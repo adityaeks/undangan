@@ -129,15 +129,10 @@
 </head>
 
 <body class="bg-sand-50 text-charcoal-900 font-sans antialiased selection:bg-brand-200 selection:text-charcoal-950 overflow-x-hidden" x-data="{
-    demoModalOpen: false,
     selectedTemplate: 'all',
     guestNameInput: 'Bpk. Budi Santoso & Partner',
-    guestCount: 350,
-    pricePerPrint: 12000,
     activeFaq: null,
-    isPlayingMusic: true,
-    mobileMenuOpen: false,
-    previewTab: 'cover'
+    mobileMenuOpen: false
 }">
 
     <!-- TOP PROMO TICKER -->
@@ -170,13 +165,8 @@
                 <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-charcoal-900/80">
                     <a href="#fitur" class="hover:text-brand-600 transition-colors duration-200">Fitur</a>
                     <a href="#tema" class="hover:text-brand-600 transition-colors duration-200">Galeri Tema</a>
-                    <a href="{{ route('demo.index') }}" class="hover:text-brand-600 transition-colors duration-200 flex items-center gap-1 text-brand-600 font-semibold">
-                        <span>Live Demo</span>
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    </a>
                     <a href="#simulasi" class="hover:text-brand-600 transition-colors duration-200">Simulasi Tamu</a>
-                    <a href="#kalkulator" class="hover:text-brand-600 transition-colors duration-200">Hemat Biaya</a>
-                    <a href="#harga" class="hover:text-brand-600 transition-colors duration-200">Paket Harga</a>
+                    <a href="#partner" class="hover:text-brand-600 transition-colors duration-200">Join Partner (WO)</a>
                     <a href="#faq" class="hover:text-brand-600 transition-colors duration-200">FAQ</a>
                 </nav>
 
@@ -224,8 +214,7 @@
             <a href="#fitur" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Fitur Lengkap</a>
             <a href="#tema" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Koleksi Tema</a>
             <a href="#simulasi" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Simulasi Tamu</a>
-            <a href="#kalkulator" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Kalkulator Penghematan</a>
-            <a href="#harga" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Paket & Harga</a>
+            <a href="#partner" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Join Partner (WO & Vendor)</a>
             <a href="#faq" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Tanya Jawab (FAQ)</a>
             <div class="pt-3 border-t border-sand-200 flex flex-col gap-3">
                 @if (Route::has('login'))
@@ -577,10 +566,14 @@
                         <div class="absolute top-4 left-4 flex gap-2">
                             <span class="px-3 py-1 rounded-full bg-charcoal-950/80 backdrop-blur-md text-brand-200 text-[10px] font-bold uppercase tracking-wider">Terpopuler</span>
                         </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                            <a href="{{ route('demo.index') }}" class="px-4 py-2 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow-lg hover:scale-105 transition flex items-center gap-1.5">
+                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Live Preview</span>
+                                <span>Preview</span>
+                            </a>
+                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
+                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
+                                <span>Pilih Desain</span>
                             </a>
                         </div>
                     </div>
@@ -594,11 +587,17 @@
                             <p class="text-xs text-charcoal-900/60">Tipografi kontemporer bernuansa editorial majalah high-fashion dengan palet warna hitam putih abadi.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <span class="text-sm font-bold text-charcoal-950">Gratis di Paket Gold</span>
-                            <a href="{{ route('demo.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1">
-                                <span>Lihat Demo</span>
-                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                            </a>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
+                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
+                                    <span>Beli</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -610,10 +609,14 @@
                         <div class="absolute top-4 left-4 flex gap-2">
                             <span class="px-3 py-1 rounded-full bg-emerald-950/80 backdrop-blur-md text-emerald-200 text-[10px] font-bold uppercase tracking-wider">Natural Vibe</span>
                         </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                            <a href="{{ route('demo.index') }}" class="px-4 py-2 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow-lg hover:scale-105 transition flex items-center gap-1.5">
+                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Live Preview</span>
+                                <span>Preview</span>
+                            </a>
+                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
+                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
+                                <span>Pilih Desain</span>
                             </a>
                         </div>
                     </div>
@@ -627,11 +630,17 @@
                             <p class="text-xs text-charcoal-900/60">Sentuhan dedaunan sage natural dengan aksen earthy tones yang menyejukkan mata dan hangat di hati.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <span class="text-sm font-bold text-charcoal-950">Gratis di Paket Gold</span>
-                            <a href="{{ route('demo.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1">
-                                <span>Lihat Demo</span>
-                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                            </a>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
+                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
+                                    <span>Beli</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -643,10 +652,14 @@
                         <div class="absolute top-4 left-4 flex gap-2">
                             <span class="px-3 py-1 rounded-full bg-amber-950/80 backdrop-blur-md text-amber-200 text-[10px] font-bold uppercase tracking-wider">Luxury Tier</span>
                         </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                            <a href="{{ route('demo.index') }}" class="px-4 py-2 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow-lg hover:scale-105 transition flex items-center gap-1.5">
+                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Live Preview</span>
+                                <span>Preview</span>
+                            </a>
+                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
+                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
+                                <span>Pilih Desain</span>
                             </a>
                         </div>
                     </div>
@@ -660,11 +673,17 @@
                             <p class="text-xs text-charcoal-900/60">Aksen foil emas berkilau berpadu latar biru midnight agung, memberikan aura kemegahan acara istimewa.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <span class="text-sm font-bold text-charcoal-950">Gratis di Paket Gold</span>
-                            <a href="{{ route('demo.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1">
-                                <span>Lihat Demo</span>
-                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                            </a>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
+                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
+                                    <span>Beli</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -676,10 +695,14 @@
                         <div class="absolute top-4 left-4 flex gap-2">
                             <span class="px-3 py-1 rounded-full bg-rose-950/80 backdrop-blur-md text-rose-200 text-[10px] font-bold uppercase tracking-wider">Romance Sweet</span>
                         </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                            <a href="{{ route('demo.index') }}" class="px-4 py-2 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow-lg hover:scale-105 transition flex items-center gap-1.5">
+                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Live Preview</span>
+                                <span>Preview</span>
+                            </a>
+                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
+                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
+                                <span>Pilih Desain</span>
                             </a>
                         </div>
                     </div>
@@ -693,11 +716,17 @@
                             <p class="text-xs text-charcoal-900/60">Nuansa pastel pink lembut dengan tipografi kaligrafi modern yang sangat manis dan anggun.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <span class="text-sm font-bold text-charcoal-950">Gratis di Paket Gold</span>
-                            <a href="{{ route('demo.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1">
-                                <span>Lihat Demo</span>
-                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                            </a>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
+                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
+                                    <span>Beli</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -709,10 +738,14 @@
                         <div class="absolute top-4 left-4 flex gap-2">
                             <span class="px-3 py-1 rounded-full bg-brand-950/80 backdrop-blur-md text-brand-200 text-[10px] font-bold uppercase tracking-wider">Tradisional Elegan</span>
                         </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                            <a href="{{ route('demo.index') }}" class="px-4 py-2 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow-lg hover:scale-105 transition flex items-center gap-1.5">
+                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Live Preview</span>
+                                <span>Preview</span>
+                            </a>
+                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
+                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
+                                <span>Pilih Desain</span>
                             </a>
                         </div>
                     </div>
@@ -726,11 +759,17 @@
                             <p class="text-xs text-charcoal-900/60">Harmoni motif ornamen budaya nusantara (Jawa, Sunda, Minang, Bali) dengan sentuhan minimalis modern.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <span class="text-sm font-bold text-charcoal-950">Gratis di Paket Gold</span>
-                            <a href="{{ route('demo.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1">
-                                <span>Lihat Demo</span>
-                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                            </a>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
+                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
+                                    <span>Beli</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -742,10 +781,14 @@
                         <div class="absolute top-4 left-4 flex gap-2">
                             <span class="px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-purple-200 text-[10px] font-bold uppercase tracking-wider">Dark Mode Aesthetic</span>
                         </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                            <a href="{{ route('demo.index') }}" class="px-4 py-2 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow-lg hover:scale-105 transition flex items-center gap-1.5">
+                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Live Preview</span>
+                                <span>Preview</span>
+                            </a>
+                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
+                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
+                                <span>Pilih Desain</span>
                             </a>
                         </div>
                     </div>
@@ -759,11 +802,17 @@
                             <p class="text-xs text-charcoal-900/60">Tampilan gelap yang memukau dengan aksen gemerlap bintang dan pencahayaan sinematik yang mempesona.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <span class="text-sm font-bold text-charcoal-950">Gratis di Paket Gold</span>
-                            <a href="{{ route('demo.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1">
-                                <span>Lihat Demo</span>
-                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                            </a>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
+                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
+                                    <span>Beli</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -889,121 +938,19 @@
 
             </div>
 
-        </div>
     </section>
 
-    <!-- SAVINGS CALCULATOR (HEMAT BIAYA CETAK VS DIGITAL) -->
-    <section id="kalkulator" class="py-24 bg-sand-50 relative overflow-hidden">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-            
-            <div class="text-center space-y-3">
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Simulasi Penghematan Anggaran</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-charcoal-950">
-                    Bandingkan Biaya Undangan Fisik vs Digital
-                </h2>
-                <p class="text-sm sm:text-base text-charcoal-900/70 max-w-xl mx-auto">
-                    Ketahui berapa juta rupiah yang bisa Anda hemat dan alihkan untuk tabungan bulan madu atau kebutuhan rumah tangga baru.
-                </p>
-            </div>
-
-            <!-- INTERACTIVE CALCULATOR CARD -->
-            <div class="p-8 sm:p-12 rounded-[36px] glass-panel border border-sand-200 shadow-2xl space-y-10">
-                
-                <!-- SLIDER CONTROL -->
-                <div class="space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <label for="guest-range-slider" class="text-sm font-bold uppercase tracking-wider text-charcoal-950">
-                            Perkiraan Jumlah Undangan Tamu:
-                        </label>
-                        <span class="text-2xl font-serif font-bold text-brand-600 bg-brand-100 px-4 py-1 rounded-full self-start sm:self-auto">
-                            <span x-text="guestCount"></span> Undangan
-                        </span>
-                    </div>
-
-                    <input 
-                        id="guest-range-slider"
-                        type="range" 
-                        min="50" 
-                        max="1000" 
-                        step="25" 
-                        x-model="guestCount" 
-                        class="w-full h-3 bg-sand-200 rounded-lg appearance-none cursor-pointer accent-brand-600"
-                    >
-                    
-                    <div class="flex justify-between text-xs text-sand-500 font-semibold">
-                        <span>50 Undangan</span>
-                        <span>500 Undangan</span>
-                        <span>1.000 Undangan</span>
-                    </div>
-                </div>
-
-                <!-- COMPARISON COLUMNS -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-                    
-                    <!-- COLUMN 1: CETAK FISIK -->
-                    <div class="p-6 rounded-2xl bg-rose-50/70 border border-rose-200/80 space-y-3">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-rose-700">Undangan Cetak Fisik</span>
-                        <div class="font-serif text-2xl sm:text-3xl font-extrabold text-charcoal-950">
-                            Rp <span x-text="(guestCount * pricePerPrint).toLocaleString('id-ID')"></span>
-                        </div>
-                        <ul class="text-xs text-charcoal-900/70 space-y-1.5 pt-2 border-t border-rose-200/60">
-                            <li>• Biaya cetak ~Rp 12.000 / pcs</li>
-                            <li>• Ongkos kirim / bensin antar fisik</li>
-                            <li>• Risiko salah cetak / revisi mahal</li>
-                            <li>• Menghabiskan banyak kertas</li>
-                        </ul>
-                    </div>
-
-                    <!-- COLUMN 2: DIGITAL KALAUNDANGAN -->
-                    <div class="p-6 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 space-y-3">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Undangan Digital KalaUndangan</span>
-                        <div class="font-serif text-2xl sm:text-3xl font-extrabold text-emerald-700">
-                            Rp 99.000
-                        </div>
-                        <ul class="text-xs text-charcoal-900/70 space-y-1.5 pt-2 border-t border-emerald-200/60">
-                            <li>• <strong>Sekali bayar</strong> untuk seumur hidup acara</li>
-                            <li>• Unlimited tamu (bebas kirim sepuasnya)</li>
-                            <li>• Revisi instan tanpa biaya tambahan</li>
-                            <li>• 100% Ramah lingkungan (Zero Waste 🌿)</li>
-                        </ul>
-                    </div>
-
-                    <!-- COLUMN 3: TOTAL SAVINGS -->
-                    <div class="p-6 rounded-2xl bg-charcoal-950 text-brand-100 space-y-3 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-brand-400">Total Uang Yang Anda Hemat</span>
-                            <div class="font-serif text-3xl font-extrabold text-white pt-1">
-                                Rp <span x-text="((guestCount * pricePerPrint) - 99000).toLocaleString('id-ID')"></span>
-                            </div>
-                            <p class="text-xs text-sand-400 pt-2">
-                                Anda menghemat hingga <strong class="text-brand-300">98%</strong> anggaran pengeluaran undangan!
-                            </p>
-                        </div>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="w-full py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold text-center transition">
-                                Ambil Hemat Sekarang
-                            </a>
-                        @endif
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- CARA KERJA (HOW IT WORKS) -->
+    <!-- CARA KERJA (HOW IT WORKS FOR PERSONAL USERS) -->
     <section class="py-24 bg-sand-100/60 border-b border-sand-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             
             <div class="text-center max-w-2xl mx-auto space-y-3">
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Langkah Mudah & Praktis</span>
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Alur Mudah Calon Pengantin</span>
                 <h2 class="font-serif text-3xl sm:text-4xl font-bold text-charcoal-950">
-                    Hanya 3 Langkah Menuju Undangan Sempurna
+                    3 Langkah Memiliki Undangan Digital Impian
                 </h2>
                 <p class="text-sm text-charcoal-900/70">
-                    Tidak perlu keahlian desain atau teknis. Siapapun bisa membuat undangan menawan dalam hitungan menit.
+                    Cukup pilih desain favorit Anda, isi data acara, dan beli template sekali bayar aktif selamanya tanpa ribet.
                 </p>
             </div>
 
@@ -1014,9 +961,9 @@
                     <div class="w-14 h-14 rounded-full bg-charcoal-950 text-brand-200 font-serif text-2xl font-bold flex items-center justify-center mx-auto shadow-md">
                         1
                     </div>
-                    <h3 class="font-serif text-xl font-bold text-charcoal-950">Pilih Desain Favorit</h3>
+                    <h3 class="font-serif text-xl font-bold text-charcoal-950">Pilih Template Favorit</h3>
                     <p class="text-xs text-charcoal-900/70 leading-relaxed">
-                        Jelajahi puluhan tema minimalis yang tersedia. Anda bebas memilih warna tema dan gaya tipografi yang sesuai selera.
+                        Jelajahi 50+ katalog tema pernikahan mulai dari Minimalist Editorial, Luxury, Botanical, hingga Adat Nusantara. Coba Live Demo langsung!
                     </p>
                 </div>
 
@@ -1025,9 +972,9 @@
                     <div class="w-14 h-14 rounded-full bg-charcoal-950 text-brand-200 font-serif text-2xl font-bold flex items-center justify-center mx-auto shadow-md">
                         2
                     </div>
-                    <h3 class="font-serif text-xl font-bold text-charcoal-950">Isi Data & Cerita</h3>
+                    <h3 class="font-serif text-xl font-bold text-charcoal-950">Lengkapi Data Acara</h3>
                     <p class="text-xs text-charcoal-900/70 leading-relaxed">
-                        Masukkan nama mempelai, tanggal & lokasi acara, nomor rekening amplop, serta galeri foto dan lagu kesukaan.
+                        Masukkan nama kedua mempelai, jadwal akad & resepsi, foto prewedding, rute Google Maps, serta nomor rekening amplop digital Anda.
                     </p>
                 </div>
 
@@ -1036,9 +983,9 @@
                     <div class="w-14 h-14 rounded-full bg-charcoal-950 text-brand-200 font-serif text-2xl font-bold flex items-center justify-center mx-auto shadow-md">
                         3
                     </div>
-                    <h3 class="font-serif text-xl font-bold text-charcoal-950">Sebarkan 1-Klik</h3>
+                    <h3 class="font-serif text-xl font-bold text-charcoal-950">Beli & Sebarkan Langsung</h3>
                     <p class="text-xs text-charcoal-900/70 leading-relaxed">
-                        Undangan siap dibagikan ke seluruh daftar kontak tamu Anda di WhatsApp secara otomatis dan personal.
+                        Bayar template sekali bayar (Rp 49.000 aktif selamanya). Undangan siap dibagikan ke ribuan tamu melalui WhatsApp dengan personalisasi nama!
                     </p>
                 </div>
 
@@ -1047,178 +994,223 @@
         </div>
     </section>
 
-    <!-- PAKET & HARGA (PRICING TIERS) -->
-    <section id="harga" class="py-24 bg-sand-50 relative">
+    <!-- JOIN PARTNER / PROGRAM KEMITRAAN (FOR WO, FREELANCER, & VENDOR) -->
+    <section id="partner" class="py-24 bg-sand-50 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             
-            <div class="text-center max-w-2xl mx-auto space-y-3">
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Investasi Hemat Sekali Bayar</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-charcoal-950">
-                    Pilihan Paket Undangan Terbaik
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-100 text-brand-800 text-[11px] font-bold uppercase tracking-widest border border-brand-200">
+                    <i data-lucide="handshake" class="w-4 h-4"></i>
+                    <span>Program Kemitraan & Reseller</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-charcoal-950 leading-tight">
+                    Solusi Kemitraan untuk Wedding Organizer & Vendor
                 </h2>
                 <p class="text-sm sm:text-base text-charcoal-900/70">
-                    Tidak ada biaya bulanan atau biaya per tamu tersembunyi. Sekali bayar aktif selamanya.
+                    Tingkatkan profit dan layanan bisnis pernikahan Anda dengan platform undangan digital white-label siap pakai. Kelola ratusan klien dari satu dashboard terpadu dengan margin keuntungan maksimal.
                 </p>
             </div>
 
-            <!-- PRICING CARDS -->
+            <!-- PARTNER PRICING CARDS -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 
-                <!-- TIER 1: BASIC -->
+                <!-- PARTNER TIER 1: STARTER -->
                 <div class="p-8 rounded-3xl glass-panel border border-sand-200 flex flex-col justify-between space-y-6 hover:shadow-xl transition-all duration-300">
                     <div class="space-y-4">
-                        <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Paket Hemat</span>
-                        <h3 class="font-serif text-2xl font-bold text-charcoal-950">Silver Basic</h3>
-                        <p class="text-xs text-charcoal-900/70">Pilihan tepat untuk acara sederhana atau syukuran privat.</p>
+                        <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Paket Freelance & Desainer</span>
+                        <h3 class="font-serif text-2xl font-bold text-charcoal-950">Starter Partner</h3>
+                        <p class="text-xs text-charcoal-900/70">Pilihan tepat untuk fotografer atau freelancer yang ingin menambah layanan undangan digital ke klien.</p>
                         
                         <div class="pt-2">
-                            <span class="text-xs text-sand-500 line-through">Rp 89.000</span>
+                            <span class="text-xs text-sand-500 line-through">Rp 490.000</span>
                             <div class="font-serif text-3xl sm:text-4xl font-extrabold text-charcoal-950">
-                                Rp 49.000
-                                <span class="text-xs font-sans font-normal text-sand-500">/ acara</span>
+                                Rp 299.000
+                                <span class="text-xs font-sans font-normal text-sand-500">/ 10 Undangan</span>
                             </div>
+                            <span class="text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full mt-1 inline-block">
+                                Modal hanya ~Rp 29.900 / undangan
+                            </span>
                         </div>
 
                         <ul class="space-y-3 pt-4 border-t border-sand-200 text-xs text-charcoal-900/80">
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span>Pilihan 10 Template Basic</span>
+                                <span><strong>Kuota 10 Undangan</strong> (Masa aktif bebas)</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span>Masa Aktif 6 Bulan</span>
+                                <span>Akses Semua Katalog Template Desain</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span>Custom Nama Tamu (Maks 100)</span>
+                                <span>Dashboard Pengelolaan Data Klien</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span>Petunjuk Peta Google Maps</span>
+                                <span><strong>Bebas Atur Harga Jual Sendiri</strong> (100% Profit)</span>
                             </li>
-                            <li class="flex items-center gap-2.5 text-sand-400">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                                <span>Amplop Digital & QRIS</span>
-                            </li>
-                            <li class="flex items-center gap-2.5 text-sand-400">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                                <span>Galeri Video Prewedding</span>
+                            <li class="flex items-center gap-2.5">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                                <span>Dukungan Teknis Prioritas via WhatsApp</span>
                             </li>
                         </ul>
                     </div>
 
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="w-full py-3.5 rounded-full border border-sand-300 font-semibold text-xs text-center text-charcoal-950 hover:bg-charcoal-950 hover:text-white transition">
-                            Pilih Paket Silver
+                        <a href="{{ route('register') }}" class="w-full py-3.5 rounded-full border border-charcoal-900 font-semibold text-xs text-center text-charcoal-950 hover:bg-charcoal-950 hover:text-white transition">
+                            Gabung Starter Partner
                         </a>
                     @endif
                 </div>
 
-                <!-- TIER 2: GOLD (RECOMMENDED) -->
+                <!-- PARTNER TIER 2: PRO WO (RECOMMENDED / FEATURED) -->
                 <div class="p-8 rounded-3xl bg-charcoal-950 text-brand-100 flex flex-col justify-between space-y-6 shadow-2xl relative ring-2 ring-brand-500/80 scale-105 z-10">
                     
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-600 to-brand-400 text-white text-[11px] font-bold uppercase tracking-wider shadow-md">
-                        🌟 Paling Populer (Best Value)
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-600 to-brand-400 text-white text-[11px] font-bold uppercase tracking-wider shadow-md flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        <span>Paling Populer (Best for WO)</span>
                     </div>
 
                     <div class="space-y-4 pt-2">
-                        <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Paket Favorit Pengantin</span>
-                        <h3 class="font-serif text-2xl font-bold text-white">Gold Premium</h3>
-                        <p class="text-xs text-sand-400">Fitur lengkap tanpa batasan untuk acara pernikahan impian Anda.</p>
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Paket Wedding Organizer & Studio</span>
+                        <h3 class="font-serif text-2xl font-bold text-white">Pro WO & Studio</h3>
+                        <p class="text-xs text-sand-400">Pilihan utama Wedding Organizer dan studio kreatif untuk melayani puluhan calon pengantin setiap bulan.</p>
                         
                         <div class="pt-2">
-                            <span class="text-xs text-sand-500 line-through">Rp 169.000</span>
+                            <span class="text-xs text-sand-500 line-through">Rp 1.470.000</span>
                             <div class="font-serif text-3xl sm:text-4xl font-extrabold text-white">
-                                Rp 99.000
-                                <span class="text-xs font-sans font-normal text-sand-400">/ acara</span>
+                                Rp 599.000
+                                <span class="text-xs font-sans font-normal text-sand-400">/ 30 Undangan</span>
                             </div>
+                            <span class="text-[11px] font-semibold text-brand-300 bg-brand-900/60 px-2.5 py-0.5 rounded-full mt-1 inline-block">
+                                Modal super hemat ~Rp 19.900 / undangan
+                            </span>
                         </div>
 
                         <ul class="space-y-3 pt-4 border-t border-brand-900/50 text-xs text-sand-200">
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
-                                <span>Akses <strong>Semua 50+ Template</strong></span>
+                                <span><strong>Kuota 30 Undangan</strong> (Top-up fleksibel)</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
-                                <span><strong>Unlimited</strong> Tamu Undangan</span>
+                                <span><strong>100% White-Label</strong> (Branding Nama & Logo WO Anda)</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
-                                <span>Masa Aktif <strong>Selamanya (Lifetime)</strong></span>
+                                <span><strong>Custom Domain / Subdomain</strong> untuk Klien</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
-                                <span>Amplop Digital & QRIS Otomatis</span>
+                                <span>Multi-Akun Kolaborator Tim & Staff WO</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
-                                <span>Background Musik Romantis Bebas Pilih</span>
+                                <span>WhatsApp Blaster & Broadcast Helper Generator</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
-                                <span>Buku Tamu & RSVP Real-time</span>
+                                <span>Sistem QR Code Check-in Tamu Resepsi</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
-                                <span>Galeri 15 Foto & Video YouTube</span>
+                                <span>Layanan VIP Dedicated Account Manager 24/7</span>
                             </li>
                         </ul>
                     </div>
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="w-full py-4 rounded-full bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs text-center shadow-lg hover:shadow-brand-500/30 hover:scale-[1.02] transition">
-                            Buat Undangan Gold Sekarang
+                            Daftar Kemitraan WO Sekarang
                         </a>
                     @endif
                 </div>
 
-                <!-- TIER 3: PLATINUM -->
+                <!-- PARTNER TIER 3: ENTERPRISE -->
                 <div class="p-8 rounded-3xl glass-panel border border-sand-200 flex flex-col justify-between space-y-6 hover:shadow-xl transition-all duration-300">
                     <div class="space-y-4">
-                        <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Paket VIP Eksklusif</span>
-                        <h3 class="font-serif text-2xl font-bold text-charcoal-950">Platinum Royal</h3>
-                        <p class="text-xs text-charcoal-900/70">Layanan premium dengan custom domain dan WhatsApp helper.</p>
+                        <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Kemitraan Skala Besar</span>
+                        <h3 class="font-serif text-2xl font-bold text-charcoal-950">Enterprise Partner</h3>
+                        <p class="text-xs text-charcoal-900/70">Solusi terpadu untuk vendor percetakan, asosiasi wedding, dan agensi event berskala besar.</p>
                         
                         <div class="pt-2">
-                            <span class="text-xs text-sand-500 line-through">Rp 249.000</span>
+                            <span class="text-xs text-sand-500 line-through">Rp 4.900.000</span>
                             <div class="font-serif text-3xl sm:text-4xl font-extrabold text-charcoal-950">
-                                Rp 149.000
-                                <span class="text-xs font-sans font-normal text-sand-500">/ acara</span>
+                                Rp 1.499.000
+                                <span class="text-xs font-sans font-normal text-sand-500">/ 100 Undangan</span>
                             </div>
+                            <span class="text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full mt-1 inline-block">
+                                Modal termurah ~Rp 14.990 / undangan
+                            </span>
                         </div>
 
                         <ul class="space-y-3 pt-4 border-t border-sand-200 text-xs text-charcoal-900/80">
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span>Semua Fitur Paket Gold</span>
+                                <span><strong>Kuota 100+ Undangan</strong> (Unlimited Top-Up)</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span><strong>Custom Subdomain</strong> Khusus</span>
+                                <span><strong>Akses REST API</strong> & Integrasi Webhook</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span>QR Code Check-in Tamu Resepsi</span>
+                                <span>Custom Template Eksklusif Brand Anda</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span>WhatsApp Blaster Generator</span>
+                                <span>Dedicated High-Speed Cloud Server</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span>Bantuan Input Data oleh Admin 24/7</span>
+                                <span>Kontrak Kerjasama Resmi & SLA 99.9%</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                                <span>Sales Kit Promosi & Template Penawaran Klien</span>
                             </li>
                         </ul>
                     </div>
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="w-full py-3.5 rounded-full border border-sand-300 font-semibold text-xs text-center text-charcoal-950 hover:bg-charcoal-950 hover:text-white transition">
-                            Pilih Paket Platinum
+                            Konsultasi Kemitraan VIP
                         </a>
                     @endif
                 </div>
 
+            </div>
+
+            <!-- PARTNER ADVANTAGES HIGHLIGHT -->
+            <div class="p-8 sm:p-10 rounded-3xl bg-sand-200/60 border border-sand-300 grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                <div class="space-y-2">
+                    <div class="w-10 h-10 rounded-2xl bg-charcoal-950 text-brand-200 flex items-center justify-center mx-auto">
+                        <i data-lucide="coins" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-serif text-sm font-bold text-charcoal-950">Margin Profit Hingga 300%</h4>
+                    <p class="text-[11px] text-charcoal-900/70">Jual paket undangan ke calon pengantin dengan harga retail standar dan raih keuntungan berlipat.</p>
+                </div>
+                <div class="space-y-2">
+                    <div class="w-10 h-10 rounded-2xl bg-charcoal-950 text-brand-200 flex items-center justify-center mx-auto">
+                        <i data-lucide="palette" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-serif text-sm font-bold text-charcoal-950">White-Label Penuh</h4>
+                    <p class="text-[11px] text-charcoal-900/70">Klien hanya melihat nama brand dan logo Wedding Organizer Anda tanpa embel-embel pihak ketiga.</p>
+                </div>
+                <div class="space-y-2">
+                    <div class="w-10 h-10 rounded-2xl bg-charcoal-950 text-brand-200 flex items-center justify-center mx-auto">
+                        <i data-lucide="clock" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-serif text-sm font-bold text-charcoal-950">Instan & Siap Pakai</h4>
+                    <p class="text-[11px] text-charcoal-900/70">Tidak butuh keahlian coding atau server management. Cukup isi form dan undangan klien langsung tayang.</p>
+                </div>
+                <div class="space-y-2">
+                    <div class="w-10 h-10 rounded-2xl bg-charcoal-950 text-brand-200 flex items-center justify-center mx-auto">
+                        <i data-lucide="headphones" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-serif text-sm font-bold text-charcoal-950">Dukungan Tim Teknis</h4>
+                    <p class="text-[11px] text-charcoal-900/70">Bantuan prioritas 24 jam untuk memastikan kelancaran setiap acara pernikahan klien Anda.</p>
+                </div>
             </div>
 
         </div>
@@ -1412,9 +1404,9 @@
                         <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </a>
                 @endif
-                <button @click="demoModalOpen = true" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-base backdrop-blur-md transition">
+                <a href="{{ route('demo.index') }}" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-base backdrop-blur-md transition flex items-center justify-center">
                     Coba Demo Undangan
-                </button>
+                </a>
             </div>
 
             <p class="text-xs text-sand-400 font-medium">
@@ -1454,8 +1446,7 @@
                         <li><a href="#fitur" class="hover:text-brand-400 transition">Fitur Utama</a></li>
                         <li><a href="#tema" class="hover:text-brand-400 transition">Koleksi Desain</a></li>
                         <li><a href="#simulasi" class="hover:text-brand-400 transition">Simulasi Tamu</a></li>
-                        <li><a href="#kalkulator" class="hover:text-brand-400 transition">Kalkulator Hemat</a></li>
-                        <li><a href="#harga" class="hover:text-brand-400 transition">Paket & Harga</a></li>
+                        <li><a href="#partner" class="hover:text-brand-400 transition">Kemitraan Partner (WO)</a></li>
                     </ul>
                 </div>
 

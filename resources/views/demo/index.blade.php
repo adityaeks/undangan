@@ -180,20 +180,26 @@
         >
             <button 
                 @click="toggleMusic()" 
+                type="button"
                 class="w-12 h-12 rounded-full bg-stone-950/90 backdrop-blur-md text-amber-300 shadow-2xl border border-amber-500/40 flex items-center justify-center hover:scale-110 active:scale-95 transition"
                 title="Musik Latar"
             >
-                <template x-if="isPlaying">
-                    <div class="flex items-end gap-0.5 h-4">
-                        <span class="w-1 bg-amber-400 rounded-full bar-1"></span>
-                        <span class="w-1 bg-amber-400 rounded-full bar-2"></span>
-                        <span class="w-1 bg-amber-400 rounded-full bar-3"></span>
-                        <span class="w-1 bg-amber-400 rounded-full bar-4"></span>
-                    </div>
-                </template>
-                <template x-if="!isPlaying">
-                    <i data-lucide="volume-x" class="w-5 h-5 text-stone-400"></i>
-                </template>
+                <!-- Playing State: Animated Equalizer Bars -->
+                <div x-show="isPlaying" class="flex items-end gap-0.5 h-4">
+                    <span class="w-1 bg-amber-400 rounded-full bar-1"></span>
+                    <span class="w-1 bg-amber-400 rounded-full bar-2"></span>
+                    <span class="w-1 bg-amber-400 rounded-full bar-3"></span>
+                    <span class="w-1 bg-amber-400 rounded-full bar-4"></span>
+                </div>
+
+                <!-- Muted / Paused State: Speaker Mute Icon -->
+                <div x-show="!isPlaying" class="flex items-center justify-center text-stone-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="22" y1="9" x2="16" y2="15"></line>
+                        <line x1="16" y1="9" x2="22" y2="15"></line>
+                    </svg>
+                </div>
             </button>
         </div>
 
@@ -661,6 +667,14 @@
                         this.updateCountdown();
                     }, 1000);
 
+                    const audio = document.getElementById('bgMusic');
+                    if (audio) {
+                        audio.volume = 0.85;
+                        audio.addEventListener('play', () => { this.isPlaying = true; });
+                        audio.addEventListener('pause', () => { this.isPlaying = false; });
+                        audio.addEventListener('ended', () => { this.isPlaying = false; });
+                    }
+
                     this.$nextTick(() => {
                         if (window.lucide) window.lucide.createIcons();
                     });
@@ -678,23 +692,34 @@
                 playMusic() {
                     const audio = document.getElementById('bgMusic');
                     if (audio) {
-                        audio.play().then(() => {
-                            this.isPlaying = true;
-                        }).catch(e => {
-                            console.log('Audio autoplay prevented:', e);
-                        });
+                        const playPromise = audio.play();
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                this.isPlaying = true;
+                            }).catch(err => {
+                                console.warn('Audio play notice:', err);
+                                this.isPlaying = false;
+                            });
+                        }
                     }
                 },
 
                 toggleMusic() {
                     const audio = document.getElementById('bgMusic');
                     if (audio) {
-                        if (this.isPlaying) {
+                        if (audio.paused) {
+                            const playPromise = audio.play();
+                            if (playPromise !== undefined) {
+                                playPromise.then(() => {
+                                    this.isPlaying = true;
+                                }).catch(err => {
+                                    console.warn('Play error:', err);
+                                    this.isPlaying = false;
+                                });
+                            }
+                        } else {
                             audio.pause();
                             this.isPlaying = false;
-                        } else {
-                            audio.play();
-                            this.isPlaying = true;
                         }
                     }
                 },
