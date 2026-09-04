@@ -155,7 +155,7 @@
                         R&A
                     </span>
                     <h1 class="font-serif text-5xl sm:text-6xl font-light tracking-wide text-white leading-none">
-                        Raka <span class="font-script text-5xl sm:text-6xl text-amber-300 block my-1 font-normal">&amp;</span> Arinda
+                        <span data-preview="groom-nickname">{{ $data['groom']['nickname'] ?? 'Raka' }}</span> <span class="font-script text-5xl sm:text-6xl text-amber-300 block my-1 font-normal">&amp;</span> <span data-preview="bride-nickname">{{ $data['bride']['nickname'] ?? 'Arinda' }}</span>
                     </h1>
                 </div>
 
@@ -170,7 +170,7 @@
             <div class="relative z-10 space-y-6 pt-4 text-center">
                 <div class="p-4 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/20 text-center space-y-1 max-w-xs mx-auto shadow-2xl">
                     <span class="text-[9px] uppercase font-bold tracking-[0.25em] text-white/60">Cordially Invited:</span>
-                    <h4 class="font-serif text-lg sm:text-xl font-bold text-amber-200 tracking-wide">{{ $guestName }}</h4>
+                    <h4 class="font-serif text-lg sm:text-xl font-bold text-amber-200 tracking-wide" data-preview="guest-name">{{ $guestName }}</h4>
                     <p class="text-[9px] text-white/50 italic">*Exclusive Guest Pass &amp; Wedding Narrative</p>
                 </div>
 
@@ -233,8 +233,8 @@
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] tracking-[0.25em] uppercase font-bold border" :style="{ borderColor: currentStyle.border_color, color: currentStyle.accent }">
                         <span>Chapter 01 • The Unification</span>
                     </div>
-                    <h2 class="font-serif text-5xl sm:text-6xl font-light tracking-tight leading-none">
-                        Raka &amp; Arinda
+                    <h2 class="font-serif text-5xl sm:text-6xl font-light tracking-tight leading-none" data-preview="couple-nickname">
+                        {{ ($data['groom']['nickname'] ?? 'Raka') . ' & ' . ($data['bride']['nickname'] ?? 'Arinda') }}
                     </h2>
                     <p class="text-xs uppercase tracking-[0.3em] font-medium" :style="{ color: currentStyle.text_secondary }">
                         Together In Holy Matrimony
@@ -246,7 +246,7 @@
                     <img :src="currentStyle.cover_bg" alt="Wedding Portrait" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 text-left text-white">
                         <span class="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-300">Jakarta, Indonesia</span>
-                        <h3 class="font-serif text-2xl font-bold">Sabtu, 24 Oktober 2026</h3>
+                        <h3 class="font-serif text-2xl font-bold" data-preview="event-date">{{ $data['events']['akad']['date'] ?? 'Sabtu, 24 Oktober 2026' }}</h3>
                     </div>
                 </div>
 
@@ -284,7 +284,7 @@
                                 <span>{{ '@' . $data['groom']['instagram'] }}</span>
                             </a>
                         </div>
-                        <h4 class="font-serif text-2xl font-bold">{{ $data['groom']['name'] }}</h4>
+                        <h4 class="font-serif text-2xl font-bold" data-preview="groom-name">{{ $data['groom']['name'] }}</h4>
                         <p class="text-xs leading-relaxed" :style="{ color: currentStyle.text_secondary }">
                             {{ $data['groom']['child_order'] }} dari pasangan terhormat<br>
                             <strong class="font-semibold" :style="{ color: currentStyle.text_primary }">{{ $data['groom']['father'] }}</strong> &amp; <strong class="font-semibold" :style="{ color: currentStyle.text_primary }">{{ $data['groom']['mother'] }}</strong>
@@ -313,7 +313,7 @@
                                 <span>{{ '@' . $data['bride']['instagram'] }}</span>
                             </a>
                         </div>
-                        <h4 class="font-serif text-2xl font-bold">{{ $data['bride']['name'] }}</h4>
+                        <h4 class="font-serif text-2xl font-bold" data-preview="bride-name">{{ $data['bride']['name'] }}</h4>
                         <p class="text-xs leading-relaxed" :style="{ color: currentStyle.text_secondary }">
                             {{ $data['bride']['child_order'] }} dari pasangan terhormat<br>
                             <strong class="font-semibold" :style="{ color: currentStyle.text_primary }">{{ $data['bride']['father'] }}</strong> &amp; <strong class="font-semibold" :style="{ color: currentStyle.text_primary }">{{ $data['bride']['mother'] }}</strong>
@@ -378,10 +378,10 @@
                         </div>
                         <div class="space-y-1">
                             <h4 class="font-serif text-2xl font-bold">{{ $data['events']['akad']['title'] }}</h4>
-                            <p class="text-xs font-medium" :style="{ color: currentStyle.text_secondary }">{{ $data['events']['akad']['date'] }}</p>
+                            <p class="text-xs font-medium" :style="{ color: currentStyle.text_secondary }" data-preview="event-date">{{ $data['events']['akad']['date'] }}</p>
                         </div>
                         <div class="pt-3 border-t text-xs space-y-1" :style="{ borderColor: currentStyle.border_color }">
-                            <p class="font-bold">{{ $data['events']['akad']['venue'] }}</p>
+                            <p class="font-bold" data-preview="venue-name">{{ $data['events']['akad']['venue'] }}</p>
                             <p :style="{ color: currentStyle.text_secondary }">{{ $data['events']['akad']['address'] }}</p>
                         </div>
                         <a 
@@ -405,10 +405,10 @@
                         </div>
                         <div class="space-y-1">
                             <h4 class="font-serif text-2xl font-bold">{{ $data['events']['resepsi']['title'] }}</h4>
-                            <p class="text-xs font-medium" :style="{ color: currentStyle.text_secondary }">{{ $data['events']['resepsi']['date'] }}</p>
+                            <p class="text-xs font-medium" :style="{ color: currentStyle.text_secondary }" data-preview="event-date">{{ $data['events']['resepsi']['date'] }}</p>
                         </div>
                         <div class="pt-3 border-t text-xs space-y-1" :style="{ borderColor: currentStyle.border_color }">
-                            <p class="font-bold">{{ $data['events']['resepsi']['venue'] }}</p>
+                            <p class="font-bold" data-preview="venue-name">{{ $data['events']['resepsi']['venue'] }}</p>
                             <p :style="{ color: currentStyle.text_secondary }">{{ $data['events']['resepsi']['address'] }}</p>
                         </div>
                         <a 
@@ -446,7 +446,7 @@
                 </div>
 
                 <!-- HORIZONTAL SCROLL DECK -->
-                <div class="flex items-stretch gap-4 overflow-x-auto no-scrollbar pb-4 pt-2 -mx-4 px-4 snap-x">
+                <div class="flex items-stretch gap-4 overflow-x-auto no-scrollbar pb-4 pt-2 -mx-4 px-4 snap-x" data-preview-container="stories">
                     @foreach ($data['stories'] as $index => $story)
                         <div 
                             class="min-w-[280px] sm:min-w-[320px] p-6 rounded-3xl border shadow-md space-y-3 snap-center flex flex-col justify-between"
@@ -454,15 +454,15 @@
                         >
                             <div class="space-y-2">
                                 <div class="flex items-center justify-between">
-                                    <span class="text-[10px] font-bold uppercase tracking-[0.2em]" :style="{ color: currentStyle.accent }">
+                                    <span data-preview="story-year-{{ $index + 1 }}" class="text-[10px] font-bold uppercase tracking-[0.2em]" :style="{ color: currentStyle.accent }">
                                         {{ $story['year'] }}
                                     </span>
-                                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold" :style="{ backgroundColor: currentStyle.tag_bg, color: currentStyle.tag_text }">
+                                    <span data-preview="story-badge-{{ $index + 1 }}" class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold" :style="{ backgroundColor: currentStyle.tag_bg, color: currentStyle.tag_text }">
                                         0{{ $index + 1 }}
                                     </span>
                                 </div>
-                                <h4 class="font-serif text-xl font-bold">{{ $story['title'] }}</h4>
-                                <p class="text-xs leading-relaxed" :style="{ color: currentStyle.text_secondary }">
+                                <h4 data-preview="story-title-{{ $index + 1 }}" class="font-serif text-xl font-bold">{{ $story['title'] }}</h4>
+                                <p data-preview="story-desc-{{ $index + 1 }}" class="text-xs leading-relaxed" :style="{ color: currentStyle.text_secondary }">
                                     {{ $story['desc'] }}
                                 </p>
                             </div>
@@ -812,5 +812,6 @@
             }
         }
     </script>
+    @include('demo.partials.preview-sync')
 </body>
 </html>

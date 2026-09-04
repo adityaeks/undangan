@@ -25,3 +25,29 @@ test('displays personalized guest recipient name from query parameter on live de
     $response->assertOk()
         ->assertSee('Bpk. Ridwan Kamil');
 });
+
+test('renders interactive demo studio with template list and customizer form', function () {
+    $response = $this->get('/demo');
+
+    $response->assertOk()
+        ->assertSee('Kustomisasi Undangan')
+        ->assertSee('Demo Studio Interaktif')
+        ->assertSee('The Vogue Editorial Issue')
+        ->assertSee('The Rose Romance Arch');
+});
+
+test('allows custom query parameters in demo studio', function () {
+    $response = $this->get('/demo?theme=rose-romance&groom_nickname=Ryan&bride_nickname=Vanya&to=Aditya');
+
+    $response->assertOk()
+        ->assertSee('Ryan')
+        ->assertSee('Vanya')
+        ->assertSee('Aditya');
+});
+
+test('renders standalone demo view when standalone parameter is provided', function () {
+    $response = $this->get('/demo?standalone=1&to=Aditya');
+
+    $response->assertOk()
+        ->assertSee('Aditya');
+});

@@ -133,10 +133,10 @@
                     :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'"
                     class="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight"
                 >
-                    {{ $data['groom']['nickname'] }} <span class="font-script text-5xl sm:text-6xl text-amber-300 font-normal">&</span> {{ $data['bride']['nickname'] }}
+                    <span data-preview="groom-nickname">{{ $data['groom']['nickname'] }}</span> <span class="font-script text-5xl sm:text-6xl text-amber-300 font-normal">&amp;</span> <span data-preview="bride-nickname">{{ $data['bride']['nickname'] }}</span>
                 </h1>
                 <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-amber-300 to-transparent mx-auto"></div>
-                <p class="text-sm font-medium text-amber-100/90 tracking-wide">
+                <p class="text-sm font-medium text-amber-100/90 tracking-wide" data-preview="event-date">
                     {{ $data['events']['akad']['date'] }}
                 </p>
             </div>
@@ -145,7 +145,7 @@
             <div class="relative z-10 pb-8 space-y-4">
                 <div class="p-4 rounded-2xl bg-black/50 backdrop-blur-md border border-white/20 text-center space-y-1.5 max-w-xs mx-auto">
                     <span class="text-[10px] uppercase font-medium tracking-[0.2em] text-white/70">Kepada Yth. Bapak/Ibu/Saudara(i):</span>
-                    <h4 class="font-serif text-lg font-bold text-amber-200">{{ $guestName }}</h4>
+                    <h4 class="font-serif text-lg font-bold text-amber-200" data-preview="guest-name">{{ $guestName }}</h4>
                     <p class="text-[10px] text-white/70 italic">*Mohon maaf bila ada kesalahan penulisan nama/gelar</p>
                 </div>
 
@@ -204,10 +204,11 @@
                     <h2 
                         :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'"
                         class="text-4xl sm:text-5xl font-bold tracking-tight"
+                        data-preview="couple-nickname"
                     >
-                        {{ $data['groom']['nickname'] }} & {{ $data['bride']['nickname'] }}
+                        {{ $data['groom']['nickname'] }} &amp; {{ $data['bride']['nickname'] }}
                     </h2>
-                    <p class="text-sm font-light text-amber-100 tracking-wider">
+                    <p class="text-sm font-light text-amber-100 tracking-wider" data-preview="event-date">
                         {{ $data['events']['akad']['date'] }}
                     </p>
                 </div>
@@ -279,6 +280,7 @@
                     <div class="space-y-1">
                         <h4 
                             :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'"
+                            data-preview="groom-name"
                             class="text-xl font-bold"
                         >
                             {{ $data['groom']['name'] }}
@@ -316,6 +318,7 @@
                     <div class="space-y-1">
                         <h4 
                             :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'"
+                            data-preview="bride-name"
                             class="text-xl font-bold"
                         >
                             {{ $data['bride']['name'] }}
@@ -394,11 +397,11 @@
                     </div>
                     <div class="space-y-1">
                         <h4 :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'" class="text-xl font-bold">{{ $data['events']['akad']['title'] }}</h4>
-                        <p :style="{ color: currentStyle.accent }" class="text-xs font-semibold">{{ $data['events']['akad']['date'] }}</p>
+                        <p :style="{ color: currentStyle.accent }" class="text-xs font-semibold" data-preview="event-date">{{ $data['events']['akad']['date'] }}</p>
                         <p class="text-xs font-bold">{{ $data['events']['akad']['time'] }}</p>
                     </div>
                     <div :style="{ borderColor: currentStyle.border_color, color: currentStyle.text_secondary }" class="pt-2 border-t text-xs space-y-1">
-                        <p :style="{ color: currentStyle.text_primary }" class="font-bold">{{ $data['events']['akad']['venue'] }}</p>
+                        <p :style="{ color: currentStyle.text_primary }" class="font-bold" data-preview="venue-name">{{ $data['events']['akad']['venue'] }}</p>
                         <p>{{ $data['events']['akad']['address'] }}</p>
                     </div>
                     <a 
@@ -423,11 +426,11 @@
                     </div>
                     <div class="space-y-1">
                         <h4 :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'" class="text-xl font-bold">{{ $data['events']['resepsi']['title'] }}</h4>
-                        <p :style="{ color: currentStyle.accent }" class="text-xs font-semibold">{{ $data['events']['resepsi']['date'] }}</p>
+                        <p :style="{ color: currentStyle.accent }" class="text-xs font-semibold" data-preview="event-date">{{ $data['events']['resepsi']['date'] }}</p>
                         <p class="text-xs font-bold">{{ $data['events']['resepsi']['time'] }}</p>
                     </div>
                     <div :style="{ borderColor: currentStyle.border_color, color: currentStyle.text_secondary }" class="pt-2 border-t text-xs space-y-1">
-                        <p :style="{ color: currentStyle.text_primary }" class="font-bold">{{ $data['events']['resepsi']['venue'] }}</p>
+                        <p :style="{ color: currentStyle.text_primary }" class="font-bold" data-preview="venue-name">{{ $data['events']['resepsi']['venue'] }}</p>
                         <p>{{ $data['events']['resepsi']['address'] }}</p>
                     </div>
                     <a 
@@ -450,8 +453,8 @@
                     <p :style="{ color: currentStyle.text_secondary }" class="text-xs">Sepenggal perjalanan indah yang membawa kami ke hari ini</p>
                 </div>
 
-                <div class="max-w-sm mx-auto space-y-4 relative before:absolute before:inset-0 before:left-4 before:w-0.5 before:bg-amber-400/40">
-                    @foreach ($data['stories'] as $story)
+                <div class="max-w-sm mx-auto space-y-4 relative before:absolute before:inset-0 before:left-4 before:w-0.5 before:bg-amber-400/40" data-preview-container="stories">
+                    @foreach ($data['stories'] as $index => $story)
                         <div class="relative flex items-start gap-4 pl-8">
                             <div :style="{ backgroundColor: currentStyle.accent }" class="absolute left-2.5 top-1.5 w-3.5 h-3.5 rounded-full ring-4 ring-white shadow"></div>
                             <div 
@@ -459,9 +462,9 @@
                                 :class="currentStyle.card_radius"
                                 class="p-4 border shadow-sm space-y-1 w-full text-left"
                             >
-                                <span :style="{ color: currentStyle.accent }" class="text-[10px] font-bold uppercase tracking-wider">{{ $story['year'] }}</span>
-                                <h5 :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'" class="text-sm font-bold">{{ $story['title'] }}</h5>
-                                <p :style="{ color: currentStyle.text_secondary }" class="text-xs leading-relaxed">{{ $story['desc'] }}</p>
+                                <span data-preview="story-year-{{ $index + 1 }}" :style="{ color: currentStyle.accent }" class="text-[10px] font-bold uppercase tracking-wider">{{ $story['year'] }}</span>
+                                <h5 data-preview="story-title-{{ $index + 1 }}" :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'" class="text-sm font-bold">{{ $story['title'] }}</h5>
+                                <p data-preview="story-desc-{{ $index + 1 }}" :style="{ color: currentStyle.text_secondary }" class="text-xs leading-relaxed">{{ $story['desc'] }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -785,5 +788,6 @@
             }
         }
     </script>
+    @include('demo.partials.preview-sync')
 </body>
 </html>

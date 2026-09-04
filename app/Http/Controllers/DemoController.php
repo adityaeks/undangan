@@ -179,18 +179,62 @@ class DemoController extends Controller
      */
     public function index(Request $request): View
     {
-        $layout = $request->query('layout', 'classic');
-        $defaultStyle = match ($layout) {
-            'editorial' => 'modern',
-            'botanical' => 'botanical',
-            'minimalist', 'warm-minimalist', 'royal-luxury' => 'minimalist',
-            'rose-romance', 'romantic', 'rose-floral' => 'romantic',
-            'classic' => 'nusantara',
-            default => 'nusantara',
-        };
-        $style = $request->query('style', $defaultStyle);
+        if ($request->boolean('standalone') || $request->boolean('raw')) {
+            $layout = $request->query('layout', 'classic');
+            $defaultStyle = match ($layout) {
+                'editorial' => 'modern',
+                'botanical' => 'botanical',
+                'minimalist', 'warm-minimalist', 'royal-luxury' => 'minimalist',
+                'rose-romance', 'romantic', 'rose-floral' => 'romantic',
+                'classic' => 'nusantara',
+                default => 'nusantara',
+            };
+            $style = $request->query('style', $defaultStyle);
 
-        return $this->renderInvitation($style, $layout, $request);
+            return $this->renderInvitation($style, $layout, $request);
+        }
+
+        $themes = ThemeCatalogController::getMasterThemes();
+        $selectedThemeSlug = $request->query('theme', 'editorial');
+        $guestName = $request->query('to', 'Reyhan');
+
+        return view('demo.studio', [
+            'themes' => $themes,
+            'selectedThemeSlug' => $selectedThemeSlug,
+            'defaultData' => [
+                'groom_nickname' => $request->query('groom_nickname', 'Raka'),
+                'bride_nickname' => $request->query('bride_nickname', 'Arinda'),
+                'groom_name' => $request->query('groom_name', 'Raka Pratama, S.T.'),
+                'bride_name' => $request->query('bride_name', 'Arinda Putri Larasati, S.I.Kom'),
+                'guest_name' => $guestName,
+                'event_date' => $request->query('date', 'Sabtu, 24 Oktober 2026'),
+                'venue_name' => $request->query('venue', 'Grand Ballroom The Ritz-Carlton, Jakarta'),
+                'akad_title' => 'Akad Nikah',
+                'resepsi_title' => 'Resepsi Pernikahan',
+                'stories' => [
+                    [
+                        'year' => 'Agustus 2020',
+                        'title' => 'Pertemuan Pertama',
+                        'desc' => 'Takdir mempertemukan kami di sebuah workshop desain dan arsitektur di Bandung. Berawal dari diskusi tugas dan obrolan secangkir kopi hangat.',
+                    ],
+                    [
+                        'year' => 'November 2022',
+                        'title' => 'Menjalin Komitmen',
+                        'desc' => 'Setelah dua tahun saling mengenal kepribadian dan berbagi mimpi, kami memutuskan untuk melangkah bersama dalam ikatan kasih yang tulus.',
+                    ],
+                    [
+                        'year' => 'Desember 2025',
+                        'title' => 'Hari Lamaran Resmi',
+                        'desc' => 'Di hadapan kedua keluarga besar, kami mengikat janji suci untuk melangkah ke jenjang pernikahan yang penuh berkah dan ridho Ilahi.',
+                    ],
+                    [
+                        'year' => 'Oktober 2026',
+                        'title' => 'Menuju Hari Bahagia',
+                        'desc' => 'Dengan penuh rasa syukur, kami siap menyatukan cinta dalam ikatan pernikahan kudus seumur hidup.',
+                    ],
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -245,22 +289,28 @@ class DemoController extends Controller
      */
     protected function renderInvitation(string $styleKey, string $layout, Request $request): View
     {
-        $guestName = $request->query('to', 'Reyhan & Lesti');
+        $guestName = $request->query('to', 'Reyhan');
+        $groomNickname = $request->query('groom_nickname', 'Raka');
+        $brideNickname = $request->query('bride_nickname', 'Arinda');
+        $groomName = $request->query('groom_name', 'Raka Pratama, S.T.');
+        $brideName = $request->query('bride_name', 'Arinda Putri Larasati, S.I.Kom');
+        $eventDate = $request->query('date', 'Sabtu, 24 Oktober 2026');
+        $venueName = $request->query('venue', 'Grand Ballroom The Ritz-Carlton');
 
         $activeStyle = $this->stylePresets[$styleKey] ?? $this->stylePresets['minimalist'];
 
         $demoData = [
             'groom' => [
-                'name' => 'Raka Pratama, S.T.',
-                'nickname' => 'Raka',
+                'name' => $groomName,
+                'nickname' => $groomNickname,
                 'father' => 'Bpk. Dr. H. Bambang Soediro',
                 'mother' => 'Ibu Hj. Ratna Juwita',
                 'child_order' => 'Putra pertama',
                 'instagram' => 'rakapratama',
             ],
             'bride' => [
-                'name' => 'Arinda Putri Larasati, S.I.Kom',
-                'nickname' => 'Arinda',
+                'name' => $brideName,
+                'nickname' => $brideNickname,
                 'father' => 'Bpk. Ir. H. Hendra Wijaya, M.M.',
                 'mother' => 'Ibu Hj. Dewi Kusuma Wardani',
                 'child_order' => 'Putri kedua',
@@ -269,7 +319,7 @@ class DemoController extends Controller
             'events' => [
                 'akad' => [
                     'title' => 'Akad Nikah',
-                    'date' => 'Sabtu, 24 Oktober 2026',
+                    'date' => $eventDate,
                     'time' => '08.00 - 10.00 WIB',
                     'venue' => 'Masjid Agung Sunda Kelapa',
                     'address' => 'Jl. Taman Sunda Kelapa No.16, Menteng, Jakarta Pusat 10310',
@@ -277,36 +327,48 @@ class DemoController extends Controller
                 ],
                 'resepsi' => [
                     'title' => 'Resepsi Pernikahan',
-                    'date' => 'Sabtu, 24 Oktober 2026',
+                    'date' => $eventDate,
                     'time' => '11.00 - 14.00 WIB & 18.30 - 21.00 WIB',
-                    'venue' => 'Grand Ballroom The Ritz-Carlton',
+                    'venue' => $venueName,
                     'address' => 'Mega Kuningan Barat No.1, Setiabudi, Jakarta Selatan 12950',
                     'maps_link' => 'https://maps.google.com/?q=The+Ritz-Carlton+Jakarta+Mega+Kuningan',
                 ],
             ],
             'countdown_target' => '2026-10-24T08:00:00+07:00',
-            'stories' => [
-                [
-                    'year' => 'Agustus 2020',
-                    'title' => 'Pertemuan Pertama',
-                    'desc' => 'Takdir mempertemukan kami di sebuah workshop desain dan arsitektur di Bandung. Berawal dari diskusi tugas dan obrolan secangkir kopi hangat.',
-                ],
-                [
-                    'year' => 'November 2022',
-                    'title' => 'Menjalin Komitmen',
-                    'desc' => 'Setelah dua tahun saling mengenal kepribadian dan berbagi mimpi, kami memutuskan untuk melangkah bersama dalam ikatan kasih yang tulus.',
-                ],
-                [
-                    'year' => 'Desember 2025',
-                    'title' => 'Hari Lamaran Resmi',
-                    'desc' => 'Di hadapan kedua keluarga besar, kami mengikat janji suci untuk melangkah ke jenjang pernikahan yang penuh berkah dan ridho Ilahi.',
-                ],
-                [
-                    'year' => 'Oktober 2026',
-                    'title' => 'Menuju Hari Bahagia',
-                    'desc' => 'Dengan penuh rasa syukur, kami siap menyatukan cinta dalam ikatan pernikahan kudus seumur hidup.',
-                ],
-            ],
+            'stories' => (function () use ($request) {
+                $defaultStories = [
+                    [
+                        'year' => 'Agustus 2020',
+                        'title' => 'Pertemuan Pertama',
+                        'desc' => 'Takdir mempertemukan kami di sebuah workshop desain dan arsitektur di Bandung. Berawal dari diskusi tugas dan obrolan secangkir kopi hangat.',
+                    ],
+                    [
+                        'year' => 'November 2022',
+                        'title' => 'Menjalin Komitmen',
+                        'desc' => 'Setelah dua tahun saling mengenal kepribadian dan berbagi mimpi, kami memutuskan untuk melangkah bersama dalam ikatan kasih yang tulus.',
+                    ],
+                    [
+                        'year' => 'Desember 2025',
+                        'title' => 'Hari Lamaran Resmi',
+                        'desc' => 'Di hadapan kedua keluarga besar, kami mengikat janji suci untuk melangkah ke jenjang pernikahan yang penuh berkah dan ridho Ilahi.',
+                    ],
+                    [
+                        'year' => 'Oktober 2026',
+                        'title' => 'Menuju Hari Bahagia',
+                        'desc' => 'Dengan penuh rasa syukur, kami siap menyatukan cinta dalam ikatan pernikahan kudus seumur hidup.',
+                    ],
+                ];
+
+                if ($request->filled('stories')) {
+                    $raw = $request->query('stories');
+                    $decoded = is_string($raw) ? json_decode($raw, true) : $raw;
+                    if (is_array($decoded) && ! empty($decoded)) {
+                        return $decoded;
+                    }
+                }
+
+                return $defaultStories;
+            })(),
             'galleries' => [
                 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
                 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80',
@@ -370,6 +432,7 @@ class DemoController extends Controller
             'guestName' => $guestName,
             'layout' => $layout,
             'data' => $demoData,
+            'isEmbed' => $request->boolean('embed'),
         ]);
     }
 }

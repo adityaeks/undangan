@@ -16,6 +16,33 @@ test('authenticated user can view dashboard page with real metrics', function ()
         ->assertSee('Admin Workspace');
 });
 
+test('authenticated member can view dedicated member dashboard with member layout', function () {
+    $member = User::factory()->create(['role' => 'user']);
+
+    $response = $this->actingAs($member)->get('/dashboard');
+
+    $response->assertOk()
+        ->assertSee('Portal Pengantin')
+        ->assertSee('Progres Kelengkapan Undangan')
+        ->assertSee('Member Aktif');
+});
+
+test('newly registered member starts with empty invitations and shows empty onboarding state', function () {
+    $member = User::factory()->create(['role' => 'user']);
+
+    $response = $this->actingAs($member)->get('/dashboard');
+
+    $response->assertOk()
+        ->assertSee('Portal Pengantin')
+        ->assertSee('Undangan Belum Dibuat')
+        ->assertSee('Mulai Buat Undangan Pertama Saya')
+        ->assertDontSee('The Wedding of Raka & Arinda');
+
+    $invitationResponse = $this->actingAs($member)->get('/admin/invitations');
+    $invitationResponse->assertOk()
+        ->assertSee('Total: 0');
+});
+
 test('authenticated user can view invitations index and create pages', function () {
     $user = User::factory()->create();
 

@@ -299,14 +299,14 @@
 
                 <!-- Nama Kaligrafi Ryan & Vanya -->
                 <h1 class="font-script text-4xl sm:text-5xl text-white font-normal leading-tight drop-shadow-md my-1">
-                    Ryan &amp; Vanya
+                    <span data-preview="groom-nickname">{{ $data['groom']['nickname'] ?? 'Ryan' }}</span> &amp; <span data-preview="bride-nickname">{{ $data['bride']['nickname'] ?? 'Vanya' }}</span>
                 </h1>
 
                 <!-- Recipient Info -->
                 <div class="my-3 space-y-0.5">
                     <p class="text-[11px] text-white/80 font-light">Kepada Yth.</p>
                     <p class="text-[11px] text-white/80 font-light">Bapak/Ibu/Saudara/i:</p>
-                    <p class="font-sans font-bold text-base sm:text-lg text-white drop-shadow tracking-wide pt-1">
+                    <p class="font-sans font-bold text-base sm:text-lg text-white drop-shadow tracking-wide pt-1" data-preview="guest-name">
                         {{ $guestName ?? 'Nama Tamu' }}
                     </p>
                 </div>
@@ -410,11 +410,11 @@
                     <span class="text-[10px] uppercase tracking-[0.25em] text-rosewood-500 font-semibold block mb-2">
                         Walimatul 'Ursy
                     </span>
-                    <h2 class="font-script text-5xl sm:text-6xl text-rosewood-900 leading-tight mb-3">
-                        Ryan &amp; Vanya
+                    <h2 class="font-script text-5xl sm:text-6xl text-rosewood-900 leading-tight mb-3" data-preview="couple-nickname">
+                        {{ ($data['groom']['nickname'] ?? 'Ryan') . ' & ' . ($data['bride']['nickname'] ?? 'Vanya') }}
                     </h2>
-                    <p class="text-xs font-serif tracking-[0.2em] uppercase text-rosewood-700">
-                        Sabtu, 24 Oktober 2026
+                    <p class="text-xs font-serif tracking-[0.2em] uppercase text-rosewood-700" data-preview="event-date">
+                        {{ $data['events']['akad']['date'] ?? 'Sabtu, 24 Oktober 2026' }}
                     </p>
 
                 </div>
@@ -503,7 +503,7 @@
                     </div>
 
                     <div class="space-y-1.5 pt-2">
-                        <h3 class="font-serif text-2xl font-bold text-rosewood-950">Ryan Pratama, S.Kom.</h3>
+                        <h3 class="font-serif text-2xl font-bold text-rosewood-950" data-preview="groom-name">{{ $data['groom']['name'] ?? 'Ryan Pratama, S.Kom.' }}</h3>
                         <p class="text-xs text-rosewood-700 leading-relaxed max-w-xs">
                             Putra pertama dari<br>
                             <strong class="font-semibold text-rosewood-950">Bpk. Dr. H. Bambang Soediro</strong><br>
@@ -554,7 +554,7 @@
                     </div>
 
                     <div class="space-y-1.5 pt-2">
-                        <h3 class="font-serif text-2xl font-bold text-rosewood-950">Vanya Citra Kirana, S.I.Kom.</h3>
+                        <h3 class="font-serif text-2xl font-bold text-rosewood-950" data-preview="bride-name">{{ $data['bride']['name'] ?? 'Vanya Citra Kirana, S.I.Kom.' }}</h3>
                         <p class="text-xs text-rosewood-700 leading-relaxed max-w-xs">
                             Putri kedua dari<br>
                             <strong class="font-semibold text-rosewood-950">Bpk. Ir. H. Hendra Wijaya</strong><br>
@@ -593,61 +593,35 @@
                 </div>
 
                 <!-- Story Vertical Cards -->
-                <div class="space-y-6 max-w-sm mx-auto text-left">
+                <div class="space-y-6 max-w-sm mx-auto text-left" data-preview-container="stories">
                     
-                    <!-- Card 1 -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl text-rosewood-950 border border-rosewood-200">
-                        <div class="aspect-[16/10] overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80" 
-                                alt="Pertemuan Pertama" 
-                                class="w-full h-full object-cover"
-                            >
+                    @foreach ($data['stories'] as $index => $story)
+                        @php
+                            $storyImages = [
+                                'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80',
+                                'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&auto=format&fit=crop&q=80',
+                                'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
+                                'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80',
+                            ];
+                            $storyImg = $storyImages[$index % count($storyImages)];
+                        @endphp
+                        <div class="bg-white rounded-3xl overflow-hidden shadow-xl text-rosewood-950 border border-rosewood-200">
+                            <div class="aspect-[16/10] overflow-hidden">
+                                <img 
+                                    src="{{ $storyImg }}" 
+                                    alt="{{ $story['title'] }}" 
+                                    class="w-full h-full object-cover"
+                                >
+                            </div>
+                            <div class="p-5 space-y-1.5">
+                                <span data-preview="story-year-{{ $index + 1 }}" class="text-[10px] font-bold uppercase tracking-wider text-rosewood-500">{{ $story['year'] }}</span>
+                                <h4 data-preview="story-title-{{ $index + 1 }}" class="font-serif text-lg font-bold text-rosewood-950">{{ $story['title'] }}</h4>
+                                <p data-preview="story-desc-{{ $index + 1 }}" class="text-xs text-rosewood-700 leading-relaxed">
+                                    {{ $story['desc'] }}
+                                </p>
+                            </div>
                         </div>
-                        <div class="p-5 space-y-1.5">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-rosewood-500">November 2021</span>
-                            <h4 class="font-serif text-lg font-bold text-rosewood-950">Awal Jumpa di Konservatori</h4>
-                            <p class="text-xs text-rosewood-700 leading-relaxed">
-                                Takdir mempertemukan kami di sebuah workshop fotografi lanskap. Percakapan santai tentang sudut pandang kamera membuka pintu perkenalan yang hangat.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl text-rosewood-950 border border-rosewood-200">
-                        <div class="aspect-[16/10] overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&auto=format&fit=crop&q=80" 
-                                alt="Momen Lamaran" 
-                                class="w-full h-full object-cover"
-                            >
-                        </div>
-                        <div class="p-5 space-y-1.5">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-rosewood-500">Desember 2024</span>
-                            <h4 class="font-serif text-lg font-bold text-rosewood-950">Mengikat Janji di Hadapan Keluarga</h4>
-                            <p class="text-xs text-rosewood-700 leading-relaxed">
-                                Setelah bertumbuh bersama melewati berbagai cerita, Ryan melamar Vanya secara resmi dalam suasana hangat penuh doa restu kedua keluarga besar.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl text-rosewood-950 border border-rosewood-200">
-                        <div class="aspect-[16/10] overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80" 
-                                alt="Menuju Pelaminan" 
-                                class="w-full h-full object-cover"
-                            >
-                        </div>
-                        <div class="p-5 space-y-1.5">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-rosewood-500">Oktober 2026</span>
-                            <h4 class="font-serif text-lg font-bold text-rosewood-950">Menyempurnakan Agama Bersama</h4>
-                            <p class="text-xs text-rosewood-700 leading-relaxed">
-                                Hari yang kami nanti akhirnya tiba. Bersama kehadiran Anda sebagai saksi, kami mengucap janji suci pernikahan seumur hidup.
-                            </p>
-                        </div>
-                    </div>
+                    @endforeach
 
                 </div>
 
@@ -683,12 +657,12 @@
                             <span class="px-3 py-1 rounded-full bg-rosewood-100 text-rosewood-800 text-[10px] font-bold uppercase tracking-wider">
                                 Akad Nikah
                             </span>
-                            <h3 class="font-serif text-xl font-bold text-rosewood-950 mt-3">Sabtu, 24 Oktober 2026</h3>
+                            <h3 class="font-serif text-xl font-bold text-rosewood-950 mt-3" data-preview="event-date">Sabtu, 24 Oktober 2026</h3>
                             <p class="text-xs font-semibold text-rosewood-700 mt-1">Pukul 08.00 - 10.00 WIB</p>
                         </div>
 
                         <div class="pt-3 border-t border-rosewood-100 text-xs text-rosewood-700 space-y-1">
-                            <p class="font-bold text-rosewood-900">The Glass House &amp; Conservatory</p>
+                            <p class="font-bold text-rosewood-900" data-preview="venue-name">The Glass House &amp; Conservatory</p>
                             <p class="leading-relaxed">Plataran Dharmawangsa, Jl. Dharmawangsa Raya No. 6, Kebayoran Baru, Jakarta Selatan</p>
                         </div>
 
@@ -716,12 +690,12 @@
                             <span class="px-3 py-1 rounded-full bg-rosewood-100 text-rosewood-800 text-[10px] font-bold uppercase tracking-wider">
                                 Resepsi Pernikahan
                             </span>
-                            <h3 class="font-serif text-xl font-bold text-rosewood-950 mt-3">Sabtu, 24 Oktober 2026</h3>
+                            <h3 class="font-serif text-xl font-bold text-rosewood-950 mt-3" data-preview="event-date">Sabtu, 24 Oktober 2026</h3>
                             <p class="text-xs font-semibold text-rosewood-700 mt-1">Pukul 11.00 - 14.00 WIB</p>
                         </div>
 
                         <div class="pt-3 border-t border-rosewood-100 text-xs text-rosewood-700 space-y-1">
-                            <p class="font-bold text-rosewood-900">Grand Ballroom The Glass House</p>
+                            <p class="font-bold text-rosewood-900" data-preview="venue-name">Grand Ballroom The Glass House</p>
                             <p class="leading-relaxed">Plataran Dharmawangsa, Jl. Dharmawangsa Raya No. 6, Kebayoran Baru, Jakarta Selatan</p>
                         </div>
 
@@ -1036,5 +1010,6 @@
             lucide.createIcons();
         });
     </script>
+    @include('demo.partials.preview-sync')
 </body>
 </html>

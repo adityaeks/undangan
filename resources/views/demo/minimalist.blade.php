@@ -283,11 +283,11 @@
 
             <!-- Nama Pasangan -->
             <h1 class="font-editorial text-4xl sm:text-5xl font-light tracking-wide text-stone-900 mb-2 leading-tight">
-                Raka <span class="font-serif italic font-normal text-stone-500 text-3xl sm:text-4xl">&amp;</span> Arinda
+                <span data-preview="groom-nickname">{{ $data['groom']['nickname'] ?? 'Raka' }}</span> <span class="font-serif italic font-normal text-stone-500 text-3xl sm:text-4xl">&amp;</span> <span data-preview="bride-nickname">{{ $data['bride']['nickname'] ?? 'Arinda' }}</span>
             </h1>
 
-            <p class="text-xs tracking-[0.2em] text-stone-500 uppercase font-light mb-8">
-                Sabtu, 24 Oktober 2026
+            <p class="text-xs tracking-[0.2em] text-stone-500 uppercase font-light mb-8" data-preview="event-date">
+                {{ $data['events']['akad']['date'] ?? 'Sabtu, 24 Oktober 2026' }}
             </p>
 
             <!-- Guest Card -->
@@ -295,8 +295,8 @@
                 <span class="text-[10px] uppercase tracking-[0.25em] text-stone-400 font-medium block mb-2">
                     Kepada Yth. Bapak/Ibu/Saudara/i:
                 </span>
-                <p class="font-serif text-xl sm:text-2xl font-normal text-stone-900 tracking-tight mb-2">
-                    {{ $guestName ?? 'Reyhan & Lesti' }}
+                <p class="font-serif text-xl sm:text-2xl font-normal text-stone-900 tracking-tight mb-2" data-preview="guest-name">
+                    {{ $guestName ?? 'Reyhan' }}
                 </p>
                 <p class="text-[11px] text-stone-500 font-light leading-relaxed">
                     Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.
@@ -364,9 +364,9 @@
                         The Wedding of
                     </span>
                     <h1 class="font-editorial text-5xl sm:text-6xl font-light text-stone-900 tracking-wide">
-                        Raka <span class="font-serif italic font-normal text-stone-500 text-4xl">&amp;</span> Arinda
+                        <span data-preview="groom-nickname">Raka</span> <span class="font-serif italic font-normal text-stone-500 text-4xl">&amp;</span> <span data-preview="bride-nickname">Arinda</span>
                     </h1>
-                    <p class="text-xs uppercase tracking-[0.25em] text-stone-500 font-light">
+                    <p class="text-xs uppercase tracking-[0.25em] text-stone-500 font-light" data-preview="event-date">
                         Sabtu, 24 Oktober 2026 • Jakarta
                     </p>
                 </div>
@@ -443,7 +443,7 @@
                             >
                         </div>
                         <div class="space-y-1.5">
-                            <h3 class="font-editorial text-2xl font-medium text-stone-900">Raka Pratama, S.T.</h3>
+                            <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="groom-name">Raka Pratama, S.T.</h3>
                             <p class="text-xs text-stone-500 leading-relaxed">
                                 Putra pertama dari<br>
                                 <strong class="text-stone-800 font-medium">Bpk. Dr. H. Bambang Soediro</strong><br>
@@ -470,7 +470,7 @@
                             >
                         </div>
                         <div class="space-y-1.5">
-                            <h3 class="font-editorial text-2xl font-medium text-stone-900">Arinda Citra Kirana, S.Ds.</h3>
+                            <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="bride-name">Arinda Citra Kirana, S.Ds.</h3>
                             <p class="text-xs text-stone-500 leading-relaxed">
                                 Putri kedua dari<br>
                                 <strong class="text-stone-800 font-medium">Bpk. Ir. H. Hendra Wijaya</strong><br>
@@ -521,12 +521,12 @@
                             </div>
 
                             <div>
-                                <h3 class="font-editorial text-2xl font-medium text-stone-900">Sabtu, 24 Oktober 2026</h3>
+                                <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="event-date">Sabtu, 24 Oktober 2026</h3>
                                 <p class="text-xs text-stone-600 font-medium mt-1">Pukul 08.00 - 10.00 WIB</p>
                             </div>
 
                             <div class="pt-3 border-t hairline-border text-xs text-stone-600 space-y-1">
-                                <p class="font-medium text-stone-900">The Langham Hotel, Ballroom Lantai 2</p>
+                                <p class="font-medium text-stone-900" data-preview="venue-name">The Langham Hotel, Ballroom Lantai 2</p>
                                 <p class="text-stone-500 leading-relaxed">District 8, SCBD Lot 28, Jl. Jend. Sudirman, Senayan, Kebayoran Baru, Jakarta Selatan</p>
                             </div>
                         </div>
@@ -554,12 +554,12 @@
                             </div>
 
                             <div>
-                                <h3 class="font-editorial text-2xl font-medium text-stone-900">Sabtu, 24 Oktober 2026</h3>
+                                <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="event-date">Sabtu, 24 Oktober 2026</h3>
                                 <p class="text-xs text-stone-600 font-medium mt-1">Pukul 11.00 - 14.00 WIB</p>
                             </div>
 
                             <div class="pt-3 border-t hairline-border text-xs text-stone-600 space-y-1">
-                                <p class="font-medium text-stone-900">The Langham Hotel, Grand Ballroom</p>
+                                <p class="font-medium text-stone-900" data-preview="venue-name">The Langham Hotel, Grand Ballroom</p>
                                 <p class="text-stone-500 leading-relaxed">District 8, SCBD Lot 28, Jl. Jend. Sudirman, Senayan, Kebayoran Baru, Jakarta Selatan</p>
                             </div>
                         </div>
@@ -594,44 +594,19 @@
                     </h2>
                 </div>
 
-                <div class="relative border-l hairline-border ml-4 sm:ml-8 pl-6 sm:pl-8 space-y-8 py-2">
-                    
-                    <!-- MILESTONE 1 -->
-                    <div class="relative">
-                        <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full bg-stone-900 border-2 border-[#FAF8F5]"></div>
-                        <div class="space-y-1">
-                            <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">November 2021</span>
-                            <h3 class="font-editorial text-xl font-medium text-stone-900">Pertemuan Pertama di Galeri Seni</h3>
-                            <p class="text-xs text-stone-500 leading-relaxed">
-                                Berawal dari sebuah pameran seni rupa di Jakarta Pusat, ketertarikan pada karya lukis membawa kami pada obrolan hangat pertama yang mengalir tanpa henti.
-                            </p>
+                <div class="relative border-l hairline-border ml-4 sm:ml-8 pl-6 sm:pl-8 space-y-8 py-2" data-preview-container="stories">
+                    @foreach ($data['stories'] as $index => $story)
+                        <div class="relative">
+                            <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full bg-stone-900 border-2 border-[#FAF8F5]"></div>
+                            <div class="space-y-1">
+                                <span data-preview="story-year-{{ $index + 1 }}" class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">{{ $story['year'] }}</span>
+                                <h3 data-preview="story-title-{{ $index + 1 }}" class="font-editorial text-xl font-medium text-stone-900">{{ $story['title'] }}</h3>
+                                <p data-preview="story-desc-{{ $index + 1 }}" class="text-xs text-stone-500 leading-relaxed">
+                                    {{ $story['desc'] }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- MILESTONE 2 -->
-                    <div class="relative">
-                        <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full bg-stone-900 border-2 border-[#FAF8F5]"></div>
-                        <div class="space-y-1">
-                            <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Desember 2024</span>
-                            <h3 class="font-editorial text-xl font-medium text-stone-900">Mengikat Janji Menuju Masa Depan</h3>
-                            <p class="text-xs text-stone-500 leading-relaxed">
-                                Setelah saling mengenal dan tumbuh bersama melewati berbagai musim, di hadapan kedua orang tua kami memantapkan hati untuk melangkah ke jenjang yang lebih serius.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- MILESTONE 3 -->
-                    <div class="relative">
-                        <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full bg-stone-900 border-2 border-[#FAF8F5]"></div>
-                        <div class="space-y-1">
-                            <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Oktober 2026</span>
-                            <h3 class="font-editorial text-xl font-medium text-stone-900">Menyempurnakan Ikatan Suci</h3>
-                            <p class="text-xs text-stone-500 leading-relaxed">
-                                Bersama Anda sekalian sebagai saksi, kami mengikrarkan janji suci pernikahan untuk saling mendampingi dalam suka dan duka seumur hidup.
-                            </p>
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
 
             </section>
@@ -901,5 +876,6 @@
             lucide.createIcons();
         });
     </script>
+    @include('demo.partials.preview-sync')
 </body>
 </html>

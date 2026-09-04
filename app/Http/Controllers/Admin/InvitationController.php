@@ -19,7 +19,12 @@ class InvitationController extends Controller
      */
     public function index(Request $request): View
     {
+        $user = Auth::user();
         $query = Invitation::with(['theme', 'couple', 'guests', 'events', 'user', 'galleries']);
+
+        if (! $user->isSuperAdmin()) {
+            $query->where('user_id', $user->id);
+        }
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -35,8 +40,12 @@ class InvitationController extends Controller
         }
 
         $invitations = $query->latest()->paginate(10);
-        $totalActive = Invitation::where('is_published', true)->count();
-        $totalDraft = Invitation::where('is_published', false)->count();
+        $totalActive = (! $user->isSuperAdmin())
+            ? Invitation::where('user_id', $user->id)->where('is_published', true)->count()
+            : Invitation::where('is_published', true)->count();
+        $totalDraft = (! $user->isSuperAdmin())
+            ? Invitation::where('user_id', $user->id)->where('is_published', false)->count()
+            : Invitation::where('is_published', false)->count();
 
         return view('admin.invitations.index', compact('invitations', 'totalActive', 'totalDraft'));
     }
@@ -302,7 +311,7 @@ class InvitationController extends Controller
 
         // 7. Create Default Sample Guest
         $invitation->guests()->create([
-            'name' => 'Reyhan & Lesti',
+            'name' => 'Reyhan',
             'slug' => 'budi-santoso',
             'phone_number' => '081234567890',
             'group' => 'VIP',

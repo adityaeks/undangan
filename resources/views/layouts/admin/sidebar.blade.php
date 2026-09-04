@@ -1,62 +1,31 @@
 <!-- ADMIN SIDEBAR NAVIGATION -->
 <aside 
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-    class="fixed inset-y-0 left-0 z-50 w-72 bg-charcoal-950 text-sand-200 flex flex-col justify-between transition-transform duration-300 ease-in-out border-r border-charcoal-800 shadow-2xl lg:static lg:translate-x-0"
+    class="fixed inset-y-0 left-0 z-50 w-72 h-screen bg-charcoal-950 text-sand-200 flex flex-col justify-between transition-transform duration-300 ease-in-out border-r border-charcoal-800 shadow-2xl lg:translate-x-0"
 >
-    <!-- TOP BRAND & USER PROFILE -->
-    <div class="flex-1 overflow-y-auto px-5 py-6 space-y-6">
-        
-        <!-- BRAND HEADER -->
-        <div class="flex items-center justify-between px-2">
-            <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-400 via-brand-500 to-brand-700 text-white flex items-center justify-center font-serif font-bold text-lg shadow-md group-hover:scale-105 transition-transform duration-200">
-                    K
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-serif text-xl font-bold tracking-tight text-white">
-                        KlikMomen<span class="text-brand-400">.</span>
-                    </span>
-                    <span class="text-[10px] tracking-widest uppercase font-semibold text-brand-300">Admin Workspace</span>
-                </div>
-            </a>
-
-            <!-- MOBILE CLOSE BUTTON -->
-            <button @click="sidebarOpen = false" class="lg:hidden p-2 rounded-xl text-sand-400 hover:text-white hover:bg-charcoal-900 transition">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-        </div>
-
-        <!-- USER INFO MINI CARD -->
-        <div class="p-3.5 rounded-2xl bg-charcoal-900/90 border border-charcoal-800 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-amber-700 text-white flex items-center justify-center font-bold text-sm shadow">
-                {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
+    <!-- BRAND HEADER (FIXED AT TOP OF SIDEBAR) -->
+    <div class="p-5 pb-4 flex items-center justify-between border-b border-charcoal-900/60 shrink-0">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-400 via-brand-500 to-brand-700 text-white flex items-center justify-center font-serif font-bold text-lg shadow-md group-hover:scale-105 transition-transform duration-200">
+                K
             </div>
-            <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-1.5">
-                    <h4 class="text-xs font-bold text-white truncate">{{ Auth::user()->name }}</h4>
-                </div>
-                <p class="text-[11px] text-sand-400 truncate">{{ Auth::user()->email }}</p>
-                <div class="mt-1">
-                    @if(Auth::user()->role === 'super_admin')
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[9px] font-extrabold uppercase tracking-wider border border-amber-500/30">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                            Super Admin
-                        </span>
-                    @elseif(Auth::user()->role === 'partner')
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 text-[9px] font-extrabold uppercase tracking-wider border border-brand-500/30">
-                            Partner WO
-                        </span>
-                    @else
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-500/20 text-slate-300 text-[9px] font-extrabold uppercase tracking-wider border border-slate-500/30">
-                            Pengguna
-                        </span>
-                    @endif
-                </div>
+            <div class="flex flex-col">
+                <span class="font-serif text-xl font-bold tracking-tight text-white">
+                    KlikMomen<span class="text-brand-400">.</span>
+                </span>
+                <span class="text-[10px] tracking-widest uppercase font-semibold text-brand-300">Admin Workspace</span>
             </div>
-        </div>
+        </a>
 
-        <!-- NAVIGATION MENUS -->
-        <nav class="space-y-6 pt-2">
+        <!-- MOBILE CLOSE BUTTON -->
+        <button @click="sidebarOpen = false" class="lg:hidden p-2 rounded-xl text-sand-400 hover:text-white hover:bg-charcoal-900 transition" aria-label="Tutup sidebar">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- NAVIGATION MENUS (SCROLLABLE INDEPENDENTLY) -->
+    <div class="flex-1 overflow-y-auto px-5 py-4 space-y-6">
+        <nav class="space-y-6">
             
             <!-- SECTION 1: MENU UTAMA -->
             <div class="space-y-1.5">
@@ -136,7 +105,7 @@
     </div>
 
     <!-- BOTTOM LOGOUT ACTION -->
-    <div class="p-4 border-t border-charcoal-800 bg-charcoal-950/60">
+    <div class="p-4 border-t border-charcoal-800 bg-charcoal-950/60 shrink-0">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl bg-charcoal-900 hover:bg-rose-950/50 text-sand-300 hover:text-rose-200 border border-charcoal-800 hover:border-rose-900/50 text-xs font-bold transition duration-200">

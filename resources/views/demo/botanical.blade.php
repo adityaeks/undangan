@@ -159,7 +159,7 @@
                 <!-- OVERLAPPING CALLIGRAPHIC NAMES -->
                 <div class="pt-4 space-y-1">
                     <h1 class="font-italiana text-3xl sm:text-4xl font-bold tracking-wider text-[#183024]">
-                        Raka <span class="font-script text-4xl sm:text-5xl text-[#537D66]">&amp;</span> Arinda
+                        <span data-preview="groom-nickname">{{ $data['groom']['nickname'] ?? 'Raka' }}</span> <span class="font-script text-4xl sm:text-5xl text-[#537D66]">&amp;</span> <span data-preview="bride-nickname">{{ $data['bride']['nickname'] ?? 'Arinda' }}</span>
                     </h1>
                 </div>
             </div>
@@ -168,7 +168,7 @@
             <div class="relative z-10 pb-4 space-y-4">
                 <div class="p-3.5 rounded-2xl glass-botanical text-center space-y-1 max-w-xs mx-auto shadow-sm">
                     <span class="text-[9px] uppercase tracking-[0.2em] font-semibold text-[#507560]">Kepada Yth. Bapak/Ibu/Saudara(i):</span>
-                    <h4 class="font-serif text-base font-bold text-[#183024]">{{ $guestName }}</h4>
+                    <h4 class="font-serif text-base font-bold text-[#183024]" data-preview="guest-name">{{ $guestName }}</h4>
                 </div>
 
                 <!-- OPEN BUTTON -->
@@ -215,10 +215,10 @@
             <section id="sec-cover" class="text-center space-y-6">
                 <div class="space-y-1">
                     <span class="font-italiana text-xs uppercase tracking-[0.3em] text-[#3D6350] font-bold">Walimatul 'Ursy</span>
-                    <h2 class="font-italiana text-4xl font-bold tracking-wide text-[#183024]">
+                    <h2 class="font-italiana text-4xl font-bold tracking-wide text-[#183024]" data-preview="couple-nickname">
                         Raka &amp; Arinda
                     </h2>
-                    <p class="text-xs uppercase tracking-[0.2em] text-stone-500 font-medium">Sabtu, 24 Oktober 2026</p>
+                    <p class="text-xs uppercase tracking-[0.2em] text-stone-500 font-medium" data-preview="event-date">Sabtu, 24 Oktober 2026</p>
                 </div>
 
                 <!-- ARCHED PHOTO WITH BOTANICAL ACCENTS -->
@@ -254,7 +254,7 @@
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80" alt="{{ $data['groom']['name'] }}" class="w-full h-full object-cover">
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-italiana text-2xl font-bold text-[#183024]">{{ $data['groom']['name'] }}</h4>
+                        <h4 class="font-italiana text-2xl font-bold text-[#183024]" data-preview="groom-name">{{ $data['groom']['name'] }}</h4>
                         <p class="text-xs text-[#406150] leading-relaxed">
                             {{ $data['groom']['child_order'] }} dari pasangan terhormat<br>
                             <strong class="text-[#183024] font-semibold">{{ $data['groom']['father'] }}</strong> &amp; <strong class="text-[#183024] font-semibold">{{ $data['groom']['mother'] }}</strong>
@@ -277,7 +277,7 @@
                         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" alt="{{ $data['bride']['name'] }}" class="w-full h-full object-cover">
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-italiana text-2xl font-bold text-[#183024]">{{ $data['bride']['name'] }}</h4>
+                        <h4 class="font-italiana text-2xl font-bold text-[#183024]" data-preview="bride-name">{{ $data['bride']['name'] }}</h4>
                         <p class="text-xs text-[#406150] leading-relaxed">
                             {{ $data['bride']['child_order'] }} dari pasangan terhormat<br>
                             <strong class="text-[#183024] font-semibold">{{ $data['bride']['father'] }}</strong> &amp; <strong class="text-[#183024] font-semibold">{{ $data['bride']['mother'] }}</strong>
@@ -328,11 +328,11 @@
                     </div>
                     <div class="space-y-1">
                         <h4 class="font-italiana text-2xl font-bold text-[#183024]">{{ $data['events']['akad']['title'] }}</h4>
-                        <p class="text-xs font-semibold text-[#3D6350]">{{ $data['events']['akad']['date'] }}</p>
+                        <p class="text-xs font-semibold text-[#3D6350]" data-preview="event-date">{{ $data['events']['akad']['date'] }}</p>
                         <p class="text-xs font-bold text-[#183024]">{{ $data['events']['akad']['time'] }}</p>
                     </div>
                     <div class="pt-3 border-t border-emerald-900/10 text-xs space-y-1 text-[#406150]">
-                        <p class="font-bold text-[#183024]">{{ $data['events']['akad']['venue'] }}</p>
+                        <p class="font-bold text-[#183024]" data-preview="venue-name">{{ $data['events']['akad']['venue'] }}</p>
                         <p>{{ $data['events']['akad']['address'] }}</p>
                     </div>
                     <a 
@@ -352,11 +352,11 @@
                     </div>
                     <div class="space-y-1">
                         <h4 class="font-italiana text-2xl font-bold text-[#183024]">{{ $data['events']['resepsi']['title'] }}</h4>
-                        <p class="text-xs font-semibold text-[#3D6350]">{{ $data['events']['resepsi']['date'] }}</p>
+                        <p class="text-xs font-semibold text-[#3D6350]" data-preview="event-date">{{ $data['events']['resepsi']['date'] }}</p>
                         <p class="text-xs font-bold text-[#183024]">{{ $data['events']['resepsi']['time'] }}</p>
                     </div>
                     <div class="pt-3 border-t border-emerald-900/10 text-xs space-y-1 text-[#406150]">
-                        <p class="font-bold text-[#183024]">{{ $data['events']['resepsi']['venue'] }}</p>
+                        <p class="font-bold text-[#183024]" data-preview="venue-name">{{ $data['events']['resepsi']['venue'] }}</p>
                         <p>{{ $data['events']['resepsi']['address'] }}</p>
                     </div>
                     <a 
@@ -378,12 +378,12 @@
                     <p class="text-xs text-stone-500">Momen berharga dalam perjalanan cinta kami</p>
                 </div>
 
-                <div class="space-y-4">
-                    @foreach ($data['stories'] as $story)
+                <div class="space-y-4" data-preview-container="stories">
+                    @foreach ($data['stories'] as $index => $story)
                         <div class="p-5 rounded-3xl glass-botanical space-y-2 text-left">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#3D6350]">{{ $story['year'] }}</span>
-                            <h5 class="font-italiana text-lg font-bold text-[#183024]">{{ $story['title'] }}</h5>
-                            <p class="text-xs text-[#406150] leading-relaxed">{{ $story['desc'] }}</p>
+                            <span data-preview="story-year-{{ $index + 1 }}" class="text-[10px] font-bold uppercase tracking-wider text-[#3D6350]">{{ $story['year'] }}</span>
+                            <h5 data-preview="story-title-{{ $index + 1 }}" class="font-italiana text-lg font-bold text-[#183024]">{{ $story['title'] }}</h5>
+                            <p data-preview="story-desc-{{ $index + 1 }}" class="text-xs text-[#406150] leading-relaxed">{{ $story['desc'] }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -670,5 +670,6 @@
             }
         }
     </script>
+    @include('demo.partials.preview-sync')
 </body>
 </html>

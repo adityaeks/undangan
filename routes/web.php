@@ -42,6 +42,7 @@ Route::get('/demo/{slug}', [DemoController::class, 'show'])->name('demo.show');
 */
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/member/dashboard', [DashboardController::class, 'index'])->name('member.dashboard');
 
     // Invitations
     Route::get('/admin/invitations', [InvitationController::class, 'index'])->name('invitations.index');

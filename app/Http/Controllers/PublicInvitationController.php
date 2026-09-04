@@ -167,7 +167,7 @@ class PublicInvitationController extends Controller
             return app(DemoController::class)->show($slug, $request);
         }
 
-        $guestName = $request->query('to', 'Reyhan & Lesti');
+        $guestName = $request->query('to', 'Reyhan');
 
         // Tentukan style preset
         $themeSlug = $invitation->theme->slug ?? 'monochrome-elegance';

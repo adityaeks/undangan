@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'KlikMomen') }} - Admin Dashboard</title>
+    <title>{{ config('app.name', 'KlikMomen') }} - Portal Pengantin</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,7 +91,8 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.25);
         }
-        /* Custom subtle scrollbar for sidebar */
+
+        /* Custom subtle scrollbar for member sidebar */
         aside ::-webkit-scrollbar {
             width: 4px;
         }
@@ -108,7 +109,7 @@
     </style>
 </head>
 
-<body class="h-full bg-sand-100 text-charcoal-900 font-sans antialiased selection:bg-brand-200 selection:text-charcoal-950" x-data="{ sidebarOpen: false }">
+<body class="h-full bg-sand-100 text-charcoal-900 font-sans antialiased selection:bg-amber-200 selection:text-charcoal-950" x-data="{ sidebarOpen: false }">
 
     <div class="min-h-screen">
 
@@ -126,22 +127,22 @@
             style="display: none;"
         ></div>
 
-        <!-- SIDEBAR COMPONENT -->
-        @include('layouts.admin.sidebar')
+        <!-- MEMBER SIDEBAR COMPONENT (ALWAYS FIXED IN PLACE) -->
+        @include('layouts.member.sidebar')
 
         <!-- MAIN CONTENT WRAPPER -->
         <div class="flex flex-col min-h-screen lg:pl-72">
             
-            <!-- TOP NAVBAR COMPONENT -->
-            @include('layouts.admin.navbar')
+            <!-- MEMBER TOP NAVBAR COMPONENT -->
+            @include('layouts.member.navbar')
 
             <!-- PAGE CONTENT BODY -->
             <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-8">
                 {{ $slot }}
             </main>
 
-            <!-- FOOTER COMPONENT -->
-            @include('layouts.admin.footer')
+            <!-- MEMBER FOOTER COMPONENT -->
+            @include('layouts.member.footer')
 
         </div>
 
