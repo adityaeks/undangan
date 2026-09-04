@@ -80,29 +80,29 @@
             <div class="space-y-1.5">
                 <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Undangan & Acara</span>
 
-                <a href="#daftar-undangan" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition">
+                <a href="{{ route('invitations.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('invitations.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
                     <div class="flex items-center gap-3">
-                        <i data-lucide="mail-open" class="w-4 h-4 text-sand-400"></i>
+                        <i data-lucide="mail-open" class="w-4 h-4 {{ request()->routeIs('invitations.*') ? 'text-white' : 'text-sand-400' }}"></i>
                         <span>Daftar Undangan</span>
                     </div>
-                    <span class="px-2 py-0.5 rounded-full bg-charcoal-800 text-[10px] text-brand-300 font-bold">1</span>
+                    <span class="px-2 py-0.5 rounded-full {{ request()->routeIs('invitations.*') ? 'bg-white/20 text-white' : 'bg-charcoal-800 text-brand-300' }} text-[10px] font-bold">1</span>
                 </a>
 
-                <a href="#koleksi-tema" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition">
+                <a href="{{ route('themes.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('themes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
                     <div class="flex items-center gap-3">
-                        <i data-lucide="palette" class="w-4 h-4 text-sand-400"></i>
+                        <i data-lucide="palette" class="w-4 h-4 {{ request()->routeIs('themes.*') ? 'text-white' : 'text-sand-400' }}"></i>
                         <span>Katalog Tema</span>
                     </div>
-                    <span class="px-2 py-0.5 rounded-full bg-brand-500/20 text-[10px] text-brand-300 font-bold">50+</span>
+                    <span class="px-2 py-0.5 rounded-full {{ request()->routeIs('themes.*') ? 'bg-white/20 text-white' : 'bg-brand-500/20 text-brand-300' }} text-[10px] font-bold">Custom</span>
                 </a>
 
-                <a href="#tamu-rsvp" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition">
-                    <i data-lucide="users" class="w-4 h-4 text-sand-400"></i>
+                <a href="{{ route('guests.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('guests.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                    <i data-lucide="users" class="w-4 h-4 {{ request()->routeIs('guests.*') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Daftar Tamu & RSVP</span>
                 </a>
 
-                <a href="#ucapan-doa" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition">
-                    <i data-lucide="message-square-heart" class="w-4 h-4 text-sand-400"></i>
+                <a href="{{ route('wishes.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('wishes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                    <i data-lucide="message-square-heart" class="w-4 h-4 {{ request()->routeIs('wishes.*') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Buku Tamu & Ucapan</span>
                 </a>
             </div>
@@ -111,13 +111,13 @@
             <div class="space-y-1.5">
                 <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Kemitraan & Billing</span>
 
-                <a href="#partner-wo" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition">
-                    <i data-lucide="handshake" class="w-4 h-4 text-sand-400"></i>
+                <a href="{{ route('partners.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('partners.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                    <i data-lucide="handshake" class="w-4 h-4 {{ request()->routeIs('partners.*') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Partner & Reseller WO</span>
                 </a>
 
-                <a href="#transaksi" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition">
-                    <i data-lucide="receipt" class="w-4 h-4 text-sand-400"></i>
+                <a href="{{ route('orders.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('orders.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                    <i data-lucide="receipt" class="w-4 h-4 {{ request()->routeIs('orders.*') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Riwayat Transaksi</span>
                 </a>
             </div>

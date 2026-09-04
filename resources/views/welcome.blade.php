@@ -135,101 +135,8 @@
     mobileMenuOpen: false
 }">
 
-    <!-- TOP PROMO TICKER -->
-    <div class="bg-charcoal-950 text-brand-200 text-xs py-2 px-4 text-center font-medium tracking-wide border-b border-brand-800/30 flex items-center justify-center gap-2">
-        <span class="inline-block w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
-        <span>✨ <strong>Promo Spesial Bulan Ini:</strong> Dapatkan Diskon 30% Semua Tema Premium dengan Kupon <strong>MOMENINDAH</strong> ✨</span>
-    </div>
-
-    <!-- MAIN NAVBAR -->
-    <header class="sticky top-0 z-40 w-full glass-panel border-b border-sand-200/80 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                
-                <!-- BRAND LOGO -->
-                <a href="{{ url('/') }}" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-full bg-charcoal-900 text-brand-200 flex items-center justify-center font-serif text-xl font-bold shadow-md group-hover:scale-105 transition-transform duration-300 border border-brand-400/40">
-                        K
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-serif text-2xl font-bold tracking-tight text-charcoal-950 flex items-center gap-1">
-                            KalaUndangan<span class="text-brand-500">.</span>
-                        </span>
-                        <span class="text-[10px] tracking-[0.25em] uppercase text-sand-500 font-semibold -mt-1">
-                            Digital Invitation Studio
-                        </span>
-                    </div>
-                </a>
-
-                <!-- DESKTOP NAVIGATION -->
-                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-charcoal-900/80">
-                    <a href="#fitur" class="hover:text-brand-600 transition-colors duration-200">Fitur</a>
-                    <a href="#tema" class="hover:text-brand-600 transition-colors duration-200">Galeri Tema</a>
-                    <a href="#simulasi" class="hover:text-brand-600 transition-colors duration-200">Simulasi Tamu</a>
-                    <a href="#partner" class="hover:text-brand-600 transition-colors duration-200">Join Partner (WO)</a>
-                    <a href="#faq" class="hover:text-brand-600 transition-colors duration-200">FAQ</a>
-                </nav>
-
-                <!-- AUTH & CTA BUTTONS -->
-                <div class="hidden sm:flex items-center gap-4">
-                    @if (Route::has('login'))
-                        @auth
-                            <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-full text-sm font-semibold bg-charcoal-900 text-brand-100 hover:bg-charcoal-800 transition-all duration-200 shadow-sm">
-                                Dashboard Saya
-                            </a>
-                        @else
-                            <a href="{{ route('login') }}" class="text-sm font-semibold text-charcoal-900 hover:text-brand-600 px-3 py-2 transition-colors">
-                                Masuk
-                            </a>
-
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white hover:shadow-lg hover:shadow-brand-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center gap-2">
-                                    <span>Buat Undangan</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                                </a>
-                            @endif
-                        @endauth
-                    @else
-                        <a href="{{ route('demo.index') }}" class="px-5 py-2.5 rounded-full text-sm font-semibold bg-brand-500 text-white hover:bg-brand-600 transition-all shadow-sm">
-                            Coba Demo Gratis
-                        </a>
-                    @endif
-                </div>
-
-                <!-- MOBILE MENU TOGGLE -->
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-charcoal-900 hover:text-brand-600 focus:outline-none" aria-label="Menu">
-                    <i data-lucide="menu" class="w-6 h-6" x-show="!mobileMenuOpen"></i>
-                    <i data-lucide="x" class="w-6 h-6" x-show="mobileMenuOpen"></i>
-                </button>
-
-            </div>
-        </div>
-
-        <!-- MOBILE MENU DRAWER -->
-        <div x-show="mobileMenuOpen" x-transition.origin.top class="md:hidden bg-sand-50/95 backdrop-blur-lg border-b border-sand-200 px-6 py-5 space-y-4">
-            <a href="{{ route('demo.index') }}" class="block text-base font-bold text-brand-600 py-1 flex items-center justify-between">
-                <span>✨ Buka Live Demo (URL Khusus)</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
-            <a href="#fitur" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Fitur Lengkap</a>
-            <a href="#tema" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Koleksi Tema</a>
-            <a href="#simulasi" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Simulasi Tamu</a>
-            <a href="#partner" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Join Partner (WO & Vendor)</a>
-            <a href="#faq" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Tanya Jawab (FAQ)</a>
-            <div class="pt-3 border-t border-sand-200 flex flex-col gap-3">
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="w-full text-center py-2.5 rounded-xl bg-charcoal-900 text-white font-medium">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="w-full text-center py-2.5 rounded-xl border border-sand-300 font-medium">Masuk ke Akun</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="w-full text-center py-2.5 rounded-xl bg-brand-500 text-white font-medium">Daftar & Buat Undangan</a>
-                        @endif
-                    @endauth
-                @endif
-            </div>
-        </div>
-    </header>
+    <!-- TOP PROMO TICKER & MAIN NAVBAR -->
+    @include('layouts.navbar')
 
     <!-- HERO SECTION -->
     <section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden">
@@ -400,7 +307,7 @@
                                 </div>
 
                                 <!-- Interactive Button Inside Screen -->
-                                <a href="{{ route('demo.show', ['slug' => 'monochrome-elegance']) }}" class="w-full py-2 rounded-xl bg-charcoal-900 text-brand-100 text-xs font-semibold shadow-md flex items-center justify-center gap-1.5 hover:bg-charcoal-800 transition">
+                                <a href="{{ route('demo.show', ['slug' => 'editorial']) }}" class="w-full py-2 rounded-xl bg-charcoal-900 text-brand-100 text-xs font-semibold shadow-md flex items-center justify-center gap-1.5 hover:bg-charcoal-800 transition">
                                     <i data-lucide="mail-open" class="w-3.5 h-3.5"></i>
                                     <span>Buka Undangan</span>
                                 </a>
@@ -528,7 +435,7 @@
                 </div>
 
                 <!-- CATEGORY FILTER TABS -->
-                <div class="flex flex-wrap items-center justify-center gap-2 bg-sand-200/70 p-1.5 rounded-full self-center md:self-auto text-xs font-semibold">
+                <!-- <div class="flex flex-wrap items-center justify-center gap-2 bg-sand-200/70 p-1.5 rounded-full self-center md:self-auto text-xs font-semibold">
                     <button 
                         @click="selectedTemplate = 'all'" 
                         :class="selectedTemplate === 'all' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
@@ -536,38 +443,38 @@
                         Semua Tema
                     </button>
                     <button 
-                        @click="selectedTemplate = 'minimalist'" 
-                        :class="selectedTemplate === 'minimalist' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                        @click="selectedTemplate = 'editorial'" 
+                        :class="selectedTemplate === 'editorial' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
                         class="px-4 py-2 rounded-full transition-all duration-200">
-                        Minimalist Editorial
-                    </button>
-                    <button 
-                        @click="selectedTemplate = 'luxury'" 
-                        :class="selectedTemplate === 'luxury' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                        class="px-4 py-2 rounded-full transition-all duration-200">
-                        Luxury Gold
+                        Editorial Modern
                     </button>
                     <button 
                         @click="selectedTemplate = 'botanical'" 
                         :class="selectedTemplate === 'botanical' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
                         class="px-4 py-2 rounded-full transition-all duration-200">
-                        Botanical & Rustic
+                        Botanical Sage
                     </button>
-                </div>
+                    <button 
+                        @click="selectedTemplate = 'classic'" 
+                        :class="selectedTemplate === 'classic' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                        class="px-4 py-2 rounded-full transition-all duration-200">
+                        Classic Nusantara
+                    </button>
+                </div> -->
             </div>
 
             <!-- TEMPLATE CARDS GRID -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- TEMPLATE 1 -->
-                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'minimalist'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
+                <!-- TEMPLATE 1: THE VOGUE EDITORIAL ISSUE -->
+                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'editorial'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
                     <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=700&auto=format&fit=crop&q=80" alt="Minimalist Monochrome" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=800&auto=format&fit=crop&q=80" alt="The Vogue Editorial Issue" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-charcoal-950/80 backdrop-blur-md text-brand-200 text-[10px] font-bold uppercase tracking-wider">Terpopuler</span>
+                            <span class="px-3 py-1 rounded-full bg-amber-500 text-charcoal-950 text-[10px] font-extrabold uppercase tracking-wider shadow">★ Tren 2026 • Editorial</span>
                         </div>
                         <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
+                            <a href="{{ route('demo.show', ['slug' => 'editorial']) }}" target="_blank" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
                                 <span>Preview</span>
                             </a>
@@ -580,11 +487,11 @@
                     <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                <span>Kategori: Minimalist Editorial</span>
-                                <span class="text-amber-600 font-bold">★ 4.9 (1.2k)</span>
+                                <span>Kategori: Modern Dark Studio</span>
+                                <span class="text-amber-600 font-bold">★ 4.98 (1.2k)</span>
                             </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">The Monochrome Elegance</h3>
-                            <p class="text-xs text-charcoal-900/60">Tipografi kontemporer bernuansa editorial majalah high-fashion dengan palet warna hitam putih abadi.</p>
+                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">The Vogue Editorial Issue</h3>
+                            <p class="text-xs text-charcoal-900/60">Layout majalah mode dunia dengan Bento Grid acara, timeline kartu horizontal &amp; Dynamic Island audio.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
                             <div class="flex flex-col">
@@ -592,7 +499,7 @@
                                 <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('demo.show', ['slug' => 'editorial']) }}" target="_blank" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
                                 <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
                                     <span>Beli</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3"></i>
@@ -602,15 +509,15 @@
                     </div>
                 </div>
 
-                <!-- TEMPLATE 2 -->
+                <!-- TEMPLATE 2: THE ETHEREAL BOTANICAL GLASS -->
                 <div x-show="selectedTemplate === 'all' || selectedTemplate === 'botanical'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
                     <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=700&auto=format&fit=crop&q=80" alt="Sage Botanical" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80" alt="The Ethereal Botanical Glass" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-emerald-950/80 backdrop-blur-md text-emerald-200 text-[10px] font-bold uppercase tracking-wider">Natural Vibe</span>
+                            <span class="px-3 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider shadow">🌿 Botanical Glass</span>
                         </div>
                         <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
+                            <a href="{{ route('demo.show', ['slug' => 'botanical']) }}" target="_blank" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
                                 <span>Preview</span>
                             </a>
@@ -623,11 +530,11 @@
                     <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                <span>Kategori: Botanical & Rustic</span>
+                                <span>Kategori: Sage Botanical &amp; Rustic</span>
                                 <span class="text-amber-600 font-bold">★ 4.95 (840)</span>
                             </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">Sage Olive & Earthy Wood</h3>
-                            <p class="text-xs text-charcoal-900/60">Sentuhan dedaunan sage natural dengan aksen earthy tones yang menyejukkan mata dan hangat di hati.</p>
+                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">The Ethereal Botanical Glass</h3>
+                            <p class="text-xs text-charcoal-900/60">Bingkai lengkung arsitektural (arch geometry), kartu kaca buram (frosted glass), dan pemutar piringan hitam vinyl.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
                             <div class="flex flex-col">
@@ -635,7 +542,7 @@
                                 <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('demo.show', ['slug' => 'botanical']) }}" target="_blank" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
                                 <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
                                     <span>Beli</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3"></i>
@@ -645,101 +552,15 @@
                     </div>
                 </div>
 
-                <!-- TEMPLATE 3 -->
-                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'luxury'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
+                <!-- TEMPLATE 3: THE TIMELESS CLASSIC CARD -->
+                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'classic'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
                     <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&auto=format&fit=crop&q=80" alt="Champagne Gold" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=800&auto=format&fit=crop&q=80" alt="The Timeless Classic Card" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-amber-950/80 backdrop-blur-md text-amber-200 text-[10px] font-bold uppercase tracking-wider">Luxury Tier</span>
+                            <span class="px-3 py-1 rounded-full bg-slate-800 text-amber-300 text-[10px] font-bold uppercase tracking-wider shadow">👑 Timeless Simplicity</span>
                         </div>
                         <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Preview</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
-                                <span>Pilih Desain</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                <span>Kategori: Luxury Royal</span>
-                                <span class="text-amber-600 font-bold">★ 5.0 (980)</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">Royal Champagne & Navy</h3>
-                            <p class="text-xs text-charcoal-900/60">Aksen foil emas berkilau berpadu latar biru midnight agung, memberikan aura kemegahan acara istimewa.</p>
-                        </div>
-                        <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
-                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
-                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
-                                    <span>Beli</span>
-                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TEMPLATE 4 -->
-                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'minimalist'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
-                    <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=700&auto=format&fit=crop&q=80" alt="Soft Blush Romance" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-rose-950/80 backdrop-blur-md text-rose-200 text-[10px] font-bold uppercase tracking-wider">Romance Sweet</span>
-                        </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Preview</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
-                                <span>Pilih Desain</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                <span>Kategori: Minimalist Modern</span>
-                                <span class="text-amber-600 font-bold">★ 4.9 (610)</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">Blush Silk & Watercolor</h3>
-                            <p class="text-xs text-charcoal-900/60">Nuansa pastel pink lembut dengan tipografi kaligrafi modern yang sangat manis dan anggun.</p>
-                        </div>
-                        <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
-                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
-                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
-                                    <span>Beli</span>
-                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TEMPLATE 5 -->
-                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'luxury'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
-                    <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=700&auto=format&fit=crop&q=80" alt="Nusantara Modern" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-brand-950/80 backdrop-blur-md text-brand-200 text-[10px] font-bold uppercase tracking-wider">Tradisional Elegan</span>
-                        </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
+                            <a href="{{ route('demo.show', ['slug' => 'classic']) }}" target="_blank" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
                                 <i data-lucide="play" class="w-3 h-3 fill-current"></i>
                                 <span>Preview</span>
                             </a>
@@ -753,10 +574,10 @@
                         <div>
                             <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
                                 <span>Kategori: Nusantara Adat</span>
-                                <span class="text-amber-600 font-bold">★ 4.9 (450)</span>
+                                <span class="text-amber-600 font-bold">★ 4.97 (920)</span>
                             </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">Nusantara Songket Heritage</h3>
-                            <p class="text-xs text-charcoal-900/60">Harmoni motif ornamen budaya nusantara (Jawa, Sunda, Minang, Bali) dengan sentuhan minimalis modern.</p>
+                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">The Timeless Classic Card</h3>
+                            <p class="text-xs text-charcoal-900/60">Format kartu vertikal bertingkat rapi, cover amplop pembuka melayang, countdown timer card, dan ornamen batik songket tradisional.</p>
                         </div>
                         <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
                             <div class="flex flex-col">
@@ -764,50 +585,7 @@
                                 <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
-                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
-                                    <span>Beli</span>
-                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TEMPLATE 6 -->
-                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'minimalist'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
-                    <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=700&auto=format&fit=crop&q=80" alt="Midnight Starlight Dark Mode" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-purple-200 text-[10px] font-bold uppercase tracking-wider">Dark Mode Aesthetic</span>
-                        </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.index') }}" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Preview</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
-                                <span>Pilih Desain</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                <span>Kategori: Dark Mode Stylist</span>
-                                <span class="text-amber-600 font-bold">★ 4.98 (730)</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">Midnight Starlight Studio</h3>
-                            <p class="text-xs text-charcoal-900/60">Tampilan gelap yang memukau dengan aksen gemerlap bintang dan pencahayaan sinematik yang mempesona.</p>
-                        </div>
-                        <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
-                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.index') }}" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
+                                <a href="{{ route('demo.show', ['slug' => 'classic']) }}" target="_blank" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
                                 <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
                                     <span>Beli</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3"></i>
@@ -821,8 +599,8 @@
 
             <!-- VIEW ALL TEMPLATES BUTTON -->
             <div class="text-center pt-6">
-                <a href="{{ route('demo.index') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-sand-200/90 hover:bg-sand-300 text-charcoal-950 font-semibold text-sm transition">
-                    <span>Eksplorasi 50+ Desain Template Lainnya</span>
+                <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-sand-200/90 hover:bg-sand-300 text-charcoal-950 font-semibold text-sm transition">
+                    <span>Lihat &amp; Coba Semua Tema Undangan</span>
                     <i data-lucide="sparkles" class="w-4 h-4 text-brand-600"></i>
                 </a>
             </div>
