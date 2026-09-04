@@ -138,7 +138,7 @@
             <p class="text-[11px] text-sand-500 leading-relaxed pt-1">
                 Dengan mendaftar, Anda menyetujui 
                 <a href="#" class="font-semibold text-brand-600 hover:underline">Syarat & Ketentuan</a> serta 
-                <a href="#" class="font-semibold text-brand-600 hover:underline">Kebijakan Privasi</a> KalaUndangan.
+                <a href="#" class="font-semibold text-brand-600 hover:underline">Kebijakan Privasi</a> KlikMomen.
             </p>
 
             <!-- SUBMIT BUTTON -->

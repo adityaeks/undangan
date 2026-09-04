@@ -183,6 +183,8 @@ class DemoController extends Controller
         $defaultStyle = match ($layout) {
             'editorial' => 'modern',
             'botanical' => 'botanical',
+            'minimalist', 'warm-minimalist', 'royal-luxury' => 'minimalist',
+            'rose-romance', 'romantic', 'rose-floral' => 'romantic',
             'classic' => 'nusantara',
             default => 'nusantara',
         };
@@ -207,6 +209,12 @@ class DemoController extends Controller
         } elseif ($slug === 'classic' || $slug === 'classic-card' || $slug === 'timeless-classic' || $slug === 'nusantara') {
             $slug = 'nusantara';
             $layout = 'classic';
+        } elseif ($slug === 'minimalist' || $slug === 'warm-minimalist' || $slug === 'serene-minimalist' || $slug === 'royal-luxury' || $slug === 'royal-grand-palais' || $slug === 'royal-champagne' || $slug === 'luxury' || $slug === 'palais') {
+            $slug = 'minimalist';
+            $layout = 'minimalist';
+        } elseif ($slug === 'rose-romance' || $slug === 'rose-floral' || $slug === 'romantic' || $slug === 'rosewood') {
+            $slug = 'romantic';
+            $layout = 'rose-romance';
         }
 
         // Petakan slug tema ke preset ID
@@ -219,6 +227,8 @@ class DemoController extends Controller
             'luxury' => 'luxury',
             'blush-silk' => 'romantic',
             'romantic' => 'romantic',
+            'rose-romance' => 'romantic',
+            'rose-floral' => 'romantic',
             'nusantara-heritage' => 'nusantara',
             'nusantara' => 'nusantara',
             'midnight-starlight' => 'modern',
@@ -235,7 +245,7 @@ class DemoController extends Controller
      */
     protected function renderInvitation(string $styleKey, string $layout, Request $request): View
     {
-        $guestName = $request->query('to', 'Bpk. Budi Santoso & Partner');
+        $guestName = $request->query('to', 'Reyhan & Lesti');
 
         $activeStyle = $this->stylePresets[$styleKey] ?? $this->stylePresets['minimalist'];
 
@@ -346,6 +356,10 @@ class DemoController extends Controller
             $viewName = 'demo.editorial';
         } elseif ($layout === 'botanical') {
             $viewName = 'demo.botanical';
+        } elseif ($layout === 'minimalist' || $layout === 'warm-minimalist' || $layout === 'royal-luxury') {
+            $viewName = 'demo.minimalist';
+        } elseif ($layout === 'rose-romance' || $layout === 'romantic' || $layout === 'rose-floral') {
+            $viewName = 'demo.rose-romance';
         } else {
             $viewName = 'demo.classic';
         }

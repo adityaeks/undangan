@@ -14,7 +14,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="font-serif text-xl font-bold tracking-tight text-white">
-                        KalaUndangan<span class="text-brand-400">.</span>
+                        KlikMomen<span class="text-brand-400">.</span>
                     </span>
                     <span class="text-[10px] tracking-widest uppercase font-semibold text-brand-300">Admin Workspace</span>
                 </div>

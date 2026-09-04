@@ -642,7 +642,7 @@
                     {{ $data['groom']['nickname'] }} &amp; {{ $data['bride']['nickname'] }}
                 </div>
                 <div class="pt-4 text-[10px] opacity-50 font-mono">
-                    Powered by <a href="{{ route('home') }}" class="underline font-bold">KalaUndangan.id</a> • Editorial Series
+                    Powered by <a href="{{ route('home') }}" class="underline font-bold">KlikMomen.id</a> • Editorial Series
                 </div>
             </footer>
 

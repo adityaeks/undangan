@@ -16,7 +16,7 @@
             </div>
 
             <div class="flex items-center gap-2 text-xs font-bold text-charcoal-950 bg-sand-200/80 px-4 py-2.5 rounded-2xl">
-                <span>3 Seri Tema Pilihan • Siap Pakai</span>
+                <span>5 Seri Tema Pilihan • Siap Pakai</span>
             </div>
         </div>
 
@@ -61,11 +61,37 @@
                     'typography' => 'Playfair + Plus Jakarta',
                     'demo_url' => route('demo.index', ['layout' => 'classic', 'style' => 'nusantara']),
                 ],
+                [
+                    'number' => 'Tema Desain 04',
+                    'title' => 'The Warm Minimalist',
+                    'layout_format' => 'Warm Minimalist & Fine Art',
+                    'category_name' => 'Warm Minimalist',
+                    'tag' => '✨ Warm Minimalist',
+                    'tag_bg' => 'bg-stone-800 text-stone-100',
+                    'thumbnail' => 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
+                    'colors' => ['#FAF8F5', '#EBE3D5', '#211E1B'],
+                    'description' => 'Estetika minimalis kontemporer bernuansa warm linen dan soft beige dengan tipografi halus dan tata letak tenang.',
+                    'typography' => 'Cormorant + Plus Jakarta',
+                    'demo_url' => route('demo.show', ['slug' => 'minimalist']),
+                ],
+                [
+                    'number' => 'Tema Desain 05',
+                    'title' => 'The Rose Romance Arch',
+                    'layout_format' => 'Dusty Rose & Floral Arch',
+                    'category_name' => 'Rose Romance',
+                    'tag' => '🌸 Rose Romance',
+                    'tag_bg' => 'bg-rose-700 text-white',
+                    'thumbnail' => 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
+                    'colors' => ['#FBF6F7', '#B06F85', '#7E465A'],
+                    'description' => 'Nuansa romantis dusty rose dan floral watercolor dengan bingkai lengkung arch, potret oval, dan cover monoline Ryan & Vanya.',
+                    'typography' => 'Alex Brush + Cormorant',
+                    'demo_url' => route('demo.show', ['slug' => 'rose-romance']),
+                ],
             ];
         @endphp
 
         <!-- THEMES GRID (COMPACT CARDS) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             @foreach ($themeCards as $theme)
                 <div class="group rounded-3xl glass-panel border border-sand-200 hover:border-brand-400/80 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden bg-white/90">
                     <!-- THUMBNAIL WRAPPER -->

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'KalaUndangan') }} - Studio Undangan Digital Minimalis & Elegan</title>
+    <title>{{ config('app.name', 'KlikMomen') }} - Studio Undangan Digital Minimalis & Elegan</title>
 
     <!-- Meta SEO -->
     <meta name="description" content="Platform penyedia website undangan digital pernikahan, khitanan, dan acara spesial dengan desain minimalis, stylist, RSVP real-time, amplop digital tanpa potongan, dan musik romantis.">
@@ -98,6 +98,14 @@
             box-shadow: 0 20px 40px -15px rgba(166, 141, 92, 0.18);
         }
 
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         @keyframes float-slow {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-8px) rotate(0.5deg); }
@@ -130,7 +138,7 @@
 
 <body class="bg-sand-50 text-charcoal-900 font-sans antialiased selection:bg-brand-200 selection:text-charcoal-950 overflow-x-hidden" x-data="{
     selectedTemplate: 'all',
-    guestNameInput: 'Bpk. Budi Santoso & Partner',
+    guestNameInput: 'Aditya',
     activeFaq: null,
     mobileMenuOpen: false
 }">
@@ -152,12 +160,13 @@
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
                     
                     <!-- BADGE -->
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-brand-300/60 shadow-sm text-xs font-semibold tracking-wide text-brand-700">
-                        <span class="flex h-2 w-2 relative">
+                    <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/90 border border-brand-300/60 shadow-sm text-[11px] sm:text-xs font-semibold tracking-wide text-brand-700 whitespace-nowrap">
+                        <span class="flex h-2 w-2 relative shrink-0">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
                         </span>
-                        <span>#1 Platform Undangan Digital Paling Elegan & Stylist</span>
+                        <span class="sm:hidden">Studio Undangan Digital Elegan</span>
+                        <span class="hidden sm:inline">Studio Undangan Digital Minimalis & Elegan</span>
                     </div>
 
                     <!-- HERO HEADLINE -->
@@ -408,7 +417,7 @@
                         Kepada Yth. <strong class="text-charcoal-950" x-text="guestNameInput"></strong>,<br>
                         Tanpa mengurangi rasa hormat, kami bermaksud mengundang Anda untuk hadir di momen pernikahan kami.<br><br>
                         ✨ Buka undangan digital Anda melalui link berikut:<br>
-                        <span class="text-blue-700 underline break-all font-mono">https://kalaundangan.id/raka-arinda?to=<span x-text="encodeURIComponent(guestNameInput)"></span></span><br><br>
+                        <span class="text-blue-700 underline break-all font-mono">https://KlikMomen.id/raka-arinda?to=<span x-text="encodeURIComponent(guestNameInput)"></span></span><br><br>
                         Merupakan suatu kehormatan & kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.
                     </p>
                 </div>
@@ -419,190 +428,310 @@
     </section>
 
     <!-- TEMPLATE SHOWCASE / GALERI TEMA SECTION -->
-    <section id="tema" class="py-24 bg-sand-50 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section id="tema" class="py-24 bg-sand-50 relative overflow-hidden">
+        @php
+            $themes = $themes ?? \App\Http\Controllers\ThemeCatalogController::getMasterThemes();
+        @endphp
+
+        <div 
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10"
+            x-data="{
+                container: null,
+                canPrev: false,
+                canNext: true,
+                isDown: false,
+                startX: 0,
+                scrollLeftPos: 0,
+                hasMoved: false,
+                activeDot: 0,
+                totalThemes: {{ count($themes) }},
+
+                checkScroll() {
+                    if (!this.container) return;
+                    this.canPrev = this.container.scrollLeft > 15;
+                    this.canNext = this.container.scrollLeft < (this.container.scrollWidth - this.container.clientWidth - 15);
+                    const cardWidth = this.container.firstElementChild ? (this.container.firstElementChild.offsetWidth + 24) : 310;
+                    this.activeDot = Math.min(Math.round(this.container.scrollLeft / cardWidth), this.totalThemes - 1);
+                },
+                scrollLeft() {
+                    if (!this.container) return;
+                    const cardWidth = this.container.firstElementChild ? (this.container.firstElementChild.offsetWidth + 24) : 310;
+                    this.container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                },
+                scrollRight() {
+                    if (!this.container) return;
+                    const cardWidth = this.container.firstElementChild ? (this.container.firstElementChild.offsetWidth + 24) : 310;
+                    this.container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                },
+                scrollToIndex(idx) {
+                    if (!this.container) return;
+                    const cardWidth = this.container.firstElementChild ? (this.container.firstElementChild.offsetWidth + 24) : 310;
+                    this.container.scrollTo({ left: idx * cardWidth, behavior: 'smooth' });
+                },
+                startDrag(e) {
+                    this.isDown = true;
+                    this.hasMoved = false;
+                    this.startX = e.pageX - this.container.offsetLeft;
+                    this.scrollLeftPos = this.container.scrollLeft;
+                },
+                stopDrag() {
+                    this.isDown = false;
+                    setTimeout(() => { this.hasMoved = false; }, 60);
+                },
+                doDrag(e) {
+                    if (!this.isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - this.container.offsetLeft;
+                    const walk = (x - this.startX) * 1.3;
+                    if (Math.abs(walk) > 5) {
+                        this.hasMoved = true;
+                    }
+                    this.container.scrollLeft = this.scrollLeftPos - walk;
+                    this.checkScroll();
+                }
+            }"
+            x-init="container = $refs.slider; $nextTick(() => checkScroll());"
+        >
             
-            <!-- SECTION HEADER -->
+            <!-- SECTION HEADER WITH INTEGRATED NAVIGATION -->
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 text-center md:text-left">
                 <div class="space-y-3">
-                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Koleksi Desain Eksklusif</span>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 border border-brand-200 text-brand-800 text-[11px] font-bold tracking-wider uppercase">
+                        <span class="w-1.5 h-1.5 rounded-full bg-brand-600 animate-pulse"></span>
+                        Koleksi Desain Eksklusif
+                    </div>
                     <h2 class="font-serif text-3xl sm:text-5xl font-bold text-charcoal-950 tracking-tight">
                         Pilihan Tema Minimalis, Elegan & Stylist
                     </h2>
                     <p class="text-sm sm:text-base text-charcoal-900/70 max-w-xl">
-                        Didesain secara presisi oleh desainer profesional untuk menciptakan kesan pertama yang tak terlupakan bagi para tamu undangan.
+                        Maksimal 4 tema per tampilan. Geser atau klik panah untuk melihat koleksi lengkap yang dirancang presisi.
                     </p>
                 </div>
 
-                <!-- CATEGORY FILTER TABS -->
-                <!-- <div class="flex flex-wrap items-center justify-center gap-2 bg-sand-200/70 p-1.5 rounded-full self-center md:self-auto text-xs font-semibold">
-                    <button 
-                        @click="selectedTemplate = 'all'" 
-                        :class="selectedTemplate === 'all' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                        class="px-4 py-2 rounded-full transition-all duration-200">
-                        Semua Tema
-                    </button>
-                    <button 
-                        @click="selectedTemplate = 'editorial'" 
-                        :class="selectedTemplate === 'editorial' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                        class="px-4 py-2 rounded-full transition-all duration-200">
-                        Editorial Modern
-                    </button>
-                    <button 
-                        @click="selectedTemplate = 'botanical'" 
-                        :class="selectedTemplate === 'botanical' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                        class="px-4 py-2 rounded-full transition-all duration-200">
-                        Botanical Sage
-                    </button>
-                    <button 
-                        @click="selectedTemplate = 'classic'" 
-                        :class="selectedTemplate === 'classic' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                        class="px-4 py-2 rounded-full transition-all duration-200">
-                        Classic Nusantara
-                    </button>
-                </div> -->
+                <!-- HEADER SLIDER CONTROLS -->
+                <div class="flex items-center justify-center md:justify-end gap-3">
+                    <span class="hidden sm:inline-flex text-xs font-semibold text-sand-500 bg-white/80 px-3.5 py-2 rounded-full border border-sand-200 shadow-sm">
+                        <strong class="text-charcoal-950 mr-1">{{ count($themes) }} Tema</strong> Tersedia
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <button 
+                            type="button"
+                            @click="scrollLeft()" 
+                            :disabled="!canPrev"
+                            :class="canPrev ? 'bg-white text-charcoal-950 hover:bg-sand-100 hover:scale-105 shadow-md cursor-pointer border-sand-300' : 'bg-sand-200/40 text-sand-400 cursor-not-allowed border-sand-200 opacity-60'"
+                            class="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-200"
+                            title="Geser ke kiri"
+                            aria-label="Geser ke kiri"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <button 
+                            type="button"
+                            @click="scrollRight()" 
+                            :disabled="!canNext"
+                            :class="canNext ? 'bg-white text-charcoal-950 hover:bg-sand-100 hover:scale-105 shadow-md cursor-pointer border-sand-300' : 'bg-sand-200/40 text-sand-400 cursor-not-allowed border-sand-200 opacity-60'"
+                            class="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-200"
+                            title="Geser ke kanan"
+                            aria-label="Geser ke kanan"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <!-- TEMPLATE CARDS GRID -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- TEMPLATE 1: THE VOGUE EDITORIAL ISSUE -->
-                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'editorial'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
-                    <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=800&auto=format&fit=crop&q=80" alt="The Vogue Editorial Issue" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-amber-500 text-charcoal-950 text-[10px] font-extrabold uppercase tracking-wider shadow">★ Tren 2026 • Editorial</span>
-                        </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.show', ['slug' => 'editorial']) }}" target="_blank" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Preview</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
-                                <span>Pilih Desain</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                <span>Kategori: Modern Dark Studio</span>
-                                <span class="text-amber-600 font-bold">★ 4.98 (1.2k)</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">The Vogue Editorial Issue</h3>
-                            <p class="text-xs text-charcoal-900/60">Layout majalah mode dunia dengan Bento Grid acara, timeline kartu horizontal &amp; Dynamic Island audio.</p>
-                        </div>
-                        <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
-                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.show', ['slug' => 'editorial']) }}" target="_blank" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
-                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
-                                    <span>Beli</span>
-                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- TEMPLATES SLIDER CONTAINER (MAKSIMAL 4 KARTU PADA DESKTOP, DAPAT DIGESER / SWIPEABLE) -->
+            <div class="relative group/slider">
+                <!-- FLOATING SIDE ARROWS (DESKTOP & TABLET) -->
+                <button 
+                    type="button"
+                    @click="scrollLeft()" 
+                    x-show="canPrev"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 -translate-x-3 scale-90"
+                    x-transition:enter-end="opacity-100 translate-x-0 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-x-0 scale-100"
+                    x-transition:leave-end="opacity-0 -translate-x-3 scale-90"
+                    class="absolute -left-3 sm:-left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/95 text-charcoal-950 shadow-2xl border border-sand-300 hover:bg-sand-100 hover:scale-110 active:scale-95 transition flex items-center justify-center backdrop-blur-md cursor-pointer"
+                    title="Geser ke Kiri"
+                    aria-label="Geser ke Kiri"
+                >
+                    <svg class="w-5 h-5 text-charcoal-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
 
-                <!-- TEMPLATE 2: THE ETHEREAL BOTANICAL GLASS -->
-                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'botanical'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
-                    <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80" alt="The Ethereal Botanical Glass" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider shadow">🌿 Botanical Glass</span>
-                        </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.show', ['slug' => 'botanical']) }}" target="_blank" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Preview</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
-                                <span>Pilih Desain</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                <span>Kategori: Sage Botanical &amp; Rustic</span>
-                                <span class="text-amber-600 font-bold">★ 4.95 (840)</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">The Ethereal Botanical Glass</h3>
-                            <p class="text-xs text-charcoal-900/60">Bingkai lengkung arsitektural (arch geometry), kartu kaca buram (frosted glass), dan pemutar piringan hitam vinyl.</p>
-                        </div>
-                        <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
-                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.show', ['slug' => 'botanical']) }}" target="_blank" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
-                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
-                                    <span>Beli</span>
-                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <button 
+                    type="button"
+                    @click="scrollRight()" 
+                    x-show="canNext"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-x-3 scale-90"
+                    x-transition:enter-end="opacity-100 translate-x-0 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-x-0 scale-100"
+                    x-transition:leave-end="opacity-0 translate-x-3 scale-90"
+                    class="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/95 text-charcoal-950 shadow-2xl border border-sand-300 hover:bg-sand-100 hover:scale-110 active:scale-95 transition flex items-center justify-center backdrop-blur-md cursor-pointer"
+                    title="Geser ke Kanan"
+                    aria-label="Geser ke Kanan"
+                >
+                    <svg class="w-5 h-5 text-charcoal-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
 
-                <!-- TEMPLATE 3: THE TIMELESS CLASSIC CARD -->
-                <div x-show="selectedTemplate === 'all' || selectedTemplate === 'classic'" x-transition class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
-                    <div class="relative aspect-[4/3] overflow-hidden bg-sand-200">
-                        <img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=800&auto=format&fit=crop&q=80" alt="The Timeless Classic Card" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full bg-slate-800 text-amber-300 text-[10px] font-bold uppercase tracking-wider shadow">👑 Timeless Simplicity</span>
-                        </div>
-                        <div class="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                            <a href="{{ route('demo.show', ['slug' => 'classic']) }}" target="_blank" class="px-3.5 py-1.5 rounded-full bg-white text-charcoal-950 font-semibold text-xs shadow hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="play" class="w-3 h-3 fill-current"></i>
-                                <span>Preview</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-xs shadow hover:bg-brand-600 hover:scale-105 transition flex items-center gap-1">
-                                <i data-lucide="shopping-bag" class="w-3 h-3"></i>
-                                <span>Pilih Desain</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                <span>Kategori: Nusantara Adat</span>
-                                <span class="text-amber-600 font-bold">★ 4.97 (920)</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">The Timeless Classic Card</h3>
-                            <p class="text-xs text-charcoal-900/60">Format kartu vertikal bertingkat rapi, cover amplop pembuka melayang, countdown timer card, dan ornamen batik songket tradisional.</p>
-                        </div>
-                        <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] uppercase font-bold text-sand-400">Harga Personal</span>
-                                <span class="text-sm font-bold text-charcoal-950">Rp 49.000 <span class="text-[10px] font-normal text-sand-500">/ lifetime</span></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <a href="{{ route('demo.show', ['slug' => 'classic']) }}" target="_blank" class="text-xs font-semibold text-sand-600 hover:text-brand-600">Demo</a>
-                                <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1">
-                                    <span>Beli</span>
-                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- SLIDER ROW: MAKSIMAL 4 KARTU DI DESKTOP (lg:w-[calc(25%-18px)]), DAPAT DIGESER MOUSE / SWIPE TOUCH -->
+                <div 
+                    x-ref="slider"
+                    @scroll.debounce.50ms="checkScroll()"
+                    @mousedown="startDrag($event)"
+                    @mouseleave="stopDrag()"
+                    @mouseup="stopDrag()"
+                    @mousemove="doDrag($event)"
+                    :class="isDown ? 'cursor-grabbing select-none' : 'cursor-grab'"
+                    class="flex gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory scroll-smooth no-scrollbar"
+                    style="-webkit-overflow-scrolling: touch;"
+                >
+                    @foreach ($themes as $theme)
+                        <div class="w-[82vw] sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)] shrink-0 snap-start group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:border-brand-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col bg-white">
+                            <!-- CARD TOP IMAGE WITH ACTION OVERLAY -->
+                            <div class="relative aspect-[16/11] overflow-hidden bg-sand-200">
+                                <img 
+                                    src="{{ $theme['thumbnail'] }}" 
+                                    alt="{{ $theme['name'] }}" 
+                                    draggable="false"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+                                >
+                                <div class="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-charcoal-950/20 to-transparent"></div>
 
+                                <!-- BADGES -->
+                                <div class="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                                    <span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider shadow {{ $theme['tag_badge_class'] }}">
+                                        {{ $theme['tag'] }}
+                                    </span>
+                                    <span class="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-emerald-800 text-[10px] font-bold shadow">
+                                        {{ $theme['price'] }}
+                                    </span>
+                                </div>
+
+                                <!-- HOVER QUICK ACTIONS -->
+                                <div class="absolute inset-0 bg-charcoal-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2.5 p-4">
+                                    <a 
+                                        href="{{ $theme['demo_url'] }}" 
+                                        target="_blank" 
+                                        @click="if (hasMoved) { $event.preventDefault(); }"
+                                        class="w-40 py-2.5 rounded-full bg-white text-charcoal-950 font-bold text-xs shadow-lg hover:bg-sand-100 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2"
+                                    >
+                                        <i data-lucide="play" class="w-3.5 h-3.5 fill-current text-brand-600"></i>
+                                        <span>Preview</span>
+                                    </a>
+                                    <a 
+                                        href="{{ route('register') }}" 
+                                        @click="if (hasMoved) { $event.preventDefault(); }"
+                                        class="w-40 py-2.5 rounded-full bg-brand-500 text-white font-bold text-xs shadow-lg hover:bg-brand-600 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2"
+                                    >
+                                        <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                                        <span>Pilih Desain</span>
+                                    </a>
+                                </div>
+
+                                <!-- COLOR PALETTE DOTS OVERLAY -->
+                                <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between pointer-events-none">
+                                    <div class="flex items-center gap-1.5 bg-charcoal-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+                                        <span class="text-[9px] text-sand-300 font-bold uppercase tracking-wider">Palet:</span>
+                                        <div class="flex items-center -space-x-1">
+                                            @foreach ($theme['colors'] as $color)
+                                                <span 
+                                                    style="background-color: {{ $color['hex'] }};" 
+                                                    title="{{ $color['name'] }} ({{ $color['hex'] }})" 
+                                                    class="w-3.5 h-3.5 rounded-full border border-charcoal-950 shadow-sm cursor-help pointer-events-auto"
+                                                ></span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CARD BODY -->
+                            <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
+                                        <span>{{ $theme['category_label'] }}</span>
+                                    </div>
+
+                                    <h3 class="font-serif text-lg font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors leading-snug">
+                                        {{ $theme['name'] }}
+                                    </h3>
+
+                                    <p class="text-xs text-charcoal-900/70 leading-relaxed line-clamp-2">
+                                        {{ $theme['description'] }}
+                                    </p>
+                                </div>
+
+                                <div class="pt-4 border-t border-sand-200 flex items-center justify-between">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold text-charcoal-950">{{ $theme['price'] }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <a 
+                                            href="{{ $theme['demo_url'] }}" 
+                                            target="_blank" 
+                                            @click="if (hasMoved) { $event.preventDefault(); }"
+                                            class="text-xs font-semibold text-sand-600 hover:text-brand-600"
+                                        >
+                                            Demo
+                                        </a>
+                                        <a 
+                                            href="{{ route('register') }}" 
+                                            @click="if (hasMoved) { $event.preventDefault(); }"
+                                            class="px-3.5 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1"
+                                        >
+                                            <span>Beli</span>
+                                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
-            <!-- VIEW ALL TEMPLATES BUTTON -->
-            <div class="text-center pt-6">
-                <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-sand-200/90 hover:bg-sand-300 text-charcoal-950 font-semibold text-sm transition">
-                    <span>Lihat &amp; Coba Semua Tema Undangan</span>
-                    <i data-lucide="sparkles" class="w-4 h-4 text-brand-600"></i>
-                </a>
+            <!-- SLIDER NAVIGATION INDICATORS & VIEW ALL BUTTON -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-sand-200/80">
+                <!-- SWIPE HINT & DOT INDICATORS -->
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1.5">
+                        @foreach ($themes as $i => $t)
+                            <button 
+                                type="button"
+                                @click="scrollToIndex({{ $i }})"
+                                class="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                                :class="activeDot === {{ $i }} ? 'w-7 bg-charcoal-950' : 'w-2 bg-sand-300 hover:bg-sand-400'"
+                                aria-label="Lihat tema {{ $i + 1 }}"
+                            ></button>
+                        @endforeach
+                    </div>
+                    <span class="text-xs text-sand-600 font-medium flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18m-4 4l4-4m0 0l-4-4" />
+                        </svg>
+                        <span>Geser kartu atau gunakan tombol panah</span>
+                    </span>
+                </div>
+
+                <!-- VIEW ALL TEMPLATES BUTTON -->
+                <div>
+                    <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-sand-200/90 hover:bg-sand-300 text-charcoal-950 font-semibold text-xs tracking-wide transition shadow-sm hover:shadow">
+                        <span>Lihat Semua Tema Undangan</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-brand-600"></i>
+                    </a>
+                </div>
             </div>
 
         </div>
@@ -1001,7 +1130,7 @@
             <div class="text-center max-w-2xl mx-auto space-y-3">
                 <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Ulasan Nyata Pasangan</span>
                 <h2 class="font-serif text-3xl sm:text-4xl font-bold text-charcoal-950">
-                    Cerita Bahagia dari Mereka yang Telah Menggunakan KalaUndangan
+                    Cerita Bahagia dari Mereka yang Telah Menggunakan KlikMomen
                 </h2>
             </div>
 
@@ -1091,7 +1220,7 @@
                     Pertanyaan yang Sering Diajukan
                 </h2>
                 <p class="text-sm text-charcoal-900/70">
-                    Punya pertanyaan seputar layanan KalaUndangan? Temukan jawabannya di bawah ini.
+                    Punya pertanyaan seputar layanan KlikMomen? Temukan jawabannya di bawah ini.
                 </p>
             </div>
 
@@ -1171,7 +1300,7 @@
                     Mulai Bagikan Kebahagiaan Pernikahan Impian Anda Hari Ini
                 </h2>
                 <p class="text-sm sm:text-base text-sand-300 leading-relaxed">
-                    Bergabunglah bersama belasan ribu pasangan bahagia yang telah mempercayakan momen istimewa mereka kepada KalaUndangan.
+                    Bergabunglah bersama belasan ribu pasangan bahagia yang telah mempercayakan momen istimewa mereka kepada KlikMomen.
                 </p>
             </div>
 
@@ -1205,7 +1334,7 @@
                         <div class="w-8 h-8 rounded-full bg-charcoal-950 text-brand-300 flex items-center justify-center font-serif font-bold border border-brand-400/40">
                             K
                         </div>
-                        <span class="font-serif text-xl font-bold text-white">KalaUndangan.</span>
+                        <span class="font-serif text-xl font-bold text-white">KlikMomen.</span>
                     </div>
                     <p class="text-xs text-sand-400 leading-relaxed">
                         Studio undangan digital pernikahan & acara istimewa dengan estetika minimalis, teknologi modern, dan layanan sepenuh hati.
@@ -1255,7 +1384,7 @@
 
             <!-- COPYRIGHT & CREDITS -->
             <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-[11px] text-sand-500">
-                <p>&copy; 2026 KalaUndangan Studio. Hak Cipta Dilindungi Undang-Undang.</p>
+                <p>&copy; 2026 KlikMomen Studio. Hak Cipta Dilindungi Undang-Undang.</p>
                 <div class="flex items-center gap-4">
                     <a href="#" class="hover:text-sand-300">Syarat & Ketentuan</a>
                     <a href="#" class="hover:text-sand-300">Kebijakan Privasi</a>

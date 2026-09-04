@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Wedding of Raka & Arinda — KalaUndangan</title>
+    <title>The Wedding of Raka & Arinda — KlikMomen</title>
 
     <!-- Meta SEO & Social Sharing Preview (OpenGraph) -->
     <meta name="description" content="Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.">
@@ -619,7 +619,7 @@
                     {{ $data['groom']['nickname'] }} & {{ $data['bride']['nickname'] }}
                 </div>
                 <div class="pt-4 text-[10px] opacity-60">
-                    Platform Undangan Digital oleh <a href="{{ route('home') }}" class="underline font-bold">KalaUndangan.id</a>
+                    Platform Undangan Digital oleh <a href="{{ route('home') }}" class="underline font-bold">KlikMomen.id</a>
                 </div>
             </footer>
 

@@ -7,16 +7,16 @@
             </div>
             <div class="flex flex-col">
                 <span class="font-serif text-xl font-bold tracking-tight text-charcoal-950">
-                    KalaUndangan<span class="text-brand-500">.</span>
+                    KlikMomen<span class="text-brand-500">.</span>
                 </span>
             </div>
         </a>
 
         <div class="flex items-center gap-4">
-            <a href="{{ route('demo.index') }}" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-sand-600 hover:text-brand-600 transition">
+            <!-- <a href="{{ route('demo.index') }}" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-sand-600 hover:text-brand-600 transition">
                 <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
                 <span>Live Demo</span>
-            </a>
+            </a> -->
             <a href="{{ url('/') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-sand-600 hover:text-brand-600 transition">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
                 <span>Kembali ke Beranda</span>

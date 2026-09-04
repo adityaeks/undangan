@@ -302,7 +302,7 @@ class InvitationController extends Controller
 
         // 7. Create Default Sample Guest
         $invitation->guests()->create([
-            'name' => 'Bpk. Budi Santoso & Partner',
+            'name' => 'Reyhan & Lesti',
             'slug' => 'budi-santoso',
             'phone_number' => '081234567890',
             'group' => 'VIP',

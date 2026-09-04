@@ -8,7 +8,7 @@
                 Verifikasi Email Anda
             </h2>
             <p class="text-xs text-sand-600 leading-relaxed">
-                Terima kasih telah mendaftar di KalaUndangan! Sebelum memulai, mohon verifikasi alamat email Anda dengan mengeklik tautan yang baru saja kami kirimkan ke kotak masuk Anda.
+                Terima kasih telah mendaftar di KlikMomen! Sebelum memulai, mohon verifikasi alamat email Anda dengan mengeklik tautan yang baru saja kami kirimkan ke kotak masuk Anda.
             </p>
         </div>
 

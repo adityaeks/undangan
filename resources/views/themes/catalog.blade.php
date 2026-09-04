@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Katalog Template Tema Undangan Digital - {{ config('app.name', 'KalaUndangan') }}</title>
+    <title>Katalog Template Tema Undangan Digital - {{ config('app.name', 'KlikMomen') }}</title>
 
     <!-- Meta SEO -->
     <meta name="description" content="Jelajahi kumpulan template undangan pernikahan digital minimalis, editorial modern, botanical rustic, dan adat nusantara. Desain responsif, fitur RSVP realtime, amplop digital tanpa potongan.">
@@ -198,7 +198,7 @@
                             :class="selectedCategory === 'all' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
                             class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
                             <span>Semua Koleksi</span>
-                            <span class="text-[10px] opacity-75">(3)</span>
+                            <span class="text-[10px] opacity-75">({{ count($themes) }})</span>
                         </button>
                         <button 
                             @click="selectedCategory = 'modern'" 
@@ -217,6 +217,18 @@
                             :class="selectedCategory === 'classic' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
                             class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
                             <span>Nusantara Adat</span>
+                        </button>
+                        <button 
+                            @click="selectedCategory = 'minimalist'" 
+                            :class="selectedCategory === 'minimalist' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                            class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
+                            <span>Warm Minimalist</span>
+                        </button>
+                        <button 
+                            @click="selectedCategory = 'romantic'" 
+                            :class="selectedCategory === 'romantic' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                            class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
+                            <span>Rose Romance</span>
                         </button>
                     </div>
 
@@ -254,7 +266,7 @@
             <!-- GRID VIEW -->
             <div 
                 x-show="viewMode === 'grid'" 
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
                 @foreach ($themes as $theme)
                     <div 
@@ -283,13 +295,6 @@
 
                             <!-- HOVER QUICK ACTIONS -->
                             <div class="absolute inset-0 bg-charcoal-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2.5 p-4">
-                                <button 
-                                    @click="openPreview(themes.find(t => t.id === '{{ $theme['id'] }}'))" 
-                                    class="w-44 py-2.5 rounded-full bg-white text-charcoal-950 font-bold text-xs shadow-lg hover:bg-sand-100 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2"
-                                >
-                                    <i data-lucide="smartphone" class="w-4 h-4 text-brand-600"></i>
-                                    <span>Quick Preview</span>
-                                </button>
                                 
                                 <a 
                                     href="{{ $theme['demo_url'] }}" 
@@ -297,7 +302,7 @@
                                     class="w-44 py-2.5 rounded-full bg-brand-500 text-white font-bold text-xs shadow-lg hover:bg-brand-600 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2"
                                 >
                                     <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                    <span>Buka Full Demo</span>
+                                    <span>Buka Demo</span>
                                 </a>
                             </div>
 
@@ -316,10 +321,10 @@
                                     </div>
                                 </div>
 
-                                <div class="flex items-center gap-1 text-amber-400 text-xs font-bold bg-charcoal-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+                                <!-- <div class="flex items-center gap-1 text-amber-400 text-xs font-bold bg-charcoal-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
                                     <i data-lucide="star" class="w-3 h-3 fill-current"></i>
                                     <span>{{ $theme['rating'] }}</span>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -329,7 +334,7 @@
                             <!-- CONTENT -->
                             <div class="space-y-2.5">
                                 <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                    <span class="text-brand-700 font-bold uppercase tracking-wider text-[11px]">{{ $theme['number'] }}</span>
+                                    <!-- <span class="text-brand-700 font-bold uppercase tracking-wider text-[11px]">{{ $theme['number'] }}</span> -->
                                     <span>Kategori: <strong>{{ $theme['category_label'] }}</strong></span>
                                 </div>
 
@@ -342,7 +347,7 @@
                                 </p>
 
                                 <!-- TYPOGRAPHY & BEST FOR -->
-                                <div class="pt-2 space-y-1.5 border-t border-sand-200/80 text-[11px]">
+                                <!-- <div class="pt-2 space-y-1.5 border-t border-sand-200/80 text-[11px]">
                                     <div class="flex items-center gap-1.5 text-charcoal-900/80">
                                         <i data-lucide="type" class="w-3.5 h-3.5 text-brand-600 shrink-0"></i>
                                         <span>Tipografi: <strong>{{ $theme['typography'] }}</strong></span>
@@ -351,30 +356,30 @@
                                         <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-500 shrink-0"></i>
                                         <span class="truncate">Ideal: {{ $theme['best_for'] }}</span>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <!-- HIGHLIGHT CHIPS -->
-                                <div class="pt-2 flex flex-wrap gap-1.5">
+                                <!-- <div class="pt-2 flex flex-wrap gap-1.5">
                                     @foreach ($theme['features'] as $feat)
                                         <span class="px-2 py-0.5 rounded-md bg-sand-100 border border-sand-200 text-[10px] text-charcoal-900/80 font-medium">
                                             ✓ {{ $feat }}
                                         </span>
                                     @endforeach
-                                </div>
+                                </div> -->
                             </div>
 
                             <!-- CARD FOOTER & ACTIONS -->
                             <div class="pt-4 border-t border-sand-200 flex items-center justify-between gap-3">
-                                <button 
+                                <!-- <button 
                                     @click="openPreview(themes.find(t => t.id === '{{ $theme['id'] }}'))" 
                                     class="text-xs font-semibold text-charcoal-900 hover:text-brand-600 flex items-center gap-1 py-1"
                                 >
                                     <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                                     <span>Preview</span>
-                                </button>
+                                </button> -->
 
                                 <div class="flex items-center gap-2">
-                                    <a 
+                                    <!-- <a 
                                         href="{{ $theme['demo_url'] }}" 
                                         target="_blank" 
                                         class="px-3.5 py-2 rounded-xl bg-sand-200/80 hover:bg-sand-300 text-charcoal-950 text-xs font-bold transition flex items-center gap-1"
@@ -382,7 +387,7 @@
                                     >
                                         <span>Demo</span>
                                         <i data-lucide="external-link" class="w-3 h-3"></i>
-                                    </a>
+                                    </a> -->
 
                                     <a 
                                         href="{{ route('register') }}" 
@@ -430,7 +435,7 @@
                             <div>
                                 <div class="flex items-center justify-between text-xs text-sand-500 font-medium pb-1">
                                     <span class="text-brand-700 font-bold uppercase tracking-wider text-[11px]">{{ $theme['number'] }} • {{ $theme['category_label'] }}</span>
-                                    <span class="text-amber-600 font-bold">★ {{ $theme['rating'] }} ({{ $theme['reviews_count'] }} ulasan)</span>
+                                    <!-- <span class="text-amber-600 font-bold">★ {{ $theme['rating'] }} ({{ $theme['reviews_count'] }} ulasan)</span> -->
                                 </div>
 
                                 <h2 class="font-serif text-2xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">
@@ -469,13 +474,13 @@
                                 </div>
 
                                 <div class="flex items-center gap-2">
-                                    <button 
+                                    <!-- <button 
                                         @click="openPreview(themes.find(t => t.id === '{{ $theme['id'] }}'))" 
                                         class="px-4 py-2 rounded-xl bg-sand-200 hover:bg-sand-300 text-charcoal-950 text-xs font-bold transition flex items-center gap-1.5"
                                     >
                                         <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
                                         <span>Quick Mobile Preview</span>
-                                    </button>
+                                    </button> -->
 
                                     <a 
                                         href="{{ $theme['demo_url'] }}" 
@@ -712,7 +717,7 @@
                 <div class="w-7 h-7 rounded-full bg-charcoal-950 text-brand-300 flex items-center justify-center font-serif font-bold text-sm border border-brand-400/40">
                     K
                 </div>
-                <span>&copy; {{ date('Y') }} KalaUndangan Studio. All rights reserved.</span>
+                <span>&copy; {{ date('Y') }} KlikMomen Studio. All rights reserved.</span>
             </div>
             <div class="flex items-center gap-6">
                 <a href="{{ route('home') }}" class="hover:text-brand-300 transition">Beranda</a>

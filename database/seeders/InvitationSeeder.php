@@ -162,7 +162,7 @@ class InvitationSeeder extends Seeder
 
         // Guests
         Guest::updateOrCreate(
-            ['invitation_id' => $invitation->id, 'name' => 'Bpk. Budi Santoso & Partner'],
+            ['invitation_id' => $invitation->id, 'name' => 'Reyhan & Lesti'],
             [
                 'phone_number' => '081234567890',
                 'slug_url' => 'budi-santoso',

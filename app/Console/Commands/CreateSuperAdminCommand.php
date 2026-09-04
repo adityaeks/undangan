@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 #[Signature('make:super-admin {--name= : Nama Super Admin} {--email= : Email Super Admin} {--password= : Password}')]
-#[Description('Membuat akun user Super Admin baru untuk platform KalaUndangan')]
+#[Description('Membuat akun user Super Admin baru untuk platform KlikMomen')]
 class CreateSuperAdminCommand extends Command
 {
     /**
@@ -21,7 +21,7 @@ class CreateSuperAdminCommand extends Command
         $this->info('=== Buat Akun Super Admin ===');
 
         $name = $this->option('name') ?: $this->ask('Masukkan Nama Lengkap', 'Super Administrator');
-        $email = $this->option('email') ?: $this->ask('Masukkan Email', 'admin@kalaundangan.com');
+        $email = $this->option('email') ?: $this->ask('Masukkan Email', 'admin@KlikMomen.com');
         $password = $this->option('password') ?: $this->secret('Masukkan Password (default: password123)') ?: 'password123';
 
         $validator = Validator::make([

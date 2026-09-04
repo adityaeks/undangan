@@ -1,6 +1,6 @@
 # Detail Desain Skema Database (Database Schema Reference)
 
-Dokumen ini berisi rancangan detail skema tabel database untuk platform **KalaUndangan**, termasuk tipe data, relasi antar tabel (Foreign Keys), dan indeks untuk performa optimal.
+Dokumen ini berisi rancangan detail skema tabel database untuk platform **KlikMomen**, termasuk tipe data, relasi antar tabel (Foreign Keys), dan indeks untuk performa optimal.
 
 ---
 
@@ -25,7 +25,9 @@ users
 ## 🗄️ Spesifikasi Tabel & Kolom
 
 ### 1. Tabel `themes` (Template Undangan)
+
 Menyimpan katalog tema yang tersedia di sistem.
+
 ```sql
 CREATE TABLE themes (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -44,7 +46,9 @@ CREATE TABLE themes (
 ---
 
 ### 2. Tabel `invitations` (Undangan Utama)
+
 Menyimpan informasi inti website undangan setiap pengguna.
+
 ```sql
 CREATE TABLE invitations (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -70,7 +74,9 @@ CREATE TABLE invitations (
 ---
 
 ### 3. Tabel `couples` (Data Mempelai)
+
 Menyimpan data kedua mempelai / orang yang berhajat.
+
 ```sql
 CREATE TABLE couples (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -100,7 +106,9 @@ CREATE TABLE couples (
 ---
 
 ### 4. Tabel `events` (Rangkaian Acara)
+
 Menyimpan detail satu atau lebih sesi acara (Akad, Resepsi, Unduh Mantu).
+
 ```sql
 CREATE TABLE events (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -124,7 +132,9 @@ CREATE TABLE events (
 ---
 
 ### 5. Tabel `guests` (Daftar Tamu & Link Personal)
+
 Menyimpan data tamu untuk pembuatan tautan personal WhatsApp.
+
 ```sql
 CREATE TABLE guests (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -146,7 +156,9 @@ CREATE TABLE guests (
 ---
 
 ### 6. Tabel `wishes` (Buku Tamu & RSVP Online)
+
 Menyimpan ucapan doa restu dan konfirmasi kehadiran dari tamu.
+
 ```sql
 CREATE TABLE wishes (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -167,7 +179,9 @@ CREATE TABLE wishes (
 ---
 
 ### 7. Tabel `wallets` (Amplop Digital & QRIS)
+
 Menyimpan rekening transfer bank dan scan QRIS.
+
 ```sql
 CREATE TABLE wallets (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -186,6 +200,7 @@ CREATE TABLE wallets (
 ---
 
 ### 8. Tabel `galleries` & `stories` (Foto, Video & Timeline)
+
 ```sql
 CREATE TABLE galleries (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

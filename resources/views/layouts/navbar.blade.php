@@ -16,7 +16,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="font-serif text-2xl font-bold tracking-tight text-charcoal-950 flex items-center gap-1">
-                        KalaUndangan<span class="text-brand-500">.</span>
+                        KlikMomen<span class="text-brand-500">.</span>
                     </span>
                     <span class="text-[10px] tracking-[0.25em] uppercase text-sand-500 font-semibold -mt-1">
                         Digital Invitation Studio

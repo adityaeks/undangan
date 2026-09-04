@@ -205,7 +205,7 @@
                         <div>
                             <label class="font-bold text-charcoal-900 block mb-1">Kustom Link Slug (Opsional)</label>
                             <div class="flex items-center">
-                                <span class="px-3 py-2.5 rounded-l-xl bg-sand-200 text-sand-600 font-mono text-[11px] border border-r-0 border-sand-200">kalaundangan.id/u/</span>
+                                <span class="px-3 py-2.5 rounded-l-xl bg-sand-200 text-sand-600 font-mono text-[11px] border border-r-0 border-sand-200">KlikMomen.id/u/</span>
                                 <input 
                                     type="text" 
                                     name="slug" 
