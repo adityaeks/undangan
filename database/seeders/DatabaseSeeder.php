@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             SuperAdminSeeder::class,
             ThemeSeeder::class,
             InvitationSeeder::class,
+            CouponSeeder::class,
         ]);
     }
 }

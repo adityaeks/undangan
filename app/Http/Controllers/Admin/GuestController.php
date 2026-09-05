@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Guest;
 use App\Models\Invitation;
+use App\Models\InvitationGuest as Guest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class GuestController extends Controller
@@ -16,31 +15,19 @@ class GuestController extends Controller
      */
     public function index(Request $request): View
     {
-        $user = Auth::user();
         $query = Guest::with('invitation');
 
-        if (! $user->isSuperAdmin()) {
-            $invitationIds = $user->invitations()->pluck('id');
-            $query->whereIn('invitation_id', $invitationIds);
-
-            $totalGuests = Guest::whereIn('invitation_id', $invitationIds)->count();
-            $totalAttending = Guest::whereIn('invitation_id', $invitationIds)->where('attendance_status', 'hadir')->count();
-            $totalDeclined = Guest::whereIn('invitation_id', $invitationIds)->where('attendance_status', 'tidak_hadir')->count();
-            $totalPending = Guest::whereIn('invitation_id', $invitationIds)->where('attendance_status', 'pending')->count();
-            $primaryInvitation = $user->invitations()->with('couple')->latest()->first();
-        } else {
-            $totalGuests = Guest::count();
-            $totalAttending = Guest::where('attendance_status', 'hadir')->count();
-            $totalDeclined = Guest::where('attendance_status', 'tidak_hadir')->count();
-            $totalPending = Guest::where('attendance_status', 'pending')->count();
-            $primaryInvitation = Invitation::with('couple')->first();
-        }
+        $totalGuests = Guest::count();
+        $totalAttending = Guest::where('attendance_status', 'hadir')->count();
+        $totalDeclined = Guest::where('attendance_status', 'tidak_hadir')->count();
+        $totalPending = Guest::where('attendance_status', 'pending')->count();
+        $primaryInvitation = Invitation::with('couple')->first();
 
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('phone_number', 'like', "%{$search}%");
+                    ->orWhere('phone', 'like', "%{$search}%");
             });
         }
 
@@ -49,7 +36,7 @@ class GuestController extends Controller
         }
 
         if ($request->filled('group') && $request->group !== 'all') {
-            $query->where('group', $request->group);
+            $query->where('category', $request->group);
         }
 
         $guests = $query->latest()->paginate(15);

@@ -1,111 +1,117 @@
 <x-app-layout>
-    <div class="space-y-8">
+    <div class="space-y-3.5 sm:space-y-4">
         
         <!-- ============================================== -->
         <!-- 1. HERO GREETING BANNER -->
         <!-- ============================================== -->
-        <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-brand-950 p-6 sm:p-10 text-white shadow-xl border border-charcoal-800">
-            <!-- DECORATIVE ACCENTS -->
+        <div class="relative rounded-2xl overflow-hidden bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-brand-950 p-4 sm:p-5 text-white shadow-lg border border-charcoal-800">
             <div class="absolute -top-24 -right-24 w-72 h-72 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div class="space-y-2 max-w-xl">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] font-bold text-amber-200 uppercase tracking-wider">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                        <span>{{ Auth::user()->role === 'super_admin' ? 'Super Admin Dashboard' : 'Member Workspace' }}</span>
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="space-y-1 max-w-xl">
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[10px] font-bold text-amber-200 uppercase tracking-wider">
+                        <i data-lucide="shield-check" class="w-3 h-3"></i>
+                        <span>Super Admin Dashboard & Workspace</span>
                     </div>
-                    <h1 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
+                    <h1 class="font-serif text-xl sm:text-2xl font-bold tracking-tight">
                         Selamat Datang, {{ Auth::user()->name }}! 👋
                     </h1>
-                    <p class="text-xs sm:text-sm text-sand-300 leading-relaxed">
-                        Kelola seluruh data undangan digital, pantau konfirmasi kehadiran (RSVP) tamu, serta monitoring kemitraan Wedding Organizer dari panel ini.
+                    <p class="text-xs text-sand-300 leading-relaxed">
+                        Pusat kendali KlikMomen: pantau arus transaksi, moderasi undangan seluruh pengguna, kelola akun dan kupon promo.
                     </p>
                 </div>
 
                 <!-- ACTIONS -->
-                <div class="flex flex-wrap items-center gap-3">
-                    <a href="{{ route('demo.index') }}" target="_blank" class="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs backdrop-blur-md transition flex items-center gap-2">
-                        <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
-                        <span>Live Preview Demo</span>
+                <div class="flex flex-wrap items-center gap-2">
+                    <a href="{{ route('admin.users.index') }}" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs backdrop-blur-md transition flex items-center gap-1.5">
+                        <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                        <span>Kelola Pengguna</span>
                     </a>
-                    <a href="#buat-undangan" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow-lg hover:shadow-brand-500/30 hover:scale-105 transition flex items-center gap-2">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>Buat Undangan Baru</span>
+                    <a href="{{ route('admin.coupons.index') }}" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow-md hover:shadow-brand-500/30 transition flex items-center gap-1.5">
+                        <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
+                        <span>Kupon & Diskon Promo</span>
                     </a>
                 </div>
             </div>
         </div>
 
         <!-- ============================================== -->
-        <!-- 2. STATS & METRICS OVERVIEW -->
+        <!-- 2. STATS & PLATFORM METRICS -->
         <!-- ============================================== -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
             
-            <!-- CARD 1: UNDANGAN AKTIF -->
-            <div class="p-6 rounded-3xl glass-panel border border-sand-200/80 shadow-sm hover:shadow-md transition-all space-y-4">
+            <!-- CARD 1: REVENUE -->
+            <div class="p-3.5 sm:p-4 rounded-2xl glass-panel border border-sand-200/80 shadow-sm hover:shadow-md transition-all space-y-2">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Undangan Aktif</span>
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center">
-                        <i data-lucide="mail-check" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-sand-500">Total Pendapatan</span>
+                    <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                        <i data-lucide="badge-dollar-sign" class="w-4 h-4"></i>
                     </div>
                 </div>
                 <div>
-                    <div class="font-serif text-3xl font-bold text-charcoal-950">1</div>
-                    <p class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1 mt-1">
-                        <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-                        <span>100% Online & Terpublikasi</span>
+                    <div class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">
+                        Rp {{ number_format($totalRevenue, 0, ',', '.') }}
+                    </div>
+                    <p class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
+                        <i data-lucide="check-circle" class="w-3 h-3"></i>
+                        <span>{{ $totalPaidOrders }} Order Lunas</span>
                     </p>
                 </div>
             </div>
 
-            <!-- CARD 2: TAMU TERUNDANG -->
-            <div class="p-6 rounded-3xl glass-panel border border-sand-200/80 shadow-sm hover:shadow-md transition-all space-y-4">
+            <!-- CARD 2: PENGGUNA TERDAFTAR -->
+            <div class="p-3.5 sm:p-4 rounded-2xl glass-panel border border-sand-200/80 shadow-sm hover:shadow-md transition-all space-y-2">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Total Tamu RSVP</span>
-                    <div class="w-10 h-10 rounded-2xl bg-brand-50 text-brand-700 flex items-center justify-center">
-                        <i data-lucide="users" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-sand-500">Pengguna</span>
+                    <div class="w-8 h-8 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center">
+                        <i data-lucide="users" class="w-4 h-4"></i>
                     </div>
                 </div>
                 <div>
-                    <div class="font-serif text-3xl font-bold text-charcoal-950">248 <span class="text-xs font-sans text-sand-500">Tamu</span></div>
-                    <p class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1 mt-1">
-                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                        <span>186 Konfirmasi Hadir (75%)</span>
+                    <div class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">
+                        {{ $totalUsers }} <span class="text-xs font-sans text-sand-500 font-normal">Akun</span>
+                    </div>
+                    <p class="text-[10px] text-sand-600 font-medium mt-0.5">
+                        {{ $totalMembers }} Member • {{ $totalPartners }} WO
                     </p>
                 </div>
             </div>
 
-            <!-- CARD 3: KATALOG TEMA -->
-            <div class="p-6 rounded-3xl glass-panel border border-sand-200/80 shadow-sm hover:shadow-md transition-all space-y-4">
+            <!-- CARD 3: TOTAL UNDANGAN DI PLATFORM -->
+            <div class="p-3.5 sm:p-4 rounded-2xl glass-panel border border-sand-200/80 shadow-sm hover:shadow-md transition-all space-y-2">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Katalog Desain</span>
-                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center">
-                        <i data-lucide="palette" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-sand-500">Undangan</span>
+                    <div class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center">
+                        <i data-lucide="mail-check" class="w-4 h-4"></i>
                     </div>
                 </div>
                 <div>
-                    <div class="font-serif text-3xl font-bold text-charcoal-950">6 <span class="text-xs font-sans text-sand-500">Tema Siap</span></div>
-                    <p class="text-[11px] text-brand-600 font-semibold flex items-center gap-1 mt-1">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                        <span>50+ Template dalam Antrean</span>
+                    <div class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">
+                        {{ $totalInvitations }} <span class="text-xs font-sans text-sand-500 font-normal">Website</span>
+                    </div>
+                    <p class="text-[10px] text-indigo-600 font-semibold flex items-center gap-1 mt-0.5">
+                        <i data-lucide="globe" class="w-3 h-3"></i>
+                        <span>{{ $totalActiveInvitations }} Aktif Online</span>
                     </p>
                 </div>
             </div>
 
-            <!-- CARD 4: TRANSAKSI / WO PARTNER -->
-            <div class="p-6 rounded-3xl glass-panel border border-sand-200/80 shadow-sm hover:shadow-md transition-all space-y-4">
+            <!-- CARD 4: TRANSAKSI & KUPO -->
+            <div class="p-3.5 sm:p-4 rounded-2xl glass-panel border border-sand-200/80 shadow-sm hover:shadow-md transition-all space-y-2">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Kemitraan WO & Reseller</span>
-                    <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
-                        <i data-lucide="badge-dollar-sign" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-sand-500">Katalog &amp; Diskon</span>
+                    <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+                        <i data-lucide="ticket" class="w-4 h-4"></i>
                     </div>
                 </div>
                 <div>
-                    <div class="font-serif text-3xl font-bold text-charcoal-950">3 <span class="text-xs font-sans text-sand-500">Paket</span></div>
-                    <p class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1 mt-1">
-                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                        <span>100% White-Label Siap</span>
+                    <div class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">
+                        {{ $totalThemes }} <span class="text-xs font-sans text-sand-500 font-normal">Tema</span>
+                    </div>
+                    <p class="text-[10px] text-amber-700 font-semibold flex items-center gap-1 mt-0.5">
+                        <i data-lucide="tag" class="w-3 h-3"></i>
+                        <span>{{ $totalCoupons }} Kupon Promo</span>
                     </p>
                 </div>
             </div>
@@ -113,136 +119,197 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- 3. MAIN TABLE & GUESTBOOK ACTIVITY SPLIT -->
+        <!-- 3. PLATFORM MANAGEMENT SPLIT -->
         <!-- ============================================== -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
             
-            <!-- LEFT (COL-8): DAFTAR UNDANGAN AKTIF -->
-            <div class="lg:col-span-8 space-y-4">
+            <!-- LEFT (COL-8): RECENT ORDERS & INVITATIONS -->
+            <div class="lg:col-span-8 space-y-4 sm:space-y-5">
                 
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h2 class="font-serif text-xl font-bold text-charcoal-950">Daftar Undangan Terdaftar</h2>
-                        <p class="text-xs text-sand-600">Daftar website undangan digital yang telah dibuat dan aktif.</p>
+                <!-- TRANSAKSI TERAKHIR -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="font-serif text-xl font-bold text-charcoal-950">Transaksi Billing Terkini</h2>
+                            <p class="text-xs text-sand-600">Monitoring pembayaran lisensi tema dan paket kemitraan.</p>
+                        </div>
+                        <a href="{{ route('orders.index') }}" class="text-xs text-brand-600 hover:text-brand-800 font-bold flex items-center gap-1">
+                            <span>Lihat Semua</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </a>
                     </div>
-                    <span class="px-3 py-1 rounded-full bg-sand-200 text-charcoal-900 text-xs font-bold">Total: 1</span>
+
+                    <div class="rounded-3xl glass-panel border border-sand-200/80 overflow-hidden shadow-sm">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-sand-50/80 border-b border-sand-200/80 text-sand-600 font-bold uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-4 pl-6">Kode Order</th>
+                                    <th class="p-4">Pengguna</th>
+                                    <th class="p-4">Tagihan</th>
+                                    <th class="p-4 text-center">Status</th>
+                                    <th class="p-4 pr-6 text-right">Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-sand-200/60">
+                                @forelse($recentOrders as $order)
+                                    <tr class="hover:bg-sand-50/50 transition">
+                                        <td class="p-4 pl-6">
+                                            <a href="{{ route('orders.show', $order) }}" class="font-mono font-bold text-brand-700 hover:underline">
+                                                {{ $order->order_code }}
+                                            </a>
+                                            @if($order->coupon)
+                                                <span class="block text-[10px] text-emerald-600 font-semibold">Kupon: {{ $order->coupon->code }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="p-4">
+                                            <span class="font-semibold text-charcoal-950 block">{{ $order->user?->name ?? 'User #'.$order->user_id }}</span>
+                                            <span class="text-sand-500 text-[11px]">{{ $order->user?->email }}</span>
+                                        </td>
+                                        <td class="p-4 font-bold text-charcoal-950">
+                                            Rp {{ number_format($order->total_amount ?: $order->amount, 0, ',', '.') }}
+                                        </td>
+                                        <td class="p-4 text-center">
+                                            @if($order->isPaid())
+                                                <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-wider">Lunas</span>
+                                            @else
+                                                <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider">Pending</span>
+                                            @endif
+                                        </td>
+                                        <td class="p-4 pr-6 text-right text-sand-500">
+                                            {{ $order->created_at ? $order->created_at->isoFormat('D MMM Y, HH:mm') : '-' }}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="p-6 text-center text-sand-500">Belum ada transaksi di platform.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <!-- INVITATION ITEM CARD -->
-                <div class="rounded-3xl glass-panel border border-sand-200/80 overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-sand-200/60">
-                        <div class="flex items-center gap-4">
-                            <div class="w-16 h-16 rounded-2xl bg-cover bg-center border border-sand-300 shadow-sm flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&auto=format&fit=crop&q=80');"></div>
-                            <div class="space-y-1">
-                                <div class="flex items-center gap-2">
-                                    <h3 class="font-serif text-lg font-bold text-charcoal-950">The Wedding of Raka & Arinda</h3>
-                                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-wider">Online</span>
+                <!-- MONITORING UNDANGAN TERBARU -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="font-serif text-xl font-bold text-charcoal-950">Monitoring Undangan Terkini</h2>
+                            <p class="text-xs text-sand-600">Undangan pernikahan yang baru saja dibuat atau diperbarui di platform.</p>
+                        </div>
+                        <a href="{{ route('invitations.index') }}" class="text-xs text-brand-600 hover:text-brand-800 font-bold flex items-center gap-1">
+                            <span>Lihat Semua</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+
+                    <div class="space-y-3">
+                        @forelse($recentInvitations as $invitation)
+                            <div class="p-5 rounded-2xl glass-panel border border-sand-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <h3 class="font-serif text-base font-bold text-charcoal-950">{{ $invitation->title }}</h3>
+                                        @if($invitation->is_published)
+                                            <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Online</span>
+                                        @else
+                                            <span class="px-2 py-0.5 rounded-full bg-sand-200 text-sand-700 text-[10px] font-bold">Draft</span>
+                                        @endif
+                                    </div>
+                                    <p class="text-xs text-sand-600">
+                                        Pemilik: <strong class="text-charcoal-900">{{ $invitation->owner?->name ?? 'User' }}</strong> • 
+                                        Tema: <strong class="text-charcoal-900">{{ $invitation->theme?->name ?? '-' }}</strong>
+                                    </p>
+                                    <p class="text-[11px] font-mono text-sand-500">
+                                        Tautan: /u/{{ $invitation->slug }}
+                                    </p>
                                 </div>
-                                <p class="text-xs text-sand-600">Tema: <span class="font-semibold text-charcoal-900">The Monochrome Elegance</span> • Tanggal: <span class="font-semibold text-charcoal-900">24 Oktober 2026</span></p>
-                                <p class="text-[11px] text-sand-500">Slug URL: <a href="{{ route('demo.index') }}" target="_blank" class="font-mono text-brand-600 hover:underline">/demo (raka-arinda)</a></p>
+
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('invitation.show', $invitation->slug) }}" target="_blank" class="px-3.5 py-2 rounded-xl bg-charcoal-900 hover:bg-charcoal-800 text-white font-bold text-xs transition flex items-center gap-1.5">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                        <span>Buka</span>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="flex items-center gap-2 w-full sm:w-auto">
-                            <a href="{{ route('demo.index') }}" target="_blank" class="flex-1 sm:flex-none px-4 py-2.5 rounded-2xl bg-charcoal-950 hover:bg-brand-600 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow">
-                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                <span>Lihat Undangan</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- SUB-STATS OF INVITATION -->
-                    <div class="bg-sand-50/80 px-6 py-4 grid grid-cols-3 gap-4 text-center divide-x divide-sand-200 text-xs">
-                        <div>
-                            <span class="text-sand-500 text-[10px] uppercase font-bold block">Tamu Terdaftar</span>
-                            <span class="font-serif text-base font-bold text-charcoal-950">248</span>
-                        </div>
-                        <div>
-                            <span class="text-sand-500 text-[10px] uppercase font-bold block">RSVP Hadir</span>
-                            <span class="font-serif text-base font-bold text-emerald-600">186</span>
-                        </div>
-                        <div>
-                            <span class="text-sand-500 text-[10px] uppercase font-bold block">Amplop Digital</span>
-                            <span class="font-serif text-base font-bold text-brand-600">2 Rekening</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- QUICK ACTIONS GRID -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                    <div class="p-5 rounded-2xl glass-panel border border-sand-200 space-y-2 hover:border-brand-400 transition cursor-pointer">
-                        <div class="w-9 h-9 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center">
-                            <i data-lucide="user-plus" class="w-4 h-4"></i>
-                        </div>
-                        <h4 class="font-serif text-sm font-bold text-charcoal-950">Tambah Data Tamu</h4>
-                        <p class="text-[11px] text-sand-600">Generate link undangan personal dengan nama khusus tamu.</p>
-                    </div>
-
-                    <div class="p-5 rounded-2xl glass-panel border border-sand-200 space-y-2 hover:border-brand-400 transition cursor-pointer">
-                        <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-                            <i data-lucide="wallet" class="w-4 h-4"></i>
-                        </div>
-                        <h4 class="font-serif text-sm font-bold text-charcoal-950">Atur Amplop Digital</h4>
-                        <p class="text-[11px] text-sand-600">Konfigurasi rekening Bank BCA, Mandiri, dan QRIS instan.</p>
-                    </div>
-
-                    <div class="p-5 rounded-2xl glass-panel border border-sand-200 space-y-2 hover:border-brand-400 transition cursor-pointer">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                            <i data-lucide="music" class="w-4 h-4"></i>
-                        </div>
-                        <h4 class="font-serif text-sm font-bold text-charcoal-950">Musik & Foto Galeri</h4>
-                        <p class="text-[11px] text-sand-600">Ganti lagu latar pernikahan dan unggah foto prewedding.</p>
+                        @empty
+                            <div class="p-6 rounded-2xl glass-panel text-center text-sand-500 text-xs">
+                                Belum ada undangan terdaftar di platform.
+                            </div>
+                        @endforelse
                     </div>
                 </div>
 
             </div>
 
-            <!-- RIGHT (COL-4): UCAPAN & DOA TERBARU (LIVE FEED) -->
-            <div class="lg:col-span-4 space-y-4">
+            <!-- RIGHT (COL-4): USERS & QUICK ACTIONS -->
+            <div class="lg:col-span-4 space-y-6">
                 
-                <div class="flex items-center justify-between">
-                    <h2 class="font-serif text-xl font-bold text-charcoal-950">Ucapan Tamu Terbaru</h2>
-                    <span class="text-xs font-bold text-brand-600 cursor-pointer hover:underline">Lihat Semua</span>
+                <!-- PENGGUNA BARU BERGABUNG -->
+                <div class="p-6 rounded-3xl glass-panel border border-sand-200/80 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-serif text-base font-bold text-charcoal-950">Pengguna Baru</h3>
+                        <a href="{{ route('admin.users.index') }}" class="text-[11px] font-bold text-brand-600 hover:underline">Semua</a>
+                    </div>
+
+                    <div class="divide-y divide-sand-200/60">
+                        @forelse($recentUsers as $newUser)
+                            <div class="py-3 flex items-center justify-between first:pt-0 last:pb-0">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-xl bg-charcoal-900 text-brand-300 flex items-center justify-center font-bold text-xs">
+                                        {{ strtoupper(substr($newUser->name, 0, 1)) }}
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-charcoal-950">{{ $newUser->name }}</h4>
+                                        <span class="text-[11px] text-sand-500">{{ $newUser->email }}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider {{ $newUser->isPartner() ? 'bg-brand-100 text-brand-800' : ($newUser->isSuperAdmin() ? 'bg-indigo-100 text-indigo-800' : 'bg-amber-100 text-amber-800') }}">
+                                        {{ $newUser->role }}
+                                    </span>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-xs text-sand-500 py-4 text-center">Belum ada pengguna terdaftar.</p>
+                        @endforelse
+                    </div>
                 </div>
 
-                <div class="rounded-3xl glass-panel border border-sand-200/80 p-5 space-y-4 shadow-sm">
-                    
-                    <!-- WISH 1 -->
-                    <div class="p-4 rounded-2xl bg-sand-50/80 border border-sand-200/60 space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-charcoal-950">Dimas Anggara</span>
-                            <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold">Hadir</span>
-                        </div>
-                        <p class="text-xs text-charcoal-900/80 leading-relaxed italic font-editorial text-sm">
-                            "Selamat menempuh hidup baru Raka & Arinda! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Aamiin."
-                        </p>
-                        <span class="text-[10px] text-sand-400 block">5 menit yang lalu</span>
-                    </div>
+                <!-- AKSI KELOLA CEPAT -->
+                <div class="p-6 rounded-3xl bg-gradient-to-br from-charcoal-950 to-charcoal-900 text-white border border-charcoal-800 shadow-lg space-y-4">
+                    <h3 class="font-serif text-base font-bold text-amber-200">Aksi Cepat Super Admin</h3>
+                    <div class="space-y-2.5 text-xs">
+                        <a href="{{ route('admin.coupons.index') }}" class="w-full flex items-center justify-between p-3 rounded-2xl bg-white/10 hover:bg-white/15 transition">
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="plus-circle" class="w-4 h-4 text-amber-300"></i>
+                                Buat Kupon Promo Diskon
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-sand-400"></i>
+                        </a>
 
-                    <!-- WISH 2 -->
-                    <div class="p-4 rounded-2xl bg-sand-50/80 border border-sand-200/60 space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-charcoal-950">Siti Nurhaliza & Keluarga</span>
-                            <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold">Hadir</span>
-                        </div>
-                        <p class="text-xs text-charcoal-900/80 leading-relaxed italic font-editorial text-sm">
-                            "Barakallahu lakum wa baraka alaikum. Bahagia selalu sampai kakek nenek ya kalian berdua!"
-                        </p>
-                        <span class="text-[10px] text-sand-400 block">1 jam yang lalu</span>
-                    </div>
+                        <a href="{{ route('themes.index') }}" class="w-full flex items-center justify-between p-3 rounded-2xl bg-white/10 hover:bg-white/15 transition">
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="palette" class="w-4 h-4 text-brand-300"></i>
+                                Kelola Katalog & Harga Tema
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-sand-400"></i>
+                        </a>
 
-                    <!-- WISH 3 -->
-                    <div class="p-4 rounded-2xl bg-sand-50/80 border border-sand-200/60 space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-charcoal-950">Budi Santoso</span>
-                            <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[9px] font-bold">Masih Ragu</span>
-                        </div>
-                        <p class="text-xs text-charcoal-900/80 leading-relaxed italic font-editorial text-sm">
-                            "InsyaAllah saya usahakan hadir bro. Sukses lancar sampai hari H ya!"
-                        </p>
-                        <span class="text-[10px] text-sand-400 block">3 jam yang lalu</span>
-                    </div>
+                        <a href="{{ route('partners.index') }}" class="w-full flex items-center justify-between p-3 rounded-2xl bg-white/10 hover:bg-white/15 transition">
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="handshake" class="w-4 h-4 text-emerald-300"></i>
+                                Kemitraan Reseller & WO
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-sand-400"></i>
+                        </a>
 
+                        <a href="{{ route('wishes.index') }}" class="w-full flex items-center justify-between p-3 rounded-2xl bg-white/10 hover:bg-white/15 transition">
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="message-square-heart" class="w-4 h-4 text-rose-300"></i>
+                                Moderasi Ucapan Doa Tamu
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-sand-400"></i>
+                        </a>
+                    </div>
                 </div>
 
             </div>

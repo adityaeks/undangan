@@ -38,13 +38,65 @@ test('newly registered member starts with empty invitations and shows empty onbo
         ->assertSee('Mulai Buat Undangan Pertama Saya')
         ->assertDontSee('The Wedding of Raka & Arinda');
 
-    $invitationResponse = $this->actingAs($member)->get('/admin/invitations');
+    $invitationResponse = $this->actingAs($member)->get('/member/invitations');
     $invitationResponse->assertOk()
-        ->assertSee('Total: 0');
+        ->assertSee('Belum Ada Undangan');
 });
 
-test('authenticated user can view invitations index and create pages', function () {
-    $user = User::factory()->create();
+test('member cannot access admin workspace routes and receives 403 forbidden', function () {
+    $member = User::factory()->create(['role' => 'member']);
+
+    $this->actingAs($member)->get('/admin/dashboard')->assertForbidden();
+    $this->actingAs($member)->get('/admin/invitations')->assertForbidden();
+    $this->actingAs($member)->get('/admin/themes')->assertForbidden();
+    $this->actingAs($member)->get('/admin/guests')->assertForbidden();
+    $this->actingAs($member)->get('/admin/wishes')->assertForbidden();
+    $this->actingAs($member)->get('/admin/orders')->assertForbidden();
+    $this->actingAs($member)->get('/admin/partners')->assertForbidden();
+});
+
+test('member can view and manage their dedicated member pages with portal pengantin layout', function () {
+    $member = User::factory()->create(['role' => 'member']);
+
+    // Invitations
+    $this->actingAs($member)->get('/member/invitations')
+        ->assertOk()
+        ->assertSee('Portal Pengantin')
+        ->assertSee('Data Undangan Pernikahan');
+
+    // Create Invitation
+    $this->actingAs($member)->get('/member/invitations/create')
+        ->assertOk()
+        ->assertSee('Portal Pengantin')
+        ->assertSee('Form Pembuatan Undangan Baru');
+
+    // Themes
+    $this->actingAs($member)->get('/member/themes')
+        ->assertOk()
+        ->assertSee('Portal Pengantin')
+        ->assertSee('Pilihan Desain Tema Undangan');
+
+    // Guests
+    $this->actingAs($member)->get('/member/guests')
+        ->assertOk()
+        ->assertSee('Portal Pengantin')
+        ->assertSee('Daftar Tamu & Sebar Undangan WA');
+
+    // Wishes
+    $this->actingAs($member)->get('/member/wishes')
+        ->assertOk()
+        ->assertSee('Portal Pengantin')
+        ->assertSee('Buku Tamu & Doa Restu');
+
+    // Orders
+    $this->actingAs($member)->get('/member/orders')
+        ->assertOk()
+        ->assertSee('Portal Pengantin')
+        ->assertSee('Riwayat Transaksi & Pembayaran');
+});
+
+test('authenticated super admin can view admin invitations index and create pages', function () {
+    $user = User::factory()->create(['role' => 'super_admin']);
 
     $response = $this->actingAs($user)->get('/admin/invitations');
     $response->assertOk()
@@ -55,8 +107,8 @@ test('authenticated user can view invitations index and create pages', function 
         ->assertSee('Form Pembuatan Undangan Baru');
 });
 
-test('authenticated user can store and save new invitation with couple events and wallets', function () {
-    $user = User::factory()->create();
+test('authenticated member can store and save new invitation with couple events and wallets', function () {
+    $user = User::factory()->create(['role' => 'member']);
     $theme = Theme::first() ?? Theme::create([
         'name' => 'The Monochrome Elegance',
         'slug' => 'monochrome-elegance',
@@ -95,9 +147,9 @@ test('authenticated user can store and save new invitation with couple events an
         'bank_1_holder' => 'Dimas Arya',
     ];
 
-    $response = $this->actingAs($user)->post('/admin/invitations', $payload);
+    $response = $this->actingAs($user)->post('/member/invitations', $payload);
 
-    $response->assertRedirect('/admin/invitations');
+    $response->assertRedirect('/member/invitations');
     $response->assertSessionHas('success');
 
     $this->assertDatabaseHas('invitations', [
@@ -105,26 +157,31 @@ test('authenticated user can store and save new invitation with couple events an
         'slug' => 'dimas-anisa',
     ]);
 
-    $this->assertDatabaseHas('couples', [
-        'groom_nickname' => 'Dimas',
-        'bride_nickname' => 'Anisa',
+    $this->assertDatabaseHas('invitation_couples', [
+        'nickname' => 'Dimas',
+        'role' => 'groom',
     ]);
 
-    $this->assertDatabaseHas('events', [
+    $this->assertDatabaseHas('invitation_couples', [
+        'nickname' => 'Anisa',
+        'role' => 'bride',
+    ]);
+
+    $this->assertDatabaseHas('invitation_events', [
         'title' => 'Akad Nikah',
         'venue_name' => 'Masjid Raya Pondok Indah',
     ]);
 
-    $this->assertDatabaseHas('wallets', [
+    $this->assertDatabaseHas('invitation_gifts', [
         'bank_name' => 'BCA',
         'account_number' => '880199281',
     ]);
 });
 
-test('authenticated user can upload files for cover bride groom gallery and music', function () {
+test('authenticated member can upload files for cover bride groom gallery and music', function () {
     Storage::fake('public');
 
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => 'member']);
     $theme = Theme::first() ?? Theme::create([
         'name' => 'The Monochrome Elegance',
         'slug' => 'monochrome-elegance',
@@ -160,9 +217,9 @@ test('authenticated user can upload files for cover bride groom gallery and musi
         'resepsi_address' => 'Jl. Dharmawangsa, Jakarta Selatan',
     ];
 
-    $response = $this->actingAs($user)->post('/admin/invitations', $payload);
+    $response = $this->actingAs($user)->post('/member/invitations', $payload);
 
-    $response->assertRedirect('/admin/invitations');
+    $response->assertRedirect('/member/invitations');
     $response->assertSessionHas('success');
 
     $invitation = Invitation::where('slug', 'upload-media')->first();
@@ -170,18 +227,19 @@ test('authenticated user can upload files for cover bride groom gallery and musi
     expect($invitation->galleries()->count())->toBe(2);
 });
 
-test('authenticated user can delete an invitation', function () {
-    $user = User::factory()->create();
+test('authenticated member can delete an invitation', function () {
+    $user = User::factory()->create(['role' => 'member']);
     $theme = Theme::first() ?? Theme::create([
-        'name' => 'The Monochrome Elegance',
-        'slug' => 'monochrome-elegance',
-        'category' => 'Minimalist Editorial',
+        'name' => 'The Warm Minimalist',
+        'slug' => 'minimalist',
+        'category' => 'minimalist',
         'thumbnail' => 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc',
-        'view_path' => 'demo.index',
+        'view_path' => 'demo.minimalist',
         'is_active' => true,
     ]);
 
     $invitation = Invitation::create([
+        'owner_id' => $user->id,
         'user_id' => $user->id,
         'theme_id' => $theme->id,
         'title' => 'Sample Undangan Untuk Dihapus',
@@ -191,9 +249,9 @@ test('authenticated user can delete an invitation', function () {
         'is_published' => true,
     ]);
 
-    $response = $this->actingAs($user)->delete("/admin/invitations/{$invitation->id}");
+    $response = $this->actingAs($user)->delete("/member/invitations/{$invitation->id}");
 
-    $response->assertRedirect('/admin/invitations');
+    $response->assertRedirect('/member/invitations');
     $response->assertSessionHas('success');
 
     $this->assertDatabaseMissing('invitations', [
@@ -201,8 +259,8 @@ test('authenticated user can delete an invitation', function () {
     ]);
 });
 
-test('authenticated user can view themes catalog page', function () {
-    $user = User::factory()->create();
+test('authenticated super admin can view themes catalog page', function () {
+    $user = User::factory()->create(['role' => 'super_admin']);
 
     $response = $this->actingAs($user)->get('/admin/themes');
 
@@ -210,8 +268,8 @@ test('authenticated user can view themes catalog page', function () {
         ->assertSee('Katalog Tema & Kustomisasi Gaya', false);
 });
 
-test('authenticated user can view guests page with WhatsApp helpers', function () {
-    $user = User::factory()->create();
+test('authenticated super admin can view guests page with WhatsApp helpers', function () {
+    $user = User::factory()->create(['role' => 'super_admin']);
 
     $response = $this->actingAs($user)->get('/admin/guests');
 
@@ -219,8 +277,8 @@ test('authenticated user can view guests page with WhatsApp helpers', function (
         ->assertSee('Daftar Tamu & Sebar WhatsApp', false);
 });
 
-test('authenticated user can view wishes moderation page', function () {
-    $user = User::factory()->create();
+test('authenticated super admin can view wishes moderation page', function () {
+    $user = User::factory()->create(['role' => 'super_admin']);
 
     $response = $this->actingAs($user)->get('/admin/wishes');
 
@@ -228,8 +286,8 @@ test('authenticated user can view wishes moderation page', function () {
         ->assertSee('Ucapan Doa & Respon Kehadiran', false);
 });
 
-test('authenticated user can view partner WO management page', function () {
-    $user = User::factory()->create();
+test('authenticated super admin can view partner WO management page', function () {
+    $user = User::factory()->create(['role' => 'super_admin']);
 
     $response = $this->actingAs($user)->get('/admin/partners');
 
@@ -237,8 +295,8 @@ test('authenticated user can view partner WO management page', function () {
         ->assertSee('Kemitraan Wedding Organizer', false);
 });
 
-test('authenticated user can view orders & billing transactions page', function () {
-    $user = User::factory()->create();
+test('authenticated super admin can view orders & billing transactions page', function () {
+    $user = User::factory()->create(['role' => 'super_admin']);
 
     $response = $this->actingAs($user)->get('/admin/orders');
 

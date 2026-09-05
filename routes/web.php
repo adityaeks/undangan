@@ -1,13 +1,27 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CouponController as AdminCouponController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\GuestController;
 use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ThemeController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\WishController;
+use App\Http\Controllers\DashboardDispatcherController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\Member\DashboardController as MemberDashboardController;
+use App\Http\Controllers\Member\GuestController as MemberGuestController;
+use App\Http\Controllers\Member\InvitationController as MemberInvitationController;
+use App\Http\Controllers\Member\OrderController as MemberOrderController;
+use App\Http\Controllers\Member\ThemeController as MemberThemeController;
+use App\Http\Controllers\Member\WishController as MemberWishController;
+use App\Http\Controllers\Order\CheckoutController;
+use App\Http\Controllers\Partner\ClientController as PartnerClientController;
+use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
+use App\Http\Controllers\Partner\InvitationController as PartnerInvitationController;
+use App\Http\Controllers\Payment\WebhookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicInvitationController;
 use App\Http\Controllers\ThemeCatalogController;
@@ -35,40 +49,125 @@ Route::get('/templates', [ThemeCatalogController::class, 'index'])->name('templa
 Route::get('/demo', [DemoController::class, 'index'])->name('demo.index');
 Route::get('/demo/{slug}', [DemoController::class, 'show'])->name('demo.show');
 
+// Payment Webhook (Idempotent Notification Receiver)
+Route::post('/payment/webhook', [WebhookController::class, 'handle'])->name('payment.webhook');
+
 /*
 |--------------------------------------------------------------------------
-| Authenticated Admin & User Workspace Routes
+| Central Dashboard Dispatcher
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/member/dashboard', [DashboardController::class, 'index'])->name('member.dashboard');
+    Route::get('/dashboard', DashboardDispatcherController::class)->name('dashboard');
 
-    // Invitations
-    Route::get('/admin/invitations', [InvitationController::class, 'index'])->name('invitations.index');
-    Route::get('/admin/invitations/create', [InvitationController::class, 'create'])->name('invitations.create');
-    Route::post('/admin/invitations', [InvitationController::class, 'store'])->name('invitations.store');
-    Route::delete('/admin/invitations/{invitation}', [InvitationController::class, 'destroy'])->name('invitations.destroy');
-
-    // Themes
-    Route::get('/admin/themes', [ThemeController::class, 'index'])->name('themes.index');
-
-    // Guests & RSVP
-    Route::get('/admin/guests', [GuestController::class, 'index'])->name('guests.index');
-
-    // Wishes / Guestbook
-    Route::get('/admin/wishes', [WishController::class, 'index'])->name('wishes.index');
-
-    // Partners / WO
-    Route::get('/admin/partners', [PartnerController::class, 'index'])->name('partners.index');
-
-    // Orders & Billing
-    Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
+    // Shared Orders & Checkout
+    Route::get('/orders/{order}', [CheckoutController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{order}/coupon', [CheckoutController::class, 'applyCoupon'])->name('orders.coupon.apply');
+    Route::delete('/orders/{order}/coupon', [CheckoutController::class, 'removeCoupon'])->name('orders.coupon.remove');
+    Route::post('/orders/{order}/simulate', [CheckoutController::class, 'simulatePayment'])->name('orders.simulate');
+    Route::get('/checkout/theme/{theme}', [CheckoutController::class, 'checkoutTheme'])->name('checkout.theme');
+    Route::get('/checkout/package/{package}', [CheckoutController::class, 'checkoutPackage'])->name('checkout.package');
 
     // Profile Settings
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Member Workspace Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', 'role:member,user'])->prefix('member')->name('member.')->group(function () {
+    Route::get('/dashboard', [MemberDashboardController::class, 'index'])->name('dashboard');
+
+    // Member Invitations
+    Route::get('/invitations', [MemberInvitationController::class, 'index'])->name('invitations.index');
+    Route::get('/invitations/create', [MemberInvitationController::class, 'create'])->name('invitations.create');
+    Route::post('/invitations', [MemberInvitationController::class, 'store'])->name('invitations.store');
+    Route::delete('/invitations/{invitation}', [MemberInvitationController::class, 'destroy'])->name('invitations.destroy');
+
+    // Member Themes
+    Route::get('/themes', [MemberThemeController::class, 'index'])->name('themes.index');
+
+    // Member Guests & WhatsApp
+    Route::get('/guests', [MemberGuestController::class, 'index'])->name('guests.index');
+    Route::post('/guests', [MemberGuestController::class, 'store'])->name('guests.store');
+    Route::delete('/guests/{guest}', [MemberGuestController::class, 'destroy'])->name('guests.destroy');
+
+    // Member Wishes / Guestbook
+    Route::get('/wishes', [MemberWishController::class, 'index'])->name('wishes.index');
+
+    // Member Orders / Billing
+    Route::get('/orders', [MemberOrderController::class, 'index'])->name('orders.index');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Partner Workspace Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', 'role:partner'])->prefix('partner')->name('partner.')->group(function () {
+    Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
+
+    // Partner Clients
+    Route::get('/clients', [PartnerClientController::class, 'index'])->name('clients.index');
+    Route::post('/clients', [PartnerClientController::class, 'store'])->name('clients.store');
+    Route::put('/clients/{client}', [PartnerClientController::class, 'update'])->name('clients.update');
+    Route::delete('/clients/{client}', [PartnerClientController::class, 'destroy'])->name('clients.destroy');
+
+    // Partner Invitations
+    Route::get('/invitations', [PartnerInvitationController::class, 'index'])->name('invitations.index');
+    Route::get('/invitations/create', [PartnerInvitationController::class, 'create'])->name('invitations.create');
+    Route::post('/invitations', [PartnerInvitationController::class, 'store'])->name('invitations.store');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Admin Workspace Routes (Strictly Restricted to Super Admin)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Users Management
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::post('/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::patch('/users/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('admin.users.toggle-status');
+    Route::patch('/users/{user}/role', [AdminUserController::class, 'updateRole'])->name('admin.users.update-role');
+
+    // Invitations Moderation
+    Route::get('/invitations', [InvitationController::class, 'index'])->name('invitations.index');
+    Route::patch('/invitations/{invitation}/toggle', [InvitationController::class, 'togglePublish'])->name('admin.invitations.toggle');
+    Route::get('/invitations/create', [InvitationController::class, 'create'])->name('invitations.create');
+    Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
+    Route::delete('/invitations/{invitation}', [InvitationController::class, 'destroy'])->name('invitations.destroy');
+
+    // Coupons Management
+    Route::get('/coupons', [AdminCouponController::class, 'index'])->name('admin.coupons.index');
+    Route::post('/coupons', [AdminCouponController::class, 'store'])->name('admin.coupons.store');
+    Route::patch('/coupons/{coupon}/toggle', [AdminCouponController::class, 'toggleActive'])->name('admin.coupons.toggle');
+    Route::delete('/coupons/{coupon}', [AdminCouponController::class, 'destroy'])->name('admin.coupons.destroy');
+
+    // Themes
+    Route::get('/themes', [ThemeController::class, 'index'])->name('themes.index');
+    Route::patch('/themes/{theme}/toggle', [ThemeController::class, 'toggleActive'])->name('admin.themes.toggle');
+    Route::patch('/themes/{theme}/price', [ThemeController::class, 'updatePrice'])->name('admin.themes.update-price');
+
+    // Guests & RSVP (Lookup)
+    Route::get('/guests', [GuestController::class, 'index'])->name('guests.index');
+
+    // Wishes / Guestbook Moderation
+    Route::get('/wishes', [WishController::class, 'index'])->name('wishes.index');
+    Route::patch('/wishes/{wish}/toggle', [WishController::class, 'toggleApproval'])->name('admin.wishes.toggle');
+    Route::delete('/wishes/{wish}', [WishController::class, 'destroy'])->name('admin.wishes.destroy');
+
+    // Partners / WO
+    Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
+
+    // Orders & Billing
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 });
 
 require __DIR__.'/auth.php';

@@ -3,58 +3,62 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Guest;
+use App\Models\Coupon;
 use App\Models\Invitation;
+use App\Models\InvitationGuest as Guest;
+use App\Models\InvitationWish as Wish;
 use App\Models\Order;
 use App\Models\Theme;
-use App\Models\Wish;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     /**
-     * Display the Dashboard with role-specific views and metrics.
+     * Display the Admin Super Admin Dashboard with platform governance metrics.
      */
     public function index(): View
     {
-        $user = Auth::user();
-
-        if ($user && ! $user->isSuperAdmin()) {
-            $invitation = $user->invitations()->with(['theme', 'couple', 'guests', 'events', 'wishes', 'wallets'])->latest()->first();
-
-            $myGuestsCount = $invitation ? $invitation->guests()->count() : 0;
-            $myConfirmedGuestsCount = $invitation ? $invitation->guests()->where('attendance_status', 'hadir')->count() : 0;
-            $myWishesCount = $invitation ? $invitation->wishes()->count() : 0;
-            $recentWishes = $invitation ? $invitation->wishes()->latest()->take(5)->get() : collect();
-            $couple = $invitation?->couple;
-            $mainEvent = $invitation?->events()->first();
-
-            return view('member.dashboard', compact(
-                'invitation',
-                'myGuestsCount',
-                'myConfirmedGuestsCount',
-                'myWishesCount',
-                'recentWishes',
-                'couple',
-                'mainEvent'
-            ));
-        }
+        $totalUsers = User::count();
+        $totalMembers = User::whereIn('role', ['member', 'user'])->count();
+        $totalPartners = User::where('role', 'partner')->count();
 
         $totalInvitations = Invitation::count();
+        $totalActiveInvitations = Invitation::where('is_published', true)->count();
+
+        $totalOrders = Order::count();
+        $totalRevenue = (float) Order::where('payment_status', 'paid')->sum(DB::raw('COALESCE(NULLIF(total_amount, 0), amount)'));
+
+        $totalPaidOrders = Order::where('payment_status', 'paid')->count();
+        $totalPendingOrders = Order::where('payment_status', 'pending')->count();
+
+        $totalThemes = Theme::count();
+        $totalCoupons = Coupon::count();
         $totalGuests = Guest::count();
         $totalConfirmedGuests = Guest::where('attendance_status', 'hadir')->count();
-        $totalThemes = Theme::count();
-        $totalOrders = Order::count();
-        $recentInvitations = Invitation::with(['theme', 'couple', 'guests', 'events'])->latest()->take(5)->get();
+
+        $recentOrders = Order::with(['user', 'coupon'])->latest()->take(6)->get();
+        $recentUsers = User::latest()->take(6)->get();
+        $recentInvitations = Invitation::with(['owner', 'theme', 'couple'])->latest()->take(6)->get();
         $recentWishes = Wish::with('invitation')->latest()->take(5)->get();
 
         return view('dashboard', compact(
+            'totalUsers',
+            'totalMembers',
+            'totalPartners',
             'totalInvitations',
+            'totalActiveInvitations',
+            'totalOrders',
+            'totalRevenue',
+            'totalPaidOrders',
+            'totalPendingOrders',
+            'totalThemes',
+            'totalCoupons',
             'totalGuests',
             'totalConfirmedGuests',
-            'totalThemes',
-            'totalOrders',
+            'recentOrders',
+            'recentUsers',
             'recentInvitations',
             'recentWishes'
         ));

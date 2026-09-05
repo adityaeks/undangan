@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Theme extends Model
@@ -16,6 +17,8 @@ class Theme extends Model
         'category',
         'thumbnail',
         'view_path',
+        'price',
+        'metadata',
         'is_active',
         'is_premium',
     ];
@@ -23,6 +26,8 @@ class Theme extends Model
     protected function casts(): array
     {
         return [
+            'price' => 'decimal:2',
+            'metadata' => 'array',
             'is_active' => 'boolean',
             'is_premium' => 'boolean',
         ];
@@ -34,5 +39,80 @@ class Theme extends Model
     public function invitations(): HasMany
     {
         return $this->hasMany(Invitation::class);
+    }
+
+    /**
+     * User theme ownership records.
+     */
+    public function userThemes(): HasMany
+    {
+        return $this->hasMany(UserTheme::class);
+    }
+
+    /**
+     * Users who own this theme.
+     */
+    public function owners(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_themes')
+            ->withPivot(['order_id', 'unlocked_at', 'is_active'])
+            ->withTimestamps();
+    }
+
+    /**
+     * Check if theme is free to use without purchasing.
+     */
+    public function isFree(): bool
+    {
+        return ! $this->is_premium || (float) $this->price <= 0.00;
+    }
+
+    /**
+     * Retrieve the model for a bound value (supports numeric ID or slug).
+     */
+    public function resolveRouteBinding($value, $field = null): ?self
+    {
+        return $this->where('id', $value)->orWhere('slug', $value)->firstOrFail();
+    }
+
+    /**
+     * Convert theme model into standardized catalog array for UI components.
+     *
+     * @return array<string, mixed>
+     */
+    public function toCatalogArray(): array
+    {
+        $meta = $this->metadata ?? [];
+
+        return [
+            'id' => $this->slug,
+            'db_id' => $this->id,
+            'number' => $meta['number'] ?? 'Tema Desain',
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'category' => $this->category,
+            'category_label' => $meta['category_label'] ?? ucfirst($this->category),
+            'tag' => $meta['tag'] ?? ucfirst($this->category),
+            'tag_badge_class' => $meta['tag_badge_class'] ?? 'bg-amber-500 text-charcoal-950 font-bold',
+            'thumbnail' => $this->thumbnail,
+            'secondary_image' => $meta['secondary_image'] ?? $this->thumbnail,
+            'description' => $meta['description'] ?? 'Desain tema undangan digital elegan dan responsif.',
+            'typography' => $meta['typography'] ?? 'Plus Jakarta Sans + Cormorant Garamond',
+            'colors' => $meta['colors'] ?? [],
+            'features' => $meta['features'] ?? [
+                'Bento Grid Event Schedule',
+                'Dynamic Island Floating Audio Player',
+                'Interactive Love Story Horizontal Carousel',
+                'Modern Responsive Finish',
+            ],
+            'best_for' => $meta['best_for'] ?? 'Pasangan modern, resepsi pernikahan elegan minimalis',
+            'rating' => $meta['rating'] ?? '4.98',
+            'reviews_count' => $meta['reviews_count'] ?? '1.200',
+            'price' => format_rupiah($this->price),
+            'raw_price' => (float) $this->price,
+            'is_premium' => $this->is_premium,
+            'demo_url' => route('demo.show', ['slug' => $this->slug]),
+            'checkout_url' => route('checkout.theme', ['theme' => $this->id]),
+        ];
     }
 }

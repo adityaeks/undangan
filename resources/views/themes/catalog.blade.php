@@ -390,7 +390,7 @@
                                     </a> -->
 
                                     <a 
-                                        href="{{ route('register') }}" 
+                                        href="{{ $theme['checkout_url'] }}" 
                                         class="px-4 py-2 rounded-xl bg-charcoal-950 text-brand-100 hover:bg-brand-600 hover:text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
                                     >
                                         <span>Pilih Desain</span>
@@ -492,7 +492,7 @@
                                     </a>
 
                                     <a 
-                                        href="{{ route('register') }}" 
+                                        href="{{ $theme['checkout_url'] }}" 
                                         class="px-4 py-2 rounded-xl bg-brand-500 text-white hover:bg-brand-600 text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
                                     >
                                         <span>Pilih Tema</span>
@@ -861,10 +861,10 @@
                     </a>
 
                     <a 
-                        href="{{ route('register') }}" 
+                        :href="activePreviewTheme ? activePreviewTheme.checkout_url : '{{ route('login') }}'" 
                         class="px-5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 text-white font-bold text-xs hover:scale-105 transition flex items-center gap-1.5 shadow-md"
                     >
-                        <span>Gunakan Tema Ini &amp; Buat Undangan</span>
+                        <span>Pilih Desain &amp; Checkout</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>

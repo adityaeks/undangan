@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="space-y-8" x-data="{ toast: { show: false, message: '' }, showToast(msg) { this.toast.message = msg; this.toast.show = true; setTimeout(() => this.toast.show = false, 3000); } }">
+    <div class="space-y-3 sm:space-y-3.5" x-data="{ toast: { show: false, message: '' }, showToast(msg) { this.toast.message = msg; this.toast.show = true; setTimeout(() => this.toast.show = false, 3000); } }">
         
         <!-- TOAST NOTIFICATION -->
         <div 
@@ -13,53 +13,53 @@
         </div>
 
         <!-- HEADER -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-[10px] font-bold uppercase tracking-wider">
-                    <span>Program Reseller & WO</span>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">Kemitraan Wedding Organizer (WO)</h1>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-100 text-brand-800 text-[10px] font-bold uppercase tracking-wider">Program WO</span>
                 </div>
-                <h1 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-950">
-                    Kemitraan Wedding Organizer (WO)
-                </h1>
                 <p class="text-xs text-sand-600">
                     Kelola kuota paket kemitraan reseller, status white-label branding, dan domain kustom untuk klien Anda.
                 </p>
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ url('/#partner') }}" target="_blank" class="px-5 py-3 rounded-2xl bg-charcoal-950 hover:bg-brand-600 text-white font-bold text-xs transition flex items-center gap-2 shadow">
-                    <i data-lucide="external-link" class="w-4 h-4"></i>
-                    <span>Lihat Halaman Kemitraan</span>
+                <a href="{{ url('/#partner') }}" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-charcoal-950 hover:bg-brand-600 text-white font-bold text-xs transition flex items-center gap-1.5 shadow">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                    <span>Halaman Kemitraan</span>
                 </a>
             </div>
         </div>
 
-        <!-- WHITE-LABEL ADVANTAGE HERO CARD -->
-        <div class="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-brand-950 text-white shadow-xl border border-charcoal-800 space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div class="space-y-2 max-w-xl">
-                    <span class="text-[11px] font-bold text-amber-300 uppercase tracking-widest">Fitur Eksklusif Partner</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl font-bold">100% White-Label & Subdomain Sendiri</h2>
-                    <p class="text-xs sm:text-sm text-sand-300 leading-relaxed">
-                        Undangan klien sepenuhnya menggunakan nama, logo, dan nomor WhatsApp Wedding Organizer Anda tanpa watermark atau embel-embel pihak ketiga.
+        <!-- WHITE-LABEL ADVANTAGE HERO CARD (COMPACT) -->
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-brand-950 text-white shadow-md border border-charcoal-800">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="space-y-0.5 max-w-xl">
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-bold text-amber-300 uppercase tracking-widest">Fitur Eksklusif</span>
+                        <span class="text-xs font-serif font-bold text-white">100% White-Label & Subdomain Sendiri</span>
+                    </div>
+                    <p class="text-xs text-sand-300 leading-relaxed">
+                        Undangan klien sepenuhnya menggunakan nama, logo, dan nomor WhatsApp Wedding Organizer Anda tanpa watermark.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-3 text-center">
-                    <div class="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
-                        <span class="font-serif text-xl font-bold text-amber-200">100%</span>
-                        <span class="text-[10px] text-sand-300 block uppercase">Margin Profit</span>
+                <div class="flex items-center gap-2 text-center shrink-0">
+                    <div class="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
+                        <span class="font-serif text-sm font-bold text-amber-200">100%</span>
+                        <span class="text-[9px] text-sand-300 block uppercase">Margin Profit</span>
                     </div>
-                    <div class="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
-                        <span class="font-serif text-xl font-bold text-amber-200">24/7</span>
-                        <span class="text-[10px] text-sand-300 block uppercase">Support VIP</span>
+                    <div class="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
+                        <span class="font-serif text-sm font-bold text-amber-200">24/7</span>
+                        <span class="text-[9px] text-sand-300 block uppercase">Support VIP</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- PARTNER TIERS GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
             
             <!-- TIER 1 -->
             <div class="p-8 rounded-3xl glass-panel border border-sand-200 flex flex-col justify-between space-y-6">

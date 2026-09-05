@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 class Invitation extends Model
 {
@@ -14,6 +15,9 @@ class Invitation extends Model
 
     protected $fillable = [
         'user_id',
+        'owner_id',
+        'partner_id',
+        'client_id',
         'theme_id',
         'title',
         'slug',
@@ -24,6 +28,8 @@ class Invitation extends Model
         'quote_source',
         'cover_image',
         'is_published',
+        'status',
+        'published_at',
         'passcode',
     ];
 
@@ -32,15 +38,57 @@ class Invitation extends Model
         return [
             'event_date' => 'date',
             'is_published' => 'boolean',
+            'published_at' => 'datetime',
         ];
     }
 
     /**
-     * User who owns the invitation.
+     * Generate unique URL slug for invitation.
+     */
+    public static function generateUniqueSlug(string $baseText, ?int $ignoreId = null): string
+    {
+        $baseSlug = Str::slug($baseText) ?: 'undangan';
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while (static::where('slug', $slug)->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))->exists()) {
+            $slug = "{$baseSlug}-{$counter}";
+            $counter++;
+        }
+
+        return $slug;
+    }
+
+    /**
+     * Owner of the invitation (Customer or Partner).
+     */
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    /**
+     * Partner (WO/Agency) who manages this invitation.
+     */
+    public function partner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'partner_id');
+    }
+
+    /**
+     * Client record under partner.
+     */
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(PartnerClient::class, 'client_id');
+    }
+
+    /**
+     * Backward-compatible user relationship.
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -52,19 +100,64 @@ class Invitation extends Model
     }
 
     /**
-     * Groom and Bride profile data.
+     * Modular invitation settings.
      */
-    public function couple(): HasOne
+    public function setting(): HasOne
     {
-        return $this->hasOne(Couple::class);
+        return $this->hasOne(InvitationSetting::class);
     }
 
     /**
-     * Event agenda details (Akad, Resepsi, etc.).
+     * Modular couple entries (Groom & Bride rows).
+     */
+    public function couples(): HasMany
+    {
+        return $this->hasMany(InvitationCouple::class)->orderBy('order');
+    }
+
+    /**
+     * Couple relationship for groom entry.
+     */
+    public function couple(): HasOne
+    {
+        return $this->hasOne(InvitationCouple::class)->where('role', 'groom');
+    }
+
+    /**
+     * Backward-compatible couple object accessor combining groom and bride.
+     */
+    public function getCoupleAttribute(): ?object
+    {
+        $couples = $this->relationLoaded('couples') ? $this->couples : $this->couples()->get();
+        $groom = $couples->firstWhere('role', 'groom');
+        $bride = $couples->firstWhere('role', 'bride');
+
+        if (! $groom && ! $bride) {
+            return null;
+        }
+
+        return (object) [
+            'groom_name' => $groom?->full_name ?? '',
+            'groom_nickname' => $groom?->nickname ?? $groom?->full_name ?? '',
+            'groom_father' => $groom?->father_name ?? '',
+            'groom_mother' => $groom?->mother_name ?? '',
+            'groom_instagram' => $groom?->instagram ?? '',
+            'groom_photo' => $groom?->photo_url ?? '',
+            'bride_name' => $bride?->full_name ?? '',
+            'bride_nickname' => $bride?->nickname ?? $bride?->full_name ?? '',
+            'bride_father' => $bride?->father_name ?? '',
+            'bride_mother' => $bride?->mother_name ?? '',
+            'bride_instagram' => $bride?->instagram ?? '',
+            'bride_photo' => $bride?->photo_url ?? '',
+        ];
+    }
+
+    /**
+     * Event agenda details.
      */
     public function events(): HasMany
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(InvitationEvent::class)->orderBy('order');
     }
 
     /**
@@ -72,23 +165,33 @@ class Invitation extends Model
      */
     public function stories(): HasMany
     {
-        return $this->hasMany(Story::class)->orderBy('order_position');
+        return $this->hasMany(InvitationStory::class)->orderBy('order');
     }
 
     /**
-     * Photo and video galleries.
+     * Media galleries.
      */
+    public function media(): HasMany
+    {
+        return $this->hasMany(InvitationMedia::class)->orderBy('order');
+    }
+
     public function galleries(): HasMany
     {
-        return $this->hasMany(Gallery::class)->orderBy('order_position');
+        return $this->hasMany(InvitationMedia::class)->orderBy('order');
     }
 
     /**
-     * Digital envelopes and bank accounts.
+     * Gifts and digital wallets.
      */
+    public function gifts(): HasMany
+    {
+        return $this->hasMany(InvitationGift::class)->orderBy('order');
+    }
+
     public function wallets(): HasMany
     {
-        return $this->hasMany(Wallet::class);
+        return $this->hasMany(InvitationGift::class)->orderBy('order');
     }
 
     /**
@@ -96,7 +199,7 @@ class Invitation extends Model
      */
     public function guests(): HasMany
     {
-        return $this->hasMany(Guest::class);
+        return $this->hasMany(InvitationGuest::class);
     }
 
     /**
@@ -104,7 +207,7 @@ class Invitation extends Model
      */
     public function wishes(): HasMany
     {
-        return $this->hasMany(Wish::class)->latest();
+        return $this->hasMany(InvitationWish::class)->latest();
     }
 
     /**

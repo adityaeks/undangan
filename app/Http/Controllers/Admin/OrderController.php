@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -14,7 +15,7 @@ class OrderController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Order::with(['user', 'invitation']);
+        $query = Order::with(['user', 'invitation', 'coupon']);
 
         if ($request->filled('search')) {
             $query->where('order_code', 'like', "%{$request->search}%");
@@ -25,7 +26,7 @@ class OrderController extends Controller
         }
 
         $orders = $query->latest()->paginate(10);
-        $totalRevenue = Order::where('payment_status', 'paid')->sum('amount');
+        $totalRevenue = (float) Order::where('payment_status', 'paid')->sum(DB::raw('COALESCE(NULLIF(total_amount, 0), amount)'));
         $totalPaid = Order::where('payment_status', 'paid')->count();
         $totalPending = Order::where('payment_status', 'pending')->count();
 

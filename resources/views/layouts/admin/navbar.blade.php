@@ -1,5 +1,5 @@
 <!-- ADMIN TOP NAVBAR -->
-<header class="h-20 bg-white/80 backdrop-blur-md border-b border-sand-200 sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8">
+<header class="h-14 bg-white/85 backdrop-blur-md border-b border-sand-200 sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 lg:px-8 transition-all">
     
     <!-- LEFT: TOGGLE & SEARCH -->
     <div class="flex items-center gap-4 flex-1 max-w-xl">

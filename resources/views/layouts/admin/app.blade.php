@@ -136,7 +136,7 @@
             @include('layouts.admin.navbar')
 
             <!-- PAGE CONTENT BODY -->
-            <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-8">
+            <main class="flex-1 px-4 sm:px-6 lg:px-8 pt-2.5 sm:pt-3 pb-8">
                 {{ $slot }}
             </main>
 

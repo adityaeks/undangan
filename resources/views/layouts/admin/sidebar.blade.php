@@ -31,9 +31,9 @@
             <div class="space-y-1.5">
                 <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Menu Utama</span>
                 
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
-                    <i data-lucide="layout-dashboard" class="w-4 h-4 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-sand-400' }}"></i>
-                    <span>Dashboard</span>
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4 {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'text-white' : 'text-sand-400' }}"></i>
+                    <span>Dashboard Platform</span>
                 </a>
 
                 <a href="{{ route('demo.index') }}" target="_blank" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition group">
@@ -45,34 +45,37 @@
                 </a>
             </div>
 
-            <!-- SECTION 2: KELOLA UNDANGAN -->
+            <!-- SECTION 2: MANAJEMEN PLATFORM -->
             <div class="space-y-1.5">
-                <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Undangan & Acara</span>
+                <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Manajemen Platform</span>
+
+                <a href="{{ route('admin.users.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('admin.users.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="users" class="w-4 h-4 {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-sand-400' }}"></i>
+                        <span>Kelola Pengguna</span>
+                    </div>
+                </a>
 
                 <a href="{{ route('invitations.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('invitations.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
                     <div class="flex items-center gap-3">
-                        <i data-lucide="mail-open" class="w-4 h-4 {{ request()->routeIs('invitations.*') ? 'text-white' : 'text-sand-400' }}"></i>
-                        <span>Daftar Undangan</span>
+                        <i data-lucide="mail-check" class="w-4 h-4 {{ request()->routeIs('invitations.*') ? 'text-white' : 'text-sand-400' }}"></i>
+                        <span>Monitoring Undangan</span>
                     </div>
-                    <span class="px-2 py-0.5 rounded-full {{ request()->routeIs('invitations.*') ? 'bg-white/20 text-white' : 'bg-charcoal-800 text-brand-300' }} text-[10px] font-bold">1</span>
+                </a>
+
+                <a href="{{ route('admin.coupons.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('admin.coupons.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="ticket" class="w-4 h-4 {{ request()->routeIs('admin.coupons.*') ? 'text-white' : 'text-sand-400' }}"></i>
+                        <span>Kupon & Diskon Promo</span>
+                    </div>
+                    <span class="px-2 py-0.5 rounded-full {{ request()->routeIs('admin.coupons.*') ? 'bg-white/20 text-white' : 'bg-brand-500/20 text-brand-300' }} text-[10px] font-bold">Promo</span>
                 </a>
 
                 <a href="{{ route('themes.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('themes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
                     <div class="flex items-center gap-3">
                         <i data-lucide="palette" class="w-4 h-4 {{ request()->routeIs('themes.*') ? 'text-white' : 'text-sand-400' }}"></i>
-                        <span>Katalog Tema</span>
+                        <span>Katalog & Harga Tema</span>
                     </div>
-                    <span class="px-2 py-0.5 rounded-full {{ request()->routeIs('themes.*') ? 'bg-white/20 text-white' : 'bg-brand-500/20 text-brand-300' }} text-[10px] font-bold">Custom</span>
-                </a>
-
-                <a href="{{ route('guests.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('guests.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
-                    <i data-lucide="users" class="w-4 h-4 {{ request()->routeIs('guests.*') ? 'text-white' : 'text-sand-400' }}"></i>
-                    <span>Daftar Tamu & RSVP</span>
-                </a>
-
-                <a href="{{ route('wishes.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('wishes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
-                    <i data-lucide="message-square-heart" class="w-4 h-4 {{ request()->routeIs('wishes.*') ? 'text-white' : 'text-sand-400' }}"></i>
-                    <span>Buku Tamu & Ucapan</span>
                 </a>
             </div>
 
@@ -88,6 +91,11 @@
                 <a href="{{ route('orders.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('orders.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
                     <i data-lucide="receipt" class="w-4 h-4 {{ request()->routeIs('orders.*') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Riwayat Transaksi</span>
+                </a>
+
+                <a href="{{ route('wishes.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('wishes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                    <i data-lucide="message-square-heart" class="w-4 h-4 {{ request()->routeIs('wishes.*') ? 'text-white' : 'text-sand-400' }}"></i>
+                    <span>Moderasi Buku Tamu</span>
                 </a>
             </div>
 

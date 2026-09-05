@@ -69,11 +69,11 @@
                     </div>
 
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('invitations.index') }}" class="px-4 py-2.5 rounded-2xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 font-bold text-xs transition flex items-center gap-2">
+                        <a href="{{ route('member.invitations.index') }}" class="px-4 py-2.5 rounded-2xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 font-bold text-xs transition flex items-center gap-2">
                             <i data-lucide="edit-3" class="w-3.5 h-3.5 text-sand-600"></i>
                             <span>Edit Data Acara</span>
                         </a>
-                        <a href="{{ route('themes.index') }}" class="px-4 py-2.5 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 font-bold text-xs transition flex items-center gap-2 border border-amber-500/30">
+                        <a href="{{ route('member.themes.index') }}" class="px-4 py-2.5 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 font-bold text-xs transition flex items-center gap-2 border border-amber-500/30">
                             <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-600"></i>
                             <span>Ganti Tema</span>
                         </a>
@@ -124,11 +124,11 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3">
-                        <a href="{{ route('themes.index') }}" class="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs backdrop-blur-md transition flex items-center gap-2">
+                        <a href="{{ route('member.themes.index') }}" class="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs backdrop-blur-md transition flex items-center gap-2">
                             <i data-lucide="palette" class="w-3.5 h-3.5"></i>
                             <span>Pilihan Tema</span>
                         </a>
-                        <a href="{{ route('invitations.create') }}" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-white font-bold text-xs shadow-lg hover:shadow-amber-500/30 hover:scale-105 transition flex items-center gap-2">
+                        <a href="{{ route('member.invitations.create') }}" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-white font-bold text-xs shadow-lg hover:shadow-amber-500/30 hover:scale-105 transition flex items-center gap-2">
                             <i data-lucide="plus" class="w-4 h-4"></i>
                             <span>Buat Undangan Sekarang</span>
                         </a>
@@ -192,7 +192,7 @@
                 </div>
 
                 <div class="pt-2">
-                    <a href="{{ route('invitations.create') }}" class="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-bold text-sm shadow-xl hover:shadow-amber-500/25 hover:scale-105 transition duration-200">
+                    <a href="{{ route('member.invitations.create') }}" class="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-bold text-sm shadow-xl hover:shadow-amber-500/25 hover:scale-105 transition duration-200">
                         <i data-lucide="plus" class="w-5 h-5"></i>
                         <span>Mulai Buat Undangan Pertama Saya</span>
                     </a>
@@ -276,7 +276,100 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- 4. CHECKLIST KELENGKAPAN UNDANGAN & AKSI CEPAT -->
+        <!-- 4. TEMA YANG TELAH DIBAYAR & DIMILIKI -->
+        <!-- ============================================== -->
+        <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 sm:p-8 space-y-6 shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-sand-200/60 pb-5">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase tracking-wider mb-2">
+                        <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
+                        <span>Akses Template Digital</span>
+                    </div>
+                    <h3 class="font-serif text-xl sm:text-2xl font-bold text-charcoal-950">Tema yang Telah Anda Miliki</h3>
+                    <p class="text-xs text-sand-600">Daftar desain tema undangan yang telah Anda bayar dan aktif digunakan kapan saja.</p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-auto">
+                    <a href="{{ route('member.themes.index') }}" class="px-4 py-2.5 rounded-2xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 font-bold text-xs transition flex items-center gap-2">
+                        <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-600"></i>
+                        <span>Tema Saya</span>
+                    </a>
+                    <a href="{{ route('themes.catalog') }}" class="px-4 py-2.5 rounded-2xl bg-charcoal-900 hover:bg-charcoal-800 text-white font-bold text-xs transition flex items-center gap-2 shadow-sm">
+                        <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span>Beli Tema Baru</span>
+                    </a>
+                </div>
+            </div>
+
+            @if($unlockedThemes && $unlockedThemes->isNotEmpty())
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($unlockedThemes as $theme)
+                        <div class="rounded-2xl border border-sand-200/80 bg-white shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col group">
+                            <!-- THUMBNAIL -->
+                            <div class="relative aspect-[4/3] overflow-hidden bg-sand-100">
+                                <img src="{{ $theme->thumbnail }}" alt="{{ $theme->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-transparent to-transparent"></div>
+                                <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-bold shadow flex items-center gap-1">
+                                    <i data-lucide="shield-check" class="w-3 h-3"></i>
+                                    <span>Lunas &amp; Aktif</span>
+                                </span>
+                                <div class="absolute bottom-3 left-3 right-3 text-white">
+                                    <span class="text-[10px] font-bold text-amber-300 uppercase tracking-wider block">{{ ucfirst($theme->category) }}</span>
+                                    <h4 class="text-sm font-serif font-bold truncate">{{ $theme->name }}</h4>
+                                </div>
+                            </div>
+
+                            <!-- CARD CONTENT -->
+                            <div class="p-4 flex-1 flex flex-col justify-between space-y-4">
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-[11px]">
+                                        <span class="font-semibold text-sand-500">Status Pembayaran:</span>
+                                        <span class="text-emerald-700 font-bold flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                            Lunas
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-sand-600 line-clamp-2">
+                                        {{ $theme->metadata['description'] ?? 'Desain tema undangan digital eksklusif siap pakai.' }}
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-sand-100">
+                                    <a href="{{ route('demo.show', ['slug' => $theme->slug]) }}" target="_blank" class="py-2 px-3 rounded-xl border border-sand-200 hover:bg-sand-50 text-charcoal-800 text-[11px] font-bold flex items-center justify-center gap-1 transition text-center">
+                                        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                        <span>Demo</span>
+                                    </a>
+                                    <a href="{{ route('member.invitations.create', ['theme_id' => $theme->id]) }}" class="py-2 px-3 rounded-xl bg-charcoal-950 hover:bg-amber-600 text-white text-[11px] font-bold flex items-center justify-center gap-1 transition text-center shadow-sm">
+                                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                        <span>Gunakan</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="py-8 px-4 text-center rounded-2xl bg-sand-50/60 border border-dashed border-sand-300 space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-xl shadow-sm">
+                        <i data-lucide="palette" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-1 max-w-sm mx-auto">
+                        <h4 class="font-serif text-base font-bold text-charcoal-950">Belum Ada Tema yang Dibeli</h4>
+                        <p class="text-xs text-sand-500 leading-relaxed">
+                            Pilih desain template impian Anda dari koleksi eksklusif KlikMomen dan selesaikan aktivasi untuk membuat website undangan pernikahan Anda.
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold text-xs shadow-md transition">
+                            <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                            <span>Jelajahi &amp; Beli Tema (Mulai Rp 49.000)</span>
+                        </a>
+                    </div>
+                </div>
+            @endif
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 5. CHECKLIST KELENGKAPAN UNDANGAN & AKSI CEPAT -->
         <!-- ============================================== -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
@@ -346,7 +439,7 @@
 
                 <!-- QUICK ACTIONS -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <a href="{{ route('invitations.create') }}" class="p-5 rounded-2xl glass-panel border border-sand-200 space-y-2 hover:border-amber-400 hover:shadow-md transition group">
+                    <a href="{{ route('member.invitations.create') }}" class="p-5 rounded-2xl glass-panel border border-sand-200 space-y-2 hover:border-amber-400 hover:shadow-md transition group">
                         <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center group-hover:scale-105 transition">
                             <i data-lucide="plus-circle" class="w-5 h-5"></i>
                         </div>
@@ -354,12 +447,12 @@
                         <p class="text-[11px] text-sand-600">Form pembuatan website undangan pernikahan digital lengkap.</p>
                     </a>
 
-                    <a href="{{ route('themes.index') }}" class="p-5 rounded-2xl glass-panel border border-sand-200 space-y-2 hover:border-amber-400 hover:shadow-md transition group">
+                    <a href="{{ route('themes.catalog') }}" class="p-5 rounded-2xl glass-panel border border-sand-200 space-y-2 hover:border-amber-400 hover:shadow-md transition group">
                         <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center group-hover:scale-105 transition">
-                            <i data-lucide="palette" class="w-5 h-5"></i>
+                            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                         </div>
-                        <h4 class="font-serif text-sm font-bold text-charcoal-950">Katalog Desain</h4>
-                        <p class="text-[11px] text-sand-600">Pilih tema eksklusif mulai dari Tradisional Nusantara hingga Modern.</p>
+                        <h4 class="font-serif text-sm font-bold text-charcoal-950">Katalog & Beli Tema</h4>
+                        <p class="text-[11px] text-sand-600">Jelajahi dan beli tema eksklusif mulai Rp 49.000.</p>
                     </a>
 
                     <a href="{{ route('demo.index') }}" target="_blank" class="p-5 rounded-2xl glass-panel border border-sand-200 space-y-2 hover:border-amber-400 hover:shadow-md transition group">
@@ -379,7 +472,7 @@
                 <div class="flex items-center justify-between">
                     <h3 class="font-serif text-xl font-bold text-charcoal-950">Ucapan Masuk Terbaru</h3>
                     @if($myWishesCount > 0)
-                        <a href="{{ route('wishes.index') }}" class="text-xs font-bold text-amber-700 hover:underline">Lihat Semua</a>
+                        <a href="{{ route('member.wishes.index') }}" class="text-xs font-bold text-amber-700 hover:underline">Lihat Semua</a>
                     @endif
                 </div>
 

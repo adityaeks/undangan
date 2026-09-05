@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Invitation;
 use App\Models\Theme;
+use App\Models\UserTheme;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class InvitationController extends Controller
@@ -40,12 +40,8 @@ class InvitationController extends Controller
         }
 
         $invitations = $query->latest()->paginate(10);
-        $totalActive = (! $user->isSuperAdmin())
-            ? Invitation::where('user_id', $user->id)->where('is_published', true)->count()
-            : Invitation::where('is_published', true)->count();
-        $totalDraft = (! $user->isSuperAdmin())
-            ? Invitation::where('user_id', $user->id)->where('is_published', false)->count()
-            : Invitation::where('is_published', false)->count();
+        $totalActive = Invitation::where('is_published', true)->count();
+        $totalDraft = Invitation::where('is_published', false)->count();
 
         return view('admin.invitations.index', compact('invitations', 'totalActive', 'totalDraft'));
     }
@@ -56,29 +52,7 @@ class InvitationController extends Controller
     public function create(): View
     {
         $themes = Theme::where('is_active', true)->get();
-
-        $musicPresets = [
-            [
-                'title' => 'A Thousand Years (Romantic Acoustic Piano)',
-                'file' => '/audio/wedding-song.mp3',
-            ],
-            [
-                'title' => 'Canon in D (String Quartet Ensemble)',
-                'file' => '/audio/canon-in-d.mp3',
-            ],
-            [
-                'title' => 'Until I Found You (Acoustic Guitar)',
-                'file' => '/audio/until-i-found-you.mp3',
-            ],
-            [
-                'title' => 'Akad (Payung Teduh - Sweet Instrumental)',
-                'file' => '/audio/akad-instrumental.mp3',
-            ],
-            [
-                'title' => 'Kisah Romantis (Acoustic Strings)',
-                'file' => '/audio/kisah-romantis.mp3',
-            ],
-        ];
+        $musicPresets = config('themes.music_presets', []);
 
         return view('admin.invitations.create', compact('themes', 'musicPresets'));
     }
@@ -185,19 +159,16 @@ class InvitationController extends Controller
 
         // Generate clean unique slug
         $baseSlug = $request->filled('slug')
-            ? Str::slug($request->slug)
-            : Str::slug($request->groom_nickname.'-'.$request->bride_nickname);
+            ? $request->slug
+            : ($request->groom_nickname.'-'.$request->bride_nickname);
+        $slug = Invitation::generateUniqueSlug($baseSlug);
 
-        $slug = $baseSlug;
-        $counter = 1;
-        while (Invitation::where('slug', $slug)->exists()) {
-            $slug = "{$baseSlug}-{$counter}";
-            $counter++;
-        }
+        $userId = Auth::id() ?? 1;
 
-        // 2. Create Invitation
+        // 2. Create Invitation Aggregate
         $invitation = Invitation::create([
-            'user_id' => Auth::id() ?? 1,
+            'user_id' => $userId,
+            'owner_id' => $userId,
             'theme_id' => $validated['theme_id'],
             'title' => $validated['title'],
             'slug' => $slug,
@@ -208,25 +179,52 @@ class InvitationController extends Controller
             'quote_source' => $validated['quote_source'] ?? 'QS. Ar-Rum: 21',
             'cover_image' => $coverImage,
             'is_published' => true,
+            'status' => 'published',
+            'published_at' => now(),
         ]);
 
-        // 3. Create Couple Data
-        $invitation->couple()->create([
-            'groom_name' => $validated['groom_name'],
-            'groom_nickname' => $validated['groom_nickname'],
-            'groom_father' => $validated['groom_father'] ?? 'Bpk. Orang Tua Pria',
-            'groom_mother' => $validated['groom_mother'] ?? 'Ibu Orang Tua Pria',
-            'groom_instagram' => $validated['groom_instagram'] ?? 'rakapratama',
-            'groom_photo' => $groomPhoto,
-            'bride_name' => $validated['bride_name'],
-            'bride_nickname' => $validated['bride_nickname'],
-            'bride_father' => $validated['bride_father'] ?? 'Bpk. Orang Tua Wanita',
-            'bride_mother' => $validated['bride_mother'] ?? 'Ibu Orang Tua Wanita',
-            'bride_instagram' => $validated['bride_instagram'] ?? 'arindaputri.l',
-            'bride_photo' => $bridePhoto,
+        // Auto unlock theme for owner if not already unlocked
+        UserTheme::firstOrCreate([
+            'user_id' => $userId,
+            'theme_id' => $validated['theme_id'],
+        ], [
+            'unlocked_at' => now(),
         ]);
 
-        // 4. Create Events (Akad & Resepsi)
+        // 3. Create Settings
+        $invitation->setting()->create([
+            'bg_music_url' => $backgroundMusic,
+            'is_music_autoplay' => false,
+            'quote_text' => $validated['quote_text'] ?? 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.',
+            'quote_source' => $validated['quote_source'] ?? 'QS. Ar-Rum: 21',
+            'enable_comments' => true,
+            'enable_rsvp' => true,
+        ]);
+
+        // 4. Create Couple Data (Groom & Bride rows)
+        $invitation->couples()->create([
+            'role' => 'groom',
+            'full_name' => $validated['groom_name'],
+            'nickname' => $validated['groom_nickname'],
+            'father_name' => $validated['groom_father'] ?? 'Bpk. Orang Tua Pria',
+            'mother_name' => $validated['groom_mother'] ?? 'Ibu Orang Tua Pria',
+            'instagram' => $validated['groom_instagram'] ?? 'rakapratama',
+            'photo_url' => $groomPhoto,
+            'order' => 1,
+        ]);
+
+        $invitation->couples()->create([
+            'role' => 'bride',
+            'full_name' => $validated['bride_name'],
+            'nickname' => $validated['bride_nickname'],
+            'father_name' => $validated['bride_father'] ?? 'Bpk. Orang Tua Wanita',
+            'mother_name' => $validated['bride_mother'] ?? 'Ibu Orang Tua Wanita',
+            'instagram' => $validated['bride_instagram'] ?? 'arindaputri.l',
+            'photo_url' => $bridePhoto,
+            'order' => 2,
+        ]);
+
+        // 5. Create Events (Akad & Resepsi)
         $invitation->events()->create([
             'title' => 'Akad Nikah',
             'date' => $validated['akad_date'],
@@ -234,7 +232,8 @@ class InvitationController extends Controller
             'timezone' => 'WIB',
             'venue_name' => $validated['akad_venue'],
             'address' => $validated['akad_address'],
-            'google_maps_url' => $validated['akad_maps_link'] ?? 'https://maps.google.com/?q=Jakarta',
+            'maps_url' => $validated['akad_maps_link'] ?? 'https://maps.google.com/?q=Jakarta',
+            'order' => 1,
         ]);
 
         $invitation->events()->create([
@@ -244,39 +243,37 @@ class InvitationController extends Controller
             'timezone' => 'WIB',
             'venue_name' => $validated['resepsi_venue'],
             'address' => $validated['resepsi_address'],
-            'google_maps_url' => $validated['resepsi_maps_link'] ?? 'https://maps.google.com/?q=Jakarta',
+            'maps_url' => $validated['resepsi_maps_link'] ?? 'https://maps.google.com/?q=Jakarta',
+            'order' => 2,
         ]);
 
-        // 5. Create Prewedding Galleries
+        // 6. Create Prewedding Media Galleries
         $orderPos = 1;
 
-        // Uploaded files
         if ($request->hasFile('gallery_files')) {
             foreach ($request->file('gallery_files') as $file) {
                 $path = $file->store('invitations/galleries', 'public');
-                $invitation->galleries()->create([
+                $invitation->media()->create([
                     'media_type' => 'photo',
-                    'file_url' => Storage::url($path),
-                    'order_position' => $orderPos++,
+                    'url' => Storage::url($path),
+                    'order' => $orderPos++,
                 ]);
             }
         }
 
-        // Custom URLs if any
         if (! empty($validated['gallery_urls'])) {
             foreach ($validated['gallery_urls'] as $url) {
                 if (! empty($url)) {
-                    $invitation->galleries()->create([
+                    $invitation->media()->create([
                         'media_type' => 'photo',
-                        'file_url' => $url,
-                        'order_position' => $orderPos++,
+                        'url' => $url,
+                        'order' => $orderPos++,
                     ]);
                 }
             }
         }
 
-        // If no gallery uploaded, provide 4 curated sample photos
-        if ($invitation->galleries()->count() === 0) {
+        if ($invitation->media()->count() === 0) {
             $defaultGalleries = [
                 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
                 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80',
@@ -284,43 +281,61 @@ class InvitationController extends Controller
                 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80',
             ];
             foreach ($defaultGalleries as $photoUrl) {
-                $invitation->galleries()->create([
+                $invitation->media()->create([
                     'media_type' => 'photo',
-                    'file_url' => $photoUrl,
-                    'order_position' => $orderPos++,
+                    'url' => $photoUrl,
+                    'order' => $orderPos++,
                 ]);
             }
         }
 
-        // 6. Create Wallets / Bank Accounts
+        // 7. Create Gifts / Bank Accounts
         if (! empty($validated['bank_1_name']) && ! empty($validated['bank_1_number'])) {
-            $invitation->wallets()->create([
+            $invitation->gifts()->create([
+                'gift_type' => 'bank_transfer',
                 'bank_name' => $validated['bank_1_name'],
                 'account_number' => $validated['bank_1_number'],
                 'account_name' => $validated['bank_1_holder'] ?? $validated['groom_name'],
+                'order' => 1,
             ]);
         }
 
         if (! empty($validated['bank_2_name']) && ! empty($validated['bank_2_number'])) {
-            $invitation->wallets()->create([
+            $invitation->gifts()->create([
+                'gift_type' => 'bank_transfer',
                 'bank_name' => $validated['bank_2_name'],
                 'account_number' => $validated['bank_2_number'],
                 'account_name' => $validated['bank_2_holder'] ?? $validated['bride_name'],
+                'order' => 2,
             ]);
         }
 
-        // 7. Create Default Sample Guest
+        // 8. Create Default Sample Guest
         $invitation->guests()->create([
             'name' => 'Reyhan',
             'slug' => 'budi-santoso',
-            'phone_number' => '081234567890',
-            'group' => 'VIP',
-            'rsvp_status' => 'pending',
-            'confirmed_pax' => 2,
+            'phone' => '081234567890',
+            'category' => 'VIP',
+            'attendance_status' => 'pending',
+            'pax' => 2,
         ]);
 
         return redirect()->route('invitations.index')
             ->with('success', 'Selamat! Undangan pernikahan "'.$invitation->title.'" berhasil disimpan dan diterbitkan.');
+    }
+
+    /**
+     * Toggle publish/draft status for moderation.
+     */
+    public function togglePublish(Invitation $invitation): RedirectResponse
+    {
+        $invitation->update([
+            'is_published' => ! $invitation->is_published,
+        ]);
+
+        $status = $invitation->is_published ? 'dipublikasikan (Online)' : 'ditarik (Draft / Suspended)';
+
+        return back()->with('success', "Status undangan \"{$invitation->title}\" berhasil diubah menjadi {$status}.");
     }
 
     /**

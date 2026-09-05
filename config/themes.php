@@ -1,0 +1,336 @@
+<?php
+
+$editorialPreset = [
+    'id' => 'editorial',
+    'name' => 'The Vogue Editorial Issue',
+    'category' => 'Modern Dark Aesthetic',
+    'tagline' => 'Cinematic, Deep Starlight & Cosmic Aura',
+    'is_dark' => true,
+    'font_heading' => 'Plus Jakarta Sans',
+    'font_body' => 'Plus Jakarta Sans',
+    'font_accent' => 'Plus Jakarta Sans',
+    'cover_bg' => 'https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=1200&auto=format&fit=crop&q=85',
+    'groom_photo' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+    'bride_photo' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80',
+    'audio_url' => '/audio/wedding-song.mp3',
+    'audio_title' => 'City of Stars & Modern Synth Strings',
+    'bg_main' => '#0A0C13',
+    'bg_card' => '#121624',
+    'text_primary' => '#F8FAFC',
+    'text_secondary' => '#94A3B8',
+    'accent' => '#38BDF8',
+    'border_color' => '#1E293B',
+    'btn_bg' => '#3B82F6',
+    'btn_text' => '#FFFFFF',
+    'button_style' => 'bg-sky-500 text-slate-950 font-bold hover:bg-sky-400',
+    'tag_bg' => '#1E253E',
+    'tag_text' => '#93C5FD',
+    'card_radius' => 'rounded-2xl',
+    'card_shadow' => 'shadow-xl border border-sky-500/20',
+];
+
+$botanicalPreset = [
+    'id' => 'botanical',
+    'name' => 'The Ethereal Botanical Glass',
+    'category' => 'Botanical & Rustic',
+    'tagline' => 'Organic, Earthy & Ethereal Greenery',
+    'is_dark' => false,
+    'font_heading' => 'Cormorant Garamond',
+    'font_body' => 'Plus Jakarta Sans',
+    'font_accent' => 'Playfair Display',
+    'cover_bg' => 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=1200&auto=format&fit=crop&q=85',
+    'groom_photo' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+    'bride_photo' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80',
+    'audio_url' => '/audio/wedding-song.mp3',
+    'audio_title' => 'Canon in D (Acoustic & Woodwinds)',
+    'bg_main' => '#F2F6F3',
+    'bg_card' => '#FFFFFF',
+    'text_primary' => '#1B3227',
+    'text_secondary' => '#526A5D',
+    'accent' => '#3E6F56',
+    'border_color' => '#D5E3D9',
+    'btn_bg' => '#244234',
+    'btn_text' => '#EFF6F1',
+    'button_style' => 'bg-[#2D503F] text-emerald-50 hover:bg-[#233E31]',
+    'tag_bg' => '#DDE9E0',
+    'tag_text' => '#244234',
+    'card_radius' => 'rounded-[28px]',
+    'card_shadow' => 'shadow-sm',
+];
+
+$classicPreset = [
+    'id' => 'classic',
+    'name' => 'The Timeless Classic Card',
+    'category' => 'Traditional Cultural',
+    'tagline' => 'Majestic, Cultural & Golden Songket Batik',
+    'is_dark' => false,
+    'font_heading' => 'Playfair Display',
+    'font_body' => 'Plus Jakarta Sans',
+    'font_accent' => 'Cormorant Garamond',
+    'cover_bg' => 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=1200&auto=format&fit=crop&q=85',
+    'groom_photo' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+    'bride_photo' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80',
+    'audio_url' => '/audio/wedding-song.mp3',
+    'audio_title' => 'Gending Sriwijaya & Royal Gamelan',
+    'bg_main' => '#FDF8F2',
+    'bg_card' => '#FFFFFF',
+    'text_primary' => '#2B0E11',
+    'text_secondary' => '#75484D',
+    'accent' => '#B67E22',
+    'border_color' => '#ECDDCB',
+    'btn_bg' => '#5B1A21',
+    'btn_text' => '#FDF4E7',
+    'button_style' => 'bg-[#6D1B22] text-amber-50 hover:bg-[#57141A]',
+    'tag_bg' => '#F5E6D3',
+    'tag_text' => '#5B1A21',
+    'card_radius' => 'rounded-3xl',
+    'card_shadow' => 'shadow-md border border-amber-400/30',
+];
+
+$minimalistPreset = [
+    'id' => 'minimalist',
+    'name' => 'The Warm Minimalist',
+    'category' => 'Minimalist Editorial',
+    'tagline' => 'Clean, Timeless & Editorial Serif',
+    'is_dark' => false,
+    'font_heading' => 'Playfair Display',
+    'font_body' => 'Plus Jakarta Sans',
+    'font_accent' => 'Cormorant Garamond',
+    'cover_bg' => 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&q=85',
+    'groom_photo' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+    'bride_photo' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80',
+    'audio_url' => '/audio/wedding-song.mp3',
+    'audio_title' => 'A Thousand Years (Romantic Acoustic)',
+    'bg_main' => '#FAF8F5',
+    'bg_card' => '#FFFFFF',
+    'text_primary' => '#181715',
+    'text_secondary' => '#7A7469',
+    'accent' => '#A68D5C',
+    'border_color' => '#EFECE3',
+    'btn_bg' => '#181715',
+    'btn_text' => '#F4EFE6',
+    'button_style' => 'bg-stone-900 text-stone-50 hover:bg-stone-800',
+    'tag_bg' => '#E9DFC9',
+    'tag_text' => '#6C5834',
+    'card_radius' => 'rounded-3xl',
+    'card_shadow' => 'shadow-sm',
+];
+
+$roseRomancePreset = [
+    'id' => 'rose-romance',
+    'name' => 'The Rose Romance Arch',
+    'category' => 'Blush Romance',
+    'tagline' => 'Delicate, Poetic & Soft Rose Watercolor',
+    'is_dark' => false,
+    'font_heading' => 'Cormorant Garamond',
+    'font_body' => 'Plus Jakarta Sans',
+    'font_accent' => 'Great Vibes',
+    'cover_bg' => 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1200&auto=format&fit=crop&q=85',
+    'groom_photo' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+    'bride_photo' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80',
+    'audio_url' => '/audio/wedding-song.mp3',
+    'audio_title' => 'La Vie En Rose (French Acoustic Harp)',
+    'bg_main' => '#FAF3F5',
+    'bg_card' => '#FFFFFF',
+    'text_primary' => '#3B1A24',
+    'text_secondary' => '#7F5160',
+    'accent' => '#B85D77',
+    'border_color' => '#EEDCE2',
+    'btn_bg' => '#8C3A53',
+    'btn_text' => '#FDF0F3',
+    'button_style' => 'bg-[#9E4761] text-rose-50 hover:bg-[#853B51]',
+    'tag_bg' => '#F5DEE5',
+    'tag_text' => '#8C3A53',
+    'card_radius' => 'rounded-3xl',
+    'card_shadow' => 'shadow-sm',
+];
+
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | The 5 Canonical Themes Style Presets
+    |--------------------------------------------------------------------------
+    | Standardized aesthetic styling tokens for the 5 themes in KlikMomen.
+    */
+    'presets' => [
+        'editorial' => $editorialPreset,
+        'botanical' => $botanicalPreset,
+        'classic' => $classicPreset,
+        'minimalist' => $minimalistPreset,
+        'rose-romance' => $roseRomancePreset,
+
+        // Aliases for backward compatibility
+        'modern' => $editorialPreset,
+        'nusantara' => $classicPreset,
+        'romantic' => $roseRomancePreset,
+        'luxury' => $classicPreset,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Slug to Preset Mapping
+    |--------------------------------------------------------------------------
+    | Maps public theme slugs to corresponding theme preset style keys.
+    */
+    'slug_to_preset' => [
+        // 5 Canonical Themes
+        'editorial' => 'editorial',
+        'botanical' => 'botanical',
+        'classic' => 'classic',
+        'minimalist' => 'minimalist',
+        'rose-romance' => 'rose-romance',
+
+        // Backward compatibility mappings
+        'modern' => 'editorial',
+        'vogue-editorial' => 'editorial',
+        'editorial-magazine' => 'editorial',
+        'midnight-starlight' => 'editorial',
+        'ethereal-botanical' => 'botanical',
+        'sage-botanical' => 'botanical',
+        'botanical-glass' => 'botanical',
+        'botanical-arch' => 'botanical',
+        'timeless-classic' => 'classic',
+        'classic-card' => 'classic',
+        'nusantara-heritage' => 'classic',
+        'nusantara' => 'classic',
+        'monochrome-elegance' => 'minimalist',
+        'warm-minimalist' => 'minimalist',
+        'serene-minimalist' => 'minimalist',
+        'minimalist-linen' => 'minimalist',
+        'royal-luxury' => 'minimalist',
+        'royal-champagne' => 'minimalist',
+        'royal-grand-palais' => 'minimalist',
+        'luxury' => 'minimalist',
+        'palais' => 'minimalist',
+        'blush-silk' => 'rose-romance',
+        'rose-floral' => 'rose-romance',
+        'romantic' => 'rose-romance',
+        'rosewood' => 'rose-romance',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Wedding Music Presets
+    |--------------------------------------------------------------------------
+    | Standard curated background tracks for digital invitations.
+    */
+    'music_presets' => [
+        ['title' => 'A Thousand Years (Romantic Acoustic Piano)', 'file' => '/audio/wedding-song.mp3'],
+        ['title' => 'Canon in D (String Quartet Ensemble)', 'file' => '/audio/canon-in-d.mp3'],
+        ['title' => 'Until I Found You (Acoustic Guitar)', 'file' => '/audio/until-i-found-you.mp3'],
+        ['title' => 'Akad (Payung Teduh - Sweet Instrumental)', 'file' => '/audio/akad-instrumental.mp3'],
+        ['title' => 'Kisah Romantis (Acoustic Strings)', 'file' => '/audio/kisah-romantis.mp3'],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Fallback Demo Invitation Data
+    |--------------------------------------------------------------------------
+    */
+    'demo_data' => [
+        'groom' => [
+            'name' => 'Raka Pratama, S.T.',
+            'nickname' => 'Raka',
+            'father' => 'Bpk. Dr. H. Bambang Soediro',
+            'mother' => 'Ibu Hj. Ratna Juwita',
+            'child_order' => 'Putra pertama',
+            'instagram' => 'rakapratama',
+            'photo' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+        ],
+        'bride' => [
+            'name' => 'Arinda Putri Larasati, S.I.Kom',
+            'nickname' => 'Arinda',
+            'father' => 'Bpk. Ir. H. Hendra Wijaya, M.M.',
+            'mother' => 'Ibu Hj. Dewi Kusuma Wardani',
+            'child_order' => 'Putri kedua',
+            'instagram' => 'arindaputri.l',
+            'photo' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80',
+        ],
+        'quote_text' => 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.',
+        'quote_source' => 'QS. Ar-Rum: 21',
+        'events' => [
+            'akad' => [
+                'title' => 'Akad Nikah',
+                'date' => 'Sabtu, 24 Oktober 2026',
+                'time' => '08.00 - 10.00 WIB',
+                'venue' => 'Masjid Agung Sunda Kelapa',
+                'address' => 'Jl. Taman Sunda Kelapa No.16, Menteng, Jakarta Pusat 10310',
+                'maps_link' => 'https://maps.google.com/?q=Masjid+Agung+Sunda+Kelapa+Jakarta',
+            ],
+            'resepsi' => [
+                'title' => 'Resepsi Pernikahan',
+                'date' => 'Sabtu, 24 Oktober 2026',
+                'time' => '11.00 - 14.00 WIB & 18.30 - 21.00 WIB',
+                'venue' => 'Grand Ballroom The Ritz-Carlton, Jakarta',
+                'address' => 'Mega Kuningan Barat No.1, Setiabudi, Jakarta Selatan 12950',
+                'maps_link' => 'https://maps.google.com/?q=The+Ritz-Carlton+Jakarta+Mega+Kuningan',
+            ],
+        ],
+        'countdown_target' => '2026-10-24T08:00:00+07:00',
+        'stories' => [
+            [
+                'year' => 'Agustus 2020',
+                'title' => 'Pertemuan Pertama',
+                'desc' => 'Takdir mempertemukan kami di sebuah workshop desain dan arsitektur di Bandung. Berawal dari diskusi tugas dan obrolan secangkir kopi hangat.',
+            ],
+            [
+                'year' => 'November 2022',
+                'title' => 'Menjalin Komitmen',
+                'desc' => 'Setelah dua tahun saling mengenal kepribadian dan berbagi mimpi, kami memutuskan untuk melangkah bersama dalam ikatan kasih yang tulus.',
+            ],
+            [
+                'year' => 'Desember 2025',
+                'title' => 'Hari Lamaran Resmi',
+                'desc' => 'Di hadapan kedua keluarga besar, kami mengikat janji suci untuk melangkah ke jenjang pernikahan yang penuh berkah dan ridho Ilahi.',
+            ],
+            [
+                'year' => 'Oktober 2026',
+                'title' => 'Menuju Hari Bahagia',
+                'desc' => 'Dengan penuh rasa syukur, kami siap menyatukan cinta dalam ikatan pernikahan kudus seumur hidup.',
+            ],
+        ],
+        'galleries' => [
+            'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=800&auto=format&fit=crop&q=80',
+        ],
+        'bank_accounts' => [
+            [
+                'bank' => 'Bank Central Asia (BCA)',
+                'account_number' => '8801 2345 67',
+                'account_name' => 'Raka Adiputra',
+                'color' => 'from-blue-600 to-blue-800',
+            ],
+            [
+                'bank' => 'Bank Mandiri',
+                'account_number' => '1370 0192 8374 1',
+                'account_name' => 'Arinda Putri Larasati',
+                'color' => 'from-amber-600 to-amber-800',
+            ],
+        ],
+        'gift_address' => 'Jl. Senopati Raya No. 45, Kebayoran Baru, Jakarta Selatan 12190 (Penerima: Arinda / Raka - 0812-3456-7890)',
+        'sample_wishes' => [
+            [
+                'name' => 'Dimas & Anisa',
+                'attendance' => 'Hadir (2 Orang)',
+                'message' => 'Selamat menempuh hidup baru Raka & Arinda! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Bahagia selamanya!',
+                'time' => '10 menit yang lalu',
+            ],
+            [
+                'name' => 'Bpk. Ir. Gunawan Wibisono',
+                'attendance' => 'Hadir (2 Orang)',
+                'message' => 'Barakallahu lakuma wa baraka alaikuma wa jama\'a bainakuma fii khoir. Selamat berbahagia untuk kedua mempelai dan keluarga besar.',
+                'time' => '1 jam yang lalu',
+            ],
+            [
+                'name' => 'Clara Novita, S.Ds.',
+                'attendance' => 'Hadir (1 Orang)',
+                'message' => 'Happy Wedding Arinda sayang dan Raka! Cantik dan ganteng banget kalian berdua. Lancar sampai hari H yaa!',
+                'time' => '3 jam yang lalu',
+            ],
+        ],
+    ],
+];

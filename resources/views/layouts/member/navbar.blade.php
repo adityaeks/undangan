@@ -1,5 +1,5 @@
 <!-- MEMBER TOP NAVBAR -->
-<header class="h-20 bg-white/80 backdrop-blur-md border-b border-sand-200 sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8">
+<header class="h-14 sm:h-16 bg-white/80 backdrop-blur-md border-b border-sand-200 sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 transition-all">
     
     <!-- LEFT: TOGGLE & WEDDING STATUS -->
     <div class="flex items-center gap-4 flex-1 max-w-xl">
@@ -22,7 +22,7 @@
             <div class="hidden sm:flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-sand-100 border border-sand-200 text-xs text-sand-600">
                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
                 <span class="font-medium">Belum Ada Undangan Aktif</span>
-                <a href="{{ route('invitations.create') }}" class="text-[10px] font-bold text-amber-700 hover:underline">+ Buat Sekarang</a>
+                <a href="{{ route('member.invitations.create') }}" class="text-[10px] font-bold text-amber-700 hover:underline">+ Buat Sekarang</a>
             </div>
         @endif
     </div>
@@ -37,7 +37,7 @@
                 <span>Buka Undangan</span>
             </a>
         @else
-            <a href="{{ route('invitations.create') }}" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white text-xs font-bold shadow-sm hover:shadow transition">
+            <a href="{{ route('member.invitations.create') }}" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white text-xs font-bold shadow-sm hover:shadow transition">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                 <span>Buat Undangan</span>
             </a>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="pt-2 px-4 text-center">
-                    <a href="{{ route('wishes.index') }}" class="text-[11px] font-bold text-amber-700 hover:underline">Lihat Semua Ucapan & Tamu</a>
+                    <a href="{{ route('member.wishes.index') }}" class="text-[11px] font-bold text-amber-700 hover:underline">Lihat Semua Ucapan & Tamu</a>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="hidden md:block">
                     <span class="text-xs font-bold text-charcoal-950 block leading-tight">{{ Auth::user()->name }}</span>
-                    <span class="text-[10px] text-amber-600 font-semibold">Member / Pengantin</span>
+                    <span class="text-[10px] text-amber-600 font-semibold">Member Aktif</span>
                 </div>
                 <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-sand-500 hidden sm:block"></i>
             </button>

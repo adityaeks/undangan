@@ -53,6 +53,11 @@
             if (Array.isArray(d.stories)) {
                 const container = document.querySelector('[data-preview-container="stories"]');
                 if (container) {
+                    const sectionEl = container.closest('section');
+                    if (sectionEl) {
+                        sectionEl.style.display = d.stories.length > 0 ? '' : 'none';
+                    }
+
                     // Remember first card as template if not stored yet
                     if (!container._cardTemplate && container.children.length > 0) {
                         container._cardTemplate = container.children[0].cloneNode(true);

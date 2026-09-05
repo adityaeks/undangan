@@ -1,22 +1,21 @@
 <x-app-layout>
-    <div class="space-y-8">
+    <div class="space-y-3 sm:space-y-3.5">
         
         <!-- HEADER -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-[10px] font-bold uppercase tracking-wider">
-                    <span>Koleksi Tema Desain 2026</span>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">Katalog Tema & Kustomisasi Gaya</h1>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-100 text-brand-800 text-[10px] font-bold uppercase tracking-wider">Koleksi 2026</span>
                 </div>
-                <h1 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-950">
-                    Katalog Tema & Kustomisasi Gaya
-                </h1>
                 <p class="text-xs text-sand-600">
                     Pilihan arsitektur desain template eksklusif dengan tata letak visual modern, interaktif, dan responsif.
                 </p>
             </div>
 
-            <div class="flex items-center gap-2 text-xs font-bold text-charcoal-950 bg-sand-200/80 px-4 py-2.5 rounded-2xl">
-                <span>5 Seri Tema Pilihan • Siap Pakai</span>
+            <div class="flex items-center gap-2 text-xs font-bold text-charcoal-950 bg-sand-200/80 px-3 py-1.5 rounded-xl self-start sm:self-auto">
+                <i data-lucide="palette" class="w-3.5 h-3.5 text-brand-700"></i>
+                <span>5 Tema Siap Pakai</span>
             </div>
         </div>
 

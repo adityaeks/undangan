@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Wedding of Raka & Arinda — KlikMomen</title>
+    <title>{{ $data['title'] ?? ('The Wedding of ' . ($data['groom']['nickname'] ?? 'Raka') . ' & ' . ($data['bride']['nickname'] ?? 'Arinda')) }}</title>
 
     <!-- Meta SEO & Social Sharing Preview (OpenGraph) -->
-    <meta name="description" content="Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.">
-    <meta property="og:title" content="The Wedding of Raka & Arinda">
-    <meta property="og:description" content="Sabtu, 24 Oktober 2026 - Jakarta">
-    <meta property="og:image" content="{{ $activeStyle['cover_bg'] }}">
+    <meta name="description" content="Official Wedding Website of {{ $data['groom']['name'] ?? 'Raka Pratama' }} &amp; {{ $data['bride']['name'] ?? 'Arinda Putri Larasati' }}.">
+    <meta property="og:title" content="{{ ($data['groom']['nickname'] ?? 'Raka') . ' & ' . ($data['bride']['nickname'] ?? 'Arinda') }} — The Wedding">
+    <meta property="og:description" content="{{ $data['events']['akad']['date'] ?? 'Sabtu, 24 Oktober 2026' }} - {{ $data['events']['akad']['venue'] ?? 'Jakarta' }}">
+    <meta property="og:image" content="{{ !empty($data['cover_image']) ? $data['cover_image'] : ($activeStyle['cover_bg'] ?? 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=1200&auto=format&fit=crop&q=85') }}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -114,7 +114,7 @@
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 -translate-y-full scale-95 pointer-events-none"
             class="fixed inset-0 max-w-md mx-auto z-50 flex flex-col justify-between p-8 text-center text-white bg-cover bg-center overflow-hidden"
-            :style="`background-image: url('{{ $data['cover_image'] ?? '' }}' || '${currentStyle.cover_bg}');`"
+            style="background-image: url('{{ !empty($data['cover_image']) ? $data['cover_image'] : ($activeStyle['cover_bg'] ?? 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=1200&auto=format&fit=crop&q=85') }}');"
         >
             <!-- DARK GRADIENT OVERLAY -->
             <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black/90 z-0"></div>
@@ -193,7 +193,7 @@
         <div x-show="isOpened" class="space-y-16 pb-28">
             
             <!-- SECTION: HERO COVER -->
-            <section id="sec-cover" class="relative min-h-[520px] flex flex-col justify-between p-6 sm:p-8 text-center text-white bg-cover bg-center rounded-b-[44px] shadow-xl overflow-hidden" :style="`background-image: url('${currentStyle.cover_bg}');`">
+            <section id="sec-cover" class="relative min-h-[520px] flex flex-col justify-between p-6 sm:p-8 text-center text-white bg-cover bg-center rounded-b-[44px] shadow-xl overflow-hidden" style="background-image: url('{{ !empty($data['cover_image']) ? $data['cover_image'] : ($activeStyle['cover_bg'] ?? 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=1200&auto=format&fit=crop&q=85') }}');">
                 <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/85"></div>
                 
                 <div class="relative z-10 pt-6">
@@ -221,34 +221,32 @@
                 </div>
             </section>
 
-            <!-- SECTION: AYAT SUCI & DOA RESTU -->
-            <section class="px-6 text-center space-y-4 max-w-sm mx-auto">
+            @if(!empty($data['quote_text']))
+            <!-- SECTION: KUTIPAN / AYAT SUCI -->
+            <section class="text-center px-6 space-y-4 max-w-sm mx-auto">
                 <div 
-                    :style="{ backgroundColor: currentStyle.tag_bg, color: currentStyle.tag_text }"
-                    class="w-12 h-12 rounded-full flex items-center justify-center mx-auto shadow-sm"
+                    :style="{ color: currentStyle.accent }"
+                    class="w-10 h-10 rounded-full border border-current flex items-center justify-center mx-auto opacity-80"
                 >
                     <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
                 </div>
                 
-                <h3 
-                    :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'"
-                    class="text-lg font-bold"
-                >
-                    Maha Suci Allah SWT
-                </h3>
                 <p 
                     :style="{ color: currentStyle.text_secondary }"
                     class="font-editorial text-base sm:text-lg italic leading-relaxed"
                 >
-                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+                    "{{ $data['quote_text'] }}"
                 </p>
+                @if(!empty($data['quote_source']))
                 <span 
                     :style="{ color: currentStyle.accent }"
                     class="text-xs font-bold tracking-wider uppercase"
                 >
-                    (QS. Ar-Rum: 21)
+                    {{ Str::startsWith($data['quote_source'], '(') ? $data['quote_source'] : "({$data['quote_source']})" }}
                 </span>
+                @endif
             </section>
+            @endif
 
             <!-- SECTION: KEDUA MEMPELAI (BRIDE & GROOM) -->
             <section id="sec-mempelai" class="px-6 space-y-8">
@@ -275,7 +273,7 @@
                     class="p-6 border shadow-md text-center space-y-4 max-w-sm mx-auto transition-all duration-300"
                 >
                     <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-amber-400/30 shadow-inner">
-                        <img src="{{ $data['groom']['photo'] ?? $activeStyle['groom_photo'] }}" alt="{{ $data['groom']['name'] }}" class="w-full h-full object-cover">
+                        <img src="{{ $data['groom']['photo'] }}" alt="{{ $data['groom']['name'] }}" class="w-full h-full object-cover">
                     </div>
                     <div class="space-y-1">
                         <h4 
@@ -286,19 +284,31 @@
                             {{ $data['groom']['name'] }}
                         </h4>
                         <p :style="{ color: currentStyle.text_secondary }" class="text-xs leading-relaxed">
-                            {{ $data['groom']['child_order'] }} dari pasangan<br>
-                            <strong>{{ $data['groom']['father'] }}</strong> & <strong>{{ $data['groom']['mother'] }}</strong>
+                            @if(!empty($data['groom']['child_order']))
+                                {{ $data['groom']['child_order'] }} dari<br>
+                            @endif
+                            @if(!empty($data['groom']['father']))
+                                <strong>{{ $data['groom']['father'] }}</strong>
+                            @endif
+                            @if(!empty($data['groom']['father']) && !empty($data['groom']['mother']))
+                                &amp;
+                            @endif
+                            @if(!empty($data['groom']['mother']))
+                                <strong>{{ $data['groom']['mother'] }}</strong>
+                            @endif
                         </p>
                     </div>
+                    @if(!empty($data['groom']['instagram']))
                     <a 
-                        href="https://instagram.com/{{ $data['groom']['instagram'] }}" 
+                        href="https://instagram.com/{{ ltrim($data['groom']['instagram'], '@') }}" 
                         target="_blank" 
                         :style="{ backgroundColor: currentStyle.tag_bg, color: currentStyle.tag_text }"
                         class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:opacity-80 transition"
                     >
                         <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
-                        <span>{{ '@' . $data['groom']['instagram'] }}</span>
+                        <span>{{ '@' . ltrim($data['groom']['instagram'], '@') }}</span>
                     </a>
+                    @endif
                 </div>
 
                 <!-- AMPERSAND DIVIDER -->
@@ -313,7 +323,7 @@
                     class="p-6 border shadow-md text-center space-y-4 max-w-sm mx-auto transition-all duration-300"
                 >
                     <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-amber-400/30 shadow-inner">
-                        <img src="{{ $data['bride']['photo'] ?? $activeStyle['bride_photo'] }}" alt="{{ $data['bride']['name'] }}" class="w-full h-full object-cover">
+                        <img src="{{ $data['bride']['photo'] }}" alt="{{ $data['bride']['name'] }}" class="w-full h-full object-cover">
                     </div>
                     <div class="space-y-1">
                         <h4 
@@ -324,19 +334,31 @@
                             {{ $data['bride']['name'] }}
                         </h4>
                         <p :style="{ color: currentStyle.text_secondary }" class="text-xs leading-relaxed">
-                            {{ $data['bride']['child_order'] }} dari pasangan<br>
-                            <strong>{{ $data['bride']['father'] }}</strong> & <strong>{{ $data['bride']['mother'] }}</strong>
+                            @if(!empty($data['bride']['child_order']))
+                                {{ $data['bride']['child_order'] }} dari<br>
+                            @endif
+                            @if(!empty($data['bride']['father']))
+                                <strong>{{ $data['bride']['father'] }}</strong>
+                            @endif
+                            @if(!empty($data['bride']['father']) && !empty($data['bride']['mother']))
+                                &amp;
+                            @endif
+                            @if(!empty($data['bride']['mother']))
+                                <strong>{{ $data['bride']['mother'] }}</strong>
+                            @endif
                         </p>
                     </div>
+                    @if(!empty($data['bride']['instagram']))
                     <a 
-                        href="https://instagram.com/{{ $data['bride']['instagram'] }}" 
+                        href="https://instagram.com/{{ ltrim($data['bride']['instagram'], '@') }}" 
                         target="_blank" 
                         :style="{ backgroundColor: currentStyle.tag_bg, color: currentStyle.tag_text }"
                         class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:opacity-80 transition"
                     >
                         <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
-                        <span>{{ '@' . $data['bride']['instagram'] }}</span>
+                        <span>{{ '@' . ltrim($data['bride']['instagram'], '@') }}</span>
                     </a>
+                    @endif
                 </div>
             </section>
 
@@ -376,7 +398,7 @@
                     
                     <!-- GOOGLE CALENDAR BUTTON -->
                     <a 
-                        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Raka+%26+Arinda&dates=20261024T010000Z/20261024T070000Z&details=Pernikahan+Raka+Adiputra+dan+Arinda+Putri&location=Grand+Ballroom+The+Ritz-Carlton+Jakarta" 
+                        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text={{ urlencode('Pernikahan ' . ($data['groom']['nickname'] ?? 'Raka') . ' & ' . ($data['bride']['nickname'] ?? 'Arinda')) }}&details={{ urlencode('Pernikahan ' . ($data['groom']['name'] ?? '') . ' & ' . ($data['bride']['name'] ?? '')) }}&location={{ urlencode(($data['events']['akad']['venue'] ?? '') . ', ' . ($data['events']['akad']['address'] ?? '')) }}" 
                         target="_blank"
                         :style="{ backgroundColor: currentStyle.tag_bg, color: currentStyle.tag_text }"
                         class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-2xl hover:opacity-90 font-semibold text-xs transition"
@@ -446,6 +468,7 @@
             </section>
 
             <!-- SECTION: LOVE STORY TIMELINE -->
+            @if (!empty($data['stories']) && count($data['stories']) > 0)
             <section id="sec-cerita" class="px-6 space-y-6">
                 <div class="text-center space-y-1">
                     <span :style="{ color: currentStyle.accent }" class="text-[11px] font-bold uppercase tracking-[0.2em]">Our Journey</span>
@@ -462,6 +485,11 @@
                                 :class="currentStyle.card_radius"
                                 class="p-4 border shadow-sm space-y-1 w-full text-left"
                             >
+                                @if(!empty($story['image_url']))
+                                    <div class="rounded-xl overflow-hidden aspect-[16/10] mb-2">
+                                        <img src="{{ $story['image_url'] }}" alt="{{ $story['title'] }}" class="w-full h-full object-cover">
+                                    </div>
+                                @endif
                                 <span data-preview="story-year-{{ $index + 1 }}" :style="{ color: currentStyle.accent }" class="text-[10px] font-bold uppercase tracking-wider">{{ $story['year'] }}</span>
                                 <h5 data-preview="story-title-{{ $index + 1 }}" :class="currentStyle.font_heading === 'Playfair Display' ? 'font-serif' : 'font-sans'" class="text-sm font-bold">{{ $story['title'] }}</h5>
                                 <p data-preview="story-desc-{{ $index + 1 }}" :style="{ color: currentStyle.text_secondary }" class="text-xs leading-relaxed">{{ $story['desc'] }}</p>
@@ -470,8 +498,10 @@
                     @endforeach
                 </div>
             </section>
+            @endif
 
             <!-- SECTION: GALERI PREWEDDING -->
+            @if(!empty($data['galleries']))
             <section id="sec-galeri" class="px-6 space-y-6">
                 <div class="text-center space-y-1">
                     <span :style="{ color: currentStyle.accent }" class="text-[11px] font-bold uppercase tracking-[0.2em]">Memories</span>
@@ -494,8 +524,9 @@
                     @endforeach
                 </div>
             </section>
+            @endif
 
-            <!-- SECTION: AMPLOP DIGITAL & KADO ONLINE -->
+            @if(!empty($data['bank_accounts']) || !empty($data['gift_address']))
             <section id="sec-amplop" class="px-6 space-y-6">
                 <div class="text-center space-y-1">
                     <span :style="{ color: currentStyle.accent }" class="text-[11px] font-bold uppercase tracking-[0.2em]">Wedding Gift</span>
@@ -524,8 +555,30 @@
                             </button>
                         </div>
                     @endforeach
+
+                    @if(!empty($data['gift_address']))
+                        <div :style="{ backgroundColor: currentStyle.bg_card, borderColor: currentStyle.border_color }" :class="currentStyle.card_radius" class="p-5 border shadow-md space-y-2 text-left">
+                            <div class="flex items-center justify-between">
+                                <span :style="{ color: currentStyle.accent }" class="text-[10px] font-bold uppercase tracking-[0.2em]">Kirim Kado Fisik</span>
+                                <i data-lucide="package" class="w-4 h-4" :style="{ color: currentStyle.accent }"></i>
+                            </div>
+                            <p :style="{ color: currentStyle.text_secondary }" class="text-xs leading-relaxed">
+                                {{ $data['gift_address'] }}
+                            </p>
+                            <button 
+                                type="button" 
+                                @click="copyToClipboard('{{ $data['gift_address'] }}', 'Alamat Pengiriman Kado')"
+                                :style="{ color: currentStyle.accent }"
+                                class="inline-flex items-center gap-1.5 text-xs font-bold hover:underline pt-1"
+                            >
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                <span>Salin Alamat Lengkap</span>
+                            </button>
+                        </div>
+                    @endif
                 </div>
             </section>
+            @endif
 
             <!-- SECTION: BUKU TAMU & RSVP FORM -->
             <section id="sec-ucapan" class="px-6 space-y-6">
@@ -760,16 +813,24 @@
                     this.lightbox.open = true;
                 },
 
-                submitWish() {
+                async submitWish() {
                     if (!this.wishForm.message.trim()) return;
-                    this.wishes.unshift({
-                        name: this.wishForm.name,
-                        attendance: this.wishForm.attendance,
-                        message: this.wishForm.message,
-                        time: 'Baru saja'
-                    });
-                    this.wishForm.message = '';
-                    this.showToast('Terima kasih! Doa restu Anda telah terkirim.');
+                    this.wishForm.loading = true;
+                    try {
+                        const res = await fetch('{{ url('/u/' . ($invitation->slug ?? '')) }}/wishes', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                            body: JSON.stringify({ guest_name: this.wishForm.name, attendance: this.wishForm.attendance, message: this.wishForm.message })
+                        });
+                        const json = await res.json();
+                        if (json.success) {
+                            this.wishes.unshift({ name: json.wish.name, attendance: json.wish.attendance, message: json.wish.message, time: json.wish.time });
+                            this.wishForm.message = '';
+                            this.showToast('Terima kasih! Doa restu Anda telah terkirim.');
+                        }
+                    } finally {
+                        this.wishForm.loading = false;
+                    }
                 },
 
                 startCountdown() {

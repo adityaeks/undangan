@@ -631,7 +631,7 @@
                                         <span>Preview</span>
                                     </a>
                                     <a 
-                                        href="{{ route('register') }}" 
+                                        href="{{ $theme['checkout_url'] }}" 
                                         @click="if (hasMoved) { $event.preventDefault(); }"
                                         class="w-40 py-2.5 rounded-full bg-brand-500 text-white font-bold text-xs shadow-lg hover:bg-brand-600 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2"
                                     >
@@ -687,7 +687,7 @@
                                             Demo
                                         </a>
                                         <a 
-                                            href="{{ route('register') }}" 
+                                            href="{{ $theme['checkout_url'] }}" 
                                             @click="if (hasMoved) { $event.preventDefault(); }"
                                             class="px-3.5 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1"
                                         >

@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pernikahan Raka & Arinda — KlikMomen</title>
+    <title>Pernikahan {{ $data['groom']['nickname'] ?? 'Raka' }} &amp; {{ $data['bride']['nickname'] ?? 'Arinda' }} — KlikMomen</title>
 
     <!-- Meta SEO & Social Sharing Preview -->
-    <meta name="description" content="Undangan Pernikahan Raka & Arinda. Sabtu, 24 Oktober 2026. Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.">
-    <meta property="og:title" content="The Wedding of Raka & Arinda">
-    <meta property="og:description" content="Sabtu, 24 Oktober 2026 — Jakarta">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&q=85">
+    <meta name="description" content="Undangan Pernikahan {{ $data['groom']['name'] ?? 'Raka' }} &amp; {{ $data['bride']['name'] ?? 'Arinda' }}. {{ $data['events']['akad']['date'] ?? 'Sabtu, 24 Oktober 2026' }}.">
+    <meta property="og:title" content="The Wedding of {{ $data['groom']['nickname'] ?? 'Raka' }} &amp; {{ $data['bride']['nickname'] ?? 'Arinda' }}">
+    <meta property="og:description" content="{{ $data['events']['akad']['date'] ?? 'Sabtu, 24 Oktober 2026' }} — {{ $data['events']['akad']['venue'] ?? 'Jakarta' }}">
+    <meta property="og:image" content="{{ !empty($data['cover_image']) ? $data['cover_image'] : ($activeStyle['cover_bg'] ?? 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&q=85') }}">
 
     <!-- Google Fonts: Cormorant Garamond, Playfair Display, Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,16 +113,13 @@
         seconds: 18,
 
         // RSVP
-        rsvpName: '{{ $guestName ?? 'Tamu Terhormat' }}',
+        rsvpName: '{{ $guestName ?? '' }}',
         rsvpGuests: '1',
         rsvpStatus: 'hadir',
         rsvpMessage: '',
         rsvpSubmitted: false,
-        wishes: [
-            { name: 'Sarah Amanda, S.Kom', time: '2 jam yang lalu', status: 'hadir', msg: 'Selamat berbahagia Raka & Arinda! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah selamanya. Aamiin.' },
-            { name: 'Dimas Wicaksono', time: '5 jam yang lalu', status: 'hadir', msg: 'Barakallahu lakuma wa baraka alaikuma wa jama\'a bainakuma fii khair. Turut berbahagia untuk kalian berdua!' },
-            { name: 'Clara & Rio', time: '1 hari yang lalu', status: 'hadir', msg: 'Congratulations lovebirds! Sangat terharu melihat perjalanan kalian hingga ke pelaminan. See you on the big day!' }
-        ],
+        rsvpLoading: false,
+        wishes: @json($data['sample_wishes']),
 
         init() {
             this.audio = document.getElementById('bgm-audio');
@@ -163,17 +160,25 @@
             });
         },
 
-        submitRsvp() {
+        async submitRsvp() {
             if (!this.rsvpName.trim() || !this.rsvpMessage.trim()) return;
-            this.wishes.unshift({
-                name: this.rsvpName,
-                time: 'Baru saja',
-                status: this.rsvpStatus,
-                msg: this.rsvpMessage
-            });
-            this.rsvpSubmitted = true;
-            this.rsvpMessage = '';
-            setTimeout(() => { this.rsvpSubmitted = false; }, 4000);
+            this.rsvpLoading = true;
+            try {
+                const res = await fetch('{{ url('/u/' . ($invitation->slug ?? '')) }}/wishes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                    body: JSON.stringify({ guest_name: this.rsvpName, attendance: this.rsvpStatus + (this.rsvpGuests > 1 ? ' (' + this.rsvpGuests + ' Orang)' : ''), message: this.rsvpMessage })
+                });
+                const json = await res.json();
+                if (json.success) {
+                    this.wishes.unshift({ name: json.wish.name, time: json.wish.time, status: json.wish.attendance, msg: json.wish.message });
+                    this.rsvpSubmitted = true;
+                    this.rsvpMessage = '';
+                    setTimeout(() => { this.rsvpSubmitted = false; }, 4000);
+                }
+            } finally {
+                this.rsvpLoading = false;
+            }
         },
 
         openPhoto(url) {
@@ -207,7 +212,7 @@
 
     <!-- HIDDEN BACKGROUND AUDIO -->
     <audio id="bgm-audio" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mpeg">
+        <source src="{{ $data['background_music'] ?? $activeStyle['audio_url'] ?? '/audio/wedding-song.mp3' }}" type="audio/mpeg">
     </audio>
 
     <!-- TOAST NOTIFICATION -->
@@ -364,31 +369,35 @@
                         The Wedding of
                     </span>
                     <h1 class="font-editorial text-5xl sm:text-6xl font-light text-stone-900 tracking-wide">
-                        <span data-preview="groom-nickname">Raka</span> <span class="font-serif italic font-normal text-stone-500 text-4xl">&amp;</span> <span data-preview="bride-nickname">Arinda</span>
+                        <span data-preview="groom-nickname">{{ $data['groom']['nickname'] ?? 'Raka' }}</span> <span class="font-serif italic font-normal text-stone-500 text-4xl">&amp;</span> <span data-preview="bride-nickname">{{ $data['bride']['nickname'] ?? 'Arinda' }}</span>
                     </h1>
                     <p class="text-xs uppercase tracking-[0.25em] text-stone-500 font-light" data-preview="event-date">
-                        Sabtu, 24 Oktober 2026 • Jakarta
+                        {{ $data['events']['akad']['date'] ?? 'Sabtu, 24 Oktober 2026' }}
                     </p>
                 </div>
 
                 <!-- Fine Art Couple Portrait Frame -->
                 <div class="relative mx-auto max-w-sm aspect-[4/5] rounded-3xl overflow-hidden shadow-sm border hairline-border p-2 bg-white">
                     <img 
-                        src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80" 
-                        alt="Raka & Arinda" 
+                        src="{{ !empty($data['cover_image']) ? $data['cover_image'] : ($activeStyle['cover_bg'] ?? 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80') }}" 
+                        alt="{{ $data['groom']['nickname'] ?? 'Raka' }} &amp; {{ $data['bride']['nickname'] ?? 'Arinda' }}" 
                         class="w-full h-full object-cover rounded-2xl"
                     >
                 </div>
 
+                @if(!empty($data['quote_text']))
                 <!-- Ayat Suci / Kutipan Bijak -->
                 <div class="max-w-md mx-auto space-y-3 px-4">
                     <p class="font-editorial italic text-base sm:text-lg text-stone-700 leading-relaxed">
-                        “Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.”
+                        “{{ $data['quote_text'] }}”
                     </p>
+                    @if(!empty($data['quote_source']))
                     <span class="text-[11px] uppercase tracking-[0.2em] text-stone-400 font-medium block">
-                        QS. Ar-Rum: 21
+                        {{ $data['quote_source'] }}
                     </span>
+                    @endif
                 </div>
+                @endif
 
                 <!-- COUNTDOWN TIMER (Minimalist Pill Cards) -->
                 <div class="pt-2">
@@ -437,54 +446,76 @@
                     <div class="art-card rounded-3xl p-6 border hairline-border flex flex-col items-center text-center space-y-4">
                         <div class="w-32 h-32 rounded-full overflow-hidden border hairline-border p-1 bg-white shadow-sm">
                             <img 
-                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80" 
-                                alt="Raka Pratama" 
+                                src="{{ $data['groom']['photo'] }}" 
+                                alt="{{ $data['groom']['name'] }}" 
                                 class="w-full h-full object-cover rounded-full"
                             >
                         </div>
                         <div class="space-y-1.5">
-                            <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="groom-name">Raka Pratama, S.T.</h3>
+                            <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="groom-name">{{ $data['groom']['name'] }}</h3>
                             <p class="text-xs text-stone-500 leading-relaxed">
-                                Putra pertama dari<br>
-                                <strong class="text-stone-800 font-medium">Bpk. Dr. H. Bambang Soediro</strong><br>
-                                &amp; Ibu Hj. Ratna Juwita
+                                @if(!empty($data['groom']['child_order']))
+                                    {{ $data['groom']['child_order'] }} dari<br>
+                                @endif
+                                @if(!empty($data['groom']['father']))
+                                    <strong class="text-stone-800 font-medium">{{ $data['groom']['father'] }}</strong>
+                                @endif
+                                @if(!empty($data['groom']['father']) && !empty($data['groom']['mother']))
+                                    &amp;
+                                @endif
+                                @if(!empty($data['groom']['mother']))
+                                    {{ $data['groom']['mother'] }}
+                                @endif
                             </p>
                         </div>
+                        @if(!empty($data['groom']['instagram']))
                         <a 
-                            href="https://instagram.com" 
+                            href="https://instagram.com/{{ ltrim($data['groom']['instagram'], '@') }}" 
                             target="_blank" 
                             class="inline-flex items-center gap-1.5 text-xs text-stone-500 hover:text-stone-900 transition pt-1"
                         >
                             <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
-                            <span>@raka.pratama</span>
+                            <span>{{ '@' . ltrim($data['groom']['instagram'], '@') }}</span>
                         </a>
+                        @endif
                     </div>
 
                     <!-- BRIDE -->
                     <div class="art-card rounded-3xl p-6 border hairline-border flex flex-col items-center text-center space-y-4">
                         <div class="w-32 h-32 rounded-full overflow-hidden border hairline-border p-1 bg-white shadow-sm">
                             <img 
-                                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80" 
-                                alt="Arinda Citra Kirana" 
+                                src="{{ $data['bride']['photo'] }}" 
+                                alt="{{ $data['bride']['name'] }}" 
                                 class="w-full h-full object-cover rounded-full"
                             >
                         </div>
                         <div class="space-y-1.5">
-                            <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="bride-name">Arinda Citra Kirana, S.Ds.</h3>
+                            <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="bride-name">{{ $data['bride']['name'] }}</h3>
                             <p class="text-xs text-stone-500 leading-relaxed">
-                                Putri kedua dari<br>
-                                <strong class="text-stone-800 font-medium">Bpk. Ir. H. Hendra Wijaya</strong><br>
-                                &amp; Ibu Hj. Siti Aminah
+                                @if(!empty($data['bride']['child_order']))
+                                    {{ $data['bride']['child_order'] }} dari<br>
+                                @endif
+                                @if(!empty($data['bride']['father']))
+                                    <strong class="text-stone-800 font-medium">{{ $data['bride']['father'] }}</strong>
+                                @endif
+                                @if(!empty($data['bride']['father']) && !empty($data['bride']['mother']))
+                                    &amp;
+                                @endif
+                                @if(!empty($data['bride']['mother']))
+                                    {{ $data['bride']['mother'] }}
+                                @endif
                             </p>
                         </div>
+                        @if(!empty($data['bride']['instagram']))
                         <a 
-                            href="https://instagram.com" 
+                            href="https://instagram.com/{{ ltrim($data['bride']['instagram'], '@') }}" 
                             target="_blank" 
                             class="inline-flex items-center gap-1.5 text-xs text-stone-500 hover:text-stone-900 transition pt-1"
                         >
                             <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
-                            <span>@arinda.kirana</span>
+                            <span>{{ '@' . ltrim($data['bride']['instagram'], '@') }}</span>
                         </a>
+                        @endif
                     </div>
 
                 </div>
@@ -521,19 +552,19 @@
                             </div>
 
                             <div>
-                                <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="event-date">Sabtu, 24 Oktober 2026</h3>
-                                <p class="text-xs text-stone-600 font-medium mt-1">Pukul 08.00 - 10.00 WIB</p>
+                                <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="event-date">{{ $data['events']['akad']['date'] }}</h3>
+                                <p class="text-xs text-stone-600 font-medium mt-1">{{ $data['events']['akad']['time'] }}</p>
                             </div>
 
                             <div class="pt-3 border-t hairline-border text-xs text-stone-600 space-y-1">
-                                <p class="font-medium text-stone-900" data-preview="venue-name">The Langham Hotel, Ballroom Lantai 2</p>
-                                <p class="text-stone-500 leading-relaxed">District 8, SCBD Lot 28, Jl. Jend. Sudirman, Senayan, Kebayoran Baru, Jakarta Selatan</p>
+                                <p class="font-medium text-stone-900" data-preview="venue-name">{{ $data['events']['akad']['venue'] }}</p>
+                                <p class="text-stone-500 leading-relaxed">{{ $data['events']['akad']['address'] }}</p>
                             </div>
                         </div>
 
                         <div class="pt-2">
                             <a 
-                                href="https://maps.google.com" 
+                                href="{{ $data['events']['akad']['maps_link'] }}" 
                                 target="_blank"
                                 class="w-full py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs font-medium transition flex items-center justify-center gap-2"
                             >
@@ -554,19 +585,19 @@
                             </div>
 
                             <div>
-                                <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="event-date">Sabtu, 24 Oktober 2026</h3>
-                                <p class="text-xs text-stone-600 font-medium mt-1">Pukul 11.00 - 14.00 WIB</p>
+                                <h3 class="font-editorial text-2xl font-medium text-stone-900" data-preview="event-date">{{ $data['events']['resepsi']['date'] }}</h3>
+                                <p class="text-xs text-stone-600 font-medium mt-1">{{ $data['events']['resepsi']['time'] }}</p>
                             </div>
 
                             <div class="pt-3 border-t hairline-border text-xs text-stone-600 space-y-1">
-                                <p class="font-medium text-stone-900" data-preview="venue-name">The Langham Hotel, Grand Ballroom</p>
-                                <p class="text-stone-500 leading-relaxed">District 8, SCBD Lot 28, Jl. Jend. Sudirman, Senayan, Kebayoran Baru, Jakarta Selatan</p>
+                                <p class="font-medium text-stone-900" data-preview="venue-name">{{ $data['events']['resepsi']['venue'] }}</p>
+                                <p class="text-stone-500 leading-relaxed">{{ $data['events']['resepsi']['address'] }}</p>
                             </div>
                         </div>
 
                         <div class="pt-2">
                             <a 
-                                href="https://maps.google.com" 
+                                href="{{ $data['events']['resepsi']['maps_link'] }}" 
                                 target="_blank"
                                 class="w-full py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs font-medium transition flex items-center justify-center gap-2"
                             >
@@ -583,6 +614,7 @@
             <!-- ============================================================= -->
             <!-- 4. KISAH KAMI (LOVE STORY TIMELINE) -->
             <!-- ============================================================= -->
+            @if (!empty($data['stories']) && count($data['stories']) > 0)
             <section class="space-y-8">
                 
                 <div class="text-center space-y-2">
@@ -600,6 +632,11 @@
                             <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full bg-stone-900 border-2 border-[#FAF8F5]"></div>
                             <div class="space-y-1">
                                 <span data-preview="story-year-{{ $index + 1 }}" class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">{{ $story['year'] }}</span>
+                                @if(!empty($story['image_url']))
+                                    <div class="rounded-2xl overflow-hidden aspect-[16/10] my-2 border hairline-border">
+                                        <img src="{{ $story['image_url'] }}" alt="{{ $story['title'] }}" class="w-full h-full object-cover">
+                                    </div>
+                                @endif
                                 <h3 data-preview="story-title-{{ $index + 1 }}" class="font-editorial text-xl font-medium text-stone-900">{{ $story['title'] }}</h3>
                                 <p data-preview="story-desc-{{ $index + 1 }}" class="text-xs text-stone-500 leading-relaxed">
                                     {{ $story['desc'] }}
@@ -610,10 +647,12 @@
                 </div>
 
             </section>
+            @endif
 
             <!-- ============================================================= -->
             <!-- 5. GALERI FOTO (MOMEN BAHAGIA) -->
             <!-- ============================================================= -->
+            @if(!empty($data['galleries']))
             <section class="space-y-8">
                 
                 <div class="text-center space-y-2">
@@ -627,26 +666,14 @@
 
                 <!-- Masonry Gallery -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-                    
-                    @php
-                        $galleries = [
-                            'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
-                            'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80',
-                            'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&auto=format&fit=crop&q=80',
-                            'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80',
-                            'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80',
-                            'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=800&auto=format&fit=crop&q=80',
-                        ];
-                    @endphp
-
-                    @foreach ($galleries as $img)
+                    @foreach ($data['galleries'] as $img)
                         <div 
                             @click="openPhoto('{{ $img }}')"
                             class="relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer group shadow-sm border hairline-border bg-white"
                         >
                             <img 
                                 src="{{ $img }}" 
-                                alt="Momen Indah Raka & Arinda" 
+                                alt="Momen Indah {{ $data['groom']['nickname'] ?? 'Mempelai' }}" 
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             >
                             <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -656,10 +683,10 @@
                             </div>
                         </div>
                     @endforeach
-
                 </div>
 
             </section>
+            @endif
 
             <!-- ============================================================= -->
             <!-- 6. RSVP & KONFIRMASI KEHADIRAN -->
@@ -785,6 +812,7 @@
             <!-- ============================================================= -->
             <!-- 7. AMPLOP DIGITAL (TANDA KASIH & HADIAH) -->
             <!-- ============================================================= -->
+            @if(!empty($data['bank_accounts']) || !empty($data['gift_address']))
             <section class="space-y-8">
                 
                 <div class="text-center space-y-2">
@@ -800,48 +828,48 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    
-                    <!-- REKENING 1 (BCA) -->
-                    <div class="art-card rounded-2xl p-5 border hairline-border space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="font-serif font-bold text-sm text-stone-900">Bank BCA</span>
-                            <i data-lucide="credit-card" class="w-4 h-4 text-stone-400"></i>
+                    @foreach ($data['bank_accounts'] as $acc)
+                        <div class="art-card rounded-2xl p-5 border hairline-border space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="font-serif font-bold text-sm text-stone-900">{{ $acc['bank'] }}</span>
+                                <i data-lucide="credit-card" class="w-4 h-4 text-stone-400"></i>
+                            </div>
+                            <div class="space-y-0.5">
+                                <p class="font-mono text-base font-semibold text-stone-900">{{ $acc['account_number'] }}</p>
+                                <p class="text-xs text-stone-500">a.n. {{ $acc['account_name'] }}</p>
+                            </div>
+                            <button 
+                                @click="copyToClipboard('{{ str_replace(' ', '', $acc['account_number']) }}', 'Nomor Rekening {{ $acc['bank'] }}')"
+                                class="w-full py-2 rounded-xl bg-[#F5F0E8] hover:bg-[#EBE3D5] text-stone-800 text-xs font-medium transition flex items-center justify-center gap-1.5"
+                            >
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                <span>Salin Nomor Rekening</span>
+                            </button>
                         </div>
-                        <div class="space-y-0.5">
-                            <p class="font-mono text-base font-semibold text-stone-900">8820 1928 4710</p>
-                            <p class="text-xs text-stone-500">a.n. Raka Pratama</p>
-                        </div>
-                        <button 
-                            @click="copyToClipboard('882019284710', 'Nomor Rekening BCA')"
-                            class="w-full py-2 rounded-xl bg-[#F5F0E8] hover:bg-[#EBE3D5] text-stone-800 text-xs font-medium transition flex items-center justify-center gap-1.5"
-                        >
-                            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                            <span>Salin Nomor Rekening</span>
-                        </button>
-                    </div>
-
-                    <!-- REKENING 2 (MANDIRI) -->
-                    <div class="art-card rounded-2xl p-5 border hairline-border space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="font-serif font-bold text-sm text-stone-900">Bank Mandiri</span>
-                            <i data-lucide="credit-card" class="w-4 h-4 text-stone-400"></i>
-                        </div>
-                        <div class="space-y-0.5">
-                            <p class="font-mono text-base font-semibold text-stone-900">1370 0192 8472 1</p>
-                            <p class="text-xs text-stone-500">a.n. Arinda Citra Kirana</p>
-                        </div>
-                        <button 
-                            @click="copyToClipboard('1370019284721', 'Nomor Rekening Mandiri')"
-                            class="w-full py-2 rounded-xl bg-[#F5F0E8] hover:bg-[#EBE3D5] text-stone-800 text-xs font-medium transition flex items-center justify-center gap-1.5"
-                        >
-                            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                            <span>Salin Nomor Rekening</span>
-                        </button>
-                    </div>
-
+                    @endforeach
                 </div>
 
+                @if(!empty($data['gift_address']))
+                <div class="art-card rounded-2xl p-5 border hairline-border space-y-2 text-left">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-stone-500">Kirim Kado Fisik</span>
+                        <i data-lucide="package" class="w-4 h-4 text-stone-400"></i>
+                    </div>
+                    <p class="text-xs text-stone-600 leading-relaxed">
+                        {{ $data['gift_address'] }}
+                    </p>
+                    <button 
+                        @click="copyToClipboard('{{ $data['gift_address'] }}', 'Alamat Pengiriman Kado')"
+                        class="inline-flex items-center gap-1 text-xs font-bold text-stone-900 hover:underline pt-1"
+                    >
+                        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                        <span>Salin Alamat Lengkap</span>
+                    </button>
+                </div>
+                @endif
+
             </section>
+            @endif
 
             <!-- ============================================================= -->
             <!-- 8. FOOTER / CLOSING -->
@@ -853,7 +881,7 @@
                         kami mengucapkan terima kasih yang sedalam-dalamnya.
                     </p>
                     <h3 class="font-editorial text-3xl font-light text-stone-900 pt-2">
-                        Raka &amp; Arinda
+                        {{ $data['groom']['nickname'] ?? 'Raka' }} &amp; {{ $data['bride']['nickname'] ?? 'Arinda' }}
                     </h3>
                 </div>
 

@@ -1,5 +1,10 @@
 <?php
 
+use App\Models\Order;
+use App\Models\Theme;
+use App\Models\User;
+use Database\Seeders\ThemeSeeder;
+
 test('renders public theme catalog page successfully on /tema', function () {
     $response = $this->get('/tema');
 
@@ -73,4 +78,39 @@ test('supports legacy royal-luxury alias to minimalist demo page', function () {
     $response->assertOk()
         ->assertSee('Raka')
         ->assertSee('Arinda');
+});
+
+test('theme catalog Pilih Desain buttons link directly to checkout route', function () {
+    (new ThemeSeeder)->run();
+    $theme = Theme::where('is_active', true)->first();
+    expect($theme)->not->toBeNull();
+
+    $response = $this->get('/tema');
+
+    $response->assertOk()
+        ->assertSee(route('checkout.theme', ['theme' => $theme->id]));
+});
+
+test('authenticated member clicking Pilih Desain initiates checkout and lands on orders show page', function () {
+    (new ThemeSeeder)->run();
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = Theme::where('is_active', true)->where('is_premium', true)->first();
+    expect($theme)->not->toBeNull();
+
+    $response = $this->actingAs($member)->get(route('checkout.theme', ['theme' => $theme->id]));
+
+    // Should redirect to orders.show for checkout
+    $response->assertRedirect();
+    $order = Order::where('user_id', $member->id)->latest()->first();
+    expect($order)->not->toBeNull();
+    $response->assertRedirect(route('orders.show', $order));
+
+    // Follow redirect to order checkout page
+    $orderResponse = $this->actingAs($member)->get(route('orders.show', $order));
+    $orderResponse->assertOk()
+        ->assertSee('Detail Pembelian')
+        ->assertSee($order->order_code)
+        ->assertSee('Menunggu Pembayaran')
+        ->assertSee($theme->name)
+        ->assertSee('Total Tagihan:');
 });
