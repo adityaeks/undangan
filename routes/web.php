@@ -20,7 +20,9 @@ use App\Http\Controllers\Member\WishController as MemberWishController;
 use App\Http\Controllers\Order\CheckoutController;
 use App\Http\Controllers\Partner\ClientController as PartnerClientController;
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
+use App\Http\Controllers\Partner\GuestController as PartnerGuestController;
 use App\Http\Controllers\Partner\InvitationController as PartnerInvitationController;
+use App\Http\Controllers\Partner\PackageController as PartnerPackageController;
 use App\Http\Controllers\Payment\WebhookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicInvitationController;
@@ -94,6 +96,7 @@ Route::middleware(['auth', 'verified', 'role:member,user'])->prefix('member')->n
     // Member Guests & WhatsApp
     Route::get('/guests', [MemberGuestController::class, 'index'])->name('guests.index');
     Route::post('/guests', [MemberGuestController::class, 'store'])->name('guests.store');
+    Route::post('/guests/template', [MemberGuestController::class, 'updateTemplate'])->name('guests.template');
     Route::delete('/guests/{guest}', [MemberGuestController::class, 'destroy'])->name('guests.destroy');
 
     // Member Wishes / Guestbook
@@ -121,6 +124,19 @@ Route::middleware(['auth', 'verified', 'role:partner'])->prefix('partner')->name
     Route::get('/invitations', [PartnerInvitationController::class, 'index'])->name('invitations.index');
     Route::get('/invitations/create', [PartnerInvitationController::class, 'create'])->name('invitations.create');
     Route::post('/invitations', [PartnerInvitationController::class, 'store'])->name('invitations.store');
+    Route::get('/invitations/{invitation}/edit', [PartnerInvitationController::class, 'edit'])->name('invitations.edit');
+    Route::put('/invitations/{invitation}', [PartnerInvitationController::class, 'update'])->name('invitations.update');
+    Route::delete('/invitations/{invitation}', [PartnerInvitationController::class, 'destroy'])->name('invitations.destroy');
+
+    // Partner Guests & WhatsApp Distribution
+    Route::get('/guests', [PartnerGuestController::class, 'index'])->name('guests.index');
+    Route::post('/guests', [PartnerGuestController::class, 'store'])->name('guests.store');
+    Route::post('/guests/template', [PartnerGuestController::class, 'updateTemplate'])->name('guests.template');
+    Route::delete('/guests/{guest}', [PartnerGuestController::class, 'destroy'])->name('guests.destroy');
+
+    // Partner Packages & Quota
+    Route::get('/packages', [PartnerPackageController::class, 'index'])->name('packages.index');
+    Route::get('/packages/{package}/select', [PartnerPackageController::class, 'select'])->name('packages.select');
 });
 
 /*
@@ -153,6 +169,7 @@ Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->gr
     // Themes
     Route::get('/themes', [ThemeController::class, 'index'])->name('themes.index');
     Route::patch('/themes/{theme}/toggle', [ThemeController::class, 'toggleActive'])->name('admin.themes.toggle');
+    Route::patch('/themes/{theme}/toggle-partner', [ThemeController::class, 'togglePartner'])->name('admin.themes.toggle-partner');
     Route::patch('/themes/{theme}/price', [ThemeController::class, 'updatePrice'])->name('admin.themes.update-price');
 
     // Guests & RSVP (Lookup)
@@ -163,8 +180,10 @@ Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->gr
     Route::patch('/wishes/{wish}/toggle', [WishController::class, 'toggleApproval'])->name('admin.wishes.toggle');
     Route::delete('/wishes/{wish}', [WishController::class, 'destroy'])->name('admin.wishes.destroy');
 
-    // Partners / WO
+    // Partners / WO & Package Management
     Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
+    Route::put('/partners/packages/{package}', [PartnerController::class, 'updatePackage'])->name('admin.partners.packages.update');
+    Route::patch('/partners/users/{user}/package', [PartnerController::class, 'updateUserPackage'])->name('admin.partners.users.package');
 
     // Orders & Billing
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

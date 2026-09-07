@@ -144,6 +144,9 @@ class InvitationController extends Controller
             'stories.*.date' => 'nullable|string|max:100',
             'stories.*.story' => 'nullable|string',
             'stories.*.image_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+
+            // WhatsApp Template
+            'whatsapp_template' => 'nullable|string|max:2000',
         ]);
 
         $theme = Theme::findOrFail($validated['theme_id']);
@@ -208,6 +211,11 @@ class InvitationController extends Controller
         ]);
 
         // Settings
+        $settingMetadata = [];
+        if (! empty($validated['whatsapp_template'])) {
+            $settingMetadata['whatsapp_template'] = $validated['whatsapp_template'];
+        }
+
         $invitation->setting()->create([
             'bg_music_url' => $backgroundMusic,
             'is_music_autoplay' => false,
@@ -215,6 +223,7 @@ class InvitationController extends Controller
             'quote_source' => $validated['quote_source'] ?? 'QS. Ar-Rum: 21',
             'enable_comments' => true,
             'enable_rsvp' => true,
+            'metadata' => $settingMetadata,
         ]);
 
         // Couple (Groom & Bride rows)

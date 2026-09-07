@@ -6,12 +6,13 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'role', 'status', 'email_verified_at'])]
+#[Fillable(['name', 'email', 'password', 'role', 'status', 'email_verified_at', 'package_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -29,6 +30,68 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Package assigned to this user / partner.
+     */
+    public function package(): BelongsTo
+    {
+        return $this->belongsTo(Package::class);
+    }
+
+    /**
+     * Get active package for partner. Fallbacks to default starter package if not assigned.
+     */
+    public function getActivePackageAttribute(): ?Package
+    {
+        if ($this->relationLoaded('package') && $this->package) {
+            return $this->package;
+        }
+
+        if ($this->package_id) {
+            return $this->package;
+        }
+
+        if ($this->isPartner()) {
+            return Package::where('slug', 'partner-starter')->first();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the invitation quota allowed for this partner.
+     * 0 or null could mean unlimited.
+     */
+    public function getInvitationQuotaAttribute(): int
+    {
+        $package = $this->active_package;
+        if (! $package) {
+            return 0;
+        }
+
+        return (int) $package->quota_invitations;
+    }
+
+    /**
+     * Check whether the partner can create a new invitation based on package quota.
+     * If quota_invitations is 0 (or less), treat as unlimited.
+     */
+    public function canCreateInvitation(): bool
+    {
+        if (! $this->isPartner()) {
+            return true;
+        }
+
+        $quota = $this->invitation_quota;
+        if ($quota <= 0) {
+            return true;
+        }
+
+        $currentCount = $this->partnerInvitations()->count();
+
+        return $currentCount < $quota;
     }
 
     /**

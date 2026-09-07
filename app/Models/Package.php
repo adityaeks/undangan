@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Package extends Model
 {
@@ -27,5 +28,13 @@ class Package extends Model
             'is_active' => 'boolean',
             'quota_invitations' => 'integer',
         ];
+    }
+
+    /**
+     * Users assigned to this package.
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
     }
 }

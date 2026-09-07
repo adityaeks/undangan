@@ -29,8 +29,9 @@ class ThemeController extends Controller
         $totalThemes = Theme::count();
         $totalActive = Theme::where('is_active', true)->count();
         $totalPremium = Theme::where('is_premium', true)->count();
+        $totalPartner = Theme::where('is_for_partner', true)->count();
 
-        return view('admin.themes.index', compact('themes', 'totalThemes', 'totalActive', 'totalPremium'));
+        return view('admin.themes.index', compact('themes', 'totalThemes', 'totalActive', 'totalPremium', 'totalPartner'));
     }
 
     /**
@@ -60,5 +61,16 @@ class ThemeController extends Controller
         ]);
 
         return back()->with('success', "Harga tema {$theme->name} berhasil diperbarui menjadi Rp ".number_format($theme->price, 0, ',', '.').'.');
+    }
+
+    /**
+     * Toggle theme availability for partner workspace.
+     */
+    public function togglePartner(Theme $theme): RedirectResponse
+    {
+        $theme->update(['is_for_partner' => ! $theme->is_for_partner]);
+        $status = $theme->is_for_partner ? 'diaktifkan untuk partner' : 'dinonaktifkan dari partner';
+
+        return back()->with('success', "Ketersediaan tema {$theme->name} berhasil {$status}.");
     }
 }

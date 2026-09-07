@@ -4,7 +4,7 @@
         x-data="{ 
             currentStep: 1, 
             selectedTheme: '{{ old('theme_id', request('theme_id', $themes->first()->id ?? '')) }}',
-            selectedMusic: '{{ old('music_preset', '/audio/wedding-song.mp3') }}',
+            selectedMusic: '{{ old('music_preset', '/audio/payung-teduh-akad.mp3') }}',
             isPlayingAudio: false,
             audioPlayer: null,
             coverPreview: null,
@@ -980,6 +980,31 @@
                             placeholder="Contoh: Jl. Senopati Raya No. 45, Kebayoran Baru, Jakarta Selatan 12190 (Penerima: Dimas & Anisa - 0812-3456-7890)" 
                             class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white text-xs placeholder-sand-400"
                         >{{ old('gift_address', '') }}</textarea>
+                    </div>
+
+                    <!-- TEMPLATE PESAN WHATSAPP -->
+                    <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-2.5 text-xs">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-serif text-xs font-bold text-charcoal-950 flex items-center gap-1.5">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
+                                <span>Template Ucapan WhatsApp (Kirim Undangan)</span>
+                            </h4>
+                            <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Opsional</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-1.5 text-[10px] text-sand-600">
+                            <span class="font-bold text-charcoal-800">Variabel:</span>
+                            <code class="px-1.5 py-0.5 rounded bg-white text-charcoal-900 font-mono border border-sand-200">[nama]</code>
+                            <span>= Nama Tamu,</span>
+                            <code class="px-1.5 py-0.5 rounded bg-white text-charcoal-900 font-mono border border-sand-200">[link]</code>
+                            <span>= Link Undangan</span>
+                        </div>
+                        <textarea 
+                            name="whatsapp_template" 
+                            rows="6" 
+                            placeholder="{{ \App\Models\Invitation::defaultWhatsappTemplate() }}"
+                            class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white text-xs font-mono placeholder-sand-400"
+                        >{{ old('whatsapp_template', \App\Models\Invitation::defaultWhatsappTemplate()) }}</textarea>
+                        <p class="text-[9px] text-sand-500">Dapat diedit kapan saja melalui menu Buku Tamu setelah rilis.</p>
                     </div>
 
                     <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-center justify-between">

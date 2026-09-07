@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Member;
+namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Models\InvitationGuest as Guest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class GuestController extends Controller
 {
     /**
-     * Display a listing of wedding guests with WhatsApp generators for member invitations.
+     * Display a listing of wedding guests for client invitations under partner.
      */
     public function index(Request $request): View
     {
-        $user = Auth::user();
-        $invitations = $user->invitations()->latest()->get();
+        $user = $request->user();
+        $invitations = $user->partnerInvitations()->latest()->get();
         $invitationIds = $invitations->pluck('id');
 
         $query = Guest::whereIn('invitation_id', $invitationIds)->with('invitation');
@@ -45,17 +44,19 @@ class GuestController extends Controller
 
         $guests = $query->latest()->paginate(15)->withQueryString();
 
+        $selectedInvitation = $request->filled('invitation_id')
+            ? $invitations->firstWhere('id', (int) $request->invitation_id)
+            : $invitations->first();
+
         $totalGuests = Guest::whereIn('invitation_id', $invitationIds)->count();
         $totalAttending = Guest::whereIn('invitation_id', $invitationIds)->where('attendance_status', 'hadir')->count();
         $totalDeclined = Guest::whereIn('invitation_id', $invitationIds)->where('attendance_status', 'tidak_hadir')->count();
         $totalPending = Guest::whereIn('invitation_id', $invitationIds)->where('attendance_status', 'pending')->count();
 
-        $primaryInvitation = $invitations->first();
-
-        return view('member.guests.index', compact(
+        return view('partner.guests.index', compact(
             'guests',
             'invitations',
-            'primaryInvitation',
+            'selectedInvitation',
             'totalGuests',
             'totalAttending',
             'totalDeclined',
@@ -64,12 +65,10 @@ class GuestController extends Controller
     }
 
     /**
-     * Store a new wedding guest under member's invitation.
+     * Store a new wedding guest under client invitation.
      */
     public function store(Request $request): RedirectResponse
     {
-        $user = Auth::user();
-
         $validated = $request->validate([
             'invitation_id' => 'required|exists:invitations,id',
             'name' => 'required|string|max:255',
@@ -78,7 +77,7 @@ class GuestController extends Controller
             'pax' => 'nullable|integer|min:1|max:20',
         ]);
 
-        $invitation = $user->invitations()->findOrFail($validated['invitation_id']);
+        $invitation = $request->user()->partnerInvitations()->findOrFail($validated['invitation_id']);
 
         $baseSlug = Str::slug($validated['name']);
         $uniqueSlug = $baseSlug ?: 'tamu';
@@ -90,37 +89,30 @@ class GuestController extends Controller
             'name' => $validated['name'],
             'slug' => $uniqueSlug,
             'phone' => $validated['phone'] ?? null,
-            'category' => $validated['category'] ?? 'General',
+            'category' => $validated['category'] ?? 'Umum',
             'pax' => $validated['pax'] ?? 1,
             'attendance_status' => 'pending',
             'is_invited' => true,
         ]);
 
-        return redirect()->route('member.guests.index')
-            ->with('success', 'Tamu undangan "'.$validated['name'].'" berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Tamu undangan "'.$validated['name'].'" berhasil ditambahkan ke daftar.');
     }
 
     /**
-     * Delete a guest.
+     * Remove the specified guest from invitation.
      */
     public function destroy(Request $request, Guest $guest): RedirectResponse
     {
-        $user = Auth::user();
+        $hasAccess = $request->user()->partnerInvitations()->where('id', $guest->invitation_id)->exists();
+        abort_unless($hasAccess, 403, 'Anda tidak memiliki hak akses untuk menghapus tamu ini.');
 
-        // Ensure guest belongs to an invitation owned by the authenticated member
-        if ($guest->invitation->owner_id !== $user->id && $guest->invitation->user_id !== $user->id) {
-            abort(403, 'Akses ditolak. Tamu ini bukan milik undangan Anda.');
-        }
-
-        $name = $guest->name;
         $guest->delete();
 
-        return redirect()->route('member.guests.index')
-            ->with('success', 'Tamu "'.$name.'" berhasil dihapus dari daftar.');
+        return redirect()->back()->with('success', 'Tamu berhasil dihapus dari daftar undangan.');
     }
 
     /**
-     * Update WhatsApp invitation template for member invitation.
+     * Update WhatsApp invitation template for client invitation.
      */
     public function updateTemplate(Request $request): RedirectResponse
     {
@@ -129,8 +121,7 @@ class GuestController extends Controller
             'whatsapp_template' => 'nullable|string|max:2000',
         ]);
 
-        $user = Auth::user();
-        $invitation = $user->invitations()->findOrFail($validated['invitation_id']);
+        $invitation = $request->user()->partnerInvitations()->findOrFail($validated['invitation_id']);
 
         $setting = $invitation->setting()->firstOrCreate(['invitation_id' => $invitation->id]);
         $metadata = $setting->metadata ?? [];

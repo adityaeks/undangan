@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-partner-layout>
     <div class="space-y-8">
         <!-- Partner Hero Banner -->
         <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-amber-950 p-6 sm:p-10 text-white shadow-xl border border-charcoal-800">
@@ -68,20 +68,41 @@
                 </div>
             </div>
 
-            <!-- Card 3: Status Partner -->
+            <!-- Card 3: Status Paket & Kuota -->
             <div class="p-6 rounded-3xl glass-panel border border-sand-200/80 shadow-sm space-y-4">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Status Kemitraan</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sand-500">Paket & Kuota Aktif</span>
                     <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center">
-                        <i data-lucide="badge-check" class="w-5 h-5"></i>
+                        <i data-lucide="award" class="w-5 h-5"></i>
                     </div>
                 </div>
-                <div>
-                    <div class="font-serif text-2xl font-bold text-charcoal-950">Partner Pro</div>
-                    <p class="text-[11px] text-indigo-600 font-semibold flex items-center gap-1 mt-1">
-                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                        <span>Akses Whitelabel Aktif</span>
-                    </p>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <div class="font-serif text-xl sm:text-2xl font-bold text-charcoal-950">
+                            {{ $activePackage->name ?? 'Starter Partner' }}
+                        </div>
+                        <a href="{{ route('partner.packages.index') }}" class="text-[11px] font-bold text-amber-700 hover:text-amber-800 hover:underline">
+                            Upgrade Paket
+                        </a>
+                    </div>
+
+                    @php
+                        $quota = $invitationQuota;
+                        $used = $totalInvitations;
+                        $pct = $quota > 0 ? min(100, round(($used / $quota) * 100)) : 0;
+                    @endphp
+
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between text-[11px] font-medium text-sand-600">
+                            <span>Terpakai: <strong class="text-charcoal-950">{{ $used }}</strong> / {{ $quota > 0 ? $quota : '∞' }} Undangan</span>
+                            <span class="font-bold {{ $pct >= 90 ? 'text-rose-600' : ($pct >= 70 ? 'text-amber-600' : 'text-emerald-600') }}">{{ $quota > 0 ? $pct . '%' : 'Unlimited' }}</span>
+                        </div>
+                        @if($quota > 0)
+                            <div class="w-full bg-sand-200/80 rounded-full h-2 overflow-hidden">
+                                <div class="h-2 rounded-full transition-all duration-500 {{ $pct >= 90 ? 'bg-rose-500' : ($pct >= 70 ? 'bg-amber-500' : 'bg-emerald-500') }}" style="width: {{ $pct }}%"></div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,4 +160,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-partner-layout>

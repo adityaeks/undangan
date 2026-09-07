@@ -7,6 +7,7 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Package;
 use App\Models\Theme;
+use App\Services\MidtransService;
 use App\Services\PaymentService;
 use App\Services\ThemeOwnershipService;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,7 @@ class CheckoutController extends Controller
     public function __construct(
         protected PaymentService $paymentService,
         protected ThemeOwnershipService $themeOwnershipService,
+        protected MidtransService $midtransService,
     ) {}
 
     /**
@@ -78,7 +80,18 @@ class CheckoutController extends Controller
 
         $order->load(['items', 'payments', 'coupon']);
 
-        return view('orders.show', compact('order'));
+        $snapToken = ! $order->isPaid() ? $this->midtransService->getSnapToken($order) : null;
+        $snapJsUrl = $this->midtransService->getSnapJsUrl();
+        $midtransClientKey = $this->midtransService->getClientKey();
+        $isMidtransConfigured = $this->midtransService->isConfigured();
+
+        return view('orders.show', compact(
+            'order',
+            'snapToken',
+            'snapJsUrl',
+            'midtransClientKey',
+            'isMidtransConfigured'
+        ));
     }
 
     /**
@@ -113,6 +126,7 @@ class CheckoutController extends Controller
             'coupon_id' => $coupon->id,
             'discount' => $discount,
             'total_amount' => $total,
+            'snap_token' => null,
         ]);
 
         return back()->with('success', 'Kupon '.$coupon->code.' berhasil diterapkan!');
@@ -135,6 +149,7 @@ class CheckoutController extends Controller
             'coupon_id' => null,
             'discount' => 0.00,
             'total_amount' => $order->amount,
+            'snap_token' => null,
         ]);
 
         return back()->with('success', 'Kupon berhasil dihapus.');

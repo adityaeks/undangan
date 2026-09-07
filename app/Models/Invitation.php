@@ -217,4 +217,35 @@ class Invitation extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * Default WhatsApp invitation greeting template.
+     */
+    public static function defaultWhatsappTemplate(): string
+    {
+        return "Kepada Yth.\nBapak/Ibu/Saudara/i *[nama]*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.\n\nInformasi lengkap & konfirmasi kehadiran:\n[link]\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.\n\nTerima kasih.";
+    }
+
+    /**
+     * Get configured WhatsApp invitation template or default.
+     */
+    public function getWhatsappTemplateAttribute(): string
+    {
+        return $this->setting?->metadata['whatsapp_template'] ?? static::defaultWhatsappTemplate();
+    }
+
+    /**
+     * Build formatted WhatsApp invitation message for a recipient.
+     */
+    public function formatWhatsappMessage(string $guestName, ?string $link = null): string
+    {
+        $link = $link ?: route('invitation.show', ['slug' => $this->slug, 'to' => $guestName]);
+        $template = $this->whatsapp_template;
+
+        return str_replace(
+            ['[nama]', '{nama}', '[link]', '{link}'],
+            [$guestName, $guestName, $link, $link],
+            $template
+        );
+    }
 }

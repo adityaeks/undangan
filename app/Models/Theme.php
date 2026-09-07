@@ -21,6 +21,7 @@ class Theme extends Model
         'metadata',
         'is_active',
         'is_premium',
+        'is_for_partner',
     ];
 
     protected function casts(): array
@@ -30,6 +31,7 @@ class Theme extends Model
             'metadata' => 'array',
             'is_active' => 'boolean',
             'is_premium' => 'boolean',
+            'is_for_partner' => 'boolean',
         ];
     }
 

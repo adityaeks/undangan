@@ -24,14 +24,14 @@
     </div>
 
     <!-- NAVIGATION MENUS (SCROLLABLE INDEPENDENTLY) -->
-    <div class="flex-1 overflow-y-auto px-5 py-4 space-y-6">
+    <div id="sidebar-nav-scroll" data-sidebar-scroll="admin" class="flex-1 overflow-y-auto px-5 py-4 space-y-6">
         <nav class="space-y-6">
             
             <!-- SECTION 1: MENU UTAMA -->
             <div class="space-y-1.5">
                 <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Menu Utama</span>
                 
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'data-active-link="true"' : '' }}>
                     <i data-lucide="layout-dashboard" class="w-4 h-4 {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Dashboard Platform</span>
                 </a>
@@ -49,21 +49,21 @@
             <div class="space-y-1.5">
                 <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Manajemen Platform</span>
 
-                <a href="{{ route('admin.users.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('admin.users.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('admin.users.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('admin.users.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('admin.users.*') ? 'data-active-link="true"' : '' }}>
                     <div class="flex items-center gap-3">
                         <i data-lucide="users" class="w-4 h-4 {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-sand-400' }}"></i>
                         <span>Kelola Pengguna</span>
                     </div>
                 </a>
 
-                <a href="{{ route('invitations.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('invitations.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('invitations.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('invitations.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('invitations.*') ? 'data-active-link="true"' : '' }}>
                     <div class="flex items-center gap-3">
                         <i data-lucide="mail-check" class="w-4 h-4 {{ request()->routeIs('invitations.*') ? 'text-white' : 'text-sand-400' }}"></i>
                         <span>Monitoring Undangan</span>
                     </div>
                 </a>
 
-                <a href="{{ route('admin.coupons.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('admin.coupons.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('admin.coupons.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('admin.coupons.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('admin.coupons.*') ? 'data-active-link="true"' : '' }}>
                     <div class="flex items-center gap-3">
                         <i data-lucide="ticket" class="w-4 h-4 {{ request()->routeIs('admin.coupons.*') ? 'text-white' : 'text-sand-400' }}"></i>
                         <span>Kupon & Diskon Promo</span>
@@ -71,7 +71,7 @@
                     <span class="px-2 py-0.5 rounded-full {{ request()->routeIs('admin.coupons.*') ? 'bg-white/20 text-white' : 'bg-brand-500/20 text-brand-300' }} text-[10px] font-bold">Promo</span>
                 </a>
 
-                <a href="{{ route('themes.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('themes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('themes.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('themes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('themes.*') ? 'data-active-link="true"' : '' }}>
                     <div class="flex items-center gap-3">
                         <i data-lucide="palette" class="w-4 h-4 {{ request()->routeIs('themes.*') ? 'text-white' : 'text-sand-400' }}"></i>
                         <span>Katalog & Harga Tema</span>
@@ -83,17 +83,17 @@
             <div class="space-y-1.5">
                 <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Kemitraan & Billing</span>
 
-                <a href="{{ route('partners.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('partners.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('partners.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('partners.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('partners.*') ? 'data-active-link="true"' : '' }}>
                     <i data-lucide="handshake" class="w-4 h-4 {{ request()->routeIs('partners.*') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Partner & Reseller WO</span>
                 </a>
 
-                <a href="{{ route('orders.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('orders.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('orders.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('orders.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('orders.*') ? 'data-active-link="true"' : '' }}>
                     <i data-lucide="receipt" class="w-4 h-4 {{ request()->routeIs('orders.*') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Riwayat Transaksi</span>
                 </a>
 
-                <a href="{{ route('wishes.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('wishes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('wishes.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('wishes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('wishes.*') ? 'data-active-link="true"' : '' }}>
                     <i data-lucide="message-square-heart" class="w-4 h-4 {{ request()->routeIs('wishes.*') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Moderasi Buku Tamu</span>
                 </a>
@@ -103,7 +103,7 @@
             <div class="space-y-1.5">
                 <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Sistem & Akun</span>
 
-                <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('profile.edit') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}">
+                <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('profile.edit') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('profile.edit') ? 'data-active-link="true"' : '' }}>
                     <i data-lucide="settings" class="w-4 h-4 {{ request()->routeIs('profile.edit') ? 'text-white' : 'text-sand-400' }}"></i>
                     <span>Pengaturan Profil</span>
                 </a>
@@ -122,4 +122,51 @@
             </button>
         </form>
     </div>
+
+    <!-- SCRIPT FOR PERSISTING SIDEBAR SCROLL POSITION -->
+    <script>
+        (function () {
+            const nav = document.getElementById('sidebar-nav-scroll');
+            if (!nav) return;
+
+            const roleKey = 'sidebar_scroll_' + (nav.dataset.sidebarScroll || 'admin');
+
+            function restoreScroll() {
+                const saved = sessionStorage.getItem(roleKey);
+                if (saved !== null) {
+                    nav.scrollTop = parseInt(saved, 10);
+                }
+
+                const active = nav.querySelector('[data-active-link="true"]');
+                if (active) {
+                    const navRect = nav.getBoundingClientRect();
+                    const activeRect = active.getBoundingClientRect();
+                    if (saved === null || activeRect.top < navRect.top || activeRect.bottom > navRect.bottom) {
+                        active.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+                    }
+                }
+            }
+
+            restoreScroll();
+            document.addEventListener('DOMContentLoaded', restoreScroll);
+            window.addEventListener('load', restoreScroll);
+
+            let ticking = false;
+            nav.addEventListener('scroll', function () {
+                if (!ticking) {
+                    window.requestAnimationFrame(function () {
+                        sessionStorage.setItem(roleKey, nav.scrollTop);
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            nav.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    sessionStorage.setItem(roleKey, nav.scrollTop);
+                });
+            });
+        })();
+    </script>
 </aside>

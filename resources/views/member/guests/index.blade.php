@@ -1,7 +1,44 @@
 <x-member-layout>
     <div class="space-y-3 sm:space-y-3.5" x-data="{ 
         addModal: false, 
+        templateModal: false,
         toast: { show: false, message: '' }, 
+        defaultTemplate: @js(\App\Models\Invitation::defaultWhatsappTemplate()),
+        invitationTemplates: @js($invitations->mapWithKeys(fn($i) => [$i->id => $i->whatsapp_template])),
+        templateInvId: '{{ $primaryInvitation?->id ?? '' }}',
+        templateText: '',
+        init() {
+            this.updateTemplateText();
+        },
+        updateTemplateText() {
+            this.templateText = this.invitationTemplates[this.templateInvId] || this.defaultTemplate;
+        },
+        resetTemplateToDefault() {
+            this.templateText = this.defaultTemplate;
+        },
+        insertTag(tag) {
+            const textarea = this.$refs.templateTextarea;
+            if (textarea) {
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                this.templateText = this.templateText.substring(0, start) + tag + this.templateText.substring(end);
+                this.$nextTick(() => {
+                    textarea.focus();
+                    textarea.setSelectionRange(start + tag.length, start + tag.length);
+                });
+            } else {
+                this.templateText += ' ' + tag;
+            }
+        },
+        getTemplatePreview() {
+            const sampleName = 'Bpk. Budi Santoso & Keluarga';
+            const sampleLink = '{{ url('/u/undangan-saya') }}?to=' + encodeURIComponent(sampleName);
+            return (this.templateText || this.defaultTemplate)
+                .replaceAll('[nama]', sampleName)
+                .replaceAll('{nama}', sampleName)
+                .replaceAll('[link]', sampleLink)
+                .replaceAll('{link}', sampleLink);
+        },
         copyLink(url) { 
             navigator.clipboard.writeText(url); 
             this.toast.message = 'Link personal tamu berhasil disalin!'; 
@@ -33,24 +70,34 @@
                 </p>
             </div>
 
-            @if($primaryInvitation)
-                <button 
-                    type="button" 
-                    @click="addModal = true"
-                    class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-brand-700 text-white font-bold text-xs shadow hover:shadow-amber-500/25 hover:scale-105 transition flex items-center justify-center gap-1.5 self-start sm:self-auto"
-                >
-                    <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
-                    <span>Tambah Tamu</span>
-                </button>
-            @else
-                <a 
-                    href="{{ route('member.invitations.create') }}" 
-                    class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 text-white font-bold text-xs shadow hover:scale-105 transition flex items-center justify-center gap-1.5 self-start sm:self-auto"
-                >
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    <span>Buat Undangan Dulu</span>
-                </a>
-            @endif
+            <div class="flex items-center gap-2.5 flex-shrink-0 self-start sm:self-auto">
+                @if($primaryInvitation)
+                    <button 
+                        type="button" 
+                        @click="templateModal = true"
+                        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-sand-300 hover:border-sand-400 text-charcoal-900 font-bold text-xs hover:bg-sand-50 transition shadow-sm whitespace-nowrap cursor-pointer"
+                    >
+                        <i data-lucide="message-square-text" class="w-3.5 h-3.5 text-emerald-600"></i>
+                        <span>Template Pesan WA</span>
+                    </button>
+                    <button 
+                        type="button" 
+                        @click="addModal = true"
+                        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-brand-700 text-white font-bold text-xs shadow hover:shadow-amber-500/25 hover:scale-[1.02] transition whitespace-nowrap cursor-pointer"
+                    >
+                        <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+                        <span>Tambah Tamu</span>
+                    </button>
+                @else
+                    <a 
+                        href="{{ route('member.invitations.create') }}" 
+                        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 text-white font-bold text-xs shadow hover:scale-[1.02] transition whitespace-nowrap cursor-pointer"
+                    >
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                        <span>Buat Undangan Dulu</span>
+                    </a>
+                @endif
+            </div>
         </div>
 
         <!-- SUCCESS ALERT -->
@@ -165,7 +212,9 @@
                             @php
                                 $invitationSlug = $guest->invitation->slug ?? 'demo';
                                 $personalLink = route('invitation.show', $invitationSlug) . '?to=' . urlencode($guest->name);
-                                $waText = "Halo {$guest->name}! Tanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk hadir di pernikahan kami. Informasi lengkap & konfirmasi kehadiran: {$personalLink} . Terima kasih!";
+                                $waText = $guest->invitation 
+                                    ? $guest->invitation->formatWhatsappMessage($guest->name, $personalLink)
+                                    : "Halo {$guest->name}! Kami mengundang Anda ke pernikahan kami: {$personalLink} . Terima kasih!";
                                 $waUrl = whatsapp_url($guest->phone, $waText);
                             @endphp
                             <tr class="hover:bg-amber-50/30 transition">
@@ -372,6 +421,116 @@
                 </div>
             </div>
         @endif
+
+        <!-- MODAL EDIT TEMPLATE UCAPAN WA -->
+        <div 
+            x-show="templateModal" 
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-50 overflow-y-auto bg-charcoal-950/70 backdrop-blur-sm flex items-center justify-center p-4"
+            style="display: none;"
+        >
+            <div 
+                @click.away="templateModal = false"
+                class="w-full max-w-xl rounded-3xl glass-panel bg-white p-6 sm:p-8 shadow-2xl border border-sand-200 space-y-5"
+            >
+                <div class="flex items-center justify-between pb-3 border-b border-sand-200">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shadow">
+                            <i data-lucide="message-square-text" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-lg font-bold text-charcoal-950">Template Pesan WhatsApp</h3>
+                            <p class="text-[11px] text-sand-500">Sesuaikan kata-kata undangan yang dikirimkan via WhatsApp ke para tamu</p>
+                        </div>
+                    </div>
+                    <button type="button" @click="templateModal = false" class="p-1 rounded-xl text-sand-400 hover:text-charcoal-900 transition">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <form method="POST" action="{{ route('member.guests.template') }}" class="space-y-4 text-xs">
+                    @csrf
+
+                    <div>
+                        <label class="block font-bold text-charcoal-950 mb-1">Pilih Undangan *</label>
+                        <select 
+                            name="invitation_id" 
+                            x-model="templateInvId" 
+                            @change="updateTemplateText()" 
+                            required 
+                            class="w-full px-4 py-2.5 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        >
+                            @foreach($invitations as $inv)
+                                <option value="{{ $inv->id }}">{{ $inv->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="font-bold text-charcoal-950">Format Teks Ucapan WhatsApp</label>
+                            <button 
+                                type="button" 
+                                @click="resetTemplateToDefault()" 
+                                class="text-[11px] text-sand-500 hover:text-amber-700 underline font-semibold"
+                            >
+                                Reset ke Bawaan
+                            </button>
+                        </div>
+                        <textarea 
+                            name="whatsapp_template" 
+                            x-ref="templateTextarea"
+                            x-model="templateText" 
+                            rows="7" 
+                            required
+                            class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            placeholder="Tulis format pesan WhatsApp..."
+                        ></textarea>
+                    </div>
+
+                    <!-- TAG HELPER BUTTONS -->
+                    <div class="flex items-center gap-2 flex-wrap text-[11px]">
+                        <span class="text-sand-500 font-semibold">Sisipkan Variabel:</span>
+                        <button 
+                            type="button" 
+                            @click="insertTag('[nama]')"
+                            class="px-2.5 py-1 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-bold transition flex items-center gap-1"
+                        >
+                            <i data-lucide="plus" class="w-3 h-3"></i>
+                            <span>[nama] (Nama Tamu)</span>
+                        </button>
+                        <button 
+                            type="button" 
+                            @click="insertTag('[link]')"
+                            class="px-2.5 py-1 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold transition flex items-center gap-1"
+                        >
+                            <i data-lucide="plus" class="w-3 h-3"></i>
+                            <span>[link] (Tautan Undangan)</span>
+                        </button>
+                    </div>
+
+                    <!-- LIVE PREVIEW -->
+                    <div class="p-4 rounded-2xl bg-sand-50 border border-sand-200 space-y-1.5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-sand-500 block">Preview Hasil Pesan WhatsApp:</span>
+                        <div class="p-3 bg-white rounded-xl border border-sand-200 whitespace-pre-wrap text-[11px] text-charcoal-900 leading-relaxed font-sans" x-text="getTemplatePreview()"></div>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2 pt-2">
+                        <button type="button" @click="templateModal = false" class="px-4 py-2.5 rounded-xl bg-sand-100 text-charcoal-800 font-bold text-xs hover:bg-sand-200 transition">
+                            Batal
+                        </button>
+                        <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold text-xs shadow hover:scale-[1.02] transition">
+                            Simpan Template Ucapan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     </div>
 </x-member-layout>

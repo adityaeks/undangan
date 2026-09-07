@@ -19,6 +19,11 @@ class ThemeOwnershipService
             return true;
         }
 
+        // Partner can use active themes provided for partners by super admin
+        if ($user->isPartner() && $theme->is_active && $theme->is_for_partner) {
+            return true;
+        }
+
         // Free themes can be used by anyone
         if ($theme->isFree()) {
             return true;
@@ -59,6 +64,10 @@ class ThemeOwnershipService
     {
         if ($user->isSuperAdmin()) {
             return Theme::pluck('id')->all();
+        }
+
+        if ($user->isPartner()) {
+            return Theme::where('is_active', true)->where('is_for_partner', true)->pluck('id')->all();
         }
 
         $ownedIds = UserTheme::where('user_id', $user->id)

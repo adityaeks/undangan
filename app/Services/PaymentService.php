@@ -88,12 +88,20 @@ class PaymentService
     public function processSuccessfulPayment(Order $order, string $paymentCode, string $method = 'midtrans', ?array $payload = null): Payment
     {
         return DB::transaction(function () use ($order, $paymentCode, $method, $payload) {
+            $orderMetadata = $order->metadata ?? [];
+            if ($payload) {
+                $orderMetadata['midtrans_response'] = $payload;
+            }
+
             $order->update([
                 'status' => 'paid',
                 'payment_status' => 'paid',
                 'payment_method' => $method,
+                'metadata' => $orderMetadata,
                 'paid_at' => now(),
             ]);
+
+            $paymentStatus = $payload['transaction_status'] ?? 'paid';
 
             $payment = Payment::updateOrCreate(
                 [
@@ -103,7 +111,7 @@ class PaymentService
                 [
                     'amount' => $order->total_amount !== null ? $order->total_amount : $order->amount,
                     'method' => $method,
-                    'status' => 'paid',
+                    'status' => $paymentStatus,
                     'payload' => $payload,
                     'paid_at' => now(),
                 ]
@@ -119,6 +127,11 @@ class PaymentService
                     $theme = Theme::find($item->item_id);
                     if ($theme && $order->user) {
                         $this->themeOwnershipService->unlockThemeForUser($order->user, $theme, $order);
+                    }
+                } elseif ($item->item_type === 'package') {
+                    $package = Package::find($item->item_id);
+                    if ($package && $order->user) {
+                        $order->user->update(['package_id' => $package->id]);
                     }
                 }
             }

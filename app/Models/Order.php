@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'uuid',
         'user_id',
         'invitation_id',
         'coupon_id',
@@ -85,6 +87,36 @@ class Order extends Model
     public function userThemes(): HasMany
     {
         return $this->hasMany(UserTheme::class);
+    }
+
+    /**
+     * Bootstrap model events.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (Order $order) {
+            if (empty($order->uuid)) {
+                $order->uuid = (string) Str::uuid();
+            }
+        });
+    }
+
+    /**
+     * Get route key name for route model binding.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
+
+    /**
+     * Retrieve the model for a bound value with backward-compatible fallback for numeric ID.
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where($field ?? 'uuid', $value)
+            ->when(is_numeric($value), fn ($query) => $query->orWhere('id', $value))
+            ->first() ?? abort(404);
     }
 
     /**

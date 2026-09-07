@@ -215,11 +215,10 @@ return [
     | Standard curated background tracks for digital invitations.
     */
     'music_presets' => [
-        ['title' => 'A Thousand Years (Romantic Acoustic Piano)', 'file' => '/audio/wedding-song.mp3'],
-        ['title' => 'Canon in D (String Quartet Ensemble)', 'file' => '/audio/canon-in-d.mp3'],
-        ['title' => 'Until I Found You (Acoustic Guitar)', 'file' => '/audio/until-i-found-you.mp3'],
-        ['title' => 'Akad (Payung Teduh - Sweet Instrumental)', 'file' => '/audio/akad-instrumental.mp3'],
-        ['title' => 'Kisah Romantis (Acoustic Strings)', 'file' => '/audio/kisah-romantis.mp3'],
+        ['title' => 'Payung Teduh - Akad', 'file' => '/audio/payung-teduh-akad.mp3'],
+        ['title' => 'Sal Priadi - Mesra-mesraannya Kecil-kecilan Dulu', 'file' => '/audio/sal-priadi-mesra-mesraannya.mp3'],
+        ['title' => 'Ungu feat. Andien - Saat Bahagia', 'file' => '/audio/ungu-saat-bahagia.mp3'],
+        ['title' => 'Virgoun - Surat Cinta Untuk Starla', 'file' => '/audio/virgoun-surat-cinta-untuk-starla.mp3'],
     ],
 
     /*
