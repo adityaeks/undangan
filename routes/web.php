@@ -52,7 +52,9 @@ Route::get('/demo', [DemoController::class, 'index'])->name('demo.index');
 Route::get('/demo/{slug}', [DemoController::class, 'show'])->name('demo.show');
 
 // Payment Webhook (Idempotent Notification Receiver)
-Route::post('/payment/webhook', [WebhookController::class, 'handle'])->name('payment.webhook');
+Route::match(['GET', 'POST'], '/payment/webhook', [WebhookController::class, 'handle'])->name('payment.webhook');
+Route::match(['GET', 'POST'], '/api/webhooks/midtrans', [WebhookController::class, 'handle'])->name('midtrans.webhook');
+Route::match(['GET', 'POST'], '/api/webhook/midtrans', [WebhookController::class, 'handle']);
 
 /*
 |--------------------------------------------------------------------------

@@ -209,3 +209,24 @@ test('order route uses uuid instead of numeric id', function () {
         ->get('/orders/'.$order->id)
         ->assertOk();
 });
+
+test('midtrans test notification ping returns 200 ok for sample/unknown orders', function () {
+    // When clicking "Test notification URL" in Midtrans Dashboard
+    $testPayload = [
+        'order_id' => 'sample-test-order-123456',
+        'status_code' => '200',
+        'transaction_status' => 'settlement',
+    ];
+
+    $response = $this->postJson('/api/webhooks/midtrans', $testPayload);
+
+    $response->assertOk()
+        ->assertJson(['status' => 'ok']);
+});
+
+test('midtrans webhook endpoint responds to GET request with 200', function () {
+    $response = $this->getJson('/api/webhooks/midtrans');
+
+    $response->assertOk()
+        ->assertJson(['status' => 'ok', 'service' => 'Midtrans Payment Webhook Receiver']);
+});

@@ -22,19 +22,32 @@ class WebhookController extends Controller
      */
     public function handle(Request $request): JsonResponse
     {
+        if ($request->isMethod('GET')) {
+            return response()->json([
+                'status' => 'ok',
+                'service' => 'Midtrans Payment Webhook Receiver',
+                'timestamp' => now()->toIso8601String(),
+            ]);
+        }
+
         $orderCode = $request->input('order_id') ?? $request->input('order_code');
         $transactionStatus = $request->input('transaction_status') ?? $request->input('status');
         $paymentType = $request->input('payment_type') ?? $request->input('method') ?? 'midtrans';
 
         if (! $orderCode) {
-            return response()->json(['status' => 'error', 'message' => 'Order code is required'], 400);
+            return response()->json(['status' => 'ok', 'message' => 'Webhook endpoint is active and listening'], 200);
         }
 
         /** @var Order|null $order */
-        $order = Order::where('order_code', $orderCode)->first();
+        $order = Order::where('order_code', $orderCode)
+            ->orWhere('uuid', $orderCode)
+            ->first();
 
         if (! $order) {
-            return response()->json(['status' => 'error', 'message' => 'Order not found'], 404);
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Notification ping acknowledged (Order not found in database)',
+            ], 200);
         }
 
         // Verify signature if provided by Midtrans
