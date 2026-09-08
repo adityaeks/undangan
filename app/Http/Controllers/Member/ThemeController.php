@@ -37,8 +37,11 @@ class ThemeController extends Controller
             $query->where('themes.name', 'like', "%{$search}%");
         }
 
-        $themes = $query->orderBy('themes.name', 'asc')->get()->map(function ($theme) {
+        $usedThemeIds = $user->invitations()->pluck('theme_id')->toArray();
+
+        $themes = $query->orderBy('themes.name', 'asc')->get()->map(function ($theme) use ($usedThemeIds, $user) {
             $theme->is_owned = true;
+            $theme->is_used = in_array($theme->id, $usedThemeIds, true) && ! $user->isSuperAdmin();
 
             return $theme;
         });
@@ -51,8 +54,12 @@ class ThemeController extends Controller
             ? Theme::where('is_active', true)->count()
             : $user->themes()->count();
 
+        $totalActive = $user->isSuperAdmin()
+            ? Theme::where('is_active', true)->count()
+            : count($this->themeOwnershipService->getUserOwnedThemeIds($user));
+
         $totalCatalogThemes = Theme::where('is_active', true)->count();
 
-        return view('member.themes.index', compact('themes', 'categories', 'totalOwned', 'totalCatalogThemes'));
+        return view('member.themes.index', compact('themes', 'categories', 'totalOwned', 'totalActive', 'totalCatalogThemes'));
     }
 }

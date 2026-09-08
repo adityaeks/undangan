@@ -326,7 +326,6 @@
                 style="display: none;"
             >
                 <div 
-                    @click.away="addModal = false"
                     class="bg-white rounded-3xl border border-sand-200 max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl"
                 >
                     <div class="flex items-center justify-between pb-3 border-b border-sand-100">
@@ -435,7 +434,6 @@
             style="display: none;"
         >
             <div 
-                @click.away="templateModal = false"
                 class="w-full max-w-xl rounded-3xl glass-panel bg-white p-6 sm:p-8 shadow-2xl border border-sand-200 space-y-5"
             >
                 <div class="flex items-center justify-between pb-3 border-b border-sand-200">

@@ -2,7 +2,8 @@
     <div 
         class="space-y-6 max-w-5xl mx-auto" 
         x-data="{ 
-            currentStep: 1, 
+            currentStep: {{ $errors->hasAny(['groom_*', 'bride_*']) ? 2 : ($errors->hasAny(['akad_*', 'resepsi_*']) ? 3 : 1) }}, 
+            errorMessage: '',
             selectedTheme: {{ $themes->first()->id ?? 'null' }},
             selectedMusic: '{{ old('music_preset', '/audio/payung-teduh-akad.mp3') }}',
             isPlayingAudio: false,
@@ -25,6 +26,64 @@
             init() {
                 this.audioPlayer = new Audio(this.selectedMusic);
                 this.audioPlayer.onerror = () => { this.isPlayingAudio = false; };
+            },
+            validateStep(step) {
+                this.errorMessage = '';
+                const form = this.$el.querySelector('form');
+                if (!form) return true;
+
+                if (step === 1 && !this.selectedTheme) {
+                    this.errorMessage = 'Silakan pilih tema desain terlebih dahulu.';
+                    return false;
+                }
+
+                const stepContainer = form.querySelector(`[data-step='${step}']`);
+                if (!stepContainer) return true;
+
+                const fields = stepContainer.querySelectorAll('input[required], select[required], textarea[required]');
+                for (const field of fields) {
+                    if (!field.checkValidity()) {
+                        field.classList.add('border-rose-500', 'ring-2', 'ring-rose-200');
+                        this.currentStep = step;
+                        this.$nextTick(() => {
+                            field.focus();
+                            if (field.reportValidity) {
+                                field.reportValidity();
+                            }
+                        });
+                        const labelEl = field.closest('div')?.querySelector('label');
+                        const label = labelEl ? labelEl.innerText.replace('*', '').trim() : (field.placeholder || field.name);
+                        this.errorMessage = `Mohon lengkapi kolom wajib: '${label}'.`;
+                        return false;
+                    } else {
+                        field.classList.remove('border-rose-500', 'ring-2', 'ring-rose-200');
+                    }
+                }
+
+                return true;
+            },
+            goToStep(targetStep) {
+                this.errorMessage = '';
+                if (targetStep > this.currentStep) {
+                    for (let s = this.currentStep; s < targetStep; s++) {
+                        if (!this.validateStep(s)) {
+                            this.currentStep = s;
+                            return false;
+                        }
+                    }
+                }
+                this.currentStep = targetStep;
+                window.scrollTo({ top: 120, behavior: 'smooth' });
+                return true;
+            },
+            submitForm(e) {
+                for (let s = 1; s <= 5; s++) {
+                    if (!this.validateStep(s)) {
+                        e.preventDefault();
+                        this.currentStep = s;
+                        return false;
+                    }
+                }
             },
             toggleAudioTest() {
                 if (!this.audioPlayer) {
@@ -120,9 +179,9 @@
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
             <button 
                 type="button" 
-                @click="currentStep = 1"
+                @click="goToStep(1)"
                 :class="currentStep === 1 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
-                class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center"
+                class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
                 <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 1 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">1</span>
                 <span>Klien & Tema</span>
@@ -130,9 +189,9 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 2"
+                @click="goToStep(2)"
                 :class="currentStep === 2 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
-                class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center"
+                class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
                 <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 2 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">2</span>
                 <span>Mempelai</span>
@@ -140,9 +199,9 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 3"
+                @click="goToStep(3)"
                 :class="currentStep === 3 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
-                class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center"
+                class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
                 <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 3 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">3</span>
                 <span>Acara</span>
@@ -150,9 +209,9 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 4"
+                @click="goToStep(4)"
                 :class="currentStep === 4 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
-                class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center"
+                class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
                 <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 4 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">4</span>
                 <span>Galeri & Cerita</span>
@@ -160,23 +219,34 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 5"
+                @click="goToStep(5)"
                 :class="currentStep === 5 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
-                class="col-span-2 sm:col-span-1 px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center"
+                class="col-span-2 sm:col-span-1 px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
                 <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 5 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">5</span>
                 <span>Amplop & Kado</span>
             </button>
         </div>
 
+        <!-- ERROR MESSAGE BANNER -->
+        <div x-show="errorMessage" x-cloak x-transition class="p-4 rounded-2xl bg-rose-50 border border-rose-300 text-rose-800 text-xs flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-2 font-medium">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+                <span x-text="errorMessage"></span>
+            </div>
+            <button type="button" @click="errorMessage = ''" class="text-rose-500 hover:text-rose-700">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+
         <!-- FORM WRAPPER -->
-        <form action="{{ route('partner.invitations.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form action="{{ route('partner.invitations.store') }}" method="POST" enctype="multipart/form-data" @submit="submitForm($event)" novalidate class="space-y-6">
             @csrf
 
             <!-- ==================================================== -->
             <!-- STEP 1: PILIH KLIEN, TEMPLATE TEMA, & INFO UTAMA -->
             <!-- ==================================================== -->
-            <div x-show="currentStep === 1" class="space-y-6">
+            <div x-show="currentStep === 1" data-step="1" class="space-y-6">
                 <!-- INFO KLIEN & JUDUL -->
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 sm:p-8 bg-white/95 shadow-sm space-y-5">
                     <div class="flex items-center gap-3 pb-3 border-b border-sand-200">
@@ -336,7 +406,7 @@
                     @endif
 
                     <div class="flex justify-end pt-2">
-                        <button type="button" @click="currentStep = 2" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2">
+                        <button type="button" @click="goToStep(2)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2 cursor-pointer">
                             <span>Lanjut ke Data Mempelai</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
@@ -347,7 +417,7 @@
             <!-- ==================================================== -->
             <!-- STEP 2: DATA MEMPELAI PRIA & WANITA -->
             <!-- ==================================================== -->
-            <div x-show="currentStep === 2" class="space-y-6" style="display: none;">
+            <div x-show="currentStep === 2" data-step="2" class="space-y-6" style="display: none;">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- MEMPELAI PRIA -->
                     <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 bg-white/95 shadow-sm space-y-4 text-xs">
@@ -463,10 +533,10 @@
                 </div>
 
                 <div class="flex items-center justify-between pt-2">
-                    <button type="button" @click="currentStep = 1" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
+                    <button type="button" @click="goToStep(1)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                         Kembali
                     </button>
-                    <button type="button" @click="currentStep = 3" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2">
+                    <button type="button" @click="goToStep(3)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2 cursor-pointer">
                         <span>Lanjut ke Rangkaian Acara</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -476,7 +546,7 @@
             <!-- ==================================================== -->
             <!-- STEP 3: RANGKAIAN ACARA (AKAD & RESEPSI) -->
             <!-- ==================================================== -->
-            <div x-show="currentStep === 3" class="space-y-6" style="display: none;">
+            <div x-show="currentStep === 3" data-step="3" class="space-y-6" style="display: none;">
                 <!-- 1. AKAD NIKAH -->
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 bg-white/95 shadow-sm space-y-4 text-xs">
                     <div class="flex items-center gap-2.5 pb-3 border-b border-sand-200">
@@ -546,10 +616,10 @@
                 </div>
 
                 <div class="flex items-center justify-between pt-2">
-                    <button type="button" @click="currentStep = 2" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
+                    <button type="button" @click="goToStep(2)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                         Kembali
                     </button>
-                    <button type="button" @click="currentStep = 4" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2">
+                    <button type="button" @click="goToStep(4)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2 cursor-pointer">
                         <span>Lanjut ke Galeri & Cerita</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -559,7 +629,7 @@
             <!-- ==================================================== -->
             <!-- STEP 4: GALERI PREWEDDING, CERITA CINTA, & MUSIK -->
             <!-- ==================================================== -->
-            <div x-show="currentStep === 4" class="space-y-6" style="display: none;">
+            <div x-show="currentStep === 4" data-step="4" class="space-y-6" style="display: none;">
                 
                 <!-- 1. GALERI MULTI-UPLOAD FOTO PREWEDDING -->
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 bg-white/95 shadow-sm space-y-4 text-xs">
@@ -715,10 +785,10 @@
                 </div>
 
                 <div class="flex items-center justify-between pt-2">
-                    <button type="button" @click="currentStep = 3" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
+                    <button type="button" @click="goToStep(3)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                         Kembali
                     </button>
-                    <button type="button" @click="currentStep = 5" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2">
+                    <button type="button" @click="goToStep(5)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2 cursor-pointer">
                         <span>Lanjut ke Amplop & Kado</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -728,7 +798,7 @@
             <!-- ==================================================== -->
             <!-- STEP 5: AMPLOP DIGITAL, KADO FISIK, & KUTIPAN -->
             <!-- ==================================================== -->
-            <div x-show="currentStep === 5" class="space-y-6" style="display: none;">
+            <div x-show="currentStep === 5" data-step="5" class="space-y-6" style="display: none;">
                 <!-- 1. REKENING AMPLOP DIGITAL -->
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 bg-white/95 shadow-sm space-y-4 text-xs">
                     <div class="flex items-center gap-2.5 pb-3 border-b border-sand-200">
@@ -847,7 +917,7 @@
 
                 <!-- SUBMIT ACTIONS -->
                 <div class="flex items-center justify-between pt-2">
-                    <button type="button" @click="currentStep = 4" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
+                    <button type="button" @click="goToStep(4)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
                         Kembali
                     </button>
                     <button 

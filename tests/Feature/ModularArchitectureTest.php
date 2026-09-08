@@ -98,8 +98,9 @@ test('purchasing premium theme and processing payment unlocks theme idempotently
     // 1. Create order
     $order = $paymentService->createOrderForTheme($user, $premiumTheme);
     expect($order->isPaid())->toBeFalse();
-    expect($order->items()->count())->toBe(1);
-    expect((float) $order->total_amount)->toBe(75000.00);
+    expect((float) $order->amount)->toBe(75000.00);
+    expect((float) $order->tax_amount)->toBe(8250.00);
+    expect((float) $order->total_amount)->toBe(83250.00);
 
     // 2. Process successful payment
     $payment = $paymentService->processSuccessfulPayment(

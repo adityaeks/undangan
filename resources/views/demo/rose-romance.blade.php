@@ -132,10 +132,10 @@
         copiedMsg: '',
 
         // Countdown
-        days: 28,
-        hours: 14,
-        minutes: 42,
-        seconds: 18,
+        days: '00',
+        hours: '00',
+        minutes: '00',
+        seconds: '00',
 
         // RSVP
         rsvpName: window._guestName || '',
@@ -212,24 +212,27 @@
         },
 
         startCountdown() {
-            setInterval(() => {
-                if (this.seconds > 0) {
-                    this.seconds--;
+            const targetStr = @json($data['countdown_target'] ?? '2026-10-24T08:00:00+07:00');
+            const target = new Date(targetStr).getTime();
+            
+            const update = () => {
+                const now = new Date().getTime();
+                const diff = target - now;
+                if (diff > 0) {
+                    this.days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                    this.hours = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                    this.minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                    this.seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
                 } else {
-                    this.seconds = 59;
-                    if (this.minutes > 0) {
-                        this.minutes--;
-                    } else {
-                        this.minutes = 59;
-                        if (this.hours > 0) {
-                            this.hours--;
-                        } else {
-                            this.hours = 23;
-                            if (this.days > 0) this.days--;
-                        }
-                    }
+                    this.days = '00';
+                    this.hours = '00';
+                    this.minutes = '00';
+                    this.seconds = '00';
                 }
-            }, 1000);
+            };
+
+            update();
+            setInterval(update, 1000);
         }
     }"
     x-init="init()"
@@ -448,28 +451,28 @@
                 <!-- COUNTDOWN 4 PILL BOXES -->
                 <div class="grid grid-cols-4 gap-2.5 max-w-xs mx-auto">
                     <div class="floral-card rounded-2xl py-3 px-1 border border-rosewood-200 shadow-sm">
-                        <span class="font-serif text-xl sm:text-2xl font-bold text-rosewood-900 block" x-text="days">28</span>
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-rosewood-900 block" x-text="days">00</span>
                         <span class="text-[9px] uppercase tracking-wider text-rosewood-500 font-medium">Hari</span>
                     </div>
                     <div class="floral-card rounded-2xl py-3 px-1 border border-rosewood-200 shadow-sm">
-                        <span class="font-serif text-xl sm:text-2xl font-bold text-rosewood-900 block" x-text="hours">14</span>
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-rosewood-900 block" x-text="hours">00</span>
                         <span class="text-[9px] uppercase tracking-wider text-rosewood-500 font-medium">Jam</span>
                     </div>
                     <div class="floral-card rounded-2xl py-3 px-1 border border-rosewood-200 shadow-sm">
-                        <span class="font-serif text-xl sm:text-2xl font-bold text-rosewood-900 block" x-text="minutes">42</span>
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-rosewood-900 block" x-text="minutes">00</span>
                         <span class="text-[9px] uppercase tracking-wider text-rosewood-500 font-medium">Menit</span>
                     </div>
                     <div class="floral-card rounded-2xl py-3 px-1 border border-rosewood-200 shadow-sm">
-                        <span class="font-serif text-xl sm:text-2xl font-bold text-rosewood-900 block" x-text="seconds">18</span>
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-rosewood-900 block" x-text="seconds">00</span>
                         <span class="text-[9px] uppercase tracking-wider text-rosewood-500 font-medium">Detik</span>
                     </div>
                 </div>
 
                 <div class="pt-6">
                     <a 
-                        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text={{ urlencode('Pernikahan ' . ($data['groom']['nickname'] ?? 'Raka') . ' & ' . ($data['bride']['nickname'] ?? 'Arinda')) }}&details={{ urlencode('Pernikahan ' . ($data['groom']['name'] ?? '') . ' & ' . ($data['bride']['name'] ?? '')) }}&location={{ urlencode(($data['events']['akad']['venue'] ?? '') . ', ' . ($data['events']['akad']['address'] ?? '')) }}" 
+                        href="{{ $data['google_calendar_url'] ?? '#' }}" 
                         target="_blank" 
-                        class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-rosewood-700 hover:bg-rosewood-800 text-white text-xs font-medium tracking-wider uppercase transition shadow-md hover:scale-105"
+                        class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-rosewood-700 hover:bg-rosewood-800 text-white text-xs font-medium tracking-wider uppercase transition shadow-md hover:scale-105 cursor-pointer"
                     >
                         <i data-lucide="calendar-plus" class="w-3.5 h-3.5"></i>
                         <span>Simpan di Kalender</span>

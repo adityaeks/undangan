@@ -78,6 +78,48 @@ class Theme extends Model
     }
 
     /**
+     * Get price for 45-day duration package.
+     */
+    public function getPrice45Days(): float
+    {
+        if ($this->isFree()) {
+            return 0.00;
+        }
+
+        $price = (float) $this->price;
+        if ($price > 0.00) {
+            return $price;
+        }
+
+        return (float) Setting::get('theme_price_45_days', 49000);
+    }
+
+    /**
+     * Get price for lifetime duration package.
+     */
+    public function getLifetimePrice(): float
+    {
+        if ($this->isFree()) {
+            return 0.00;
+        }
+
+        $meta = $this->metadata ?? [];
+        if (isset($meta['price_lifetime']) && (float) $meta['price_lifetime'] > 0.00) {
+            return (float) $meta['price_lifetime'];
+        }
+
+        return (float) Setting::get('theme_price_lifetime', 99000);
+    }
+
+    /**
+     * Get fee for assisted data entry service.
+     */
+    public static function getAssistedFee(): float
+    {
+        return (float) Setting::get('theme_assisted_fee', 25000);
+    }
+
+    /**
      * Convert theme model into standardized catalog array for UI components.
      *
      * @return array<string, mixed>
@@ -85,6 +127,9 @@ class Theme extends Model
     public function toCatalogArray(): array
     {
         $meta = $this->metadata ?? [];
+        $price45 = $this->getPrice45Days();
+        $priceLifetime = $this->getLifetimePrice();
+        $assistedFee = static::getAssistedFee();
 
         return [
             'id' => $this->slug,
@@ -110,8 +155,14 @@ class Theme extends Model
             'best_for' => $meta['best_for'] ?? 'Pasangan modern, resepsi pernikahan elegan minimalis',
             'rating' => $meta['rating'] ?? '4.98',
             'reviews_count' => $meta['reviews_count'] ?? '1.200',
-            'price' => format_rupiah($this->price),
-            'raw_price' => (float) $this->price,
+            'price' => format_rupiah($price45),
+            'raw_price' => (float) $price45,
+            'price_45_days' => format_rupiah($price45),
+            'raw_price_45_days' => (float) $price45,
+            'price_lifetime' => format_rupiah($priceLifetime),
+            'raw_price_lifetime' => (float) $priceLifetime,
+            'assisted_fee' => format_rupiah($assistedFee),
+            'raw_assisted_fee' => (float) $assistedFee,
             'is_premium' => $this->is_premium,
             'demo_url' => route('demo.show', ['slug' => $this->slug]),
             'checkout_url' => route('checkout.theme', ['theme' => $this->id]),

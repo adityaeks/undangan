@@ -66,6 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Shared Orders & Checkout
     Route::get('/orders/{order}', [CheckoutController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{order}/success', [CheckoutController::class, 'success'])->name('orders.success');
+    Route::get('/orders/{order}/invoice', [CheckoutController::class, 'invoice'])->name('orders.invoice');
     Route::post('/orders/{order}/coupon', [CheckoutController::class, 'applyCoupon'])->name('orders.coupon.apply');
     Route::delete('/orders/{order}/coupon', [CheckoutController::class, 'removeCoupon'])->name('orders.coupon.remove');
     Route::post('/orders/{order}/simulate', [CheckoutController::class, 'simulatePayment'])->name('orders.simulate');
@@ -170,6 +172,7 @@ Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->gr
 
     // Themes
     Route::get('/themes', [ThemeController::class, 'index'])->name('themes.index');
+    Route::post('/themes/pricing-settings', [ThemeController::class, 'updateGlobalPricing'])->name('admin.themes.pricing-settings');
     Route::patch('/themes/{theme}/toggle', [ThemeController::class, 'toggleActive'])->name('admin.themes.toggle');
     Route::patch('/themes/{theme}/toggle-partner', [ThemeController::class, 'togglePartner'])->name('admin.themes.toggle-partner');
     Route::patch('/themes/{theme}/price', [ThemeController::class, 'updatePrice'])->name('admin.themes.update-price');

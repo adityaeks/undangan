@@ -386,7 +386,7 @@
                             </div>
                         </div>
                         <a 
-                            href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Raka+%26+Arinda&dates=20261024T010000Z/20261024T070000Z&details=Pernikahan+Raka+Adiputra+dan+Arinda+Putri&location=Grand+Ballroom+The+Ritz-Carlton+Jakarta"
+                            href="{{ $data['google_calendar_url'] ?? '#' }}" 
                             target="_blank"
                             class="inline-flex items-center justify-center gap-2 w-full py-3 rounded-2xl text-xs font-bold transition shadow-sm"
                             :style="{ backgroundColor: currentStyle.tag_bg, color: currentStyle.tag_text }"
@@ -846,7 +846,7 @@
 
                 startCountdown() {
                     const target = new Date('{{ $data["countdown_target"] }}').getTime();
-                    setInterval(() => {
+                    const update = () => {
                         const now = new Date().getTime();
                         const diff = target - now;
                         if (diff > 0) {
@@ -854,8 +854,15 @@
                             this.countdown.hours = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
                             this.countdown.minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
                             this.countdown.seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+                        } else {
+                            this.countdown.days = '00';
+                            this.countdown.hours = '00';
+                            this.countdown.minutes = '00';
+                            this.countdown.seconds = '00';
                         }
-                    }, 1000);
+                    };
+                    update();
+                    setInterval(update, 1000);
                 }
             }
         }

@@ -15,6 +15,9 @@ class UserTheme extends Model
         'theme_id',
         'order_id',
         'unlocked_at',
+        'duration_type',
+        'expires_at',
+        'service_type',
         'is_active',
     ];
 
@@ -22,8 +25,25 @@ class UserTheme extends Model
     {
         return [
             'unlocked_at' => 'datetime',
+            'expires_at' => 'datetime',
             'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Determine if this theme access has expired.
+     */
+    public function isExpired(): bool
+    {
+        return $this->expires_at !== null && $this->expires_at->isPast();
+    }
+
+    /**
+     * Determine if this theme access is lifetime.
+     */
+    public function isLifetime(): bool
+    {
+        return $this->duration_type === 'lifetime' || $this->expires_at === null;
     }
 
     /**

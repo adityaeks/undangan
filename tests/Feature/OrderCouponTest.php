@@ -41,7 +41,8 @@ test('member can apply percentage coupon successfully', function () {
     $this->order->refresh();
     expect($this->order->coupon_id)->toBe($coupon->id)
         ->and((float) $this->order->discount)->toBe(15000.0)
-        ->and((float) $this->order->total_amount)->toBe(35000.0);
+        ->and((float) $this->order->tax_amount)->toBe(3850.0)
+        ->and((float) $this->order->total_amount)->toBe(38850.0);
 });
 
 test('member can apply fixed discount coupon successfully', function () {
@@ -63,7 +64,8 @@ test('member can apply fixed discount coupon successfully', function () {
     $this->order->refresh();
     expect($this->order->coupon_id)->toBe($coupon->id)
         ->and((float) $this->order->discount)->toBe(20000.0)
-        ->and((float) $this->order->total_amount)->toBe(30000.0);
+        ->and((float) $this->order->tax_amount)->toBe(3300.0)
+        ->and((float) $this->order->total_amount)->toBe(33300.0);
 });
 
 test('rejects non-existent coupon', function () {
@@ -143,7 +145,8 @@ test('member can remove applied coupon', function () {
     $this->order->refresh();
     expect($this->order->coupon_id)->toBeNull()
         ->and((float) $this->order->discount)->toBe(0.0)
-        ->and((float) $this->order->total_amount)->toBe(50000.0);
+        ->and((float) $this->order->tax_amount)->toBe(5500.0)
+        ->and((float) $this->order->total_amount)->toBe(55500.0);
 });
 
 test('cannot apply coupon to paid order', function () {

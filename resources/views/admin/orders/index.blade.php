@@ -15,7 +15,7 @@
 
             <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1.5 rounded-xl self-start sm:self-auto">
                 <i data-lucide="wallet" class="w-3.5 h-3.5 text-emerald-700"></i>
-                <span>Omset: Rp {{ number_format($totalRevenue, 0, ',', '.') }}</span>
+                <span>Omset: {{ format_rupiah($totalRevenue) }}</span>
             </div>
         </div>
 
@@ -103,7 +103,7 @@
                         @forelse ($orders as $order)
                             <tr class="hover:bg-sand-50/80 transition">
                                 <td class="py-4 px-6">
-                                    <a href="{{ route('orders.show', $order) }}" class="font-mono font-bold text-brand-600 hover:underline block">
+                                    <a href="{{ route('orders.show', ['order' => $order, 'from' => 'dashboard']) }}" class="font-mono font-bold text-brand-600 hover:underline block">
                                         {{ $order->order_code }}
                                     </a>
                                     @if($order->coupon)
@@ -117,23 +117,38 @@
                                     <div class="font-bold text-charcoal-950">{{ $order->user->name ?? 'Customer' }}</div>
                                     <span class="text-[11px] text-sand-500">{{ $order->user->email ?? '-' }}</span>
                                 </td>
-                                <td class="py-4 px-6">
-                                    <span class="px-2.5 py-1 rounded-full bg-sand-200 text-charcoal-900 text-[10px] font-bold">
-                                        {{ ucfirst(str_replace('_', ' ', $order->package_type)) }}
-                                    </span>
+                                <td class="py-4 px-6 space-y-1">
+                                    <div>
+                                        <span class="px-2.5 py-1 rounded-full bg-sand-200 text-charcoal-900 text-[10px] font-bold">
+                                            {{ ucfirst(str_replace('_', ' ', $order->package_type)) }}
+                                        </span>
+                                    </div>
+                                    @if(isset($order->metadata['duration']))
+                                        <div class="flex flex-wrap items-center gap-1 mt-1">
+                                            <span class="px-2 py-0.5 rounded-md text-[9px] font-bold {{ ($order->metadata['duration'] ?? '') === 'lifetime' ? 'bg-amber-100 text-amber-900 border border-amber-300/60' : 'bg-sand-100 text-charcoal-800' }}">
+                                                {{ $order->metadata['duration_label'] ?? '45 Hari' }}
+                                            </span>
+                                            @if(($order->metadata['service_type'] ?? '') === 'assisted')
+                                                <span class="px-2 py-0.5 rounded-md text-[9px] font-bold bg-blue-100 text-blue-900 border border-blue-300/60 flex items-center gap-0.5">
+                                                    <i data-lucide="headphones" class="w-2.5 h-2.5"></i>
+                                                    <span>Diisikan Tim</span>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    @endif
                                 </td>
                                 <td class="py-4 px-6">
                                     @if($order->discount > 0 || $order->coupon)
                                         <div class="font-bold text-charcoal-950">
-                                            Rp {{ number_format($order->total_amount ?: ($order->amount - $order->discount), 0, ',', '.') }}
+                                            {{ format_rupiah($order->total_amount ?: ($order->amount - $order->discount)) }}
                                         </div>
                                         <div class="flex items-center gap-1.5 text-[10px] text-sand-500 mt-0.5">
-                                            <span class="line-through text-sand-400">Rp {{ number_format($order->amount, 0, ',', '.') }}</span>
-                                            <span class="text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200/60">-Rp {{ number_format($order->discount, 0, ',', '.') }}</span>
+                                            <span class="line-through text-sand-400">{{ format_rupiah($order->amount) }}</span>
+                                            <span class="text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200/60">-{{ format_rupiah($order->discount) }}</span>
                                         </div>
                                     @else
                                         <div class="font-bold text-charcoal-950">
-                                            Rp {{ number_format($order->amount, 0, ',', '.') }}
+                                            {{ format_rupiah($order->amount) }}
                                         </div>
                                     @endif
                                 </td>

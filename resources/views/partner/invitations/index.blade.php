@@ -218,7 +218,6 @@
             style="display: none;"
         >
             <div 
-                @click.away="shareModal = false"
                 class="w-full max-w-lg rounded-3xl glass-panel bg-white p-6 sm:p-8 shadow-2xl border border-sand-200 space-y-5"
             >
                 <div class="flex items-center justify-between pb-3 border-b border-sand-200">

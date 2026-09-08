@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Package;
+use App\Models\Setting;
 use App\Models\Theme;
 use App\Services\MidtransService;
 use App\Services\PaymentService;
@@ -42,6 +43,16 @@ class CheckoutController extends Controller
                 ->with('info', 'Anda sudah memiliki template ini. Silakan buat undangan digital Anda.');
         }
 
+        $duration = $request->query('duration', '45_days');
+        if (! in_array($duration, ['45_days', 'lifetime'], true)) {
+            $duration = '45_days';
+        }
+
+        $serviceType = $request->query('service_type', 'self_service');
+        if (! in_array($serviceType, ['self_service', 'assisted'], true)) {
+            $serviceType = 'self_service';
+        }
+
         // Check if there is already an existing pending order for this theme
         $existingOrder = Order::where('user_id', $user->id)
             ->where('payment_status', 'pending')
@@ -50,10 +61,22 @@ class CheckoutController extends Controller
             ->first();
 
         if ($existingOrder) {
-            return redirect()->route('orders.show', $existingOrder);
+            if ($existingOrder->isExpired()) {
+                $existingOrder->update(['status' => 'failed', 'payment_status' => 'failed']);
+            } else {
+                $currentDuration = $existingOrder->metadata['duration'] ?? '45_days';
+                $currentService = $existingOrder->metadata['service_type'] ?? 'self_service';
+
+                if ($currentDuration === $duration && $currentService === $serviceType) {
+                    return redirect()->route('orders.show', $existingOrder);
+                }
+
+                // If user modified their package options, recreate the pending order with new options
+                $existingOrder->delete();
+            }
         }
 
-        $order = $this->paymentService->createOrderForTheme($user, $theme);
+        $order = $this->paymentService->createOrderForTheme($user, $theme, $duration, $serviceType);
 
         return redirect()->route('orders.show', $order);
     }
@@ -72,15 +95,24 @@ class CheckoutController extends Controller
     /**
      * Show order payment detail page.
      */
-    public function show(Request $request, Order $order): View
+    public function show(Request $request, Order $order): View|RedirectResponse
     {
         if ($order->user_id !== $request->user()->id && ! $request->user()->isSuperAdmin()) {
             abort(403);
         }
 
+        if ($order->isPending() && $order->isExpired()) {
+            $order->update(['status' => 'failed', 'payment_status' => 'failed']);
+        }
+
+        // If order is already paid and accessed directly (not from dashboard transaction history), redirect to success page
+        if ($order->isPaid() && ! $request->filled('from')) {
+            return redirect()->route('orders.success', $order);
+        }
+
         $order->load(['items', 'payments', 'coupon']);
 
-        $snapToken = ! $order->isPaid() ? $this->midtransService->getSnapToken($order) : null;
+        $snapToken = (! $order->isPaid() && ! $order->isExpired()) ? $this->midtransService->getSnapToken($order) : null;
         $snapJsUrl = $this->midtransService->getSnapJsUrl();
         $midtransClientKey = $this->midtransService->getClientKey();
         $isMidtransConfigured = $this->midtransService->isConfigured();
@@ -92,6 +124,55 @@ class CheckoutController extends Controller
             'midtransClientKey',
             'isMidtransConfigured'
         ));
+    }
+
+    /**
+     * Show order payment success page.
+     */
+    public function success(Request $request, Order $order): View|RedirectResponse
+    {
+        if ($order->user_id !== $request->user()->id && ! $request->user()->isSuperAdmin()) {
+            abort(403);
+        }
+
+        if (! $order->isPaid()) {
+            return redirect()->route('orders.show', $order);
+        }
+
+        $order->load(['items', 'payments', 'coupon']);
+
+        $waNumber = Setting::get('support_whatsapp_number', '');
+        $cleanWa = preg_replace('/[^0-9]/', '', (string) $waNumber);
+        if (str_starts_with($cleanWa, '0')) {
+            $cleanWa = '62'.substr($cleanWa, 1);
+        }
+
+        $themeItem = $order->items->where('item_type', 'theme')->first();
+        $themeName = $themeItem ? $themeItem->item_name : 'Tema Undangan';
+        $waMessage = urlencode("Halo Tim Admin KlikMomen, saya telah menyelesaikan pembayaran untuk pesanan {$order->order_code} ({$themeName}). Saya memilih layanan Diisikan Tim, berikut saya lampirkan data dan foto untuk undangan pernikahan saya.");
+        $waUrl = ! empty($cleanWa) ? "https://wa.me/{$cleanWa}?text={$waMessage}" : '#';
+
+        return view('orders.success', compact(
+            'order',
+            'waNumber',
+            'cleanWa',
+            'waUrl',
+            'themeItem'
+        ));
+    }
+
+    /**
+     * Display printable order invoice.
+     */
+    public function invoice(Request $request, Order $order): View
+    {
+        if ($order->user_id !== $request->user()->id && ! $request->user()->isSuperAdmin()) {
+            abort(403);
+        }
+
+        $order->load(['items', 'payments', 'coupon', 'user']);
+
+        return view('orders.invoice', compact('order'));
     }
 
     /**
@@ -120,11 +201,14 @@ class CheckoutController extends Controller
         }
 
         $discount = $coupon->calculateDiscount((float) $order->amount);
-        $total = max(0, (float) $order->amount - $discount);
+        $taxableAmount = max(0, (float) $order->amount - $discount);
+        $taxAmount = round($taxableAmount * 0.11);
+        $total = $taxableAmount + $taxAmount;
 
         $order->update([
             'coupon_id' => $coupon->id,
             'discount' => $discount,
+            'tax_amount' => $taxAmount,
             'total_amount' => $total,
             'snap_token' => null,
         ]);
@@ -145,10 +229,14 @@ class CheckoutController extends Controller
             return back()->with('error', 'Pesanan yang sudah lunas tidak dapat diubah kuponnya.');
         }
 
+        $taxAmount = round((float) $order->amount * 0.11);
+        $total = (float) $order->amount + $taxAmount;
+
         $order->update([
             'coupon_id' => null,
             'discount' => 0.00,
-            'total_amount' => $order->amount,
+            'tax_amount' => $taxAmount,
+            'total_amount' => $total,
             'snap_token' => null,
         ]);
 
@@ -171,7 +259,12 @@ class CheckoutController extends Controller
             ['source' => 'manual_simulation']
         );
 
-        return redirect()->route('orders.show', $order)
+        $params = ['order' => $order];
+        if ($request->filled('from')) {
+            $params['from'] = $request->input('from');
+        }
+
+        return redirect()->route('orders.success', $params)
             ->with('success', 'Pembayaran berhasil dikonfirmasi! Template sekarang aktif di akun Anda.');
     }
 }

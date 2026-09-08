@@ -51,7 +51,7 @@
                 </div>
                 <div>
                     <div class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">
-                        Rp {{ number_format($totalRevenue, 0, ',', '.') }}
+                        {{ format_rupiah($totalRevenue) }}
                     </div>
                     <p class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
                         <i data-lucide="check-circle" class="w-3 h-3"></i>
@@ -154,7 +154,7 @@
                                 @forelse($recentOrders as $order)
                                     <tr class="hover:bg-sand-50/50 transition">
                                         <td class="p-4 pl-6">
-                                            <a href="{{ route('orders.show', $order) }}" class="font-mono font-bold text-brand-700 hover:underline">
+                                            <a href="{{ route('orders.show', ['order' => $order, 'from' => 'dashboard']) }}" class="font-mono font-bold text-brand-700 hover:underline">
                                                 {{ $order->order_code }}
                                             </a>
                                             @if($order->coupon)
@@ -166,7 +166,7 @@
                                             <span class="text-sand-500 text-[11px]">{{ $order->user?->email }}</span>
                                         </td>
                                         <td class="p-4 font-bold text-charcoal-950">
-                                            Rp {{ number_format($order->total_amount ?: $order->amount, 0, ',', '.') }}
+                                            {{ format_rupiah($order->total_amount ?: $order->amount) }}
                                         </td>
                                         <td class="p-4 text-center">
                                             @if($order->isPaid())

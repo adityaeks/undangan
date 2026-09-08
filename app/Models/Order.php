@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,7 @@ class Order extends Model
         'package_type',
         'amount',
         'discount',
+        'tax_amount',
         'total_amount',
         'payment_status',
         'status',
@@ -35,6 +37,7 @@ class Order extends Model
         return [
             'amount' => 'decimal:2',
             'discount' => 'decimal:2',
+            'tax_amount' => 'decimal:2',
             'total_amount' => 'decimal:2',
             'metadata' => 'array',
             'paid_at' => 'datetime',
@@ -125,5 +128,33 @@ class Order extends Model
     public function isPaid(): bool
     {
         return $this->status === 'paid' || $this->payment_status === 'paid';
+    }
+
+    /**
+     * Check if order is pending payment.
+     */
+    public function isPending(): bool
+    {
+        return $this->status === 'pending' || $this->payment_status === 'pending';
+    }
+
+    /**
+     * Check if order has expired or failed.
+     */
+    public function isExpired(): bool
+    {
+        if ($this->payment_status === 'failed' || $this->status === 'failed') {
+            return true;
+        }
+
+        return $this->isPending() && $this->created_at && $this->created_at->addHours(24)->isPast();
+    }
+
+    /**
+     * Get payment expiration timestamp (24 hours from creation).
+     */
+    public function getExpiresAtAttribute(): ?Carbon
+    {
+        return $this->created_at ? $this->created_at->copy()->addHours(24) : null;
     }
 }

@@ -107,10 +107,10 @@
         activeTab: 'all',
         
         // Countdown
-        days: 28,
-        hours: 14,
-        minutes: 42,
-        seconds: 18,
+        days: '00',
+        hours: '00',
+        minutes: '00',
+        seconds: '00',
 
         // RSVP
         rsvpName: '{{ $guestName ?? '' }}',
@@ -187,24 +187,27 @@
         },
 
         startCountdown() {
-            setInterval(() => {
-                if (this.seconds > 0) {
-                    this.seconds--;
+            const targetStr = @json($data['countdown_target'] ?? '2026-10-24T08:00:00+07:00');
+            const target = new Date(targetStr).getTime();
+            
+            const update = () => {
+                const now = new Date().getTime();
+                const diff = target - now;
+                if (diff > 0) {
+                    this.days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                    this.hours = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                    this.minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                    this.seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
                 } else {
-                    this.seconds = 59;
-                    if (this.minutes > 0) {
-                        this.minutes--;
-                    } else {
-                        this.minutes = 59;
-                        if (this.hours > 0) {
-                            this.hours--;
-                        } else {
-                            this.hours = 23;
-                            if (this.days > 0) this.days--;
-                        }
-                    }
+                    this.days = '00';
+                    this.hours = '00';
+                    this.minutes = '00';
+                    this.seconds = '00';
                 }
-            }, 1000);
+            };
+
+            update();
+            setInterval(update, 1000);
         }
     }"
     x-init="init()"
@@ -400,25 +403,37 @@
                 @endif
 
                 <!-- COUNTDOWN TIMER (Minimalist Pill Cards) -->
-                <div class="pt-2">
+                <div class="pt-2 space-y-4">
                     <div class="grid grid-cols-4 gap-3 max-w-xs mx-auto text-center">
                         <div class="art-card rounded-2xl p-3 border hairline-border">
-                            <span class="font-serif text-xl sm:text-2xl font-medium text-stone-900 block" x-text="days">28</span>
+                            <span class="font-serif text-xl sm:text-2xl font-medium text-stone-900 block" x-text="days">00</span>
                             <span class="text-[10px] uppercase tracking-wider text-stone-400">Hari</span>
                         </div>
                         <div class="art-card rounded-2xl p-3 border hairline-border">
-                            <span class="font-serif text-xl sm:text-2xl font-medium text-stone-900 block" x-text="hours">14</span>
+                            <span class="font-serif text-xl sm:text-2xl font-medium text-stone-900 block" x-text="hours">00</span>
                             <span class="text-[10px] uppercase tracking-wider text-stone-400">Jam</span>
                         </div>
                         <div class="art-card rounded-2xl p-3 border hairline-border">
-                            <span class="font-serif text-xl sm:text-2xl font-medium text-stone-900 block" x-text="minutes">42</span>
+                            <span class="font-serif text-xl sm:text-2xl font-medium text-stone-900 block" x-text="minutes">00</span>
                             <span class="text-[10px] uppercase tracking-wider text-stone-400">Menit</span>
                         </div>
                         <div class="art-card rounded-2xl p-3 border hairline-border">
-                            <span class="font-serif text-xl sm:text-2xl font-medium text-stone-900 block" x-text="seconds">18</span>
+                            <span class="font-serif text-xl sm:text-2xl font-medium text-stone-900 block" x-text="seconds">00</span>
                             <span class="text-[10px] uppercase tracking-wider text-stone-400">Detik</span>
                         </div>
                     </div>
+                    @if(!empty($data['google_calendar_url']))
+                    <div class="text-center pt-2">
+                        <a 
+                            href="{{ $data['google_calendar_url'] }}" 
+                            target="_blank" 
+                            class="inline-flex items-center gap-2 px-5 py-2 rounded-full border hairline-border bg-white hover:bg-stone-50 text-stone-700 text-xs font-medium tracking-wider uppercase transition shadow-sm hover:scale-105"
+                        >
+                            <i data-lucide="calendar-plus" class="w-3.5 h-3.5 text-stone-600"></i>
+                            <span>Simpan di Kalender</span>
+                        </a>
+                    </div>
+                    @endif
                 </div>
 
             </section>

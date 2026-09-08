@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use App\Models\Theme;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,7 +32,48 @@ class ThemeController extends Controller
         $totalPremium = Theme::where('is_premium', true)->count();
         $totalPartner = Theme::where('is_for_partner', true)->count();
 
-        return view('admin.themes.index', compact('themes', 'totalThemes', 'totalActive', 'totalPremium', 'totalPartner'));
+        $globalPrice45 = (float) Setting::get('theme_price_45_days', 49000);
+        $globalPriceLifetime = (float) Setting::get('theme_price_lifetime', 99000);
+        $globalAssistedFee = (float) Setting::get('theme_assisted_fee', 25000);
+        $whatsappNumber = (string) Setting::get('support_whatsapp_number', '');
+
+        return view('admin.themes.index', compact(
+            'themes',
+            'totalThemes',
+            'totalActive',
+            'totalPremium',
+            'totalPartner',
+            'globalPrice45',
+            'globalPriceLifetime',
+            'globalAssistedFee',
+            'whatsappNumber'
+        ));
+    }
+
+    /**
+     * Update global pricing and service fee settings.
+     */
+    public function updateGlobalPricing(Request $request): RedirectResponse
+    {
+        $request->merge([
+            'price_45_days' => preg_replace('/[^0-9]/', '', (string) $request->input('price_45_days')),
+            'price_lifetime' => preg_replace('/[^0-9]/', '', (string) $request->input('price_lifetime')),
+            'assisted_fee' => preg_replace('/[^0-9]/', '', (string) $request->input('assisted_fee')),
+        ]);
+
+        $validated = $request->validate([
+            'price_45_days' => ['required', 'numeric', 'min:0'],
+            'price_lifetime' => ['required', 'numeric', 'min:0'],
+            'assisted_fee' => ['required', 'numeric', 'min:0'],
+            'whatsapp_number' => ['nullable', 'string', 'max:30'],
+        ]);
+
+        Setting::set('theme_price_45_days', $validated['price_45_days']);
+        Setting::set('theme_price_lifetime', $validated['price_lifetime']);
+        Setting::set('theme_assisted_fee', $validated['assisted_fee']);
+        Setting::set('support_whatsapp_number', $validated['whatsapp_number'] ?? '');
+
+        return back()->with('success', 'Pengaturan harga varian (45 Hari & Lifetime) serta biaya jasa berhasil diperbarui.');
     }
 
     /**
@@ -50,17 +92,33 @@ class ThemeController extends Controller
      */
     public function updatePrice(Request $request, Theme $theme): RedirectResponse
     {
+        $request->merge([
+            'price' => preg_replace('/[^0-9]/', '', (string) $request->input('price')),
+            'price_lifetime' => $request->filled('price_lifetime') && preg_replace('/[^0-9]/', '', (string) $request->input('price_lifetime')) !== ''
+                ? preg_replace('/[^0-9]/', '', (string) $request->input('price_lifetime'))
+                : null,
+        ]);
+
         $validated = $request->validate([
             'price' => ['required', 'numeric', 'min:0'],
+            'price_lifetime' => ['nullable', 'numeric', 'min:0'],
             'is_premium' => ['nullable', 'boolean'],
         ]);
 
+        $metadata = $theme->metadata ?? [];
+        if ($request->filled('price_lifetime')) {
+            $metadata['price_lifetime'] = (float) $validated['price_lifetime'];
+        } else {
+            unset($metadata['price_lifetime']);
+        }
+
         $theme->update([
             'price' => $validated['price'],
+            'metadata' => $metadata,
             'is_premium' => $request->boolean('is_premium', $validated['price'] > 0),
         ]);
 
-        return back()->with('success', "Harga tema {$theme->name} berhasil diperbarui menjadi Rp ".number_format($theme->price, 0, ',', '.').'.');
+        return back()->with('success', "Harga tema {$theme->name} berhasil diperbarui (45 Hari: ".format_rupiah($theme->getPrice45Days()).', Lifetime: '.format_rupiah($theme->getLifetimePrice()).').');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Coupon;
+use App\Models\Order;
 use App\Models\Theme;
 use App\Models\User;
 use App\Services\PaymentService;
@@ -44,7 +45,7 @@ test('order detail page handles midtrans snap token generation using http client
     $response->assertOk()
         ->assertSee('Detail Pembelian & Tagihan', false)
         ->assertSee('mock-snap-token-xyz-98765')
-        ->assertSee('Bayar Sekarang via Midtrans')
+        ->assertSee('Bayar Sekarang')
         ->assertSee('https://app.sandbox.midtrans.com/snap/snap.js');
 
     $order->refresh();
@@ -71,7 +72,8 @@ test('applying and removing coupon resets snap_token for recalculation', functio
     $order->refresh();
     expect($order->snap_token)->toBeNull()
         ->and((float) $order->discount)->toBe(20000.0)
-        ->and((float) $order->total_amount)->toBe(129000.0);
+        ->and((float) $order->tax_amount)->toBe(14190.0)
+        ->and((float) $order->total_amount)->toBe(143190.0);
 
     // Now set token again, and test remove coupon resets it
     $order->update(['snap_token' => 'discounted-cached-token']);
@@ -82,7 +84,8 @@ test('applying and removing coupon resets snap_token for recalculation', functio
     $order->refresh();
     expect($order->snap_token)->toBeNull()
         ->and((float) $order->discount)->toBe(0.0)
-        ->and((float) $order->total_amount)->toBe(149000.0);
+        ->and((float) $order->tax_amount)->toBe(16390.0)
+        ->and((float) $order->total_amount)->toBe(165390.0);
 });
 
 test('midtrans webhook with valid signature activates order and unlocks theme', function () {
@@ -196,8 +199,8 @@ test('order route uses uuid instead of numeric id', function () {
         ->and(strlen($order->uuid))->toBe(36);
 
     $url = route('orders.show', $order);
-    expect($url)->toContain('/orders/'.$order->uuid)
-        ->and($url)->not->toContain('/orders/'.$order->id);
+    expect($url)->toBe(url('/orders/'.$order->uuid))
+        ->and($url)->not->toBe(url('/orders/'.$order->id));
 
     // Can access via UUID
     $this->actingAs($this->member)
@@ -229,4 +232,84 @@ test('midtrans webhook endpoint responds to GET request with 200', function () {
 
     $response->assertOk()
         ->assertJson(['status' => 'ok', 'service' => 'Midtrans Payment Webhook Receiver']);
+});
+
+test('pending order displays 24 hours countdown timer on order payment page', function () {
+    $paymentService = app(PaymentService::class);
+    $order = $paymentService->createOrderForTheme($this->member, $this->theme);
+
+    $response = $this->actingAs($this->member)->get(route('orders.show', $order));
+
+    $response->assertOk()
+        ->assertSee('Batas Waktu Pembayaran (24 Jam)')
+        ->assertSee('Sisa Waktu:')
+        ->assertSee('Menunggu Pembayaran');
+});
+
+test('expired order shows Kedaluwarsa status and Pesan Ulang button on order page', function () {
+    $paymentService = app(PaymentService::class);
+    $order = $paymentService->createOrderForTheme($this->member, $this->theme);
+
+    // Simulate order created 25 hours ago
+    $order->created_at = now()->subHours(25);
+    $order->save();
+
+    expect($order->isExpired())->toBeTrue();
+
+    $response = $this->actingAs($this->member)->get(route('orders.show', $order));
+
+    $response->assertOk()
+        ->assertSee('Kedaluwarsa')
+        ->assertSee('Waktu Pembayaran Telah Kedaluwarsa')
+        ->assertSee('Pesan Ulang / Bayar Lagi')
+        ->assertDontSee('Bayar Sekarang');
+
+    $order->refresh();
+    expect($order->status)->toBe('failed')
+        ->and($order->payment_status)->toBe('failed');
+});
+
+test('midtrans expire webhook marks order as failed and expired', function () {
+    $paymentService = app(PaymentService::class);
+    $order = $paymentService->createOrderForTheme($this->member, $this->theme);
+
+    $webhookPayload = [
+        'order_id' => $order->order_code,
+        'status_code' => '202',
+        'gross_amount' => (string) (int) ($order->total_amount ?? $order->amount),
+        'transaction_status' => 'expire',
+        'payment_type' => 'bank_transfer',
+        'transaction_id' => 'midtrans-exp-12345',
+    ];
+
+    $response = $this->postJson('/api/webhooks/midtrans', $webhookPayload);
+
+    $response->assertOk()
+        ->assertJson(['status' => 'success', 'message' => 'Order marked as failed']);
+
+    $order->refresh();
+    expect($order->status)->toBe('failed')
+        ->and($order->payment_status)->toBe('failed')
+        ->and($order->isExpired())->toBeTrue();
+});
+
+test('checkout theme creates fresh order when previous pending order has expired', function () {
+    $paymentService = app(PaymentService::class);
+    $oldOrder = $paymentService->createOrderForTheme($this->member, $this->theme);
+
+    // Simulate old order expired
+    $oldOrder->created_at = now()->subHours(25);
+    $oldOrder->save();
+
+    $response = $this->actingAs($this->member)->get(route('checkout.theme', $this->theme));
+
+    $response->assertRedirect();
+    $newOrder = Order::where('user_id', $this->member->id)
+        ->where('payment_status', 'pending')
+        ->latest()
+        ->first();
+
+    expect($newOrder)->not->toBeNull()
+        ->and($newOrder->id)->not->toBe($oldOrder->id)
+        ->and($newOrder->isExpired())->toBeFalse();
 });

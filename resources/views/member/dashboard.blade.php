@@ -303,15 +303,25 @@
             @if($unlockedThemes && $unlockedThemes->isNotEmpty())
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($unlockedThemes as $theme)
+                        @php
+                            $isThemeExpired = $theme->pivot?->expires_at && \Carbon\Carbon::parse($theme->pivot->expires_at)->isPast();
+                        @endphp
                         <div class="rounded-2xl border border-sand-200/80 bg-white shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col group">
                             <!-- THUMBNAIL -->
                             <div class="relative aspect-[4/3] overflow-hidden bg-sand-100">
                                 <img src="{{ $theme->thumbnail }}" alt="{{ $theme->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-transparent to-transparent"></div>
-                                <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-bold shadow flex items-center gap-1">
-                                    <i data-lucide="shield-check" class="w-3 h-3"></i>
-                                    <span>Lunas &amp; Aktif</span>
-                                </span>
+                                @if($isThemeExpired)
+                                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-rose-600 text-white text-[10px] font-bold shadow flex items-center gap-1">
+                                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                                        <span>Kedaluwarsa</span>
+                                    </span>
+                                @else
+                                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-bold shadow flex items-center gap-1">
+                                        <i data-lucide="shield-check" class="w-3 h-3"></i>
+                                        <span>Lunas &amp; Aktif</span>
+                                    </span>
+                                @endif
                                 <div class="absolute bottom-3 left-3 right-3 text-white">
                                     <span class="text-[10px] font-bold text-amber-300 uppercase tracking-wider block">{{ ucfirst($theme->category) }}</span>
                                     <h4 class="text-sm font-serif font-bold truncate">{{ $theme->name }}</h4>
@@ -322,11 +332,18 @@
                             <div class="p-4 flex-1 flex flex-col justify-between space-y-4">
                                 <div class="space-y-1">
                                     <div class="flex items-center justify-between text-[11px]">
-                                        <span class="font-semibold text-sand-500">Status Pembayaran:</span>
-                                        <span class="text-emerald-700 font-bold flex items-center gap-1">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                            Lunas
-                                        </span>
+                                        <span class="font-semibold text-sand-500">Status Lisensi:</span>
+                                        @if($isThemeExpired)
+                                            <span class="text-rose-700 font-bold flex items-center gap-1">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                                                Kedaluwarsa
+                                            </span>
+                                        @else
+                                            <span class="text-emerald-700 font-bold flex items-center gap-1">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Lunas &amp; Aktif
+                                            </span>
+                                        @endif
                                     </div>
                                     <p class="text-xs text-sand-600 line-clamp-2">
                                         {{ $theme->metadata['description'] ?? 'Desain tema undangan digital eksklusif siap pakai.' }}
@@ -338,10 +355,17 @@
                                         <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                                         <span>Demo</span>
                                     </a>
-                                    <a href="{{ route('member.invitations.create', ['theme_id' => $theme->id]) }}" class="py-2 px-3 rounded-xl bg-charcoal-950 hover:bg-amber-600 text-white text-[11px] font-bold flex items-center justify-center gap-1 transition text-center shadow-sm">
-                                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                                        <span>Gunakan</span>
-                                    </a>
+                                    @if($isThemeExpired)
+                                        <a href="{{ route('checkout.theme', ['theme' => $theme->id]) }}" class="py-2 px-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-bold flex items-center justify-center gap-1 transition text-center shadow-sm">
+                                            <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                                            <span>Beli Lagi</span>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('member.invitations.create', ['theme_id' => $theme->id]) }}" class="py-2 px-3 rounded-xl bg-charcoal-950 hover:bg-amber-600 text-white text-[11px] font-bold flex items-center justify-center gap-1 transition text-center shadow-sm">
+                                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                            <span>Gunakan</span>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

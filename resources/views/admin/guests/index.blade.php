@@ -242,7 +242,7 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-950/70 backdrop-blur-sm"
             style="display: none;"
         >
-            <div @click.away="modalOpen = false" class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-sand-200">
+            <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-sand-200">
                 <div class="flex items-center justify-between">
                     <h3 class="font-serif text-xl font-bold text-charcoal-950">+ Tambah Tamu Baru</h3>
                     <button @click="modalOpen = false" class="p-1 rounded-lg text-sand-400 hover:text-charcoal-950">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invitation;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -103,6 +104,24 @@ class PublicInvitationController extends Controller
         $targetDate = $akad?->date ? $akad->date->format('Y-m-d') : ($invitation->event_date ? $invitation->event_date->format('Y-m-d') : null);
         $countdownTarget = $targetDate ? $targetDate.'T'.($akad?->start_time ? substr($akad->start_time, 0, 5) : '08:00').':00+07:00' : null;
 
+        $gcalDates = '';
+        if ($countdownTarget) {
+            try {
+                $startDt = Carbon::parse($countdownTarget)->utc();
+                $endDt = (clone $startDt)->addHours(4);
+                $gcalDates = '&dates='.$startDt->format('Ymd\THis\Z').'/'.$endDt->format('Ymd\THis\Z');
+            } catch (\Throwable) {
+            }
+        }
+        $calendarTitle = 'Pernikahan '.($groomNickname ?: 'Pengantin').' & '.($brideNickname ?: 'Pengantin');
+        $calendarDetails = 'Pernikahan '.trim($groomName.' & '.$brideName, ' &');
+        $calendarLocation = trim(($akad?->venue_name ?: '').', '.($akad?->address ?: ''), ', ');
+        $googleCalendarUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+            .'&text='.urlencode($calendarTitle)
+            .$gcalDates
+            .'&details='.urlencode($calendarDetails)
+            .'&location='.urlencode($calendarLocation);
+
         $giftAddress = null;
         $physicalGift = $invitation->gifts->firstWhere('gift_type', 'physical_gift')
             ?? $invitation->gifts->first(fn ($g) => ! empty($g->recipient_address));
@@ -119,6 +138,7 @@ class PublicInvitationController extends Controller
             'quote_text' => $invitation->quote_text ?: '',
             'quote_source' => $invitation->quote_source ?: '',
             'countdown_target' => $countdownTarget,
+            'google_calendar_url' => $googleCalendarUrl,
 
             'groom' => [
                 'name' => $groomName,

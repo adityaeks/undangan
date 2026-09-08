@@ -65,6 +65,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        [x-cloak] { display: none !important; }
         .font-editorial { font-family: 'Cormorant Garamond', serif; }
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -108,6 +109,11 @@
         activeFaq: null,
         themes: {{ Js::from($themes) }},
 
+        orderModalOpen: false,
+        selectedTheme: null,
+        selectedDuration: '45_days',
+        selectedServiceType: 'self_service',
+
         openPreview(theme) {
             this.activePreviewTheme = theme;
             this.previewDevice = 'mobile';
@@ -119,6 +125,53 @@
             this.previewModalOpen = false;
             this.activePreviewTheme = null;
             document.body.style.overflow = 'auto';
+        },
+
+        openOrderModal(theme) {
+            if (!theme) return;
+            this.selectedTheme = theme;
+            this.selectedDuration = '45_days';
+            this.selectedServiceType = 'self_service';
+            this.orderModalOpen = true;
+            document.body.style.overflow = 'hidden';
+            this.$nextTick(() => {
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            });
+        },
+
+        closeOrderModal() {
+            this.orderModalOpen = false;
+            this.selectedTheme = null;
+            document.body.style.overflow = 'auto';
+        },
+
+        getDurationPrice() {
+            if (!this.selectedTheme) return 49000;
+            return this.selectedDuration === 'lifetime' 
+                ? (this.selectedTheme.raw_price_lifetime || 99000)
+                : (this.selectedTheme.raw_price_45_days || 49000);
+        },
+
+        getAssistedPrice() {
+            if (!this.selectedTheme || this.selectedServiceType !== 'assisted') return 0;
+            return this.selectedTheme.raw_assisted_fee || 25000;
+        },
+
+        getTotalPrice() {
+            return this.getDurationPrice() + this.getAssistedPrice();
+        },
+
+        formatCurrency(amount) {
+            return 'Rp ' + Number(amount || 0).toLocaleString('id-ID');
+        },
+
+        getCheckoutUrl() {
+            if (!this.selectedTheme) return '#';
+            const baseUrl = this.selectedTheme.checkout_url;
+            const sep = baseUrl.includes('?') ? '&' : '?';
+            return `${baseUrl}${sep}duration=${this.selectedDuration}&service_type=${this.selectedServiceType}`;
         },
 
         matchesFilter(theme) {
@@ -135,7 +188,6 @@
             return matchCat && matchQuery;
         }
     }"
-    @keydown.escape.window="closePreview()"
 >
 
     <!-- TOP PROMO TICKER & MAIN NAVBAR -->
@@ -391,7 +443,8 @@
 
                                     <a 
                                         href="{{ $theme['checkout_url'] }}" 
-                                        class="px-4 py-2 rounded-xl bg-charcoal-950 text-brand-100 hover:bg-brand-600 hover:text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
+                                        @click.prevent="openOrderModal(themes.find(t => t.id === '{{ $theme['id'] }}'))"
+                                        class="px-4 py-2 rounded-xl bg-charcoal-950 text-brand-100 hover:bg-brand-600 hover:text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
                                     >
                                         <span>Pilih Desain</span>
                                         <i data-lucide="arrow-right" class="w-3 h-3"></i>
@@ -493,7 +546,8 @@
 
                                     <a 
                                         href="{{ $theme['checkout_url'] }}" 
-                                        class="px-4 py-2 rounded-xl bg-brand-500 text-white hover:bg-brand-600 text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
+                                        @click.prevent="openOrderModal(themes.find(t => t.id === '{{ $theme['id'] }}'))"
+                                        class="px-4 py-2 rounded-xl bg-brand-500 text-white hover:bg-brand-600 text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
                                     >
                                         <span>Pilih Tema</span>
                                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -729,20 +783,21 @@
     </footer>
 
     <!-- INTERACTIVE SMARTPHONE QUICK PREVIEW MODAL (ALPINE.JS) -->
+    <template x-teleport="body">
     <div 
         x-show="previewModalOpen" 
+        x-cloak
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-charcoal-950/80 backdrop-blur-md"
+        class="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-charcoal-950/80 backdrop-blur-md"
         style="display: none;"
     >
         <!-- MODAL CONTAINER -->
         <div 
-            @click.outside="closePreview()"
             class="relative w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl bg-charcoal-900 text-white border border-white/15 shadow-2xl overflow-hidden"
         >
             <!-- MODAL HEADER -->
@@ -860,17 +915,22 @@
                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                     </a>
 
-                    <a 
-                        :href="activePreviewTheme ? activePreviewTheme.checkout_url : '{{ route('login') }}'" 
-                        class="px-5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 text-white font-bold text-xs hover:scale-105 transition flex items-center gap-1.5 shadow-md"
+                    <button 
+                        type="button"
+                        @click="closePreview(); openOrderModal(activePreviewTheme)" 
+                        class="px-5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 text-white font-bold text-xs hover:scale-105 transition flex items-center gap-1.5 shadow-md cursor-pointer"
                     >
                         <span>Pilih Desain &amp; Checkout</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    </template>
+
+    <!-- DESIGN SELECTION VARIANT MODAL -->
+    @include('themes.partials.design-selection-modal')
 
     <!-- INITIALIZE ICONS -->
     <script>

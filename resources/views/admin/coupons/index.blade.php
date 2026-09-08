@@ -106,7 +106,7 @@
 
                     <div>
                         <label class="block text-xs font-bold text-charcoal-900 mb-1">Minimal Belanja (Rp)</label>
-                        <input type="number" step="1000" name="min_spend" value="{{ old('min_spend', 0) }}" placeholder="0 = tanpa minimum"
+                        <input type="text" inputmode="numeric" name="min_spend" value="{{ format_rupiah(old('min_spend', 0)) }}" oninput="maskRupiah(this)" placeholder="0 = tanpa minimum"
                             class="w-full px-3.5 py-2.5 rounded-xl border border-sand-300 text-xs focus:ring-2 focus:ring-brand-500">
                     </div>
 
@@ -160,11 +160,11 @@
                                     @if($coupon->discount_type === 'percent')
                                         <span class="text-emerald-700 font-bold">{{ number_format($coupon->discount_value, 0) }}% OFF</span>
                                     @else
-                                        <span class="text-emerald-700 font-bold">Rp {{ number_format($coupon->discount_value, 0, ',', '.') }}</span>
+                                        <span class="text-emerald-700 font-bold">{{ format_rupiah($coupon->discount_value) }}</span>
                                     @endif
                                 </td>
                                 <td class="p-4 text-sand-600">
-                                    {{ $coupon->min_spend > 0 ? 'Rp '.number_format($coupon->min_spend, 0, ',', '.') : 'Tanpa Min.' }}
+                                    {{ $coupon->min_spend > 0 ? format_rupiah($coupon->min_spend) : 'Tanpa Min.' }}
                                 </td>
                                 <td class="p-4 text-center font-semibold text-charcoal-900">
                                     {{ $coupon->used_count }} {{ $coupon->max_uses ? '/ '.$coupon->max_uses : 'kali' }}

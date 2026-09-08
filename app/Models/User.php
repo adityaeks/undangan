@@ -132,7 +132,7 @@ class User extends Authenticatable
     public function themes(): BelongsToMany
     {
         return $this->belongsToMany(Theme::class, 'user_themes')
-            ->withPivot(['order_id', 'unlocked_at', 'is_active'])
+            ->withPivot(['order_id', 'unlocked_at', 'duration_type', 'expires_at', 'service_type', 'is_active'])
             ->wherePivot('is_active', true)
             ->withTimestamps();
     }

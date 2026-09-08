@@ -104,7 +104,7 @@
                             </h3>
 
                             <div class="font-serif text-3xl font-bold {{ $isPro ? 'text-white' : 'text-charcoal-950' }}">
-                                Rp {{ number_format($pkg->price, 0, ',', '.') }}
+                                {{ format_rupiah($pkg->price) }}
                                 <span class="text-xs font-sans {{ $isPro ? 'text-sand-400' : 'text-sand-500' }}">
                                     / {{ $pkg->quota_invitations > 0 ? $pkg->quota_invitations . ' Undangan' : 'Unlimited' }}
                                 </span>

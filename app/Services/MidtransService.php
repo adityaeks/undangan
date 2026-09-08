@@ -68,7 +68,7 @@ class MidtransService
      */
     public function getSnapToken(Order $order): ?string
     {
-        if ($order->isPaid()) {
+        if ($order->isPaid() || $order->isExpired()) {
             return null;
         }
 
@@ -112,6 +112,18 @@ class MidtransService
             ];
         }
 
+        if ((float) $order->tax_amount > 0) {
+            $taxAmount = (int) round((float) $order->tax_amount);
+            $calculatedSum += $taxAmount;
+
+            $itemDetails[] = [
+                'id' => 'TAX-PPN-11',
+                'price' => $taxAmount,
+                'quantity' => 1,
+                'name' => 'PPN 11%',
+            ];
+        }
+
         // Safety fallback: if items sum doesn't match gross_amount exactly, fallback to single order item
         if ($calculatedSum !== $grossAmount) {
             $itemDetails = [
@@ -133,6 +145,14 @@ class MidtransService
             'customer_details' => [
                 'first_name' => $order->user?->name ?? 'Pelanggan',
                 'email' => $order->user?->email ?? 'customer@example.com',
+            ],
+            'expiry' => [
+                'start_time' => $order->created_at ? $order->created_at->format('Y-m-d H:i:s O') : now()->format('Y-m-d H:i:s O'),
+                'unit' => 'hour',
+                'duration' => 24,
+            ],
+            'callbacks' => [
+                'finish' => route('orders.success', ['order' => $order]),
             ],
             'credit_card' => [
                 'secure' => $this->is3ds,

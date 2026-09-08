@@ -66,6 +66,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        [x-cloak] { display: none !important; }
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-editorial { font-family: 'Cormorant Garamond', serif; }
         .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }

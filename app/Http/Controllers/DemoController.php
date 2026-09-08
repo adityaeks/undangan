@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -114,6 +115,12 @@ class DemoController extends Controller
                 ]),
             ],
             'countdown_target' => $defaults['countdown_target'],
+            'google_calendar_url' => 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+                .'&text='.urlencode('Pernikahan '.($groomNickname ?: 'Raka').' & '.($brideNickname ?: 'Arinda'))
+                .'&dates='.Carbon::parse($defaults['countdown_target'])->utc()->format('Ymd\THis\Z').'/'
+                .Carbon::parse($defaults['countdown_target'])->utc()->addHours(4)->format('Ymd\THis\Z')
+                .'&details='.urlencode('Pernikahan '.$groomName.' & '.$brideName)
+                .'&location='.urlencode(($defaults['events']['akad']['venue'] ?? '').', '.($defaults['events']['akad']['address'] ?? '')),
             'stories' => $stories,
             'galleries' => $defaults['galleries'],
             'bank_accounts' => $defaults['bank_accounts'],

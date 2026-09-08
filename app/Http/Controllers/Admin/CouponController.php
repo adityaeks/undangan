@@ -28,6 +28,12 @@ class CouponController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        if ($request->filled('min_spend')) {
+            $request->merge([
+                'min_spend' => preg_replace('/[^0-9]/', '', (string) $request->input('min_spend')),
+            ]);
+        }
+
         $validated = $request->validate([
             'code' => ['required', 'string', 'max:50', 'unique:coupons,code'],
             'discount_type' => ['required', 'in:percent,fixed'],

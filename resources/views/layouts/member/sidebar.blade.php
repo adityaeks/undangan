@@ -39,26 +39,12 @@
                 
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('dashboard') ? 'data-active-link="true"' : '' }}>
                     <i data-lucide="layout-dashboard" class="w-4 h-4 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-sand-400' }}"></i>
-                    <span>Dashboard Saya</span>
+                    <span>Dashboard</span>
                 </a>
-
-                @if($activeInvitation)
-                    <a href="{{ route('invitation.show', $activeInvitation->slug) }}" target="_blank" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition group">
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="eye" class="w-4 h-4 text-amber-400 group-hover:scale-110 transition"></i>
-                            <span>Lihat Undangan Digital</span>
-                        </div>
-                        <i data-lucide="external-link" class="w-3 h-3 text-sand-500"></i>
-                    </a>
-                @else
-                    <a href="{{ route('demo.index') }}" target="_blank" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition group">
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="play-circle" class="w-4 h-4 text-amber-400 group-hover:scale-110 transition"></i>
-                            <span>Lihat Contoh Undangan</span>
-                        </div>
-                        <i data-lucide="external-link" class="w-3 h-3 text-sand-500"></i>
-                    </a>
-                @endif
+                <a href="{{ route('member.orders.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.orders.*') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('member.orders.*') ? 'data-active-link="true"' : '' }}>
+                    <i data-lucide="receipt" class="w-4 h-4 {{ request()->routeIs('member.orders.*') ? 'text-white' : 'text-sand-400' }}"></i>
+                    <span>Riwayat Transaksi</span>
+                </a>
             </div>
 
             <!-- SECTION 2: KELOLA PERNIKAHAN -->
@@ -68,7 +54,7 @@
                 <a href="{{ route('member.invitations.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.invitations.*') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('member.invitations.*') ? 'data-active-link="true"' : '' }}>
                     <div class="flex items-center gap-3">
                         <i data-lucide="heart-handshake" class="w-4 h-4 {{ request()->routeIs('member.invitations.*') ? 'text-white' : 'text-sand-400' }}"></i>
-                        <span>Data Undangan Saya</span>
+                        <span>Undangan Saya</span>
                     </div>
                     <span class="px-2 py-0.5 rounded-full {{ request()->routeIs('member.invitations.*') ? 'bg-white/20 text-white' : 'bg-charcoal-800 text-amber-300' }} text-[10px] font-bold">{{ $memberInvitationsCount }}</span>
                 </a>
@@ -100,29 +86,11 @@
                 </a>
             </div>
 
-            <!-- SECTION 3: KELENGKAPAN ACARA -->
-            <div class="space-y-1.5">
-                <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Kebutuhan Acara</span>
-
-                <a href="{{ route('member.invitations.index') }}#amplop-digital" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition">
-                    <i data-lucide="wallet" class="w-4 h-4 text-sand-400"></i>
-                    <span>Amplop Digital & QRIS</span>
-                </a>
-
-                <a href="{{ route('member.invitations.index') }}#galeri-cerita" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-sand-300 hover:bg-charcoal-900 hover:text-white transition">
-                    <i data-lucide="image" class="w-4 h-4 text-sand-400"></i>
-                    <span>Galeri Foto & Musik</span>
-                </a>
-            </div>
-
             <!-- SECTION 4: AKUN & BANTUAN -->
             <div class="space-y-1.5">
                 <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-sand-500">Akun & Layanan</span>
 
-                <a href="{{ route('member.orders.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.orders.*') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('member.orders.*') ? 'data-active-link="true"' : '' }}>
-                    <i data-lucide="receipt" class="w-4 h-4 {{ request()->routeIs('member.orders.*') ? 'text-white' : 'text-sand-400' }}"></i>
-                    <span>Riwayat Transaksi</span>
-                </a>
+              
 
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('profile.edit') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" {{ request()->routeIs('profile.edit') ? 'data-active-link="true"' : '' }}>
                     <i data-lucide="settings" class="w-4 h-4 {{ request()->routeIs('profile.edit') ? 'text-white' : 'text-sand-400' }}"></i>

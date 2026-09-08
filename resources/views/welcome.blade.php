@@ -66,6 +66,7 @@
 
     <!-- Custom CSS styles -->
     <style>
+        [x-cloak] { display: none !important; }
         .font-editorial { font-family: 'Cormorant Garamond', serif; }
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -140,7 +141,60 @@
     selectedTemplate: 'all',
     guestNameInput: 'Aditya',
     activeFaq: null,
-    mobileMenuOpen: false
+    mobileMenuOpen: false,
+    themes: {{ Js::from($themes) }},
+
+    orderModalOpen: false,
+    selectedTheme: null,
+    selectedDuration: '45_days',
+    selectedServiceType: 'self_service',
+
+    openOrderModal(theme) {
+        if (!theme) return;
+        this.selectedTheme = theme;
+        this.selectedDuration = '45_days';
+        this.selectedServiceType = 'self_service';
+        this.orderModalOpen = true;
+        document.body.style.overflow = 'hidden';
+        this.$nextTick(() => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    },
+
+    closeOrderModal() {
+        this.orderModalOpen = false;
+        this.selectedTheme = null;
+        document.body.style.overflow = 'auto';
+    },
+
+    getDurationPrice() {
+        if (!this.selectedTheme) return 49000;
+        return this.selectedDuration === 'lifetime' 
+            ? (this.selectedTheme.raw_price_lifetime || 99000)
+            : (this.selectedTheme.raw_price_45_days || 49000);
+    },
+
+    getAssistedPrice() {
+        if (!this.selectedTheme || this.selectedServiceType !== 'assisted') return 0;
+        return this.selectedTheme.raw_assisted_fee || 25000;
+    },
+
+    getTotalPrice() {
+        return this.getDurationPrice() + this.getAssistedPrice();
+    },
+
+    formatCurrency(amount) {
+        return 'Rp ' + Number(amount || 0).toLocaleString('id-ID');
+    },
+
+    getCheckoutUrl() {
+        if (!this.selectedTheme) return '#';
+        const baseUrl = this.selectedTheme.checkout_url;
+        const sep = baseUrl.includes('?') ? '&' : '?';
+        return `${baseUrl}${sep}duration=${this.selectedDuration}&service_type=${this.selectedServiceType}`;
+    }
 }">
 
     <!-- TOP PROMO TICKER & MAIN NAVBAR -->
@@ -632,8 +686,8 @@
                                     </a>
                                     <a 
                                         href="{{ $theme['checkout_url'] }}" 
-                                        @click="if (hasMoved) { $event.preventDefault(); }"
-                                        class="w-40 py-2.5 rounded-full bg-brand-500 text-white font-bold text-xs shadow-lg hover:bg-brand-600 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2"
+                                        @click="if (hasMoved) { $event.preventDefault(); } else { $event.preventDefault(); openOrderModal(themes.find(t => t.id === '{{ $theme['id'] }}')); }"
+                                        class="w-40 py-2.5 rounded-full bg-brand-500 text-white font-bold text-xs shadow-lg hover:bg-brand-600 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2 cursor-pointer"
                                     >
                                         <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                                         <span>Pilih Desain</span>
@@ -688,8 +742,8 @@
                                         </a>
                                         <a 
                                             href="{{ $theme['checkout_url'] }}" 
-                                            @click="if (hasMoved) { $event.preventDefault(); }"
-                                            class="px-3.5 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1"
+                                            @click="if (hasMoved) { $event.preventDefault(); } else { $event.preventDefault(); openOrderModal(themes.find(t => t.id === '{{ $theme['id'] }}')); }"
+                                            class="px-3.5 py-1.5 rounded-full bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1 cursor-pointer"
                                         >
                                             <span>Beli</span>
                                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
@@ -1393,6 +1447,9 @@
 
         </div>
     </footer>
+
+    <!-- DESIGN SELECTION VARIANT MODAL -->
+    @include('themes.partials.design-selection-modal')
 
     <!-- INITIALIZE LUCIDE ICONS -->
     <script>

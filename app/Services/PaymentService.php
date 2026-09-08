@@ -17,32 +17,66 @@ class PaymentService
     ) {}
 
     /**
-     * Create a purchase order for a theme.
+     * Create a purchase order for a theme with duration and service options.
      */
-    public function createOrderForTheme(User $user, Theme $theme): Order
+    public function createOrderForTheme(User $user, Theme $theme, string $duration = '45_days', string $serviceType = 'self_service'): Order
     {
-        return DB::transaction(function () use ($user, $theme) {
-            $price = (float) $theme->price;
+        return DB::transaction(function () use ($user, $theme, $duration, $serviceType) {
+            $durationPrice = $duration === 'lifetime' ? $theme->getLifetimePrice() : $theme->getPrice45Days();
+            $assistedFee = $serviceType === 'assisted' ? $theme->getAssistedFee() : 0.00;
+            $totalBaseAmount = $durationPrice + $assistedFee;
+
+            $taxRate = 0.11;
+            $taxAmount = round($totalBaseAmount * $taxRate);
+            $totalAmount = $totalBaseAmount + $taxAmount;
+
+            $durationLabel = $duration === 'lifetime' ? 'Lifetime (Selamanya)' : '45 Hari';
+            $serviceLabel = $serviceType === 'assisted' ? 'Diisikan Tim (+Fee)' : 'Isi Data Mandiri';
+
             $orderCode = 'ORD-THM-'.strtoupper(Str::random(8));
 
             $order = Order::create([
                 'user_id' => $user->id,
                 'order_code' => $orderCode,
                 'package_type' => 'single_template',
-                'amount' => $price,
-                'total_amount' => $price,
+                'amount' => $totalBaseAmount,
+                'discount' => 0.00,
+                'tax_amount' => $taxAmount,
+                'total_amount' => $totalAmount,
                 'payment_status' => 'pending',
                 'status' => 'pending',
+                'metadata' => [
+                    'duration' => $duration,
+                    'duration_days' => $duration === 'lifetime' ? null : 45,
+                    'duration_label' => $durationLabel,
+                    'service_type' => $serviceType,
+                    'service_label' => $serviceLabel,
+                    'theme_price' => $durationPrice,
+                    'assisted_fee' => $assistedFee,
+                    'tax_rate' => 0.11,
+                    'tax_amount' => $taxAmount,
+                ],
             ]);
 
             $order->items()->create([
                 'item_type' => 'theme',
                 'item_id' => $theme->id,
                 'item_name' => 'Template: '.$theme->name,
-                'price' => $price,
+                'price' => $durationPrice,
                 'quantity' => 1,
-                'subtotal' => $price,
+                'subtotal' => $durationPrice,
             ]);
+
+            if ($serviceType === 'assisted' && $assistedFee > 0) {
+                $order->items()->create([
+                    'item_type' => 'service',
+                    'item_id' => $theme->id,
+                    'item_name' => 'Layanan Tambahan: Bantu Pengisian Data oleh Tim',
+                    'price' => $assistedFee,
+                    'quantity' => 1,
+                    'subtotal' => $assistedFee,
+                ]);
+            }
 
             return $order;
         });
@@ -55,6 +89,9 @@ class PaymentService
     {
         return DB::transaction(function () use ($user, $package) {
             $price = (float) $package->price;
+            $taxRate = 0.11;
+            $taxAmount = round($price * $taxRate);
+            $totalAmount = $price + $taxAmount;
             $orderCode = 'ORD-PKG-'.strtoupper(Str::random(8));
 
             $order = Order::create([
@@ -62,9 +99,15 @@ class PaymentService
                 'order_code' => $orderCode,
                 'package_type' => $package->slug,
                 'amount' => $price,
-                'total_amount' => $price,
+                'discount' => 0.00,
+                'tax_amount' => $taxAmount,
+                'total_amount' => $totalAmount,
                 'payment_status' => 'pending',
                 'status' => 'pending',
+                'metadata' => [
+                    'tax_rate' => 0.11,
+                    'tax_amount' => $taxAmount,
+                ],
             ]);
 
             $order->items()->create([

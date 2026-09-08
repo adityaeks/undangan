@@ -368,3 +368,248 @@ test('member can submit complete custom couple, gallery, and physical gift addre
         ->assertSee('Kasih itu sabar; kasih itu murah hati; ia tidak cemburu.')
         ->assertSee('1 Korintus 13:4');
 });
+
+test('member with one purchased theme who already created an invitation cannot see that theme on create page', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Rose Romance Luxury', 'slug' => 'rose-'.uniqid()]);
+
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    // Create an invitation using this theme
+    Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'Pernikahan Dimas & Anisa',
+        'slug' => 'dimas-anisa-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    $response = $this->actingAs($member)->get('/member/invitations/create');
+
+    $response->assertOk()
+        ->assertSee('Kuota Tema Anda Sudah Digunakan')
+        ->assertSee('Semua Tema Anda Sudah Digunakan (1 Tema = 1 Undangan)')
+        ->assertDontSee('Rose Romance Luxury');
+});
+
+test('member cannot store second invitation using already used theme', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Rose Romance Limit Test', 'slug' => 'rose-limit-'.uniqid()]);
+
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    // First invitation exists
+    Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'Pernikahan Pertama',
+        'slug' => 'pertama-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    // Try to create second invitation with same theme
+    $payload = [
+        'theme_id' => $theme->id,
+        'title' => 'Pernikahan Kedua',
+        'groom_name' => 'Budi Pratama',
+        'groom_nickname' => 'Budi',
+        'bride_name' => 'Sari Indah',
+        'bride_nickname' => 'Sari',
+        'akad_date' => '2026-12-01',
+        'akad_time' => '08:00',
+        'akad_venue' => 'Masjid Raya',
+        'akad_address' => 'Jl. Merdeka',
+        'resepsi_date' => '2026-12-01',
+        'resepsi_time' => '11:00',
+        'resepsi_venue' => 'Gedung Serbaguna',
+        'resepsi_address' => 'Jl. Merdeka No. 2',
+    ];
+
+    $response = $this->actingAs($member)->post('/member/invitations', $payload);
+
+    $response->assertRedirect(route('member.invitations.create'))
+        ->assertSessionHas('error');
+
+    expect(Invitation::where('user_id', $member->id)->count())->toBe(1);
+});
+
+test('member with two purchased themes can use second theme while first is used', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $themeA = createTestTheme(['name' => 'Theme A Vintage', 'slug' => 'theme-a-'.uniqid()]);
+    $themeB = createTestTheme(['name' => 'Theme B Modern', 'slug' => 'theme-b-'.uniqid()]);
+
+    UserTheme::create(['user_id' => $member->id, 'theme_id' => $themeA->id, 'is_active' => true, 'unlocked_at' => now()]);
+    UserTheme::create(['user_id' => $member->id, 'theme_id' => $themeB->id, 'is_active' => true, 'unlocked_at' => now()]);
+
+    // Invitation with Theme A
+    Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $themeA->id,
+        'title' => 'Undangan A',
+        'slug' => 'undangan-a-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    $response = $this->actingAs($member)->get('/member/invitations/create');
+
+    $response->assertOk()
+        ->assertSee('Theme B Modern')
+        ->assertDontSee('Theme A Vintage');
+});
+
+test('member themes index shows Sudah Digunakan badge for used themes', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Ethereal Glass Used', 'slug' => 'ethereal-'.uniqid()]);
+
+    UserTheme::create(['user_id' => $member->id, 'theme_id' => $theme->id, 'is_active' => true, 'unlocked_at' => now()]);
+
+    Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'Undangan Ethereal',
+        'slug' => 'ethereal-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    $response = $this->actingAs($member)->get('/member/themes');
+
+    $response->assertOk()
+        ->assertSee('Ethereal Glass Used')
+        ->assertSee('Sudah Digunakan (1/1)')
+        ->assertSee('Lihat Undangan')
+        ->assertDontSee('Gunakan Tema');
+});
+
+test('member themes index displays lifetime license and 45 days countdown badges', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $lifetimeTheme = createTestTheme(['name' => 'Royal Sapphire Lifetime', 'slug' => 'sapphire-'.uniqid()]);
+    $standardTheme = createTestTheme(['name' => 'Warm Minimalist 45 Days', 'slug' => 'minimalist-'.uniqid()]);
+
+    // 1. Lifetime theme
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $lifetimeTheme->id,
+        'duration_type' => 'lifetime',
+        'expires_at' => null,
+        'service_type' => 'assisted',
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    // 2. 45 Days theme with 30 days left
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $standardTheme->id,
+        'duration_type' => '45_days',
+        'expires_at' => now()->addDays(30),
+        'service_type' => 'self_service',
+        'is_active' => true,
+        'unlocked_at' => now()->subDays(15),
+    ]);
+
+    $response = $this->actingAs($member)->get('/member/themes');
+
+    $response->assertOk()
+        ->assertSee('Royal Sapphire Lifetime')
+        ->assertSee('Lifetime (Selamanya)')
+        ->assertSee('Diisikan Tim')
+        ->assertSee('Warm Minimalist 45 Days')
+        ->assertSee('Sisa 30 Hari');
+});
+
+test('expired theme shows Kedaluwarsa badge and Beli Lisensi Lagi button on member themes page', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Expired Classic Card', 'slug' => 'expired-card-'.uniqid()]);
+
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'duration_type' => '45_days',
+        'expires_at' => now()->subDay(),
+        'service_type' => 'self_service',
+        'is_active' => true,
+        'unlocked_at' => now()->subDays(46),
+    ]);
+
+    $response = $this->actingAs($member)->get('/member/themes');
+
+    $response->assertOk()
+        ->assertSee('Expired Classic Card')
+        ->assertSee('Kedaluwarsa')
+        ->assertSee('Beli Lisensi Lagi')
+        ->assertSee(route('checkout.theme', $theme->id))
+        ->assertDontSee('Aktif &amp; Lunas')
+        ->assertDontSee(route('member.invitations.create', ['theme_id' => $theme->id]));
+});
+
+test('expired theme cannot be selected on invitation create page and redirects if accessed via query param', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $activeTheme = createTestTheme(['name' => 'Active Botanical', 'slug' => 'active-botanical-'.uniqid()]);
+    $expiredTheme = createTestTheme(['name' => 'Expired Classic', 'slug' => 'expired-classic-'.uniqid()]);
+
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $activeTheme->id,
+        'duration_type' => 'lifetime',
+        'expires_at' => null,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $expiredTheme->id,
+        'duration_type' => '45_days',
+        'expires_at' => now()->subDay(),
+        'is_active' => true,
+        'unlocked_at' => now()->subDays(46),
+    ]);
+
+    // 1. Visit /member/invitations/create without params
+    $response = $this->actingAs($member)->get('/member/invitations/create');
+
+    $response->assertOk()
+        ->assertSee('Active Botanical')
+        ->assertDontSee('Expired Classic');
+
+    // 2. Direct access with ?theme_id={expiredThemeId}
+    $expiredAccessResponse = $this->actingAs($member)->get('/member/invitations/create?theme_id='.$expiredTheme->id);
+
+    $expiredAccessResponse->assertRedirect(route('checkout.theme', $expiredTheme))
+        ->assertSessionHas('warning');
+
+    // 3. Trying to submit invitation with expired theme
+    $postResponse = $this->actingAs($member)->post('/member/invitations', [
+        'theme_id' => $expiredTheme->id,
+        'title' => 'Pernikahan Expired',
+        'groom_name' => 'Budi',
+        'groom_nickname' => 'Budi',
+        'bride_name' => 'Sari',
+        'bride_nickname' => 'Sari',
+        'akad_date' => '2026-12-01',
+        'akad_time' => '08:00',
+        'akad_venue' => 'Masjid',
+        'akad_address' => 'Jl. Test',
+        'resepsi_date' => '2026-12-01',
+        'resepsi_time' => '11:00',
+        'resepsi_venue' => 'Gedung',
+        'resepsi_address' => 'Jl. Test',
+    ]);
+
+    $postResponse->assertRedirect(route('checkout.theme', $expiredTheme))
+        ->assertSessionHas('warning');
+});

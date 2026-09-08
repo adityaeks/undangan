@@ -43,7 +43,11 @@ class PartnerController extends Controller
      */
     public function updatePackage(Request $request, Package $package): RedirectResponse
     {
-        abort_if($package->target_role !== 'partner', 404);
+        if ($request->has('price')) {
+            $request->merge([
+                'price' => preg_replace('/[^0-9]/', '', (string) $request->input('price')),
+            ]);
+        }
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',

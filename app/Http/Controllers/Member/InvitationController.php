@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use App\Models\Invitation;
 use App\Models\Theme;
+use App\Models\UserTheme;
 use App\Services\ThemeOwnershipService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,32 +39,56 @@ class InvitationController extends Controller
         $totalActive = $user->invitations()->where('is_published', true)->count();
         $totalDraft = $user->invitations()->where('is_published', false)->count();
 
-        return view('member.invitations.index', compact('invitations', 'totalActive', 'totalDraft'));
+        // Hitung sisa kuota tema (1 tema = 1 undangan)
+        $accessibleThemeIds = $this->themeOwnershipService->getUserOwnedThemeIds($user);
+        $usedThemeIds = $user->invitations()->pluck('theme_id')->toArray();
+        $availableThemesCount = count(array_diff($accessibleThemeIds, $usedThemeIds));
+
+        return view('member.invitations.index', compact('invitations', 'totalActive', 'totalDraft', 'availableThemesCount'));
     }
 
     /**
      * Show the form for creating a new invitation.
      */
-    public function create(): View
+    public function create(Request $request): View|RedirectResponse
     {
         $user = Auth::user();
 
         if ($user->isSuperAdmin()) {
             $themes = Theme::where('is_active', true)->get();
+            $usedThemeIds = [];
         } else {
-            $ownedThemeIds = $user->themes()->pluck('themes.id')->toArray();
+            $accessibleThemeIds = $this->themeOwnershipService->getUserOwnedThemeIds($user);
+            $usedThemeIds = $user->invitations()->pluck('theme_id')->toArray();
+
+            // Tema yang tersedia adalah tema aktif & belum kedaluwarsa milik user yang belum pernah digunakan membuat undangan
             $themes = Theme::where('is_active', true)
-                ->where(function ($query) use ($ownedThemeIds) {
-                    $query->whereIn('id', $ownedThemeIds)
-                        ->orWhere('is_premium', false)
-                        ->orWhere('price', '<=', 0);
-                })
+                ->whereIn('id', $accessibleThemeIds)
+                ->whereNotIn('id', $usedThemeIds)
                 ->get();
+        }
+
+        if ($request->filled('theme_id')) {
+            $requestedThemeId = (int) $request->query('theme_id');
+            if (! $themes->pluck('id')->contains($requestedThemeId)) {
+                $requestedTheme = Theme::find($requestedThemeId);
+                if ($requestedTheme) {
+                    $isExpired = UserTheme::where('user_id', $user->id)
+                        ->where('theme_id', $requestedTheme->id)
+                        ->where('expires_at', '<=', now())
+                        ->exists();
+
+                    if ($isExpired) {
+                        return redirect()->route('checkout.theme', $requestedTheme)
+                            ->with('warning', 'Masa aktif lisensi tema "'.$requestedTheme->name.'" telah kedaluwarsa. Silakan beli lisensi baru untuk menggunakannya.');
+                    }
+                }
+            }
         }
 
         $musicPresets = config('themes.music_presets', []);
 
-        return view('member.invitations.create', compact('themes', 'musicPresets'));
+        return view('member.invitations.create', compact('themes', 'musicPresets', 'usedThemeIds'));
     }
 
     /**
@@ -150,7 +175,23 @@ class InvitationController extends Controller
         ]);
 
         $theme = Theme::findOrFail($validated['theme_id']);
-        if (! $this->themeOwnershipService->canUseTheme($user, $theme)) {
+        if (! $this->themeOwnershipService->canUseThemeForInvitation($user, $theme)) {
+            if ($user->invitations()->where('theme_id', $theme->id)->exists()) {
+                return redirect()->route('member.invitations.create')
+                    ->withInput()
+                    ->with('error', 'Tema "'.$theme->name.'" sudah digunakan untuk undangan Anda yang lain. Setiap lisensi tema hanya berlaku untuk 1 undangan.');
+            }
+
+            $isExpired = UserTheme::where('user_id', $user->id)
+                ->where('theme_id', $theme->id)
+                ->where('expires_at', '<=', now())
+                ->exists();
+
+            if ($isExpired) {
+                return redirect()->route('checkout.theme', $theme)
+                    ->with('warning', 'Masa aktif lisensi tema "'.$theme->name.'" telah kedaluwarsa. Silakan beli lisensi baru untuk dapat menggunakannya kembali.');
+            }
+
             return redirect()->route('checkout.theme', $theme)
                 ->with('warning', 'Template ini berbayar. Silakan lakukan aktivasi template terlebih dahulu.');
         }

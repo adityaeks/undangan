@@ -398,7 +398,7 @@
                     
                     <!-- GOOGLE CALENDAR BUTTON -->
                     <a 
-                        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text={{ urlencode('Pernikahan ' . ($data['groom']['nickname'] ?? 'Raka') . ' & ' . ($data['bride']['nickname'] ?? 'Arinda')) }}&details={{ urlencode('Pernikahan ' . ($data['groom']['name'] ?? '') . ' & ' . ($data['bride']['name'] ?? '')) }}&location={{ urlencode(($data['events']['akad']['venue'] ?? '') . ', ' . ($data['events']['akad']['address'] ?? '')) }}" 
+                        href="{{ $data['google_calendar_url'] ?? '#' }}" 
                         target="_blank"
                         :style="{ backgroundColor: currentStyle.tag_bg, color: currentStyle.tag_text }"
                         class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-2xl hover:opacity-90 font-semibold text-xs transition"
@@ -835,7 +835,7 @@
 
                 startCountdown() {
                     const target = new Date('{{ $data["countdown_target"] }}').getTime();
-                    setInterval(() => {
+                    const update = () => {
                         const now = new Date().getTime();
                         const diff = target - now;
                         if (diff > 0) {
@@ -843,8 +843,15 @@
                             this.countdown.hours = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
                             this.countdown.minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
                             this.countdown.seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+                        } else {
+                            this.countdown.days = '00';
+                            this.countdown.hours = '00';
+                            this.countdown.minutes = '00';
+                            this.countdown.seconds = '00';
                         }
-                    }, 1000);
+                    };
+                    update();
+                    setInterval(update, 1000);
                 }
             }
         }

@@ -156,12 +156,12 @@
                                             Harga (Rp)
                                         </label>
                                         <input 
-                                            type="number" 
+                                            type="text" 
+                                            inputmode="numeric"
                                             id="price_{{ $pkg->id }}" 
                                             name="price" 
-                                            value="{{ old('price', (int) $pkg->price) }}" 
-                                            min="0" 
-                                            step="1000" 
+                                            value="{{ format_rupiah(old('price', (int) $pkg->price)) }}" 
+                                            oninput="maskRupiah(this)"
                                             required 
                                             class="w-full px-3.5 py-2 rounded-xl text-xs font-bold {{ $isPro ? 'bg-charcoal-900 border-charcoal-700 text-white focus:border-amber-400 focus:ring-amber-400/20' : 'bg-white border-sand-300 text-charcoal-950 focus:border-amber-600 focus:ring-amber-500/20' }} transition"
                                         >

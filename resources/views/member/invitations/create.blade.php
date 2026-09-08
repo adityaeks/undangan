@@ -2,8 +2,12 @@
     <div 
         class="space-y-4 max-w-5xl mx-auto" 
         x-data="{ 
-            currentStep: 1, 
-            selectedTheme: '{{ old('theme_id', request('theme_id', $themes->first()->id ?? '')) }}',
+            currentStep: {{ $errors->hasAny(['groom_*', 'bride_*']) ? 2 : ($errors->hasAny(['akad_*', 'resepsi_*']) ? 3 : 1) }}, 
+            errorMessage: '',
+            @php
+                $initialThemeId = $themes->firstWhere('id', old('theme_id', request('theme_id')))?->id ?? $themes->first()?->id ?? '';
+            @endphp
+            selectedTheme: '{{ $initialThemeId }}',
             selectedMusic: '{{ old('music_preset', '/audio/payung-teduh-akad.mp3') }}',
             isPlayingAudio: false,
             audioPlayer: null,
@@ -24,6 +28,64 @@
             
             init() {
                 this.audioPlayer = new Audio(this.selectedMusic);
+            },
+            validateStep(step) {
+                this.errorMessage = '';
+                const form = this.$el.querySelector('form');
+                if (!form) return true;
+
+                if (step === 1 && !this.selectedTheme) {
+                    this.errorMessage = 'Silakan pilih tema desain terlebih dahulu.';
+                    return false;
+                }
+
+                const stepContainer = form.querySelector(`[data-step='${step}']`);
+                if (!stepContainer) return true;
+
+                const fields = stepContainer.querySelectorAll('input[required], select[required], textarea[required]');
+                for (const field of fields) {
+                    if (!field.checkValidity()) {
+                        field.classList.add('border-rose-500', 'ring-2', 'ring-rose-200');
+                        this.currentStep = step;
+                        this.$nextTick(() => {
+                            field.focus();
+                            if (field.reportValidity) {
+                                field.reportValidity();
+                            }
+                        });
+                        const labelEl = field.closest('div')?.querySelector('label');
+                        const label = labelEl ? labelEl.innerText.replace('*', '').trim() : (field.placeholder || field.name);
+                        this.errorMessage = `Mohon lengkapi kolom wajib: '${label}'.`;
+                        return false;
+                    } else {
+                        field.classList.remove('border-rose-500', 'ring-2', 'ring-rose-200');
+                    }
+                }
+
+                return true;
+            },
+            goToStep(targetStep) {
+                this.errorMessage = '';
+                if (targetStep > this.currentStep) {
+                    for (let s = this.currentStep; s < targetStep; s++) {
+                        if (!this.validateStep(s)) {
+                            this.currentStep = s;
+                            return false;
+                        }
+                    }
+                }
+                this.currentStep = targetStep;
+                window.scrollTo({ top: 120, behavior: 'smooth' });
+                return true;
+            },
+            submitForm(e) {
+                for (let s = 1; s <= 6; s++) {
+                    if (!this.validateStep(s)) {
+                        e.preventDefault();
+                        this.currentStep = s;
+                        return false;
+                    }
+                }
             },
             toggleAudioTest() {
                 if (!this.audioPlayer) {
@@ -106,7 +168,7 @@
             </a>
         </div>
 
-        <!-- ALERT JIKA BELUM MEMILIKI TEMA AKTIF -->
+        <!-- ALERT JIKA BELUM MEMILIKI TEMA AKTIF / SEMUA TEMA SUDAH TERPAKAI -->
         @if ($themes->isEmpty())
             <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3.5 text-left">
@@ -114,15 +176,25 @@
                         <i data-lucide="palette" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="font-serif text-sm font-bold text-charcoal-950">Anda Belum Memiliki Tema Aktif</h3>
+                        <h3 class="font-serif text-sm font-bold text-charcoal-950">
+                            @if(!empty($usedThemeIds))
+                                Kuota Tema Anda Sudah Digunakan
+                            @else
+                                Anda Belum Memiliki Tema Aktif
+                            @endif
+                        </h3>
                         <p class="text-[11px] text-sand-600">
-                            Silakan pilih dan aktifkan salah satu tema dari katalog kami terlebih dahulu sebelum membuat undangan digital.
+                            @if(!empty($usedThemeIds))
+                                Setiap pembelian tema hanya dapat digunakan untuk 1 website undangan. Silakan pilih &amp; aktifkan tema baru di katalog kami untuk membuat undangan tambahan.
+                            @else
+                                Silakan pilih dan aktifkan salah satu tema dari katalog kami terlebih dahulu sebelum membuat undangan digital.
+                            @endif
                         </p>
                     </div>
                 </div>
                 <a href="{{ route('themes.catalog') }}" class="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-charcoal-950 text-amber-300 text-xs font-bold hover:bg-charcoal-900 transition shadow">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                    <span>Pilih Tema di Katalog (Mulai Rp 49.000)</span>
+                    <span>Pilih Tema Baru di Katalog</span>
                 </a>
             </div>
         @endif
@@ -146,7 +218,7 @@
         <div class="p-1.5 rounded-2xl glass-panel border border-sand-200 grid grid-cols-3 sm:grid-cols-6 gap-1 text-center text-xs font-semibold">
             <button 
                 type="button" 
-                @click="currentStep = 1"
+                @click="goToStep(1)"
                 :class="currentStep === 1 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
@@ -156,7 +228,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 2"
+                @click="goToStep(2)"
                 :class="currentStep === 2 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
@@ -166,7 +238,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 3"
+                @click="goToStep(3)"
                 :class="currentStep === 3 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
@@ -176,7 +248,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 4"
+                @click="goToStep(4)"
                 :class="currentStep === 4 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
@@ -186,7 +258,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 5"
+                @click="goToStep(5)"
                 :class="currentStep === 5 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
@@ -196,7 +268,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 6"
+                @click="goToStep(6)"
                 :class="currentStep === 6 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
@@ -205,8 +277,19 @@
             </button>
         </div>
 
+        <!-- ERROR MESSAGE BANNER FOR STEP VALIDATION -->
+        <div x-show="errorMessage" x-cloak x-transition class="p-3.5 rounded-2xl bg-rose-50 border border-rose-300 text-rose-800 text-xs flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-2 font-medium">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+                <span x-text="errorMessage"></span>
+            </div>
+            <button type="button" @click="errorMessage = ''" class="text-rose-500 hover:text-rose-700">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+
         <!-- FORM WRAPPER WITH MULTIPART SUPPORT -->
-        <form method="POST" action="{{ route('member.invitations.store') }}" enctype="multipart/form-data" class="space-y-4">
+        <form method="POST" action="{{ route('member.invitations.store') }}" enctype="multipart/form-data" @submit="submitForm($event)" novalidate class="space-y-4">
             @csrf
 
             <!-- HIDDEN INPUT FOR THEME ID -->
@@ -218,7 +301,7 @@
                 <!-- ========================================== -->
                 <!-- STEP 1: PILIH TEMA DESAIN -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 1" class="space-y-4">
+                <div x-show="currentStep === 1" data-step="1" class="space-y-4">
                     <div class="flex items-center justify-between pb-2 border-b border-sand-200">
                         <div>
                             <h3 class="font-serif text-base font-bold text-charcoal-950">Langkah 1: Pilih Tema Desain &amp; Judul Undangan</h3>
@@ -237,14 +320,24 @@
                                 <i data-lucide="layers" class="w-6 h-6"></i>
                             </div>
                             <div class="space-y-1">
-                                <p class="font-bold text-xs text-charcoal-900">Belum Ada Tema yang Dapat Dipilih</p>
+                                <p class="font-bold text-xs text-charcoal-900">
+                                    @if(!empty($usedThemeIds))
+                                        Semua Tema Anda Sudah Digunakan (1 Tema = 1 Undangan)
+                                    @else
+                                        Belum Ada Tema yang Dapat Dipilih
+                                    @endif
+                                </p>
                                 <p class="text-[11px] text-sand-600 max-w-md mx-auto">
-                                    Anda memerlukan minimal satu tema aktif untuk menerbitkan undangan. Silakan beli tema terlebih dahulu di katalog.
+                                    @if(!empty($usedThemeIds))
+                                        Setiap lisensi tema hanya berlaku untuk 1 undangan. Untuk membuat undangan berikutnya, silakan beli tema baru di katalog.
+                                    @else
+                                        Anda memerlukan minimal satu tema aktif untuk menerbitkan undangan. Silakan beli tema terlebih dahulu di katalog.
+                                    @endif
                                 </p>
                             </div>
                             <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition">
                                 <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
-                                <span>Beli Tema di Katalog</span>
+                                <span>Beli Tema Baru di Katalog</span>
                             </a>
                         </div>
                     @else
@@ -393,7 +486,7 @@
                     <div class="flex justify-end pt-3">
                         <button 
                             type="button" 
-                            @click="currentStep = 2" 
+                            @click="goToStep(2)" 
                             @if ($themes->isEmpty()) disabled class="opacity-50 cursor-not-allowed px-5 py-2.5 rounded-xl bg-sand-300 text-charcoal-700 font-bold text-xs" @else class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer" @endif
                         >
                             <span>Lanjut ke Data Mempelai</span>
@@ -405,7 +498,7 @@
                 <!-- ========================================== -->
                 <!-- STEP 2: DATA MEMPELAI -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 2" class="space-y-4" style="display: none;">
+                <div x-show="currentStep === 2" data-step="2" class="space-y-4" style="display: none;">
                     <div class="pb-2 border-b border-sand-200">
                         <h3 class="font-serif text-base font-bold text-charcoal-950">Langkah 2: Informasi &amp; Foto Kedua Mempelai</h3>
                         <p class="text-[11px] text-sand-600">Lengkapi data pribadi serta unggah foto profil mempelai pria dan wanita.</p>
@@ -560,10 +653,10 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-3 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 1" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
+                        <button type="button" @click="goToStep(1)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                             Kembali
                         </button>
-                        <button type="button" @click="currentStep = 3" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" @click="goToStep(3)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
                             <span>Lanjut ke Jadwal Acara</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
@@ -573,7 +666,7 @@
                 <!-- ========================================== -->
                 <!-- STEP 3: JADWAL & LOKASI ACARA -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 3" class="space-y-4" style="display: none;">
+                <div x-show="currentStep === 3" data-step="3" class="space-y-4" style="display: none;">
                     <div class="pb-2 border-b border-sand-200">
                         <h3 class="font-serif text-base font-bold text-charcoal-950">Langkah 3: Rangkaian Jadwal Acara</h3>
                         <p class="text-[11px] text-sand-600">Atur tanggal, waktu, dan lokasi prosesi pernikahan Anda.</p>
@@ -648,10 +741,10 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-3 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 2" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
+                        <button type="button" @click="goToStep(2)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                             Kembali
                         </button>
-                        <button type="button" @click="currentStep = 4" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" @click="goToStep(4)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
                             <span>Lanjut ke Kisah Perjalanan</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
@@ -661,7 +754,7 @@
                 <!-- ========================================== -->
                 <!-- STEP 4: KISAH PERJALANAN (LOVE STORY) -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 4" class="space-y-4" style="display: none;">
+                <div x-show="currentStep === 4" data-step="4" class="space-y-4" style="display: none;">
                     <div class="pb-2 border-b border-sand-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div>
                             <h3 class="font-serif text-base font-bold text-charcoal-950">Langkah 4: Kisah Perjalanan (Love Story)</h3>
@@ -762,10 +855,10 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-3 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 3" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
+                        <button type="button" @click="goToStep(3)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                             Kembali
                         </button>
-                        <button type="button" @click="currentStep = 5" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" @click="goToStep(5)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
                             <span>Lanjut ke Galeri &amp; Musik</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
@@ -775,7 +868,7 @@
                 <!-- ========================================== -->
                 <!-- STEP 5: GALERI FOTO & MUSIK -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 5" class="space-y-4" style="display: none;">
+                <div x-show="currentStep === 5" data-step="5" class="space-y-4" style="display: none;">
                     <div class="pb-2 border-b border-sand-200">
                         <h3 class="font-serif text-base font-bold text-charcoal-950">Langkah 5: Galeri Foto Prewedding &amp; Musik Latar</h3>
                         <p class="text-[11px] text-sand-600">Unggah foto cover utama, album galeri prewedding, dan tentukan lagu pengiring undangan.</p>
@@ -909,10 +1002,10 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-3 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 4" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
+                        <button type="button" @click="goToStep(4)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
                             Kembali
                         </button>
-                        <button type="button" @click="currentStep = 6" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" @click="goToStep(6)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
                             <span>Lanjut ke Amplop &amp; Rilis</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
@@ -922,7 +1015,7 @@
                 <!-- ========================================== -->
                 <!-- STEP 6: AMPLOP & PUBLISH -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 6" class="space-y-4" style="display: none;">
+                <div x-show="currentStep === 6" data-step="6" class="space-y-4" style="display: none;">
                     <div class="pb-2 border-b border-sand-200">
                         <h3 class="font-serif text-base font-bold text-charcoal-950">Langkah 6: Rekening Amplop &amp; Rilis</h3>
                         <p class="text-[11px] text-sand-600">Nomor rekening transfer untuk kado pernikahan digital para tamu.</p>
@@ -1018,7 +1111,7 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-3 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 5" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
+                        <button type="button" @click="goToStep(5)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
                             Kembali
                         </button>
                         <button 

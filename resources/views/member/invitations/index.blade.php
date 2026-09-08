@@ -42,6 +42,32 @@
             </div>
         @endif
 
+        <!-- ERROR ALERT -->
+        @if (session('error'))
+            <div class="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-2">
+                    <div class="w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold text-xs">
+                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                    </div>
+                    <span class="font-semibold">{{ session('error') }}</span>
+                </div>
+            </div>
+        @endif
+
+        <!-- INFO KUOTA TEMA TERPAKAI -->
+        @if (isset($availableThemesCount) && $availableThemesCount === 0 && !auth()->user()->isSuperAdmin() && $invitations->isNotEmpty())
+            <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-900 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="info" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+                    <span>Setiap lisensi tema hanya berlaku untuk 1 undangan. Semua tema aktif Anda sudah terpakai.</span>
+                </div>
+                <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-charcoal-950 text-amber-300 font-bold text-[11px] hover:bg-charcoal-900 transition shrink-0">
+                    <i data-lucide="shopping-bag" class="w-3 h-3"></i>
+                    <span>Beli Tema Baru</span>
+                </a>
+            </div>
+        @endif
+
         <!-- COMPACT STATS TILES -->
         <div class="grid grid-cols-3 gap-2">
             <div class="p-2 sm:p-2.5 rounded-xl glass-panel border border-sand-200/80 flex items-center justify-between shadow-sm">

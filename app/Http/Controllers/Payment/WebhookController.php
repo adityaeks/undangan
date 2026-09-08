@@ -140,6 +140,32 @@ class WebhookController extends Controller
             return response()->json(['status' => 'success', 'message' => 'Order marked as failed']);
         }
 
+        if (in_array($transactionStatus, ['refund', 'partial_refund', 'chargeback'], true)) {
+            $orderMetadata = $order->metadata ?? [];
+            $orderMetadata['midtrans_refund'] = $request->all();
+
+            $order->update([
+                'status' => 'refunded',
+                'payment_status' => 'refunded',
+                'metadata' => $orderMetadata,
+            ]);
+
+            Payment::updateOrCreate(
+                [
+                    'order_id' => $order->id,
+                    'payment_code' => $request->input('transaction_id') ?? 'REF-'.time(),
+                ],
+                [
+                    'amount' => $order->total_amount !== null ? $order->total_amount : $order->amount,
+                    'method' => $paymentType,
+                    'status' => (string) $transactionStatus,
+                    'payload' => $request->all(),
+                ]
+            );
+
+            return response()->json(['status' => 'success', 'message' => 'Order marked as refunded']);
+        }
+
         return response()->json(['status' => 'ignored', 'message' => 'Status acknowledged']);
     }
 }

@@ -66,6 +66,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        [x-cloak] { display: none !important; }
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-editorial { font-family: 'Cormorant Garamond', serif; }
         .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -148,6 +149,22 @@
     </div>
 
     <script>
+        window.formatRupiah = function(value) {
+            if (value === null || value === undefined || value === '') return '';
+            let clean = value.toString().replace(/[^0-9]/g, '');
+            if (!clean) return '';
+            return 'Rp ' + parseInt(clean, 10).toLocaleString('id-ID');
+        };
+
+        window.maskRupiah = function(el) {
+            let clean = el.value.replace(/[^0-9]/g, '');
+            if (!clean) {
+                el.value = '';
+                return;
+            }
+            el.value = 'Rp ' + parseInt(clean, 10).toLocaleString('id-ID');
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) {
                 window.lucide.createIcons();

@@ -38,7 +38,7 @@
                     <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 border border-sand-200 text-xs">
                         <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
                         <span class="text-sand-500 font-medium">Tema Aktif:</span>
-                        <span class="font-bold text-emerald-700">{{ $totalOwned }}</span>
+                        <span class="font-bold text-emerald-700">{{ $totalActive ?? $totalOwned }}</span>
                     </div>
                     <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 border border-sand-200 text-xs">
                         <i data-lucide="compass" class="w-3.5 h-3.5 text-amber-600"></i>
@@ -75,6 +75,23 @@
         <!-- THEME GRID -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             @forelse($themes as $theme)
+                @php
+                    $duration = $theme->pivot?->duration_type ?? '45_days';
+                    $expiresAt = $theme->pivot?->expires_at ? \Carbon\Carbon::parse($theme->pivot->expires_at) : null;
+                    if (! $expiresAt && $duration === '45_days' && $theme->pivot?->unlocked_at) {
+                        $expiresAt = \Carbon\Carbon::parse($theme->pivot->unlocked_at)->addDays(45);
+                    }
+                    $isLifetime = Auth::user()?->isSuperAdmin() || $duration === 'lifetime' || (! $expiresAt && $duration !== '45_days');
+
+                    if (! $isLifetime && $expiresAt) {
+                        $diffInHours = now()->diffInHours($expiresAt, false);
+                        $daysLeft = (int) max(0, ceil($diffInHours / 24));
+                        $isExpired = $expiresAt->isPast();
+                    } else {
+                        $daysLeft = null;
+                        $isExpired = false;
+                    }
+                @endphp
                 <div class="group rounded-2xl overflow-hidden glass-panel border border-sand-200/80 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition duration-300 flex flex-col justify-between">
                     <div>
                         <!-- THUMBNAIL -->
@@ -88,20 +105,55 @@
                                 </span>
                             </div>
 
-                            <!-- ACTIVE & PAID BADGE -->
+                            <!-- ACTIVE & PAID OR EXPIRED BADGE -->
                             <div class="absolute top-2.5 right-2.5">
-                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-600/95 backdrop-blur-md text-white text-[10px] font-bold shadow">
-                                    <i data-lucide="check-circle" class="w-3 h-3"></i>
-                                    <span>Aktif &amp; Lunas</span>
-                                </span>
+                                @if($isExpired)
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-600/95 backdrop-blur-md text-white text-[10px] font-bold shadow">
+                                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                                        <span>Kedaluwarsa</span>
+                                    </span>
+                                @elseif(!empty($theme->is_used))
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-sand-800/90 backdrop-blur-md text-amber-200 text-[10px] font-bold shadow">
+                                        <i data-lucide="check" class="w-3 h-3 text-amber-400"></i>
+                                        <span>Sudah Digunakan (1/1)</span>
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-600/95 backdrop-blur-md text-white text-[10px] font-bold shadow">
+                                        <i data-lucide="check-circle" class="w-3 h-3"></i>
+                                        <span>Aktif &amp; Lunas</span>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
                         <!-- CONTENT INFO -->
-                        <div class="p-4 space-y-1.5">
+                        <div class="p-4 space-y-2">
                             <h3 class="font-serif text-base font-bold text-charcoal-950 group-hover:text-amber-700 transition truncate">
                                 {{ $theme->name }}
                             </h3>
+
+                            <!-- COMPACT LICENSE BADGES -->
+                            <div class="flex flex-wrap items-center gap-2 pt-0.5">
+                                @if($isLifetime)
+                                    <span class="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-semibold bg-emerald-50/80 px-2.5 py-1 rounded-lg border border-emerald-200/60">
+                                        <i data-lucide="infinity" class="w-3.5 h-3.5 text-emerald-600"></i>
+                                        <span>Lifetime (Selamanya)</span>
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1.5 text-xs {{ $isExpired ? 'text-rose-700 bg-rose-50 border-rose-200' : ($daysLeft <= 7 ? 'text-amber-800 bg-amber-50 border-amber-200' : 'text-emerald-700 bg-emerald-50/80 border-emerald-200/60') }} font-semibold px-2.5 py-1 rounded-lg border">
+                                        <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                                        <span>{{ $isExpired ? 'Kedaluwarsa' : 'Sisa '.$daysLeft.' Hari' }}</span>
+                                    </span>
+                                @endif
+
+                                @if(($theme->pivot?->service_type ?? '') === 'assisted')
+                                    <span class="inline-flex items-center gap-1 text-xs text-blue-700 font-medium bg-blue-50/80 px-2.5 py-1 rounded-lg border border-blue-200/60">
+                                        <i data-lucide="headphones" class="w-3 h-3 text-blue-600"></i>
+                                        <span>Diisikan Tim</span>
+                                    </span>
+                                @endif
+                            </div>
+
                             <p class="text-xs text-sand-600 line-clamp-2 leading-relaxed">
                                 {{ $theme->metadata['description'] ?? 'Desain modern bernuansa '.strtolower($theme->category).', dilengkapi animasi lembut, pemutar musik, dan RSVP otomatis.' }}
                             </p>
@@ -119,13 +171,31 @@
                             <span>Live Demo</span>
                         </a>
 
-                        <a 
-                            href="{{ route('member.invitations.create', ['theme_id' => $theme->id]) }}" 
-                            class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 hover:from-amber-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
-                        >
-                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                            <span>Gunakan Tema</span>
-                        </a>
+                        @if($isExpired)
+                            <a 
+                                href="{{ route('checkout.theme', $theme->id) }}" 
+                                class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 hover:from-amber-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
+                            >
+                                <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                                <span>Beli Lisensi Lagi</span>
+                            </a>
+                        @elseif(!empty($theme->is_used))
+                            <a 
+                                href="{{ route('member.invitations.index') }}" 
+                                class="flex-1 py-2 px-3 rounded-xl bg-sand-200 hover:bg-sand-300 text-charcoal-800 text-xs font-bold transition flex items-center justify-center gap-1.5"
+                            >
+                                <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                                <span>Lihat Undangan</span>
+                            </a>
+                        @else
+                            <a 
+                                href="{{ route('member.invitations.create', ['theme_id' => $theme->id]) }}" 
+                                class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 hover:from-amber-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
+                            >
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                                <span>Gunakan Tema</span>
+                            </a>
+                        @endif
                     </div>
                 </div>
             @empty
