@@ -50,14 +50,22 @@ class WebhookController extends Controller
             ], 200);
         }
 
-        // Verify signature if provided by Midtrans
         $signatureKey = $request->input('signature_key');
         $statusCode = (string) $request->input('status_code');
         $grossAmount = (string) $request->input('gross_amount');
 
-        if (! empty($signatureKey) && $this->midtransService->isConfigured()) {
+        if ($this->midtransService->isConfigured()) {
+            if (empty($signatureKey)) {
+                return response()->json(['status' => 'error', 'message' => 'Missing signature key'], 403);
+            }
             if (! $this->midtransService->verifySignature((string) $orderCode, $statusCode, $grossAmount, (string) $signatureKey)) {
                 return response()->json(['status' => 'error', 'message' => 'Invalid signature key'], 403);
+            }
+            // ponytail: strict gross check; relax to tolerance if Midtrans rounding drifts
+            $expectedGross = (string) (int) round((float) ($order->total_amount ?? $order->amount));
+            $receivedGross = (string) (int) round((float) $grossAmount);
+            if ($receivedGross !== $expectedGross) {
+                return response()->json(['status' => 'error', 'message' => 'Gross amount mismatch'], 400);
             }
         }
 

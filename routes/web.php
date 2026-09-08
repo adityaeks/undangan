@@ -68,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders/{order}', [CheckoutController::class, 'show'])->name('orders.show');
     Route::get('/orders/{order}/success', [CheckoutController::class, 'success'])->name('orders.success');
     Route::get('/orders/{order}/invoice', [CheckoutController::class, 'invoice'])->name('orders.invoice');
-    Route::post('/orders/{order}/coupon', [CheckoutController::class, 'applyCoupon'])->name('orders.coupon.apply');
+    Route::post('/orders/{order}/coupon', [CheckoutController::class, 'applyCoupon'])->middleware('throttle:10,1')->name('orders.coupon.apply');
     Route::delete('/orders/{order}/coupon', [CheckoutController::class, 'removeCoupon'])->name('orders.coupon.remove');
     Route::post('/orders/{order}/simulate', [CheckoutController::class, 'simulatePayment'])->name('orders.simulate');
     Route::get('/checkout/theme/{theme}', [CheckoutController::class, 'checkoutTheme'])->name('checkout.theme');

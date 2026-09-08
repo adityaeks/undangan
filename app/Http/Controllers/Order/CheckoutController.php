@@ -13,6 +13,7 @@ use App\Services\PaymentService;
 use App\Services\ThemeOwnershipService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class CheckoutController extends Controller
@@ -192,28 +193,31 @@ class CheckoutController extends Controller
             'code' => ['required', 'string', 'max:50'],
         ]);
 
-        $code = strtoupper(trim($validated['code']));
-        $coupon = Coupon::where('code', $code)->first();
+        // ponytail: transaction+lock to avoid max_uses race; throttle is at route layer
+        return DB::transaction(function () use ($request, $order, $validated) {
+            $code = strtoupper(trim($validated['code']));
+            $coupon = Coupon::where('code', $code)->lockForUpdate()->first();
 
-        $error = null;
-        if (! $coupon || ! $coupon->isValidForAmount((float) $order->amount, $error)) {
-            return back()->with('error', $error ?? 'Kode kupon "'.$code.'" tidak valid atau tidak ditemukan.');
-        }
+            $error = null;
+            if (! $coupon || ! $coupon->isValidForAmount((float) $order->amount, $error)) {
+                return back()->with('error', $error ?? 'Kode kupon "'.$code.'" tidak valid atau tidak ditemukan.');
+            }
 
-        $discount = $coupon->calculateDiscount((float) $order->amount);
-        $taxableAmount = max(0, (float) $order->amount - $discount);
-        $taxAmount = round($taxableAmount * 0.11);
-        $total = $taxableAmount + $taxAmount;
+            $discount = $coupon->calculateDiscount((float) $order->amount);
+            $taxableAmount = max(0, (float) $order->amount - $discount);
+            $taxAmount = round($taxableAmount * 0.11);
+            $total = $taxableAmount + $taxAmount;
 
-        $order->update([
-            'coupon_id' => $coupon->id,
-            'discount' => $discount,
-            'tax_amount' => $taxAmount,
-            'total_amount' => $total,
-            'snap_token' => null,
-        ]);
+            $order->update([
+                'coupon_id' => $coupon->id,
+                'discount' => $discount,
+                'tax_amount' => $taxAmount,
+                'total_amount' => $total,
+                'snap_token' => null,
+            ]);
 
-        return back()->with('success', 'Kupon '.$coupon->code.' berhasil diterapkan!');
+            return back()->with('success', 'Kupon '.$coupon->code.' berhasil diterapkan!');
+        });
     }
 
     /**
