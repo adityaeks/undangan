@@ -3,11 +3,24 @@
     
     <!-- LEFT: TOGGLE & SEARCH -->
     <div class="flex items-center gap-4 flex-1 max-w-xl">
-        <button @click="sidebarOpen = true" class="lg:hidden p-2.5 rounded-2xl bg-sand-100 text-charcoal-900 hover:bg-sand-200 transition">
+        <!-- MOBILE MENU BUTTON -->
+        <button @click="sidebarOpen = true" class="lg:hidden p-2.5 rounded-2xl bg-sand-100 text-charcoal-900 hover:bg-sand-200 transition" aria-label="Buka Menu">
             <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
 
-        <!-- SEARCH BAR -->
+        <!-- DESKTOP TOGGLE SIDEBAR (FULL WIDTH MODE) -->
+        <button 
+            @click="toggleSidebarCollapse()" 
+            class="hidden lg:inline-flex items-center justify-center p-2.5 rounded-2xl bg-sand-100 hover:bg-sand-200 text-charcoal-800 hover:text-charcoal-950 transition border border-sand-200/60 shadow-sm group" 
+            :title="sidebarCollapsed ? 'Perluas Sidebar' : 'Mode Layar Penuh (Tutup Sidebar)'"
+            aria-label="Toggle Lebar Layar / Sidebar"
+        >
+            <i data-lucide="panel-left-close" x-show="!sidebarCollapsed" class="icon-panel-close w-4 h-4 text-charcoal-700 group-hover:text-charcoal-950 transition"></i>
+            <i data-lucide="panel-left-open" x-show="sidebarCollapsed" class="icon-panel-open w-4 h-4 text-brand-600 group-hover:text-brand-700 transition" style="display: none;"></i>
+        </button>
+
+        <!-- SEARCH BAR (NONAKTIF) -->
+        <!-- 
         <div class="relative w-full hidden sm:block">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sand-400">
                 <i data-lucide="search" class="w-4 h-4"></i>
@@ -18,6 +31,7 @@
                 class="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-sand-200 bg-sand-50/70 text-xs text-charcoal-950 placeholder:text-sand-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
             >
         </div>
+        -->
     </div>
 
     <!-- RIGHT: ACTIONS & USER PROFILE -->

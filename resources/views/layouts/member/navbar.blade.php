@@ -3,15 +3,27 @@
     
     <!-- LEFT: TOGGLE & WEDDING STATUS -->
     <div class="flex items-center gap-4 flex-1 max-w-xl">
+        <!-- MOBILE MENU BUTTON -->
         <button @click="sidebarOpen = true" class="lg:hidden p-2.5 rounded-2xl bg-sand-100 text-charcoal-900 hover:bg-sand-200 transition" aria-label="Buka Menu">
             <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
 
+        <!-- DESKTOP TOGGLE SIDEBAR (FULL WIDTH MODE) -->
+        <button 
+            @click="toggleSidebarCollapse()" 
+            class="hidden lg:inline-flex items-center justify-center p-2.5 rounded-2xl bg-sand-100 hover:bg-sand-200 text-charcoal-800 hover:text-charcoal-950 transition border border-sand-200/60 shadow-sm group" 
+            :title="sidebarCollapsed ? 'Perluas Sidebar' : 'Mode Layar Penuh (Tutup Sidebar)'"
+            aria-label="Toggle Lebar Layar / Sidebar"
+        >
+            <i data-lucide="panel-left-close" x-show="!sidebarCollapsed" class="icon-panel-close w-4 h-4 text-charcoal-700 group-hover:text-charcoal-950 transition"></i>
+            <i data-lucide="panel-left-open" x-show="sidebarCollapsed" class="icon-panel-open w-4 h-4 text-amber-600 group-hover:text-amber-700 transition" style="display: none;"></i>
+        </button>
+
+        <!-- CURRENT INVITATION STATUS BADGE (NONAKTIF) -->
+        <!-- 
         @php
             $activeInvitation = Auth::user()->invitations()->latest()->first();
         @endphp
-
-        <!-- CURRENT INVITATION STATUS BADGE -->
         @if($activeInvitation)
             <div class="hidden sm:flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -25,13 +37,14 @@
                 <a href="{{ route('member.invitations.create') }}" class="text-[10px] font-bold text-amber-700 hover:underline">+ Buat Sekarang</a>
             </div>
         @endif
+        -->
     </div>
 
     <!-- RIGHT: ACTIONS & USER PROFILE -->
     <div class="flex items-center gap-3">
         
         <!-- QUICK ACTION BUTTON -->
-        @if($activeInvitation)
+        <!-- @if($activeInvitation)
             <a href="{{ route('invitation.show', $activeInvitation->slug) }}" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white text-xs font-bold shadow-sm hover:shadow transition">
                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                 <span>Buka Undangan</span>
@@ -41,7 +54,7 @@
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                 <span>Buat Undangan</span>
             </a>
-        @endif
+        @endif -->
 
         <!-- NOTIFICATION BUTTON -->
         <div class="relative" x-data="{ notifyOpen: false }">
@@ -133,10 +146,10 @@
                         <i data-lucide="user" class="w-3.5 h-3.5 text-sand-500"></i>
                         <span>Pengaturan Akun</span>
                     </a>
-                    <a href="{{ route('demo.index') }}" target="_blank" class="flex items-center gap-2.5 px-4 py-2 text-xs text-charcoal-800 hover:bg-sand-100 transition">
+                    <!-- <a href="{{ route('demo.index') }}" target="_blank" class="flex items-center gap-2.5 px-4 py-2 text-xs text-charcoal-800 hover:bg-sand-100 transition">
                         <i data-lucide="eye" class="w-3.5 h-3.5 text-sand-500"></i>
                         <span>Preview Undangan</span>
-                    </a>
+                    </a> -->
                 </div>
 
                 <div class="py-1">

@@ -107,10 +107,94 @@
         aside ::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.25);
         }
+
+        /* Instant sidebar width & content padding on initial render (prevents FOUC / flicker on refresh) */
+        @media (min-width: 1024px) {
+            html.sidebar-collapsed aside.sidebar-collapsible {
+                width: 5rem !important; /* lg:w-20 */
+            }
+            html.sidebar-collapsed .main-content-wrapper {
+                padding-left: 5rem !important; /* lg:pl-20 */
+            }
+            html:not(.sidebar-collapsed) aside.sidebar-collapsible {
+                width: 18rem !important; /* lg:w-72 */
+            }
+            html:not(.sidebar-collapsed) .main-content-wrapper {
+                padding-left: 18rem !important; /* lg:pl-72 */
+            }
+
+            /* Instant visibility of child elements to eliminate any flash */
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-label-text,
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-badge-count,
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-brand-text,
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-section-title {
+                display: none !important;
+            }
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-section-divider {
+                display: block !important;
+            }
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-indicator-dot {
+                display: block !important;
+            }
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-nav-link {
+                justify-content: center !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                padding-top: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+            }
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-header-box {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+                justify-content: center !important;
+            }
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-logout-box {
+                padding: 0.5rem !important;
+                display: flex !important;
+                justify-content: center !important;
+            }
+            html.sidebar-collapsed aside.sidebar-collapsible .sidebar-logout-button {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                padding-top: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+            }
+
+            /* Instant icon toggle state on navbar */
+            html.sidebar-collapsed .icon-panel-close { display: none !important; }
+            html.sidebar-collapsed .icon-panel-open { display: block !important; }
+            html:not(.sidebar-collapsed) .icon-panel-close { display: block !important; }
+            html:not(.sidebar-collapsed) .icon-panel-open { display: none !important; }
+        }
     </style>
+
+    <!-- Immediate Sidebar State Init (Prevents Layout Flash / FOUC on Refresh) -->
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('sidebar_collapsed') === 'true') {
+                    document.documentElement.classList.add('sidebar-collapsed');
+                } else {
+                    document.documentElement.classList.remove('sidebar-collapsed');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
 
-<body class="h-full bg-sand-100 text-charcoal-900 font-sans antialiased selection:bg-amber-200 selection:text-charcoal-950" x-data="{ sidebarOpen: false }">
+<body class="h-full bg-sand-100 text-charcoal-900 font-sans antialiased selection:bg-amber-200 selection:text-charcoal-950" x-data="{ 
+    sidebarOpen: false, 
+    sidebarCollapsed: localStorage.getItem('sidebar_collapsed') === 'true',
+    toggleSidebarCollapse() {
+        this.sidebarCollapsed = !this.sidebarCollapsed;
+        localStorage.setItem('sidebar_collapsed', this.sidebarCollapsed);
+        if (this.sidebarCollapsed) {
+            document.documentElement.classList.add('sidebar-collapsed');
+        } else {
+            document.documentElement.classList.remove('sidebar-collapsed');
+        }
+    }
+}">
 
     <div class="min-h-screen">
 
@@ -132,7 +216,7 @@
         @include('layouts.member.sidebar')
 
         <!-- MAIN CONTENT WRAPPER -->
-        <div class="flex flex-col min-h-screen lg:pl-72">
+        <div class="main-content-wrapper flex flex-col min-h-screen lg:pl-72 transition-[padding] duration-300 ease-in-out" :class="sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-72'">
             
             <!-- MEMBER TOP NAVBAR COMPONENT -->
             @include('layouts.member.navbar')
