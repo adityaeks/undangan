@@ -58,13 +58,12 @@ class InvitationController extends Controller
             $themes = Theme::where('is_active', true)->get();
             $usedThemeIds = [];
         } else {
-            $accessibleThemeIds = $this->themeOwnershipService->getUserOwnedThemeIds($user);
+            $availableThemeIds = $this->themeOwnershipService->getUserAvailableThemeIdsForNewInvitation($user);
             $usedThemeIds = $user->invitations()->pluck('theme_id')->toArray();
 
-            // Tema yang tersedia adalah tema aktif & belum kedaluwarsa milik user yang belum pernah digunakan membuat undangan
+            // Tema yang tersedia adalah tema aktif & belum kedaluwarsa milik user yang masih memiliki lisensi belum terpakai (atau gratis)
             $themes = Theme::where('is_active', true)
-                ->whereIn('id', $accessibleThemeIds)
-                ->whereNotIn('id', $usedThemeIds)
+                ->whereIn('id', $availableThemeIds)
                 ->get();
         }
 
@@ -81,6 +80,11 @@ class InvitationController extends Controller
                     if ($isExpired) {
                         return redirect()->route('checkout.theme', $requestedTheme)
                             ->with('warning', 'Masa aktif lisensi tema "'.$requestedTheme->name.'" telah kedaluwarsa. Silakan beli lisensi baru untuk menggunakannya.');
+                    }
+
+                    if ($this->themeOwnershipService->getUsedLicensesCount($user, $requestedTheme) > 0) {
+                        return redirect()->route('checkout.theme', ['theme' => $requestedTheme->id, 'additional' => 1])
+                            ->with('warning', 'Semua lisensi tema "'.$requestedTheme->name.'" sudah digunakan. Silakan beli lisensi tambahan untuk membuat undangan baru.');
                     }
                 }
             }
@@ -250,6 +254,9 @@ class InvitationController extends Controller
             'status' => 'published',
             'published_at' => now(),
         ]);
+
+        // Assign available theme license to this invitation
+        $this->themeOwnershipService->assignThemeLicenseToInvitation($user, $theme, $invitation);
 
         // Settings
         $settingMetadata = [];
@@ -434,6 +441,7 @@ class InvitationController extends Controller
         }
 
         $title = $invitation->title;
+        $this->themeOwnershipService->releaseThemeLicenseFromInvitation($invitation);
         $invitation->delete();
 
         return redirect()->route('member.invitations.index')

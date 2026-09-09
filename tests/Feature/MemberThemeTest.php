@@ -613,3 +613,121 @@ test('expired theme cannot be selected on invitation create page and redirects i
     $postResponse->assertRedirect(route('checkout.theme', $expiredTheme))
         ->assertSessionHas('warning');
 });
+
+test('member can checkout second license when first license is already in use', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Botanical Multi License', 'slug' => 'botanical-multi-'.uniqid()]);
+
+    $userTheme = UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    // First invitation exists and uses this theme
+    $invitation = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'Undangan Pertama',
+        'slug' => 'pertama-multi-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    $userTheme->update(['invitation_id' => $invitation->id]);
+
+    // Member attempts to checkout the theme again
+    $response = $this->actingAs($member)->get(route('checkout.theme', ['theme' => $theme->id]));
+
+    // Should redirect to orders.show (order created), NOT redirected back to invitations.create
+    $response->assertRedirect();
+    expect($response->headers->get('Location'))->toContain('/orders/');
+});
+
+test('member with two licenses for same theme can create second invitation with that theme', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Rustic Romance Double', 'slug' => 'rustic-double-'.uniqid()]);
+
+    // First license (used)
+    $license1 = UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    $invitation1 = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'Resepsi Utama',
+        'slug' => 'resepsi-utama-'.uniqid(),
+        'is_published' => true,
+    ]);
+    $license1->update(['invitation_id' => $invitation1->id]);
+
+    // Second license (purchased and available)
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    // Create second invitation with same theme
+    $payload = [
+        'theme_id' => $theme->id,
+        'title' => 'Ngunduh Mantu',
+        'groom_name' => 'Faris',
+        'groom_nickname' => 'Faris',
+        'bride_name' => 'Nadia',
+        'bride_nickname' => 'Nadia',
+        'akad_date' => '2026-12-15',
+        'akad_time' => '09:00',
+        'akad_venue' => 'Masjid Raya',
+        'akad_address' => 'Jl. Pahlawan',
+        'resepsi_date' => '2026-12-15',
+        'resepsi_time' => '13:00',
+        'resepsi_venue' => 'Hotel Grand',
+        'resepsi_address' => 'Jl. Pahlawan No. 1',
+    ];
+
+    $response = $this->actingAs($member)->post('/member/invitations', $payload);
+
+    $response->assertRedirect(route('member.invitations.index'))
+        ->assertSessionHas('success');
+
+    expect(Invitation::where('user_id', $member->id)->where('theme_id', $theme->id)->count())->toBe(2);
+});
+
+test('deleting an invitation frees the theme license for reuse', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Elegance Free License', 'slug' => 'elegance-free-'.uniqid()]);
+
+    $license = UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    $invitation = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'Undangan Dibatalkan',
+        'slug' => 'dibatalkan-'.uniqid(),
+        'is_published' => true,
+    ]);
+    $license->update(['invitation_id' => $invitation->id]);
+
+    expect($license->fresh()->isUsed())->toBeTrue();
+
+    // Delete the invitation
+    $response = $this->actingAs($member)->delete(route('member.invitations.destroy', $invitation));
+
+    $response->assertRedirect(route('member.invitations.index'));
+    expect($license->fresh()->isUsed())->toBeFalse();
+    expect($license->fresh()->isAvailable())->toBeTrue();
+});

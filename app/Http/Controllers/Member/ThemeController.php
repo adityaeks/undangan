@@ -37,11 +37,17 @@ class ThemeController extends Controller
             $query->where('themes.name', 'like', "%{$search}%");
         }
 
-        $usedThemeIds = $user->invitations()->pluck('theme_id')->toArray();
-
-        $themes = $query->orderBy('themes.name', 'asc')->get()->map(function ($theme) use ($usedThemeIds, $user) {
+        $themes = $query->distinct()->orderBy('themes.name', 'asc')->get()->map(function ($theme) use ($user) {
             $theme->is_owned = true;
-            $theme->is_used = in_array($theme->id, $usedThemeIds, true) && ! $user->isSuperAdmin();
+
+            $totalLicenses = $this->themeOwnershipService->getTotalLicensesCount($user, $theme);
+            $usedLicenses = $this->themeOwnershipService->getUsedLicensesCount($user, $theme);
+            $availableLicenses = $this->themeOwnershipService->getAvailableLicensesCount($user, $theme);
+
+            $theme->total_licenses = $totalLicenses;
+            $theme->used_licenses = $usedLicenses;
+            $theme->available_licenses = $availableLicenses;
+            $theme->is_used = $totalLicenses > 0 && $availableLicenses === 0 && ! $user->isSuperAdmin();
 
             return $theme;
         });

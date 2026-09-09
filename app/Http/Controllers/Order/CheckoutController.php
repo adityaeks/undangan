@@ -38,10 +38,10 @@ class CheckoutController extends Controller
             return redirect()->route('member.dashboard')->with('success', 'Template berhasil diaktifkan ke akun Anda!');
         }
 
-        // If already owned
-        if ($this->themeOwnershipService->canUseTheme($user, $theme)) {
+        // If user still has an available unused license for this theme, redirect to use it unless explicitly purchasing an additional license
+        if ($this->themeOwnershipService->hasUnusedLicense($user, $theme) && ! $request->boolean('additional')) {
             return redirect()->route('member.invitations.create', ['theme_id' => $theme->id])
-                ->with('info', 'Anda sudah memiliki template ini. Silakan buat undangan digital Anda.');
+                ->with('info', 'Anda masih memiliki lisensi aktif yang belum digunakan untuk template "'.$theme->name.'". Silakan gunakan untuk membuat undangan digital Anda.');
         }
 
         $duration = $request->query('duration', '45_days');
@@ -194,7 +194,7 @@ class CheckoutController extends Controller
         ]);
 
         // ponytail: transaction+lock to avoid max_uses race; throttle is at route layer
-        return DB::transaction(function () use ($request, $order, $validated) {
+        return DB::transaction(function () use ($order, $validated) {
             $code = strtoupper(trim($validated['code']));
             $coupon = Coupon::where('code', $code)->lockForUpdate()->first();
 

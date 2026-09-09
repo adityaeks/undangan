@@ -35,6 +35,12 @@ class PaymentService
 
             $orderCode = 'ORD-THM-'.strtoupper(Str::random(8));
 
+            $existingLicensesCount = $user->userThemes()->where('theme_id', $theme->id)->count();
+            $isAdditional = $existingLicensesCount > 0;
+            $itemName = $isAdditional
+                ? 'Template: '.$theme->name.' (Lisensi ke-'.($existingLicensesCount + 1).')'
+                : 'Template: '.$theme->name;
+
             $order = Order::create([
                 'user_id' => $user->id,
                 'order_code' => $orderCode,
@@ -55,13 +61,15 @@ class PaymentService
                     'assisted_fee' => $assistedFee,
                     'tax_rate' => 0.11,
                     'tax_amount' => $taxAmount,
+                    'is_additional_license' => $isAdditional,
+                    'license_number' => $existingLicensesCount + 1,
                 ],
             ]);
 
             $order->items()->create([
                 'item_type' => 'theme',
                 'item_id' => $theme->id,
-                'item_name' => 'Template: '.$theme->name,
+                'item_name' => $itemName,
                 'price' => $durationPrice,
                 'quantity' => 1,
                 'subtotal' => $durationPrice,

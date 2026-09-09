@@ -14,6 +14,7 @@ class UserTheme extends Model
         'user_id',
         'theme_id',
         'order_id',
+        'invitation_id',
         'unlocked_at',
         'duration_type',
         'expires_at',
@@ -68,5 +69,29 @@ class UserTheme extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    /**
+     * Invitation currently using this theme license.
+     */
+    public function invitation(): BelongsTo
+    {
+        return $this->belongsTo(Invitation::class);
+    }
+
+    /**
+     * Determine if this license is currently in use by an invitation.
+     */
+    public function isUsed(): bool
+    {
+        return $this->invitation_id !== null;
+    }
+
+    /**
+     * Determine if this license is active, unexpired, and available for a new invitation.
+     */
+    public function isAvailable(): bool
+    {
+        return $this->is_active && ! $this->isExpired() && $this->invitation_id === null;
     }
 }

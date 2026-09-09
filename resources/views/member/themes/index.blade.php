@@ -115,7 +115,12 @@
                                 @elseif(!empty($theme->is_used))
                                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-sand-800/90 backdrop-blur-md text-amber-200 text-[10px] font-bold shadow">
                                         <i data-lucide="check" class="w-3 h-3 text-amber-400"></i>
-                                        <span>Sudah Digunakan (1/1)</span>
+                                        <span>Sudah Digunakan ({{ $theme->used_licenses ?? 1 }}/{{ $theme->total_licenses ?? 1 }})</span>
+                                    </span>
+                                @elseif(($theme->available_licenses ?? 1) > 0 && ($theme->used_licenses ?? 0) > 0)
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-600/95 backdrop-blur-md text-white text-[10px] font-bold shadow">
+                                        <i data-lucide="check-circle" class="w-3 h-3"></i>
+                                        <span>Tersedia {{ $theme->available_licenses }} Lisensi</span>
                                     </span>
                                 @else
                                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-600/95 backdrop-blur-md text-white text-[10px] font-bold shadow">
@@ -152,6 +157,13 @@
                                         <span>Diisikan Tim</span>
                                     </span>
                                 @endif
+
+                                @if(($theme->total_licenses ?? 1) > 1)
+                                    <span class="inline-flex items-center gap-1 text-xs text-amber-800 font-semibold bg-amber-50/80 px-2.5 py-1 rounded-lg border border-amber-200/60">
+                                        <i data-lucide="layers" class="w-3 h-3 text-amber-600"></i>
+                                        <span>Total {{ $theme->total_licenses }} Lisensi</span>
+                                    </span>
+                                @endif
                             </div>
 
                             <p class="text-xs text-sand-600 line-clamp-2 leading-relaxed">
@@ -165,10 +177,10 @@
                         <a 
                             href="{{ route('demo.show', $theme->slug) }}" 
                             target="_blank"
-                            class="flex-1 py-2 px-3 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 text-xs font-bold transition flex items-center justify-center gap-1.5"
+                            class="py-2 px-3 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 text-xs font-bold transition flex items-center justify-center gap-1.5 shrink-0"
                         >
                             <i data-lucide="play" class="w-3.5 h-3.5 text-amber-600"></i>
-                            <span>Live Demo</span>
+                            <span>Demo</span>
                         </a>
 
                         @if($isExpired)
@@ -182,10 +194,19 @@
                         @elseif(!empty($theme->is_used))
                             <a 
                                 href="{{ route('member.invitations.index') }}" 
-                                class="flex-1 py-2 px-3 rounded-xl bg-sand-200 hover:bg-sand-300 text-charcoal-800 text-xs font-bold transition flex items-center justify-center gap-1.5"
+                                class="py-2 px-2.5 rounded-xl bg-sand-200 hover:bg-sand-300 text-charcoal-800 text-xs font-bold transition flex items-center justify-center gap-1 shrink-0"
+                                title="Lihat Undangan yang menggunakan tema ini"
                             >
                                 <i data-lucide="mail" class="w-3.5 h-3.5"></i>
                                 <span>Lihat Undangan</span>
+                            </a>
+                            <a 
+                                href="{{ route('checkout.theme', ['theme' => $theme->id, 'additional' => 1]) }}" 
+                                class="flex-1 py-2 px-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 hover:from-amber-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1"
+                                title="Beli lisensi tambahan untuk membuat undangan lain dengan tema ini"
+                            >
+                                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                                <span>+ Beli Lisensi Lagi</span>
                             </a>
                         @else
                             <a 

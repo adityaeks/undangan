@@ -100,6 +100,14 @@ class Invitation extends Model
     }
 
     /**
+     * UserTheme license slot tied to this invitation.
+     */
+    public function userTheme(): HasOne
+    {
+        return $this->hasOne(UserTheme::class);
+    }
+
+    /**
      * Modular invitation settings.
      */
     public function setting(): HasOne
