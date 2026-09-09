@@ -311,7 +311,7 @@
                                         </button>
 
                                         <!-- Delete Guest -->
-                                        <form method="POST" action="{{ route('partner.guests.destroy', $guest) }}" onsubmit="return confirm('Hapus nama tamu ini dari daftar undangan klien?');" class="inline">
+                                        <form method="POST" action="{{ route('partner.guests.destroy', $guest) }}" data-confirm="Hapus {{ $guest->name }} dari daftar undangan klien?" data-confirm-title="Hapus Tamu?" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button 

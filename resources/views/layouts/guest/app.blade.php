@@ -146,5 +146,8 @@
             }
         });
     </script>
+
+    <!-- SWEETALERT NOTIFICATION SYSTEM -->
+    <x-sweetalert />
 </body>
 </html>

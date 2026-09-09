@@ -4,8 +4,8 @@
         <!-- PAGE HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div class="space-y-0.5">
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-800 text-[10px] font-bold uppercase tracking-wider border border-amber-500/20">
-                    <i data-lucide="receipt" class="w-3 h-3 text-amber-600"></i>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-800 text-[10px] font-bold uppercase tracking-wider border border-brand-500/20">
+                    <i data-lucide="receipt" class="w-3 h-3 text-brand-600"></i>
                     <span>Portal Pengantin • Tagihan</span>
                 </div>
                 <h1 class="font-serif text-xl sm:text-2xl font-bold text-charcoal-950">
@@ -20,7 +20,7 @@
                 href="{{ route('themes.catalog') }}" 
                 class="px-4 py-2 rounded-xl bg-charcoal-900 hover:bg-charcoal-800 text-white font-bold text-xs transition flex items-center justify-center gap-2 self-start sm:self-auto shadow-sm"
             >
-                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-amber-400"></i>
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-brand-400"></i>
                 <span>Beli Tema Baru</span>
             </a>
         </div>
@@ -50,9 +50,9 @@
             <div class="p-3 rounded-2xl glass-panel border border-sand-200/80 flex items-center justify-between shadow-sm">
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-wider text-sand-500 block">Total Pengeluaran</span>
-                    <div class="font-serif text-lg font-bold text-amber-600">{{ format_rupiah($totalSpent) }}</div>
+                    <div class="font-serif text-lg font-bold text-brand-600">{{ format_rupiah($totalSpent) }}</div>
                 </div>
-                <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xs">
+                <div class="w-8 h-8 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-xs">
                     <i data-lucide="wallet" class="w-4 h-4"></i>
                 </div>
             </div>

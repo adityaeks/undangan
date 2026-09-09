@@ -36,7 +36,7 @@
                         target="_blank"
                         class="px-3.5 py-1.5 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 font-bold text-xs transition flex items-center gap-1.5 shadow-sm"
                     >
-                        <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600"></i>
+                        <i data-lucide="external-link" class="w-3.5 h-3.5 text-brand-600"></i>
                         <span>Lihat Undangan</span>
                     </a>
                 @endif
@@ -52,7 +52,7 @@
                         name="search" 
                         value="{{ request('search') }}"
                         placeholder="Cari pengirim atau isi pesan doa..." 
-                        class="w-full pl-9 pr-3 py-2 rounded-xl border border-sand-200 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-xs bg-white placeholder-sand-400"
+                        class="w-full pl-9 pr-3 py-2 rounded-xl border border-sand-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-xs bg-white placeholder-sand-400"
                     >
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-sand-400">
                         <i data-lucide="search" class="w-3.5 h-3.5"></i>
@@ -62,7 +62,7 @@
                 <div class="w-full sm:w-auto flex items-center gap-2 shrink-0">
                     <select 
                         name="attendance" 
-                        class="w-full sm:w-36 px-3 py-2 rounded-xl border border-sand-200 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                        class="w-full sm:w-36 px-3 py-2 rounded-xl border border-sand-200 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                     >
                         <option value="all">Semua Respon</option>
                         <option value="hadir" {{ request('attendance') === 'hadir' ? 'selected' : '' }}>Hadir</option>
@@ -88,7 +88,7 @@
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <div class="w-7 h-7 rounded-full bg-amber-100 text-amber-800 font-bold text-xs flex items-center justify-center">
+                                <div class="w-7 h-7 rounded-full bg-brand-100 text-brand-800 font-bold text-xs flex items-center justify-center">
                                     {{ strtoupper(substr($wish->sender_name ?? 'T', 0, 1)) }}
                                 </div>
                                 <div>

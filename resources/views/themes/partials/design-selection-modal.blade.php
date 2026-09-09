@@ -27,7 +27,7 @@
         x-transition:leave-end="opacity-0 scale-95 translate-y-3"
     >
         <!-- TOP ACCENT LINE -->
-        <div class="h-1 w-full bg-gradient-to-r from-brand-500 via-amber-400 to-brand-600 shrink-0"></div>
+        <div class="h-1 w-full bg-gradient-to-r from-brand-500 via-brand-400 to-brand-600 shrink-0"></div>
 
         <!-- HEADER -->
         <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-sand-200/70 bg-gradient-to-b from-sand-50/80 to-white flex items-center justify-between gap-3 shrink-0">
@@ -112,25 +112,25 @@
                         @click="selectedDuration = 'lifetime'"
                         class="relative p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-2.5 select-none"
                         :class="selectedDuration === 'lifetime' 
-                            ? 'border-amber-600 bg-amber-50/60 ring-1 ring-amber-600/40 shadow-xs' 
+                            ? 'border-brand-600 bg-brand-50/60 ring-1 ring-brand-600/40 shadow-xs' 
                             : 'border-sand-200 bg-white hover:border-sand-300 hover:bg-sand-50/40'"
                     >
                         <div class="space-y-0.5 min-w-0">
                             <div class="flex items-center gap-1.5">
                                 <span class="font-bold text-xs sm:text-sm text-charcoal-950">Lifetime</span>
-                                <span class="px-1.5 py-0.2 rounded text-[9px] font-extrabold bg-amber-100 text-amber-900 flex items-center gap-0.5">
+                                <span class="px-1.5 py-0.2 rounded text-[9px] font-extrabold bg-brand-100 text-brand-900 flex items-center gap-0.5">
                                     <i data-lucide="sparkles" class="w-2.5 h-2.5"></i>
                                     <span>Abadi</span>
                                 </span>
                             </div>
-                            <p class="text-[10px] text-amber-800/80 truncate">Aktif selamanya</p>
+                            <p class="text-[10px] text-brand-800/80 truncate">Aktif selamanya</p>
                         </div>
 
                         <div class="flex items-center gap-2 shrink-0">
-                            <span class="font-serif text-sm sm:text-base font-bold text-amber-700" x-text="selectedTheme ? selectedTheme.price_lifetime : 'Rp 99.000'"></span>
+                            <span class="font-serif text-sm sm:text-base font-bold text-brand-700" x-text="selectedTheme ? selectedTheme.price_lifetime : 'Rp 99.000'"></span>
                             <div 
                                 class="w-4 h-4 rounded-full border flex items-center justify-center transition"
-                                :class="selectedDuration === 'lifetime' ? 'border-amber-600 bg-amber-600 text-white' : 'border-sand-300 bg-white'"
+                                :class="selectedDuration === 'lifetime' ? 'border-brand-600 bg-brand-600 text-white' : 'border-sand-300 bg-white'"
                             >
                                 <template x-if="selectedDuration === 'lifetime'">
                                     <div class="w-1.5 h-1.5 rounded-full bg-white"></div>

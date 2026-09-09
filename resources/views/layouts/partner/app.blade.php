@@ -161,7 +161,7 @@
     </script>
 </head>
 
-<body class="h-full bg-sand-100 text-charcoal-900 font-sans antialiased selection:bg-amber-200 selection:text-charcoal-950" x-data="{ 
+<body class="h-full bg-sand-100 text-charcoal-900 font-sans antialiased selection:bg-brand-200 selection:text-charcoal-950" x-data="{ 
     sidebarOpen: false, 
     sidebarCollapsed: localStorage.getItem('sidebar_collapsed') === 'true',
     toggleSidebarCollapse() {
@@ -219,5 +219,8 @@
             }
         });
     </script>
+
+    <!-- SWEETALERT NOTIFICATION SYSTEM -->
+    <x-sweetalert />
 </body>
 </html>

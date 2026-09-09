@@ -161,7 +161,7 @@
                                 </button>
                             </form>
 
-                            <form method="POST" action="{{ route('invitations.destroy', $invitation) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus undangan ini secara permanen?');">
+                            <form method="POST" action="{{ route('invitations.destroy', $invitation) }}" data-confirm="Apakah Anda yakin ingin menghapus undangan ini secara permanen?" data-confirm-title="Hapus Undangan Permanen?">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition flex items-center justify-center" title="Hapus Undangan">

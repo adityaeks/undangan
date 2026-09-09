@@ -9,7 +9,10 @@ test('profile page is displayed', function () {
         ->actingAs($user)
         ->get('/profile');
 
-    $response->assertOk();
+    $response->assertOk()
+        ->assertSee('Perbarui Kata Sandi')
+        ->assertSee('update_password_password')
+        ->assertSee("activeTab === 'security'", false);
 });
 
 test('profile information can be updated', function () {

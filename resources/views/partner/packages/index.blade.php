@@ -5,7 +5,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-950">Paket Kemitraan & Kuota Undangan</h1>
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-brand-100 text-brand-800 text-[10px] font-bold uppercase tracking-wider">
                         WO / Reseller
                     </span>
                 </div>
@@ -42,10 +42,10 @@
             $pct = $quota > 0 ? min(100, round(($used / $quota) * 100)) : 0;
         @endphp
 
-        <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-amber-950 text-white shadow-xl border border-charcoal-800 relative overflow-hidden">
+        <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-brand-950 text-white shadow-xl border border-charcoal-800 relative overflow-hidden">
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div class="space-y-3 max-w-xl">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold uppercase tracking-wider">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30 text-xs font-bold uppercase tracking-wider">
                         <i data-lucide="award" class="w-3.5 h-3.5"></i>
                         <span>Paket Aktif Anda</span>
                     </div>
@@ -85,11 +85,11 @@
                     $isPro = $pkg->slug === 'partner-pro';
                 @endphp
 
-                <div class="p-8 rounded-3xl {{ $isPro ? 'bg-charcoal-950 text-white shadow-2xl relative ring-2 ring-amber-500' : 'glass-panel border border-sand-200 text-charcoal-950' }} flex flex-col justify-between space-y-6">
+                <div class="p-8 rounded-3xl {{ $isPro ? 'bg-charcoal-950 text-white shadow-2xl relative ring-2 ring-brand-500' : 'glass-panel border border-sand-200 text-charcoal-950' }} flex flex-col justify-between space-y-6">
                     
                     <div>
                         @if($isPro)
-                            <div class="inline-block px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-bold uppercase tracking-wider shadow mb-3">
+                            <div class="inline-block px-3 py-0.5 rounded-full bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white text-[10px] font-bold uppercase tracking-wider shadow mb-3">
                                 🌟 Paling Populer (Best for WO)
                             </div>
                         @elseif($isCurrent)
@@ -111,7 +111,7 @@
                             </div>
 
                             <p class="text-xs {{ $isPro ? 'text-sand-300' : 'text-sand-600' }}">
-                                Kuota pembuatan: <strong class="{{ $isPro ? 'text-amber-300' : 'text-charcoal-950' }}">{{ $pkg->quota_invitations > 0 ? $pkg->quota_invitations . ' Undangan' : 'Unlimited' }}</strong>
+                                Kuota pembuatan: <strong class="{{ $isPro ? 'text-brand-300' : 'text-charcoal-950' }}">{{ $pkg->quota_invitations > 0 ? $pkg->quota_invitations . ' Undangan' : 'Unlimited' }}</strong>
                             </p>
 
                             <!-- Features list -->
@@ -135,7 +135,7 @@
                                 <span>Paket Aktif Saat Ini</span>
                             </button>
                         @else
-                            <a href="{{ route('checkout.package', $pkg) }}" class="w-full py-3.5 rounded-2xl {{ $isPro ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-lg' : 'bg-charcoal-950 hover:bg-amber-700 text-white' }} font-bold text-xs transition flex items-center justify-center gap-2">
+                            <a href="{{ route('checkout.package', $pkg) }}" class="w-full py-3.5 rounded-2xl {{ $isPro ? 'bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white shadow-lg' : 'bg-charcoal-950 hover:bg-brand-700 text-white' }} font-bold text-xs transition flex items-center justify-center gap-2">
                                 <span>Pilih & Upgrade Paket</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>

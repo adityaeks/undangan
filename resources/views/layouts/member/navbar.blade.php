@@ -16,7 +16,7 @@
             aria-label="Toggle Lebar Layar / Sidebar"
         >
             <i data-lucide="panel-left-close" x-show="!sidebarCollapsed" class="icon-panel-close w-4 h-4 text-charcoal-700 group-hover:text-charcoal-950 transition"></i>
-            <i data-lucide="panel-left-open" x-show="sidebarCollapsed" class="icon-panel-open w-4 h-4 text-amber-600 group-hover:text-amber-700 transition" style="display: none;"></i>
+            <i data-lucide="panel-left-open" x-show="sidebarCollapsed" class="icon-panel-open w-4 h-4 text-brand-600 group-hover:text-brand-700 transition" style="display: none;"></i>
         </button>
 
         <!-- CURRENT INVITATION STATUS BADGE (NONAKTIF) -->
@@ -25,16 +25,16 @@
             $activeInvitation = Auth::user()->invitations()->latest()->first();
         @endphp
         @if($activeInvitation)
-            <div class="hidden sm:flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs">
+            <div class="hidden sm:flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-brand-50 border border-brand-200/80 text-xs">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span class="font-bold text-charcoal-950 font-serif truncate max-w-xs">{{ $activeInvitation->title }}</span>
-                <span class="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full {{ $activeInvitation->is_published ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' }} tracking-wider">{{ $activeInvitation->is_published ? 'Online' : 'Draft' }}</span>
+                <span class="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full {{ $activeInvitation->is_published ? 'bg-emerald-100 text-emerald-800' : 'bg-brand-100 text-brand-800' }} tracking-wider">{{ $activeInvitation->is_published ? 'Online' : 'Draft' }}</span>
             </div>
         @else
             <div class="hidden sm:flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-sand-100 border border-sand-200 text-xs text-sand-600">
-                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span class="w-2 h-2 rounded-full bg-brand-500"></span>
                 <span class="font-medium">Belum Ada Undangan Aktif</span>
-                <a href="{{ route('member.invitations.create') }}" class="text-[10px] font-bold text-amber-700 hover:underline">+ Buat Sekarang</a>
+                <a href="{{ route('member.invitations.create') }}" class="text-[10px] font-bold text-brand-700 hover:underline">+ Buat Sekarang</a>
             </div>
         @endif
         -->
@@ -45,12 +45,12 @@
         
         <!-- QUICK ACTION BUTTON -->
         <!-- @if($activeInvitation)
-            <a href="{{ route('invitation.show', $activeInvitation->slug) }}" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white text-xs font-bold shadow-sm hover:shadow transition">
+            <a href="{{ route('invitation.show', $activeInvitation->slug) }}" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition">
                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                 <span>Buka Undangan</span>
             </a>
         @else
-            <a href="{{ route('member.invitations.create') }}" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white text-xs font-bold shadow-sm hover:shadow transition">
+            <a href="{{ route('member.invitations.create') }}" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                 <span>Buat Undangan</span>
             </a>
@@ -60,7 +60,7 @@
         <div class="relative" x-data="{ notifyOpen: false }">
             <button @click="notifyOpen = !notifyOpen" class="relative p-2.5 rounded-2xl bg-sand-100 hover:bg-sand-200 text-charcoal-800 transition" title="Notifikasi Kehadiran & Ucapan">
                 <i data-lucide="bell" class="w-4 h-4"></i>
-                <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-500 ring-2 ring-white"></span>
+                <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-500 ring-2 ring-white"></span>
             </button>
 
             <!-- NOTIFICATION DROPDOWN -->
@@ -78,10 +78,10 @@
             >
                 <div class="px-4 pb-2 flex items-center justify-between">
                     <span class="text-xs font-bold text-charcoal-950">Notifikasi Terbaru</span>
-                    <span class="text-[10px] font-bold text-amber-600">3 Baru</span>
+                    <span class="text-[10px] font-bold text-brand-600">3 Baru</span>
                 </div>
                 <div class="py-2 px-3 space-y-2 max-h-60 overflow-y-auto">
-                    <div class="p-2.5 rounded-xl bg-sand-50 hover:bg-amber-50/50 transition flex items-start gap-2.5 text-xs">
+                    <div class="p-2.5 rounded-xl bg-sand-50 hover:bg-brand-50/50 transition flex items-start gap-2.5 text-xs">
                         <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                             <i data-lucide="check" class="w-3.5 h-3.5"></i>
                         </div>
@@ -91,8 +91,8 @@
                             <span class="text-[9px] text-sand-400">5 menit yang lalu</span>
                         </div>
                     </div>
-                    <div class="p-2.5 rounded-xl bg-sand-50 hover:bg-amber-50/50 transition flex items-start gap-2.5 text-xs">
-                        <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
+                    <div class="p-2.5 rounded-xl bg-sand-50 hover:bg-brand-50/50 transition flex items-start gap-2.5 text-xs">
+                        <div class="w-7 h-7 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center shrink-0 mt-0.5">
                             <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
                         </div>
                         <div class="flex-1 min-w-0">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="pt-2 px-4 text-center">
-                    <a href="{{ route('member.wishes.index') }}" class="text-[11px] font-bold text-amber-700 hover:underline">Lihat Semua Ucapan & Tamu</a>
+                    <a href="{{ route('member.wishes.index') }}" class="text-[11px] font-bold text-brand-700 hover:underline">Lihat Semua Ucapan & Tamu</a>
                 </div>
             </div>
         </div>
@@ -113,12 +113,12 @@
         <!-- USER PROFILE DROPDOWN -->
         <div class="relative" x-data="{ open: false }">
             <button @click="open = !open" class="flex items-center gap-3 p-1.5 sm:px-3 sm:py-1.5 rounded-2xl hover:bg-sand-100 transition text-left">
-                <div class="w-9 h-9 rounded-xl bg-charcoal-950 text-amber-300 font-bold text-xs flex items-center justify-center border border-amber-400/30">
+                <div class="w-9 h-9 rounded-xl bg-charcoal-950 text-brand-300 font-bold text-xs flex items-center justify-center border border-brand-400/30">
                     {{ strtoupper(substr(Auth::user()->name ?? 'M', 0, 1)) }}
                 </div>
                 <div class="hidden md:block">
                     <span class="text-xs font-bold text-charcoal-950 block leading-tight">{{ Auth::user()->name }}</span>
-                    <span class="text-[10px] text-amber-600 font-semibold">Member Aktif</span>
+                    <span class="text-[10px] text-brand-600 font-semibold">Member Aktif</span>
                 </div>
                 <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-sand-500 hidden sm:block"></i>
             </button>

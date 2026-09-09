@@ -87,10 +87,10 @@
                         <i data-lucide="user" class="w-3.5 h-3.5 text-sand-500"></i>
                         <span>Profil Saya</span>
                     </a>
-                    <a href="{{ route('demo.index') }}" target="_blank" class="flex items-center gap-2.5 px-4 py-2 text-xs text-charcoal-800 hover:bg-sand-100 transition">
+                    <!-- <a href="{{ route('demo.index') }}" target="_blank" class="flex items-center gap-2.5 px-4 py-2 text-xs text-charcoal-800 hover:bg-sand-100 transition">
                         <i data-lucide="eye" class="w-3.5 h-3.5 text-sand-500"></i>
                         <span>Demo Undangan</span>
-                    </a>
+                    </a> -->
                 </div>
 
                 <div class="py-1">

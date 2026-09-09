@@ -293,7 +293,16 @@
             if (payButton) {
                 payButton.addEventListener('click', function () {
                     if (typeof window.snap === 'undefined') {
-                        alert('Modul pembayaran Midtrans sedang dimuat. Mohon tunggu beberapa detik atau muat ulang halaman.');
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Memuat Pembayaran',
+                                text: 'Modul pembayaran Midtrans sedang dimuat. Mohon tunggu beberapa detik atau muat ulang halaman.',
+                                confirmButtonColor: '#8A7245'
+                            });
+                        } else {
+                            alert('Modul pembayaran Midtrans sedang dimuat. Mohon tunggu beberapa detik atau muat ulang halaman.');
+                        }
                         return;
                     }
 
@@ -305,7 +314,16 @@
                             window.location.reload();
                         },
                         onError: function (result) {
-                            alert('Pembayaran tidak berhasil diselesaikan. Silakan coba kembali.');
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Pembayaran Gagal',
+                                    text: 'Pembayaran tidak berhasil diselesaikan. Silakan coba kembali.',
+                                    confirmButtonColor: '#8A7245'
+                                });
+                            } else {
+                                alert('Pembayaran tidak berhasil diselesaikan. Silakan coba kembali.');
+                            }
                         },
                         onClose: function () {
                             console.log('Midtrans Snap popup ditutup.');

@@ -5,7 +5,7 @@
         <div 
             x-show="toast.show" 
             x-transition 
-            class="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold shadow-2xl flex items-center gap-2 border border-amber-500/40"
+            class="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold shadow-2xl flex items-center gap-2 border border-brand-500/40"
             style="display: none;"
         >
             <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
@@ -17,14 +17,14 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">Data Undangan Pernikahan</h1>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 text-[10px] font-bold uppercase tracking-wider border border-amber-500/20">Undangan Saya</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-800 text-[10px] font-bold uppercase tracking-wider border border-brand-500/20">Undangan Saya</span>
                 </div>
                 <p class="text-xs text-sand-600">
                     Kelola website undangan digital Anda, status online, serta tautan tamu undangan.
                 </p>
             </div>
 
-            <a href="{{ route('member.invitations.create') }}" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-brand-700 text-white font-bold text-xs shadow hover:shadow-amber-500/25 hover:scale-105 transition flex items-center justify-center gap-1.5 self-start sm:self-auto">
+            <a href="{{ route('member.invitations.create') }}" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow hover:shadow-brand-500/25 hover:scale-105 transition flex items-center justify-center gap-1.5 self-start sm:self-auto">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                 <span>Buat Undangan Baru</span>
             </a>
@@ -47,7 +47,7 @@
             <div class="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-2">
                     <div class="w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold text-xs">
-                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                        <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
                     </div>
                     <span class="font-semibold">{{ session('error') }}</span>
                 </div>
@@ -56,12 +56,12 @@
 
         <!-- INFO KUOTA TEMA TERPAKAI -->
         @if (isset($availableThemesCount) && $availableThemesCount === 0 && !auth()->user()->isSuperAdmin() && $invitations->isNotEmpty())
-            <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-900 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div class="p-3 rounded-xl bg-brand-500/10 border border-brand-500/20 text-brand-900 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                    <i data-lucide="info" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+                    <i data-lucide="info" class="w-4 h-4 text-brand-600 flex-shrink-0"></i>
                     <span>Setiap lisensi tema hanya berlaku untuk 1 undangan. Semua tema aktif Anda sudah terpakai.</span>
                 </div>
-                <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-charcoal-950 text-amber-300 font-bold text-[11px] hover:bg-charcoal-900 transition shrink-0">
+                <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-charcoal-950 text-brand-300 font-bold text-[11px] hover:bg-charcoal-900 transition shrink-0">
                     <i data-lucide="shopping-bag" class="w-3 h-3"></i>
                     <span>Beli Tema Baru</span>
                 </a>
@@ -75,7 +75,7 @@
                     <span class="text-[9px] font-bold uppercase tracking-wider text-sand-500 block">Total Undangan</span>
                     <div class="font-serif text-base font-bold text-charcoal-950">{{ $invitations->total() }} <span class="text-[11px] font-sans text-sand-400 font-normal">Website</span></div>
                 </div>
-                <div class="w-6 h-6 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xs">
+                <div class="w-6 h-6 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center font-bold text-xs">
                     <i data-lucide="mail" class="w-3.5 h-3.5"></i>
                 </div>
             </div>
@@ -110,7 +110,7 @@
                         name="search" 
                         value="{{ request('search') }}" 
                         placeholder="Cari judul undangan atau tautan slug..." 
-                        class="w-full pl-8 pr-3 py-1.5 rounded-xl border border-sand-200 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-xs bg-white placeholder-sand-400"
+                        class="w-full pl-8 pr-3 py-1.5 rounded-xl border border-sand-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-xs bg-white placeholder-sand-400"
                     >
                     <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-sand-400">
                         <i data-lucide="search" class="w-3.5 h-3.5"></i>
@@ -143,7 +143,7 @@
                                 @if($invitation->cover_image)
                                     <img src="{{ $invitation->cover_image }}" alt="{{ $invitation->title }}" class="w-full h-full object-cover">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-600 to-brand-700 text-white font-serif font-bold text-xl">
+                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-600 to-brand-800 text-white font-serif font-bold text-xl">
                                         {{ strtoupper(substr($invitation->title, 0, 1)) }}
                                     </div>
                                 @endif
@@ -177,7 +177,7 @@
 
                                     @if($invitation->theme)
                                         <span class="flex items-center gap-1.5">
-                                            <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-600"></i>
+                                            <i data-lucide="palette" class="w-3.5 h-3.5 text-brand-600"></i>
                                             Tema: <strong class="text-charcoal-900">{{ $invitation->theme->name }}</strong>
                                         </span>
                                     @endif
@@ -186,7 +186,7 @@
                                 <!-- Public URL link -->
                                 <div class="pt-1 flex items-center gap-2 text-xs">
                                     <span class="text-sand-400">Link Publik:</span>
-                                    <span class="font-mono text-amber-700 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200/60 font-semibold truncate max-w-xs">
+                                    <span class="font-mono text-brand-700 bg-brand-50 px-2 py-0.5 rounded-lg border border-brand-200/60 font-semibold truncate max-w-xs">
                                         {{ route('invitation.show', $invitation->slug) }}
                                     </span>
                                     <button 
@@ -208,19 +208,19 @@
                                 target="_blank"
                                 class="px-3.5 py-2 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-800 text-xs font-bold transition flex items-center gap-1.5"
                             >
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600"></i>
+                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-brand-600"></i>
                                 <span>Lihat Website</span>
                             </a>
 
                             <a 
                                 href="{{ route('member.guests.index', ['invitation_id' => $invitation->id]) }}" 
-                                class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 text-xs font-bold transition flex items-center gap-1.5 border border-amber-200"
+                                class="px-3.5 py-2 rounded-xl bg-brand-50 hover:bg-brand-100 text-brand-900 text-xs font-bold transition flex items-center gap-1.5 border border-brand-200"
                             >
-                                <i data-lucide="users" class="w-3.5 h-3.5 text-amber-700"></i>
+                                <i data-lucide="users" class="w-3.5 h-3.5 text-brand-700"></i>
                                 <span>Kelola Tamu</span>
                             </a>
 
-                            <form method="POST" action="{{ route('member.invitations.destroy', $invitation) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus undangan ini?');">
+                            <form method="POST" action="{{ route('member.invitations.destroy', $invitation) }}" data-confirm="Apakah Anda yakin ingin menghapus undangan ini? Data tamu dan acara terkait akan terhapus." data-confirm-title="Hapus Undangan?">
                                 @csrf
                                 @method('DELETE')
                                 <button 
@@ -236,7 +236,7 @@
                 </div>
             @empty
                 <div class="p-12 rounded-3xl glass-panel border border-sand-200/80 text-center space-y-4">
-                    <div class="w-16 h-16 rounded-full bg-amber-100 text-amber-700 mx-auto flex items-center justify-center font-bold">
+                    <div class="w-16 h-16 rounded-full bg-brand-100 text-brand-700 mx-auto flex items-center justify-center font-bold">
                         <i data-lucide="heart" class="w-8 h-8"></i>
                     </div>
                     <div class="space-y-1 max-w-md mx-auto">
@@ -245,7 +245,7 @@
                             Anda belum membuat website undangan pernikahan. Buat sekarang dan sebarkan kebahagiaan Anda kepada seluruh keluarga & kerabat!
                         </p>
                     </div>
-                    <a href="{{ route('member.invitations.create') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-600 to-brand-700 text-white font-bold text-xs shadow-lg hover:shadow-amber-500/25 transition">
+                    <a href="{{ route('member.invitations.create') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow-lg hover:shadow-brand-500/25 transition">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         <span>Mulai Buat Undangan Pertama</span>
                     </a>
@@ -261,7 +261,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
             <div id="amplop-digital" class="p-6 rounded-3xl glass-panel border border-sand-200/80 shadow-sm space-y-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <div class="w-10 h-10 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center">
                         <i data-lucide="wallet" class="w-5 h-5"></i>
                     </div>
                     <div>

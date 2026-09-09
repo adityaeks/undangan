@@ -51,7 +51,7 @@
         <div 
             x-show="toast.show" 
             x-transition 
-            class="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold shadow-2xl flex items-center gap-2 border border-amber-500/40"
+            class="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold shadow-2xl flex items-center gap-2 border border-brand-500/40"
             style="display: none;"
         >
             <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
@@ -63,7 +63,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="font-serif text-lg sm:text-xl font-bold text-charcoal-950">Daftar Tamu &amp; Sebar Undangan WA</h1>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 text-[10px] font-bold uppercase tracking-wider border border-amber-500/20">Buku Tamu</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-800 text-[10px] font-bold uppercase tracking-wider border border-brand-500/20">Buku Tamu</span>
                 </div>
                 <p class="text-xs text-sand-600">
                     Kelola nama tamu personal, tautan khusus, dan kirim pesan undangan WhatsApp 1-klik.
@@ -83,7 +83,7 @@
                     <button 
                         type="button" 
                         @click="addModal = true"
-                        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-brand-700 text-white font-bold text-xs shadow hover:shadow-amber-500/25 hover:scale-[1.02] transition whitespace-nowrap cursor-pointer"
+                        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow hover:shadow-brand-500/25 hover:scale-[1.02] transition whitespace-nowrap cursor-pointer"
                     >
                         <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
                         <span>Tambah Tamu</span>
@@ -91,7 +91,7 @@
                 @else
                     <a 
                         href="{{ route('member.invitations.create') }}" 
-                        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 text-white font-bold text-xs shadow hover:scale-[1.02] transition whitespace-nowrap cursor-pointer"
+                        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow hover:scale-[1.02] transition whitespace-nowrap cursor-pointer"
                     >
                         <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                         <span>Buat Undangan Dulu</span>
@@ -164,7 +164,7 @@
                         name="search" 
                         value="{{ request('search') }}"
                         placeholder="Cari nama tamu atau nomor WhatsApp..." 
-                        class="w-full pl-8 pr-3 py-1.5 rounded-xl border border-sand-200 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-xs bg-white placeholder-sand-400"
+                        class="w-full pl-8 pr-3 py-1.5 rounded-xl border border-sand-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-xs bg-white placeholder-sand-400"
                     >
                     <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-sand-400">
                         <i data-lucide="search" class="w-3.5 h-3.5"></i>
@@ -174,7 +174,7 @@
                 <div class="w-full sm:w-auto flex items-center gap-2 shrink-0">
                     <select 
                         name="status" 
-                        class="w-full sm:w-36 px-2.5 py-1.5 rounded-xl border border-sand-200 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                        class="w-full sm:w-36 px-2.5 py-1.5 rounded-xl border border-sand-200 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                     >
                         <option value="all">Semua Status</option>
                         <option value="hadir" {{ request('status') === 'hadir' ? 'selected' : '' }}>Hadir</option>
@@ -217,7 +217,7 @@
                                     : "Halo {$guest->name}! Kami mengundang Anda ke pernikahan kami: {$personalLink} . Terima kasih!";
                                 $waUrl = whatsapp_url($guest->phone, $waText);
                             @endphp
-                            <tr class="hover:bg-amber-50/30 transition">
+                            <tr class="hover:bg-brand-50/30 transition">
                                 <td class="p-4 pl-6">
                                     <div class="font-bold text-charcoal-950 font-serif text-sm">{{ $guest->name }}</div>
                                     <div class="flex items-center gap-2 mt-0.5">
@@ -283,7 +283,7 @@
                                         </button>
 
                                         <!-- Delete Guest -->
-                                        <form method="POST" action="{{ route('member.guests.destroy', $guest) }}" onsubmit="return confirm('Hapus tamu ini dari daftar undangan?');" class="inline">
+                                        <form method="POST" action="{{ route('member.guests.destroy', $guest) }}" data-confirm="Hapus {{ $guest->name }} dari daftar tamu undangan?" data-confirm-title="Hapus Tamu?" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button 
@@ -360,7 +360,7 @@
                                 name="name" 
                                 required
                                 placeholder="Contoh: Budi Santoso & Partner"
-                                class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-amber-500"
+                                class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                             >
                         </div>
 
@@ -371,7 +371,7 @@
                                 type="text" 
                                 name="phone" 
                                 placeholder="Contoh: 081234567890"
-                                class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-amber-500"
+                                class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                             >
                             <span class="text-[10px] text-sand-500 mt-1 block">Diperlukan jika ingin langsung mengirim link via WhatsApp 1-klik.</span>
                         </div>
@@ -411,7 +411,7 @@
                             </button>
                             <button 
                                 type="submit" 
-                                class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 text-white font-bold transition shadow"
+                                class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold transition shadow"
                             >
                                 Simpan Tamu
                             </button>
@@ -475,7 +475,7 @@
                             <button 
                                 type="button" 
                                 @click="resetTemplateToDefault()" 
-                                class="text-[11px] text-sand-500 hover:text-amber-700 underline font-semibold"
+                                class="text-[11px] text-sand-500 hover:text-brand-700 underline font-semibold"
                             >
                                 Reset ke Bawaan
                             </button>
@@ -497,7 +497,7 @@
                         <button 
                             type="button" 
                             @click="insertTag('[nama]')"
-                            class="px-2.5 py-1 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-bold transition flex items-center gap-1"
+                            class="px-2.5 py-1 rounded-xl bg-brand-50 hover:bg-brand-100 border border-brand-300 text-brand-900 font-bold transition flex items-center gap-1"
                         >
                             <i data-lucide="plus" class="w-3 h-3"></i>
                             <span>[nama] (Nama Tamu)</span>

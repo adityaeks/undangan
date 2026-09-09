@@ -55,7 +55,7 @@
         <div 
             x-show="toast.show" 
             x-transition 
-            class="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold shadow-2xl flex items-center gap-2 border border-amber-500/40"
+            class="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold shadow-2xl flex items-center gap-2 border border-brand-500/40"
             style="display: none;"
         >
             <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
@@ -73,16 +73,16 @@
                 <p class="text-xs text-sand-500">Semua undangan digital yang dibuat dan dikelola atas nama klien Anda.</p>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
-                <div class="px-3.5 py-2 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-semibold flex items-center gap-1.5">
-                    <i data-lucide="award" class="w-4 h-4 text-amber-600"></i>
+                <div class="px-3.5 py-2 rounded-2xl bg-brand-50 border border-brand-200 text-brand-900 text-xs font-semibold flex items-center gap-1.5">
+                    <i data-lucide="award" class="w-4 h-4 text-brand-600"></i>
                     <span>{{ $activePackage->name ?? 'Starter Partner' }}: <strong>{{ $invitationCount }}</strong> / {{ $invitationQuota > 0 ? $invitationQuota : '∞' }} Undangan</span>
                 </div>
                 <a href="{{ route('partner.guests.index') }}" class="px-4 py-2.5 rounded-2xl bg-white border border-sand-300 text-charcoal-900 font-bold text-xs hover:bg-sand-50 transition flex items-center gap-2 shadow-sm">
-                    <i data-lucide="users" class="w-4 h-4 text-amber-600"></i>
+                    <i data-lucide="users" class="w-4 h-4 text-brand-600"></i>
                     <span>Buku Tamu &amp; Sebar WA</span>
                 </a>
                 @if($canCreate)
-                    <a href="{{ route('partner.invitations.create') }}" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-700 text-white font-bold text-xs shadow-md transition flex items-center gap-2">
+                    <a href="{{ route('partner.invitations.create') }}" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow-md transition flex items-center gap-2">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         <span>Buat Undangan Baru</span>
                     </a>
@@ -125,7 +125,7 @@
                         <p class="text-xs text-amber-800">Paket {{ $activePackage->name ?? 'Starter Partner' }} Anda telah memenuhi batas kuota. Upgrade paket kemitraan untuk menambah kuota pembuatan undangan klien.</p>
                     </div>
                 </div>
-                <a href="{{ route('partner.packages.index') }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition shrink-0">
+                <a href="{{ route('partner.packages.index') }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition shrink-0">
                     <span>Upgrade Paket Sekarang</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
@@ -155,7 +155,7 @@
                     <div class="bg-sand-50/80 p-4 border-t border-sand-200 flex flex-col gap-2">
                         <div class="flex items-center justify-between text-[11px] text-sand-500 pb-1 border-b border-sand-200/60">
                             <span class="truncate max-w-[170px]" title="/u/{{ $invitation->slug }}">/u/{{ $invitation->slug }}</span>
-                            <a href="{{ route('partner.guests.index', ['invitation_id' => $invitation->id]) }}" class="text-amber-700 hover:text-amber-800 font-bold flex items-center gap-1">
+                            <a href="{{ route('partner.guests.index', ['invitation_id' => $invitation->id]) }}" class="text-brand-700 hover:text-brand-800 font-bold flex items-center gap-1">
                                 <i data-lucide="users" class="w-3 h-3"></i>
                                 <span>{{ $invitation->guests()->count() }} Tamu</span>
                             </a>
@@ -163,12 +163,12 @@
 
                         <div class="flex items-center justify-between gap-1.5 flex-wrap">
                             <div class="flex items-center gap-1.5 flex-wrap">
-                                <a href="{{ route('invitation.show', $invitation->slug) }}" target="_blank" class="px-2.5 py-1.5 rounded-xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-1" title="Lihat Website Undangan">
+                                <a href="{{ route('invitation.show', $invitation->slug) }}" target="_blank" class="px-2.5 py-1.5 rounded-xl bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-1" title="Lihat Website Undangan">
                                     <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                                     <span>Lihat</span>
                                 </a>
-                                <a href="{{ route('partner.invitations.edit', $invitation) }}" class="px-2.5 py-1.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold hover:bg-amber-100 transition flex items-center gap-1" title="Edit Rincian Undangan">
-                                    <i data-lucide="edit-3" class="w-3.5 h-3.5 text-amber-700"></i>
+                                <a href="{{ route('partner.invitations.edit', $invitation) }}" class="px-2.5 py-1.5 rounded-xl bg-brand-50 border border-brand-300 text-brand-900 text-xs font-bold hover:bg-brand-100 transition flex items-center gap-1" title="Edit Rincian Undangan">
+                                    <i data-lucide="edit-3" class="w-3.5 h-3.5 text-brand-700"></i>
                                     <span>Edit</span>
                                 </a>
                                 <button 
@@ -182,7 +182,7 @@
                                 </button>
                             </div>
 
-                            <form method="POST" action="{{ route('partner.invitations.destroy', $invitation) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus undangan klien ini?');" class="inline">
+                            <form method="POST" action="{{ route('partner.invitations.destroy', $invitation) }}" data-confirm="Apakah Anda yakin ingin menghapus undangan klien ini?" data-confirm-title="Hapus Undangan Klien?" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-1.5 rounded-xl text-sand-400 hover:text-rose-600 hover:bg-rose-50 transition" title="Hapus Undangan">
@@ -301,7 +301,7 @@
                                 <button 
                                     type="submit" 
                                     :disabled="!guestName"
-                                    :class="guestName ? 'bg-amber-500 hover:bg-amber-600 text-charcoal-950' : 'bg-sand-200 text-sand-400 cursor-not-allowed'"
+                                    :class="guestName ? 'bg-brand-500 hover:bg-brand-600 text-white' : 'bg-sand-200 text-sand-400 cursor-not-allowed'"
                                     class="px-3.5 py-1.5 rounded-xl font-bold text-xs transition flex items-center gap-1"
                                 >
                                     <i data-lucide="bookmark-plus" class="w-3.5 h-3.5"></i>
@@ -315,7 +315,7 @@
                     <div class="pt-2 text-center">
                         <a 
                             :href="'{{ route('partner.guests.index') }}?invitation_id=' + selectedId"
-                            class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 hover:text-amber-800"
+                            class="inline-flex items-center gap-1 text-[11px] font-bold text-brand-700 hover:text-brand-800"
                         >
                             <span>Buka Halaman Buku Tamu &amp; Sebar WA Lengkap</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>

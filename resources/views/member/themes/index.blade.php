@@ -4,8 +4,8 @@
         <!-- PAGE HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div class="space-y-0.5">
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-800 text-[10px] font-bold uppercase tracking-wider border border-amber-500/20">
-                    <i data-lucide="palette" class="w-3 h-3 text-amber-600"></i>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-800 text-[10px] font-bold uppercase tracking-wider border border-brand-500/20">
+                    <i data-lucide="palette" class="w-3 h-3 text-brand-600"></i>
                     <span>Portal Pengantin • Tema Undangan Saya</span>
                 </div>
                 <h1 class="font-serif text-xl sm:text-2xl font-bold text-charcoal-950">
@@ -18,12 +18,12 @@
 
             <div class="flex items-center gap-2">
                 <a href="{{ route('themes.catalog') }}" class="px-3.5 py-2 rounded-xl bg-charcoal-900 hover:bg-charcoal-800 text-white font-bold text-xs shadow transition flex items-center justify-center gap-1.5">
-                    <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-brand-400"></i>
                     <span>Beli Tema Baru</span>
                 </a>
 
                 @if($totalOwned > 0)
-                    <a href="{{ route('member.invitations.create') }}" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-brand-700 text-white font-bold text-xs shadow hover:shadow-amber-500/25 hover:scale-105 transition flex items-center justify-center gap-1.5">
+                    <a href="{{ route('member.invitations.create') }}" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow hover:shadow-brand-500/25 hover:scale-105 transition flex items-center justify-center gap-1.5">
                         <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                         <span>Buat Undangan</span>
                     </a>
@@ -41,7 +41,7 @@
                         <span class="font-bold text-emerald-700">{{ $totalActive ?? $totalOwned }}</span>
                     </div>
                     <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 border border-sand-200 text-xs">
-                        <i data-lucide="compass" class="w-3.5 h-3.5 text-amber-600"></i>
+                        <i data-lucide="compass" class="w-3.5 h-3.5 text-brand-600"></i>
                         <span class="text-sand-500 font-medium">Katalog:</span>
                         <span class="font-bold text-charcoal-900">{{ $totalCatalogThemes ?? 5 }}</span>
                     </div>
@@ -54,7 +54,7 @@
                             name="search" 
                             value="{{ request('search') }}"
                             placeholder="Cari tema aktif Anda..." 
-                            class="w-full pl-8 pr-3 py-1.5 rounded-xl border border-sand-200 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-xs bg-white placeholder-sand-400"
+                            class="w-full pl-8 pr-3 py-1.5 rounded-xl border border-sand-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-xs bg-white placeholder-sand-400"
                         >
                         <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-sand-400">
                             <i data-lucide="search" class="w-3.5 h-3.5"></i>
@@ -100,7 +100,7 @@
                             
                             <!-- CATEGORY BADGE -->
                             <div class="absolute top-2.5 left-2.5">
-                                <span class="px-2.5 py-0.5 rounded-full bg-charcoal-950/80 backdrop-blur-md text-amber-200 text-[10px] font-bold uppercase tracking-wider shadow">
+                                <span class="px-2.5 py-0.5 rounded-full bg-charcoal-950/80 backdrop-blur-md text-brand-200 text-[10px] font-bold uppercase tracking-wider shadow">
                                     {{ $theme->category }}
                                 </span>
                             </div>
@@ -113,8 +113,8 @@
                                         <span>Kedaluwarsa</span>
                                     </span>
                                 @elseif(!empty($theme->is_used))
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-sand-800/90 backdrop-blur-md text-amber-200 text-[10px] font-bold shadow">
-                                        <i data-lucide="check" class="w-3 h-3 text-amber-400"></i>
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-sand-800/90 backdrop-blur-md text-brand-200 text-[10px] font-bold shadow">
+                                        <i data-lucide="check" class="w-3 h-3 text-brand-400"></i>
                                         <span>Sudah Digunakan ({{ $theme->used_licenses ?? 1 }}/{{ $theme->total_licenses ?? 1 }})</span>
                                     </span>
                                 @elseif(($theme->available_licenses ?? 1) > 0 && ($theme->used_licenses ?? 0) > 0)
@@ -133,7 +133,7 @@
 
                         <!-- CONTENT INFO -->
                         <div class="p-4 space-y-2">
-                            <h3 class="font-serif text-base font-bold text-charcoal-950 group-hover:text-amber-700 transition truncate">
+                            <h3 class="font-serif text-base font-bold text-charcoal-950 group-hover:text-brand-700 transition truncate">
                                 {{ $theme->name }}
                             </h3>
 
@@ -159,8 +159,8 @@
                                 @endif
 
                                 @if(($theme->total_licenses ?? 1) > 1)
-                                    <span class="inline-flex items-center gap-1 text-xs text-amber-800 font-semibold bg-amber-50/80 px-2.5 py-1 rounded-lg border border-amber-200/60">
-                                        <i data-lucide="layers" class="w-3 h-3 text-amber-600"></i>
+                                    <span class="inline-flex items-center gap-1 text-xs text-brand-800 font-semibold bg-brand-50/80 px-2.5 py-1 rounded-lg border border-brand-200/60">
+                                        <i data-lucide="layers" class="w-3 h-3 text-brand-600"></i>
                                         <span>Total {{ $theme->total_licenses }} Lisensi</span>
                                     </span>
                                 @endif
@@ -179,14 +179,14 @@
                             target="_blank"
                             class="py-2 px-3 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 text-xs font-bold transition flex items-center justify-center gap-1.5 shrink-0"
                         >
-                            <i data-lucide="play" class="w-3.5 h-3.5 text-amber-600"></i>
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-brand-600"></i>
                             <span>Demo</span>
                         </a>
 
                         @if($isExpired)
                             <a 
                                 href="{{ route('checkout.theme', $theme->id) }}" 
-                                class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 hover:from-amber-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
+                                class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
                             >
                                 <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
                                 <span>Beli Lisensi Lagi</span>
@@ -202,7 +202,7 @@
                             </a>
                             <a 
                                 href="{{ route('checkout.theme', ['theme' => $theme->id, 'additional' => 1]) }}" 
-                                class="flex-1 py-2 px-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 hover:from-amber-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1"
+                                class="flex-1 py-2 px-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1"
                                 title="Beli lisensi tambahan untuk membuat undangan lain dengan tema ini"
                             >
                                 <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
@@ -211,7 +211,7 @@
                         @else
                             <a 
                                 href="{{ route('member.invitations.create', ['theme_id' => $theme->id]) }}" 
-                                class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-amber-600 to-brand-700 hover:from-amber-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
+                                class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
                             >
                                 <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
                                 <span>Gunakan Tema</span>
@@ -223,7 +223,7 @@
                 @if($totalOwned === 0)
                     <!-- EMPTY STATE: USER HAS NOT PURCHASED ANY THEMES -->
                     <div class="col-span-full p-8 sm:p-10 rounded-2xl glass-panel border border-sand-200/80 text-center space-y-3">
-                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-600 border border-amber-500/20 flex items-center justify-center font-bold text-2xl mx-auto shadow-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-600 border border-brand-500/20 flex items-center justify-center font-bold text-2xl mx-auto shadow-sm">
                             🎨
                         </div>
                         <div class="space-y-1.5 max-w-md mx-auto">
@@ -233,7 +233,7 @@
                             </p>
                         </div>
                         <div class="pt-1">
-                            <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-brand-700 hover:from-amber-700 hover:to-brand-800 text-white font-bold text-xs shadow hover:scale-105 transition duration-200">
+                            <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold text-xs shadow hover:scale-105 transition duration-200">
                                 <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                                 <span>Jelajahi Katalog Tema (Mulai Rp 49.000)</span>
                             </a>

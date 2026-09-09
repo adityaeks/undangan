@@ -150,8 +150,8 @@
         <!-- HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-sand-200">
             <div>
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-800 text-[10px] font-bold uppercase tracking-wider border border-amber-500/20 mb-1">
-                    <i data-lucide="sparkles" class="w-3 h-3 text-amber-600"></i>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-800 text-[10px] font-bold uppercase tracking-wider border border-brand-500/20 mb-1">
+                    <i data-lucide="sparkles" class="w-3 h-3 text-brand-600"></i>
                     <span>Portal Pengantin • Buat Undangan</span>
                 </div>
                 <h1 class="font-serif text-xl sm:text-2xl font-bold text-charcoal-950">
@@ -170,9 +170,9 @@
 
         <!-- ALERT JIKA BELUM MEMILIKI TEMA AKTIF / SEMUA TEMA SUDAH TERPAKAI -->
         @if ($themes->isEmpty())
-            <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="p-5 rounded-2xl bg-brand-50 border border-brand-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3.5 text-left">
-                    <div class="w-10 h-10 rounded-xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-700 flex-shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-brand-100 border border-brand-300 flex items-center justify-center text-brand-700 flex-shrink-0">
                         <i data-lucide="palette" class="w-5 h-5"></i>
                     </div>
                     <div>
@@ -192,7 +192,7 @@
                         </p>
                     </div>
                 </div>
-                <a href="{{ route('themes.catalog') }}" class="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-charcoal-950 text-amber-300 text-xs font-bold hover:bg-charcoal-900 transition shadow">
+                <a href="{{ route('themes.catalog') }}" class="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-charcoal-950 text-brand-300 text-xs font-bold hover:bg-charcoal-900 transition shadow">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                     <span>Pilih Tema Baru di Katalog</span>
                 </a>
@@ -218,61 +218,61 @@
         <div class="p-1.5 rounded-2xl glass-panel border border-sand-200 grid grid-cols-3 sm:grid-cols-6 gap-1 text-center text-xs font-semibold">
             <button 
                 type="button" 
-                @click="goToStep(1)"
+                @click="goToStep(1)" 
                 :class="currentStep === 1 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
-                <span class="w-4 h-4 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center">1</span>
+                <span class="w-4 h-4 rounded-full bg-brand-500 text-white text-[9px] font-bold flex items-center justify-center">1</span>
                 <span class="text-[11px] truncate">Tema</span>
             </button>
 
             <button 
                 type="button" 
-                @click="goToStep(2)"
+                @click="goToStep(2)" 
                 :class="currentStep === 2 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
-                <span class="w-4 h-4 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center">2</span>
+                <span class="w-4 h-4 rounded-full bg-brand-500 text-white text-[9px] font-bold flex items-center justify-center">2</span>
                 <span class="text-[11px] truncate">Mempelai</span>
             </button>
 
             <button 
                 type="button" 
-                @click="goToStep(3)"
+                @click="goToStep(3)" 
                 :class="currentStep === 3 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
-                <span class="w-4 h-4 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center">3</span>
+                <span class="w-4 h-4 rounded-full bg-brand-500 text-white text-[9px] font-bold flex items-center justify-center">3</span>
                 <span class="text-[11px] truncate">Acara</span>
             </button>
 
             <button 
                 type="button" 
-                @click="goToStep(4)"
+                @click="goToStep(4)" 
                 :class="currentStep === 4 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
-                <span class="w-4 h-4 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center">4</span>
+                <span class="w-4 h-4 rounded-full bg-brand-500 text-white text-[9px] font-bold flex items-center justify-center">4</span>
                 <span class="text-[11px] truncate">Kisah Perjalanan</span>
             </button>
 
             <button 
                 type="button" 
-                @click="goToStep(5)"
+                @click="goToStep(5)" 
                 :class="currentStep === 5 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
-                <span class="w-4 h-4 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center">5</span>
+                <span class="w-4 h-4 rounded-full bg-brand-500 text-white text-[9px] font-bold flex items-center justify-center">5</span>
                 <span class="text-[11px] truncate">Galeri &amp; Musik</span>
             </button>
 
             <button 
                 type="button" 
-                @click="goToStep(6)"
+                @click="goToStep(6)" 
                 :class="currentStep === 6 ? 'bg-charcoal-950 text-white shadow-sm' : 'text-sand-600 hover:bg-sand-100'"
                 class="py-2 px-1 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
-                <span class="w-4 h-4 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center">6</span>
+                <span class="w-4 h-4 rounded-full bg-brand-500 text-white text-[9px] font-bold flex items-center justify-center">6</span>
                 <span class="text-[11px] truncate">Amplop &amp; Rilis</span>
             </button>
         </div>
@@ -335,7 +335,7 @@
                                     @endif
                                 </p>
                             </div>
-                            <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition">
+                            <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition">
                                 <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                                 <span>Beli Tema Baru di Katalog</span>
                             </a>
@@ -345,18 +345,18 @@
                             @foreach ($themes as $theme)
                                 <div 
                                     @click="selectedTheme = '{{ $theme->id }}'"
-                                    :class="selectedTheme == '{{ $theme->id }}' ? 'ring-2 ring-amber-500 shadow-md border-amber-500 bg-amber-500/5' : 'border-sand-200 opacity-90 hover:opacity-100 bg-white'"
+                                    :class="selectedTheme == '{{ $theme->id }}' ? 'ring-2 ring-brand-500 shadow-md border-brand-500 bg-brand-500/5' : 'border-sand-200 opacity-90 hover:opacity-100 bg-white'"
                                     class="group rounded-2xl overflow-hidden glass-panel border cursor-pointer transition-all duration-200 flex flex-col justify-between"
                                 >
                                     <div class="relative aspect-[16/10] overflow-hidden bg-sand-200">
                                         <img src="{{ $theme->thumbnail }}" alt="{{ $theme->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                         <div class="absolute top-2.5 left-2.5">
-                                            <span class="px-2 py-0.5 rounded-full bg-charcoal-950/80 backdrop-blur-md text-amber-200 text-[9px] font-bold uppercase">
+                                            <span class="px-2 py-0.5 rounded-full bg-charcoal-950/80 backdrop-blur-md text-brand-200 text-[9px] font-bold uppercase">
                                                 {{ $theme->category }}
                                             </span>
                                         </div>
                                         <div class="absolute top-2.5 right-2.5" x-show="selectedTheme == '{{ $theme->id }}'">
-                                            <div class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center shadow">
+                                            <div class="w-5 h-5 rounded-full bg-brand-500 text-white flex items-center justify-center shadow">
                                                 <i data-lucide="check" class="w-3 h-3"></i>
                                             </div>
                                         </div>
@@ -385,7 +385,7 @@
                                 value="{{ old('title', '') }}" 
                                 required
                                 placeholder="Contoh: Pernikahan Dimas &amp; Anisa"
-                                class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-amber-500 text-xs"
+                                class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-xs"
                             >
                         </div>
                         <div>
@@ -397,7 +397,7 @@
                                     name="slug" 
                                     value="{{ old('slug', '') }}" 
                                     placeholder="dimas-anisa (otomatis jika kosong)"
-                                    class="w-full px-3 py-2 rounded-r-xl border border-sand-200 bg-white focus:ring-2 focus:ring-amber-500 text-xs"
+                                    class="w-full px-3 py-2 rounded-r-xl border border-sand-200 bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-xs"
                                 >
                             </div>
                         </div>
@@ -439,7 +439,7 @@
                                 <label class="font-bold text-charcoal-900 block">Kutipan Ayat / Doa / Kata Mutiara (Quotes)</label>
                                 <p class="text-[11px] text-sand-500">Tampil di bagian pembuka undangan sebagai ungkapan doa atau rasa syukur.</p>
                             </div>
-                            <span class="text-[9px] text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200/80 font-semibold self-start sm:self-auto">
+                            <span class="text-[9px] text-brand-800 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-200/80 font-semibold self-start sm:self-auto">
                                 Pilihan Cepat di Bawah
                             </span>
                         </div>
@@ -450,7 +450,7 @@
                                 <button 
                                     type="button" 
                                     @click="setPreset(preset)"
-                                    class="px-2.5 py-1 rounded-lg bg-sand-100 hover:bg-amber-100 text-charcoal-800 hover:text-amber-900 text-[10px] font-medium border border-sand-200 transition flex items-center gap-1 cursor-pointer"
+                                    class="px-2.5 py-1 rounded-lg bg-sand-100 hover:bg-brand-100 text-charcoal-800 hover:text-brand-900 text-[10px] font-medium border border-sand-200 transition flex items-center gap-1 cursor-pointer"
                                 >
                                     <span x-text="preset.label"></span>
                                 </button>
@@ -466,7 +466,7 @@
                                     name="quote_text" 
                                     rows="3" 
                                     placeholder="Tuliskan kutipan ayat suci, doa, atau kata mutiara pernikahan Anda..."
-                                    class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-amber-500 text-xs leading-relaxed"
+                                    class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-xs leading-relaxed"
                                 ></textarea>
                             </div>
 
@@ -477,7 +477,7 @@
                                     type="text" 
                                     name="quote_source" 
                                     placeholder="Contoh: QS. Ar-Rum: 21 / 1 Korintus 13:4 / Kahlil Gibran"
-                                    class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-amber-500 text-xs"
+                                    class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-xs"
                                 >
                             </div>
                         </div>
@@ -487,7 +487,7 @@
                         <button 
                             type="button" 
                             @click="goToStep(2)" 
-                            @if ($themes->isEmpty()) disabled class="opacity-50 cursor-not-allowed px-5 py-2.5 rounded-xl bg-sand-300 text-charcoal-700 font-bold text-xs" @else class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer" @endif
+                            @if ($themes->isEmpty()) disabled class="opacity-50 cursor-not-allowed px-5 py-2.5 rounded-xl bg-sand-300 text-charcoal-700 font-bold text-xs" @else class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-1.5 cursor-pointer" @endif
                         >
                             <span>Lanjut ke Data Mempelai</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -510,7 +510,7 @@
                         <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-3 text-xs">
                             <div class="flex items-center justify-between pb-2 border-b border-sand-200">
                                 <div class="flex items-center gap-2">
-                                    <span class="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-[9px]">1</span>
+                                    <span class="w-5 h-5 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-[9px]">1</span>
                                     <h4 class="font-serif text-sm font-bold text-charcoal-950">Mempelai Pria (Groom)</h4>
                                 </div>
                             </div>
@@ -656,7 +656,7 @@
                         <button type="button" @click="goToStep(1)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                             Kembali
                         </button>
-                        <button type="button" @click="goToStep(3)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" @click="goToStep(3)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-1.5 cursor-pointer">
                             <span>Lanjut ke Jadwal Acara</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
@@ -677,7 +677,7 @@
                         <!-- 1. AKAD NIKAH -->
                         <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-3">
                             <h4 class="font-serif text-sm font-bold text-charcoal-950 flex items-center gap-2">
-                                <span class="w-5 h-5 rounded-full bg-amber-600 text-white text-[9px] flex items-center justify-center font-bold">1</span>
+                                <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-[9px] flex items-center justify-center font-bold">1</span>
                                 <span>Akad Nikah / Pemberkatan</span>
                             </h4>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -709,7 +709,7 @@
                         <!-- 2. RESEPSI PERNIKAHAN -->
                         <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-3">
                             <h4 class="font-serif text-sm font-bold text-charcoal-950 flex items-center gap-2">
-                                <span class="w-5 h-5 rounded-full bg-amber-600 text-white text-[9px] flex items-center justify-center font-bold">2</span>
+                                <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-[9px] flex items-center justify-center font-bold">2</span>
                                 <span>Resepsi Pernikahan / Syukuran</span>
                             </h4>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -744,7 +744,7 @@
                         <button type="button" @click="goToStep(2)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                             Kembali
                         </button>
-                        <button type="button" @click="goToStep(4)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" @click="goToStep(4)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-1.5 cursor-pointer">
                             <span>Lanjut ke Kisah Perjalanan</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
@@ -764,7 +764,7 @@
                             type="button" 
                             @click="addStory()"
                             x-show="stories.length < 8"
-                            class="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-charcoal-950 font-bold text-xs transition shadow-sm cursor-pointer"
+                            class="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs transition shadow-sm cursor-pointer"
                         >
                             <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
                             <span>Tambah Babak Kisah</span>
@@ -776,7 +776,7 @@
                             <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-3 transition hover:border-sand-300">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
-                                        <span class="w-5 h-5 rounded-full bg-amber-600 text-white text-[9px] flex items-center justify-center font-bold" x-text="index + 1"></span>
+                                        <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-[9px] flex items-center justify-center font-bold" x-text="index + 1"></span>
                                         <h4 class="font-serif text-xs sm:text-sm font-bold text-charcoal-950" x-text="story.title ? story.title : ('Babak Kisah ' + (index + 1))"></h4>
                                     </div>
                                     <button 
@@ -858,7 +858,7 @@
                         <button type="button" @click="goToStep(3)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                             Kembali
                         </button>
-                        <button type="button" @click="goToStep(5)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" @click="goToStep(5)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-1.5 cursor-pointer">
                             <span>Lanjut ke Galeri &amp; Musik</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
@@ -877,7 +877,7 @@
                     <!-- 1. FOTO COVER UTAMA -->
                     <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-3 text-xs">
                         <h4 class="font-serif text-sm font-bold text-charcoal-950 flex items-center gap-2">
-                            <i data-lucide="image" class="w-4 h-4 text-amber-600"></i>
+                            <i data-lucide="image" class="w-4 h-4 text-brand-600"></i>
                             <span>Foto Cover / Sampul Utama</span>
                         </h4>
                         
@@ -906,7 +906,7 @@
                                         name="cover_image_file" 
                                         accept="image/*"
                                         @change="previewFile($event, 'coverPreview')"
-                                        class="w-full text-xs text-sand-600 file:mr-2.5 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-charcoal-950 file:text-white hover:file:bg-amber-600 cursor-pointer"
+                                        class="w-full text-xs text-sand-600 file:mr-2.5 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-charcoal-950 file:text-white hover:file:bg-brand-600 cursor-pointer"
                                     >
                                 </div>
                                 <span class="text-[9px] text-sand-500 block">Rekomendasi rasio potret atau lanskap resolusi tinggi (JPG, PNG, WEBP, maks 5MB).</span>
@@ -918,10 +918,10 @@
                     <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-3 text-xs">
                         <div class="flex items-center justify-between">
                             <h4 class="font-serif text-sm font-bold text-charcoal-950 flex items-center gap-2">
-                                <i data-lucide="images" class="w-4 h-4 text-amber-600"></i>
+                                <i data-lucide="images" class="w-4 h-4 text-brand-600"></i>
                                 <span>Galeri Album Prewedding (Multi-Upload)</span>
                             </h4>
-                            <span class="text-[9px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                            <span class="text-[9px] text-brand-700 font-bold bg-brand-50 px-2 py-0.5 rounded-full border border-brand-200">
                                 Bisa Pilih Banyak Sekaligus
                             </span>
                         </div>
@@ -934,7 +934,7 @@
                                 multiple
                                 accept="image/*"
                                 @change="previewMultipleGalleries($event)"
-                                class="w-full text-xs text-sand-600 file:mr-2.5 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-charcoal-950 file:text-white hover:file:bg-amber-600 cursor-pointer"
+                                class="w-full text-xs text-sand-600 file:mr-2.5 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-charcoal-950 file:text-white hover:file:bg-brand-600 cursor-pointer"
                             >
                             <p class="text-[9px] text-sand-500">Anda dapat memilih 4 - 10 foto prewedding terbaik untuk ditampilkan di album galeri.</p>
                         </div>
@@ -957,7 +957,7 @@
                     <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-3 text-xs">
                         <div class="flex items-center justify-between">
                             <h4 class="font-serif text-sm font-bold text-charcoal-950 flex items-center gap-2">
-                                <i data-lucide="music" class="w-4 h-4 text-amber-600"></i>
+                                <i data-lucide="music" class="w-4 h-4 text-brand-600"></i>
                                 <span>Pilihan Musik Latar (Background Music)</span>
                             </h4>
 
@@ -965,7 +965,7 @@
                             <button 
                                 type="button" 
                                 @click="toggleAudioTest()"
-                                :class="isPlayingAudio ? 'bg-amber-500 text-charcoal-950 shadow-sm' : 'bg-charcoal-950 text-white'"
+                                :class="isPlayingAudio ? 'bg-brand-500 text-white shadow-sm' : 'bg-charcoal-950 text-white'"
                                 class="px-3 py-1 rounded-full font-bold text-[10px] transition flex items-center gap-1.5 cursor-pointer"
                             >
                                 <i :data-lucide="isPlayingAudio ? 'pause' : 'play'" class="w-3 h-3 fill-current"></i>
@@ -980,7 +980,7 @@
                                 name="music_preset" 
                                 x-model="selectedMusic"
                                 @change="changeMusicPreset($event.target.value)"
-                                class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white font-medium focus:ring-2 focus:ring-amber-500 text-xs"
+                                class="w-full px-3 py-2 rounded-xl border border-sand-200 bg-white font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-xs"
                             >
                                 @foreach ($musicPresets as $music)
                                     <option value="{{ $music['file'] }}">{{ $music['title'] }}</option>
@@ -1005,7 +1005,7 @@
                         <button type="button" @click="goToStep(4)" class="px-4 py-2 rounded-xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition">
                             Kembali
                         </button>
-                        <button type="button" @click="goToStep(6)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" @click="goToStep(6)" class="px-5 py-2.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-1.5 cursor-pointer">
                             <span>Lanjut ke Amplop &amp; Rilis</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
@@ -1062,7 +1062,7 @@
                     <div class="p-4 rounded-xl bg-sand-50/80 border border-sand-200 space-y-2 text-xs">
                         <div class="flex items-center justify-between">
                             <h4 class="font-serif text-xs font-bold text-charcoal-950 flex items-center gap-1.5">
-                                <i data-lucide="package" class="w-3.5 h-3.5 text-amber-600"></i>
+                                <i data-lucide="package" class="w-3.5 h-3.5 text-brand-600"></i>
                                 <span>Alamat Pengiriman Kado Fisik (Opsional)</span>
                             </h4>
                             <span class="text-[9px] text-sand-500">Untuk tamu yang ingin mengirim kado/parcel</span>
@@ -1116,7 +1116,7 @@
                         </button>
                         <button 
                             type="submit" 
-                            @if ($themes->isEmpty()) disabled class="opacity-50 cursor-not-allowed px-6 py-2.5 rounded-xl bg-sand-300 text-charcoal-700 font-bold text-xs" @else class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-brand-700 text-white font-bold text-xs shadow-md hover:shadow-amber-500/30 hover:scale-102 transition flex items-center gap-2 cursor-pointer" @endif
+                            @if ($themes->isEmpty()) disabled class="opacity-50 cursor-not-allowed px-6 py-2.5 rounded-xl bg-sand-300 text-charcoal-700 font-bold text-xs" @else class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow-md hover:shadow-brand-500/30 hover:scale-102 transition flex items-center gap-2 cursor-pointer" @endif
                         >
                             <i data-lucide="check" class="w-3.5 h-3.5"></i>
                             <span>Simpan &amp; Rilis Undangan</span>

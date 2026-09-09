@@ -157,8 +157,8 @@
             </div>
             
             <div class="flex items-center gap-2">
-                <span class="px-3 py-1.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 font-bold text-xs flex items-center gap-1.5">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i>
+                <span class="px-3 py-1.5 rounded-2xl bg-brand-500/10 border border-brand-500/30 text-brand-900 font-bold text-xs flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-brand-600"></i>
                     <span>Portal Partner & WO</span>
                 </span>
             </div>
@@ -180,50 +180,50 @@
             <button 
                 type="button" 
                 @click="goToStep(1)"
-                :class="currentStep === 1 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
+                :class="currentStep === 1 ? 'bg-brand-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
                 class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
-                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 1 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">1</span>
+                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 1 ? 'bg-white text-brand-700' : 'bg-sand-200 text-charcoal-950'">1</span>
                 <span>Klien & Tema</span>
             </button>
 
             <button 
                 type="button" 
                 @click="goToStep(2)"
-                :class="currentStep === 2 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
+                :class="currentStep === 2 ? 'bg-brand-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
                 class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
-                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 2 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">2</span>
+                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 2 ? 'bg-white text-brand-700' : 'bg-sand-200 text-charcoal-950'">2</span>
                 <span>Mempelai</span>
             </button>
 
             <button 
                 type="button" 
                 @click="goToStep(3)"
-                :class="currentStep === 3 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
+                :class="currentStep === 3 ? 'bg-brand-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
                 class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
-                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 3 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">3</span>
+                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 3 ? 'bg-white text-brand-700' : 'bg-sand-200 text-charcoal-950'">3</span>
                 <span>Acara</span>
             </button>
 
             <button 
                 type="button" 
                 @click="goToStep(4)"
-                :class="currentStep === 4 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
+                :class="currentStep === 4 ? 'bg-brand-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
                 class="px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
-                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 4 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">4</span>
+                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 4 ? 'bg-white text-brand-700' : 'bg-sand-200 text-charcoal-950'">4</span>
                 <span>Galeri & Cerita</span>
             </button>
 
             <button 
                 type="button" 
                 @click="goToStep(5)"
-                :class="currentStep === 5 ? 'bg-amber-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
+                :class="currentStep === 5 ? 'bg-brand-600 text-white font-bold shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-charcoal-800 font-medium'"
                 class="col-span-2 sm:col-span-1 px-3 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition text-center cursor-pointer"
             >
-                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 5 ? 'bg-white text-amber-700' : 'bg-sand-200 text-charcoal-950'">5</span>
+                <span class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold" :class="currentStep === 5 ? 'bg-white text-brand-700' : 'bg-sand-200 text-charcoal-950'">5</span>
                 <span>Amplop & Kado</span>
             </button>
         </div>
@@ -250,7 +250,7 @@
                 <!-- INFO KLIEN & JUDUL -->
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 sm:p-8 bg-white/95 shadow-sm space-y-5">
                     <div class="flex items-center gap-3 pb-3 border-b border-sand-200">
-                        <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-xs shadow">1.1</div>
+                        <div class="w-8 h-8 rounded-xl bg-brand-500 text-white flex items-center justify-center font-bold text-xs shadow">1.1</div>
                         <div>
                             <h2 class="font-serif text-base sm:text-lg font-bold text-charcoal-950">Data Klien & Judul Undangan</h2>
                             <p class="text-[11px] text-sand-500">Pilih klien yang memesan dan atur judul serta URL undangan</p>
@@ -261,12 +261,12 @@
                         <div class="sm:col-span-2">
                             <div class="flex items-center justify-between mb-1.5">
                                 <label class="font-bold text-charcoal-950">Pilih Klien WO (Opsional)</label>
-                                <a href="{{ route('partner.clients.index') }}" target="_blank" class="text-[11px] text-amber-700 hover:text-amber-800 font-semibold flex items-center gap-1">
+                                <a href="{{ route('partner.clients.index') }}" target="_blank" class="text-[11px] text-brand-700 hover:text-brand-800 font-semibold flex items-center gap-1">
                                     <i data-lucide="user-plus" class="w-3 h-3"></i>
                                     <span>Kelola / Tambah Klien</span>
                                 </a>
                             </div>
-                            <select name="client_id" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs text-charcoal-950 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition">
+                            <select name="client_id" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs text-charcoal-950 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition">
                                 <option value="">-- Tanpa Klien Khusus (Dikelola Mandiri) --</option>
                                 @foreach($clients as $client)
                                     <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
@@ -284,7 +284,7 @@
                                 value="{{ old('title') }}" 
                                 required 
                                 placeholder="Contoh: The Wedding of Ryan & Vanya" 
-                                class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs text-charcoal-950 placeholder:text-sand-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                                class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs text-charcoal-950 placeholder:text-sand-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
                             >
                         </div>
 
@@ -294,7 +294,7 @@
                                 type="date" 
                                 name="event_date" 
                                 value="{{ old('event_date') }}" 
-                                class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs text-charcoal-950 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                                class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs text-charcoal-950 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
                             >
                         </div>
 
@@ -309,7 +309,7 @@
                                     name="slug" 
                                     value="{{ old('slug') }}" 
                                     placeholder="ryan-vanya" 
-                                    class="w-full px-4 py-3 rounded-r-2xl border border-sand-300 bg-white text-xs text-charcoal-950 placeholder:text-sand-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                                    class="w-full px-4 py-3 rounded-r-2xl border border-sand-300 bg-white text-xs text-charcoal-950 placeholder:text-sand-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
                                 >
                             </div>
                         </div>
@@ -320,7 +320,7 @@
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 sm:p-8 bg-white/95 shadow-sm space-y-5">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-sand-200">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-xs shadow">1.2</div>
+                            <div class="w-8 h-8 rounded-xl bg-brand-500 text-white flex items-center justify-center font-bold text-xs shadow">1.2</div>
                             <div>
                                 <h2 class="font-serif text-base sm:text-lg font-bold text-charcoal-950">Pilih Template Tema Super Admin</h2>
                                 <p class="text-[11px] text-sand-500">Template yang disediakan oleh Super Admin (bebas digunakan untuk partner)</p>
@@ -345,7 +345,7 @@
                             @foreach($themes as $theme)
                                 <label 
                                     class="relative rounded-2xl border-2 transition-all cursor-pointer overflow-hidden flex flex-col group"
-                                    :class="selectedTheme == {{ $theme->id }} ? 'border-amber-500 ring-4 ring-amber-500/20 shadow-lg' : 'border-sand-200 hover:border-sand-300 bg-white'"
+                                    :class="selectedTheme == {{ $theme->id }} ? 'border-brand-500 ring-4 ring-brand-500/20 shadow-lg' : 'border-sand-200 hover:border-sand-300 bg-white'"
                                 >
                                     <input 
                                         type="radio" 
@@ -368,7 +368,7 @@
                                         <!-- SELECTED BADGE -->
                                         <div 
                                             x-show="selectedTheme == {{ $theme->id }}" 
-                                            class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-amber-500 text-white text-[10px] font-bold flex items-center gap-1 shadow-md"
+                                            class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-brand-500 text-white text-[10px] font-bold flex items-center gap-1 shadow-md"
                                         >
                                             <i data-lucide="check" class="w-3 h-3"></i>
                                             <span>Dipilih</span>
@@ -393,7 +393,7 @@
 
                                     <!-- DETAILS -->
                                     <div class="p-4 flex-1 flex flex-col justify-between space-y-2 bg-white">
-                                        <h3 class="font-serif text-sm font-bold text-charcoal-950 group-hover:text-amber-700 transition-colors leading-tight">
+                                        <h3 class="font-serif text-sm font-bold text-charcoal-950 group-hover:text-brand-700 transition-colors leading-tight">
                                             {{ $theme->name }}
                                         </h3>
                                         <p class="text-[11px] text-sand-500 line-clamp-2">
@@ -406,7 +406,7 @@
                     @endif
 
                     <div class="flex justify-end pt-2">
-                        <button type="button" @click="goToStep(2)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2 cursor-pointer">
+                        <button type="button" @click="goToStep(2)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-2 cursor-pointer">
                             <span>Lanjut ke Data Mempelai</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
@@ -444,34 +444,34 @@
 
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Nama Lengkap & Gelar *</label>
-                            <input type="text" name="groom_name" value="{{ old('groom_name') }}" placeholder="Contoh: Ryan Pratama, S.T." required class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="groom_name" value="{{ old('groom_name') }}" placeholder="Contoh: Ryan Pratama, S.T." required class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nama Panggilan</label>
-                                <input type="text" name="groom_nickname" value="{{ old('groom_nickname') }}" placeholder="Ryan" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="groom_nickname" value="{{ old('groom_nickname') }}" placeholder="Ryan" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Urutan Anak</label>
-                                <input type="text" name="groom_child_order" value="{{ old('groom_child_order') }}" placeholder="Putra pertama dari" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="groom_child_order" value="{{ old('groom_child_order') }}" placeholder="Putra pertama dari" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nama Ayah</label>
-                                <input type="text" name="groom_father" value="{{ old('groom_father') }}" placeholder="Bpk. Hendra Pratama" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="groom_father" value="{{ old('groom_father') }}" placeholder="Bpk. Hendra Pratama" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nama Ibu</label>
-                                <input type="text" name="groom_mother" value="{{ old('groom_mother') }}" placeholder="Ibu Rina Astuti" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="groom_mother" value="{{ old('groom_mother') }}" placeholder="Ibu Rina Astuti" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                         </div>
 
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Akun Instagram</label>
-                            <input type="text" name="groom_instagram" value="{{ old('groom_instagram') }}" placeholder="@ryanpratama" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="groom_instagram" value="{{ old('groom_instagram') }}" placeholder="@ryanpratama" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                     </div>
 
@@ -500,34 +500,34 @@
 
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Nama Lengkap & Gelar *</label>
-                            <input type="text" name="bride_name" value="{{ old('bride_name') }}" placeholder="Contoh: Vanya Alodya, S.Farm." required class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="bride_name" value="{{ old('bride_name') }}" placeholder="Contoh: Vanya Alodya, S.Farm." required class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nama Panggilan</label>
-                                <input type="text" name="bride_nickname" value="{{ old('bride_nickname') }}" placeholder="Vanya" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bride_nickname" value="{{ old('bride_nickname') }}" placeholder="Vanya" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Urutan Anak</label>
-                                <input type="text" name="bride_child_order" value="{{ old('bride_child_order') }}" placeholder="Putri kedua dari" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bride_child_order" value="{{ old('bride_child_order') }}" placeholder="Putri kedua dari" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nama Ayah</label>
-                                <input type="text" name="bride_father" value="{{ old('bride_father') }}" placeholder="Bpk. Wahyu Nugraha" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bride_father" value="{{ old('bride_father') }}" placeholder="Bpk. Wahyu Nugraha" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nama Ibu</label>
-                                <input type="text" name="bride_mother" value="{{ old('bride_mother') }}" placeholder="Ibu Maya Sari" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bride_mother" value="{{ old('bride_mother') }}" placeholder="Ibu Maya Sari" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                         </div>
 
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Akun Instagram</label>
-                            <input type="text" name="bride_instagram" value="{{ old('bride_instagram') }}" placeholder="@vanyaalodya" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="bride_instagram" value="{{ old('bride_instagram') }}" placeholder="@vanyaalodya" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                     </div>
                 </div>
@@ -536,7 +536,7 @@
                     <button type="button" @click="goToStep(1)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                         Kembali
                     </button>
-                    <button type="button" @click="goToStep(3)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2 cursor-pointer">
+                    <button type="button" @click="goToStep(3)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-2 cursor-pointer">
                         <span>Lanjut ke Rangkaian Acara</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -550,33 +550,33 @@
                 <!-- 1. AKAD NIKAH -->
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 bg-white/95 shadow-sm space-y-4 text-xs">
                     <div class="flex items-center gap-2.5 pb-3 border-b border-sand-200">
-                        <span class="w-7 h-7 rounded-xl bg-amber-600 text-white text-xs flex items-center justify-center font-bold">1</span>
+                        <span class="w-7 h-7 rounded-xl bg-brand-600 text-white text-xs flex items-center justify-center font-bold">1</span>
                         <h3 class="font-serif text-base font-bold text-charcoal-950">Akad Nikah / Pemberkatan</h3>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Tanggal Akad</label>
-                            <input type="date" name="akad_date" value="{{ old('akad_date') }}" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="date" name="akad_date" value="{{ old('akad_date') }}" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Waktu Acara</label>
-                            <input type="text" name="akad_time" value="{{ old('akad_time') }}" placeholder="08.00 - 10.00 WIB" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="akad_time" value="{{ old('akad_time') }}" placeholder="08.00 - 10.00 WIB" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Nama Tempat / Gedung</label>
-                            <input type="text" name="akad_venue" value="{{ old('akad_venue') }}" placeholder="Masjid Agung Sunda Kelapa" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="akad_venue" value="{{ old('akad_venue') }}" placeholder="Masjid Agung Sunda Kelapa" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Alamat Lengkap</label>
-                            <input type="text" name="akad_address" value="{{ old('akad_address') }}" placeholder="Jl. Taman Sunda Kelapa No.16, Menteng, Jakarta Pusat" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="akad_address" value="{{ old('akad_address') }}" placeholder="Jl. Taman Sunda Kelapa No.16, Menteng, Jakarta Pusat" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Link Google Maps (Opsional)</label>
-                            <input type="url" name="akad_maps_link" value="{{ old('akad_maps_link') }}" placeholder="https://maps.google.com/..." class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="url" name="akad_maps_link" value="{{ old('akad_maps_link') }}" placeholder="https://maps.google.com/..." class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                     </div>
                 </div>
@@ -584,33 +584,33 @@
                 <!-- 2. RESEPSI PERNIKAHAN -->
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 bg-white/95 shadow-sm space-y-4 text-xs">
                     <div class="flex items-center gap-2.5 pb-3 border-b border-sand-200">
-                        <span class="w-7 h-7 rounded-xl bg-amber-600 text-white text-xs flex items-center justify-center font-bold">2</span>
+                        <span class="w-7 h-7 rounded-xl bg-brand-600 text-white text-xs flex items-center justify-center font-bold">2</span>
                         <h3 class="font-serif text-base font-bold text-charcoal-950">Resepsi Pernikahan / Syukuran</h3>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Tanggal Resepsi</label>
-                            <input type="date" name="resepsi_date" value="{{ old('resepsi_date') }}" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="date" name="resepsi_date" value="{{ old('resepsi_date') }}" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Waktu Acara</label>
-                            <input type="text" name="resepsi_time" value="{{ old('resepsi_time') }}" placeholder="11.00 - 14.00 WIB" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="resepsi_time" value="{{ old('resepsi_time') }}" placeholder="11.00 - 14.00 WIB" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Nama Tempat / Gedung</label>
-                            <input type="text" name="resepsi_venue" value="{{ old('resepsi_venue') }}" placeholder="Grand Ballroom The Ritz-Carlton" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="resepsi_venue" value="{{ old('resepsi_venue') }}" placeholder="Grand Ballroom The Ritz-Carlton" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Alamat Lengkap</label>
-                            <input type="text" name="resepsi_address" value="{{ old('resepsi_address') }}" placeholder="Mega Kuningan Barat No.1, Jakarta Selatan" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="resepsi_address" value="{{ old('resepsi_address') }}" placeholder="Mega Kuningan Barat No.1, Jakarta Selatan" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Link Google Maps (Opsional)</label>
-                            <input type="url" name="resepsi_maps_link" value="{{ old('resepsi_maps_link') }}" placeholder="https://maps.google.com/..." class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="url" name="resepsi_maps_link" value="{{ old('resepsi_maps_link') }}" placeholder="https://maps.google.com/..." class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                     </div>
                 </div>
@@ -619,7 +619,7 @@
                     <button type="button" @click="goToStep(2)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                         Kembali
                     </button>
-                    <button type="button" @click="goToStep(4)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2 cursor-pointer">
+                    <button type="button" @click="goToStep(4)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-2 cursor-pointer">
                         <span>Lanjut ke Galeri & Cerita</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -635,15 +635,15 @@
                 <div class="rounded-3xl glass-panel border border-sand-200/80 p-6 bg-white/95 shadow-sm space-y-4 text-xs">
                     <div class="flex items-center justify-between pb-3 border-b border-sand-200">
                         <div class="flex items-center gap-2.5">
-                            <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-900 flex items-center justify-center font-bold">
-                                <i data-lucide="images" class="w-4 h-4 text-amber-700"></i>
+                            <div class="w-7 h-7 rounded-lg bg-brand-100 text-brand-900 flex items-center justify-center font-bold">
+                                <i data-lucide="images" class="w-4 h-4 text-brand-700"></i>
                             </div>
                             <div>
                                 <h3 class="font-serif text-base font-bold text-charcoal-950">Galeri Album Prewedding (Multi-Upload)</h3>
                                 <p class="text-[11px] text-sand-500">Unggah foto-foto prewedding klien sekaligus (bisa pilih banyak gambar)</p>
                             </div>
                         </div>
-                        <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 font-bold text-[10px] border border-amber-200">
+                        <span class="px-2.5 py-1 rounded-full bg-brand-50 text-brand-700 font-bold text-[10px] border border-brand-200">
                             Mendukung Multi-Upload
                         </span>
                     </div>
@@ -656,7 +656,7 @@
                             multiple 
                             accept="image/*"
                             @change="previewMultipleGalleries($event)"
-                            class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs text-sand-700 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-charcoal-950 file:text-white hover:file:bg-amber-600 cursor-pointer"
+                            class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs text-sand-700 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-charcoal-950 file:text-white hover:file:bg-brand-600 cursor-pointer"
                         >
                         <p class="text-[10px] text-sand-500">Mendukung format JPG, PNG, WEBP. Maksimum 5MB per file foto.</p>
                     </div>
@@ -692,7 +692,7 @@
                             type="button" 
                             @click="addStory()"
                             x-show="stories.length < 8"
-                            class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-charcoal-950 font-bold text-xs transition shadow-sm flex items-center gap-1.5"
+                            class="px-3 py-1.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-charcoal-950 font-bold text-xs transition shadow-sm flex items-center gap-1.5"
                         >
                             <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                             <span>Tambah Babak</span>
@@ -746,7 +746,7 @@
                         <button 
                             type="button" 
                             @click="toggleAudioTest()"
-                            class="px-3.5 py-1.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-amber-600 transition flex items-center gap-1.5"
+                            class="px-3.5 py-1.5 rounded-xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-1.5"
                         >
                             <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
                             <span x-text="isPlayingAudio ? 'Jeda Audio' : 'Tes Putar Musik'"></span>
@@ -759,7 +759,7 @@
                             @foreach($musicPresets as $preset)
                                 <label 
                                     class="p-3 rounded-2xl border-2 transition cursor-pointer flex items-center justify-between"
-                                    :class="selectedMusic === '{{ $preset['file'] }}' ? 'border-amber-500 bg-amber-50/50' : 'border-sand-200 hover:border-sand-300 bg-white'"
+                                    :class="selectedMusic === '{{ $preset['file'] }}' ? 'border-brand-500 bg-brand-50/50' : 'border-sand-200 hover:border-sand-300 bg-white'"
                                 >
                                     <div class="flex items-center gap-2.5">
                                         <input 
@@ -769,10 +769,10 @@
                                             class="sr-only" 
                                             @change="changeMusicPreset('{{ $preset['file'] }}')"
                                         >
-                                        <i data-lucide="disc" class="w-4 h-4 text-amber-600"></i>
+                                        <i data-lucide="disc" class="w-4 h-4 text-brand-600"></i>
                                         <span class="font-semibold text-charcoal-900 text-xs">{{ $preset['title'] }}</span>
                                     </div>
-                                    <span x-show="selectedMusic === '{{ $preset['file'] }}'" class="text-amber-600 font-bold text-xs">✓</span>
+                                    <span x-show="selectedMusic === '{{ $preset['file'] }}'" class="text-brand-600 font-bold text-xs">✓</span>
                                 </label>
                             @endforeach
                         </div>
@@ -788,7 +788,7 @@
                     <button type="button" @click="goToStep(3)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs hover:bg-sand-300 transition cursor-pointer">
                         Kembali
                     </button>
-                    <button type="button" @click="goToStep(5)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-amber-600 transition flex items-center gap-2 cursor-pointer">
+                    <button type="button" @click="goToStep(5)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white text-xs font-bold hover:bg-brand-600 transition flex items-center gap-2 cursor-pointer">
                         <span>Lanjut ke Amplop & Kado</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -817,15 +817,15 @@
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nama Bank</label>
-                                <input type="text" name="bank_1_name" value="{{ old('bank_1_name') }}" placeholder="BCA / Mandiri / BRI" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bank_1_name" value="{{ old('bank_1_name') }}" placeholder="BCA / Mandiri / BRI" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nomor Rekening</label>
-                                <input type="text" name="bank_1_number" value="{{ old('bank_1_number') }}" placeholder="1234567890" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bank_1_number" value="{{ old('bank_1_number') }}" placeholder="1234567890" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Atas Nama (Holder)</label>
-                                <input type="text" name="bank_1_holder" value="{{ old('bank_1_holder') }}" placeholder="Nama Pemilik Rekening" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bank_1_holder" value="{{ old('bank_1_holder') }}" placeholder="Nama Pemilik Rekening" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                         </div>
                     </div>
@@ -836,15 +836,15 @@
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nama Bank</label>
-                                <input type="text" name="bank_2_name" value="{{ old('bank_2_name') }}" placeholder="BNI / BSI / Jenius" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bank_2_name" value="{{ old('bank_2_name') }}" placeholder="BNI / BSI / Jenius" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Nomor Rekening</label>
-                                <input type="text" name="bank_2_number" value="{{ old('bank_2_number') }}" placeholder="9876543210" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bank_2_number" value="{{ old('bank_2_number') }}" placeholder="9876543210" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block font-bold text-charcoal-950 mb-1">Atas Nama (Holder)</label>
-                                <input type="text" name="bank_2_holder" value="{{ old('bank_2_holder') }}" placeholder="Nama Pemilik Rekening" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="text" name="bank_2_holder" value="{{ old('bank_2_holder') }}" placeholder="Nama Pemilik Rekening" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             </div>
                         </div>
                     </div>
@@ -852,7 +852,7 @@
                     <!-- ALAMAT PENGIRIMAN KADO FISIK -->
                     <div>
                         <label class="block font-bold text-charcoal-950 mb-1">Alamat Pengiriman Kado Fisik (Opsional)</label>
-                        <textarea name="gift_address" rows="2" placeholder="Jl. Kemang Raya No. 12, Mampang Prapatan, Jakarta Selatan (Penerima: Ryan & Vanya - 0812xxxxxxx)" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"></textarea>
+                        <textarea name="gift_address" rows="2" placeholder="Jl. Kemang Raya No. 12, Mampang Prapatan, Jakarta Selatan (Penerima: Ryan & Vanya - 0812xxxxxxx)" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"></textarea>
                     </div>
                 </div>
 
@@ -871,12 +871,12 @@
                     <div class="space-y-3">
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Isi Kutipan / Doa</label>
-                            <textarea name="quote_text" rows="3" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">{{ old('quote_text', 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.') }}</textarea>
+                            <textarea name="quote_text" rows="3" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">{{ old('quote_text', 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.') }}</textarea>
                         </div>
 
                         <div>
                             <label class="block font-bold text-charcoal-950 mb-1">Sumber Kutipan</label>
-                            <input type="text" name="quote_source" value="{{ old('quote_source', 'QS. Ar-Rum: 21') }}" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <input type="text" name="quote_source" value="{{ old('quote_source', 'QS. Ar-Rum: 21') }}" class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         </div>
                     </div>
                 </div>
@@ -908,7 +908,7 @@
                                 name="whatsapp_template" 
                                 rows="8" 
                                 placeholder="{{ \App\Models\Invitation::defaultWhatsappTemplate() }}"
-                                class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                                class="w-full px-4 py-3 rounded-2xl border border-sand-300 bg-white text-xs font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                             >{{ old('whatsapp_template', \App\Models\Invitation::defaultWhatsappTemplate()) }}</textarea>
                             <p class="text-[11px] text-sand-500 mt-1">Dapat diedit kembali kapan saja melalui Buku Tamu atau Edit Undangan.</p>
                         </div>
@@ -922,7 +922,7 @@
                     </button>
                     <button 
                         type="submit" 
-                        class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-white text-xs font-bold shadow-xl hover:shadow-amber-500/30 hover:scale-[1.02] transition flex items-center gap-2"
+                        class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white text-xs font-bold shadow-xl hover:shadow-brand-500/30 hover:scale-[1.02] transition flex items-center gap-2"
                     >
                         <i data-lucide="sparkles" class="w-4 h-4"></i>
                         <span>Simpan & Terbitkan Undangan Klien</span>

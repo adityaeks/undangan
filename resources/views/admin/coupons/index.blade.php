@@ -199,7 +199,7 @@
                                             </button>
                                         </form>
 
-                                        <form action="{{ route('admin.coupons.destroy', $coupon) }}" method="POST" onsubmit="return confirm('Hapus kupon ini?')">
+                                        <form action="{{ route('admin.coupons.destroy', $coupon) }}" method="POST" data-confirm="Hapus kupon promo {{ $coupon->code }}?" data-confirm-title="Hapus Kupon?">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="p-1.5 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 transition" title="Hapus Kupon">

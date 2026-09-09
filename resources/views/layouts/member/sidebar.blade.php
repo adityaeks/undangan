@@ -12,14 +12,14 @@
         :class="sidebarCollapsed ? 'lg:px-3 lg:justify-center' : ''"
     >
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group overflow-hidden" :title="sidebarCollapsed ? 'KlikMomen - Portal Pengantin' : ''">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 via-brand-500 to-amber-600 text-white flex items-center justify-center font-serif font-bold text-lg shadow-md group-hover:scale-105 transition-transform duration-200 shrink-0">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-400 via-brand-500 to-brand-700 text-white flex items-center justify-center font-serif font-bold text-lg shadow-md group-hover:scale-105 transition-transform duration-200 shrink-0">
                 K
             </div>
             <div class="sidebar-brand-text flex flex-col whitespace-nowrap" :class="sidebarCollapsed ? 'lg:hidden' : ''">
                 <span class="font-serif text-xl font-bold tracking-tight text-white">
-                    KlikMomen<span class="text-amber-400">.</span>
+                    KlikMomen<span class="text-brand-400">.</span>
                 </span>
-                <span class="text-[10px] tracking-widest uppercase font-semibold text-amber-300">Portal Pengantin</span>
+                <span class="text-[10px] tracking-widest uppercase font-semibold text-brand-300">Portal Pengantin</span>
             </div>
         </a>
 
@@ -50,7 +50,7 @@
                 <div class="sidebar-section-divider hidden my-2 border-t border-charcoal-900" :class="sidebarCollapsed ? 'lg:block' : ''"></div>
                 
                 <a href="{{ route('dashboard') }}" 
-                   class="sidebar-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
+                   class="sidebar-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
                    {{ request()->routeIs('dashboard') ? 'data-active-link="true"' : '' }}
                    :class="sidebarCollapsed ? 'lg:justify-center lg:px-0 lg:py-3' : ''"
                    title="Dashboard"
@@ -59,7 +59,7 @@
                     <span :class="sidebarCollapsed ? 'lg:hidden' : ''" class="sidebar-label-text truncate">Dashboard</span>
                 </a>
                 <a href="{{ route('member.orders.index') }}" 
-                   class="sidebar-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.orders.*') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
+                   class="sidebar-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.orders.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
                    {{ request()->routeIs('member.orders.*') ? 'data-active-link="true"' : '' }}
                    :class="sidebarCollapsed ? 'lg:justify-center lg:px-0 lg:py-3' : ''"
                    title="Riwayat Transaksi"
@@ -75,7 +75,7 @@
                 <div class="sidebar-section-divider hidden my-2 border-t border-charcoal-900" :class="sidebarCollapsed ? 'lg:block' : ''"></div>
 
                 <a href="{{ route('member.invitations.index') }}" 
-                   class="sidebar-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.invitations.*') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }} relative" 
+                   class="sidebar-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.invitations.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }} relative" 
                    {{ request()->routeIs('member.invitations.*') ? 'data-active-link="true"' : '' }}
                    :class="sidebarCollapsed ? 'lg:justify-center lg:px-0 lg:py-3' : ''"
                    title="Undangan Saya"
@@ -84,14 +84,14 @@
                         <i data-lucide="heart-handshake" class="w-4 h-4 shrink-0 {{ request()->routeIs('member.invitations.*') ? 'text-white' : 'text-sand-400' }}"></i>
                         <span :class="sidebarCollapsed ? 'lg:hidden' : ''" class="sidebar-label-text truncate">Undangan Saya</span>
                     </div>
-                    <span :class="sidebarCollapsed ? 'lg:hidden' : ''" class="sidebar-badge-count px-2 py-0.5 rounded-full {{ request()->routeIs('member.invitations.*') ? 'bg-white/20 text-white' : 'bg-charcoal-800 text-amber-300' }} text-[10px] font-bold">{{ $memberInvitationsCount }}</span>
+                    <span :class="sidebarCollapsed ? 'lg:hidden' : ''" class="sidebar-badge-count px-2 py-0.5 rounded-full {{ request()->routeIs('member.invitations.*') ? 'bg-white/20 text-white' : 'bg-charcoal-800 text-brand-300' }} text-[10px] font-bold">{{ $memberInvitationsCount }}</span>
                     @if($memberInvitationsCount > 0)
-                        <span :class="sidebarCollapsed ? 'lg:block' : 'hidden'" class="sidebar-indicator-dot hidden absolute top-1.5 right-2 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-charcoal-950"></span>
+                        <span :class="sidebarCollapsed ? 'lg:block' : 'hidden'" class="sidebar-indicator-dot hidden absolute top-1.5 right-2 w-2 h-2 rounded-full bg-brand-400 ring-2 ring-charcoal-950"></span>
                     @endif
                 </a>
 
                 <a href="{{ route('member.themes.index') }}" 
-                   class="sidebar-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.themes.*') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }} relative" 
+                   class="sidebar-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.themes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }} relative" 
                    {{ request()->routeIs('member.themes.*') ? 'data-active-link="true"' : '' }}
                    :class="sidebarCollapsed ? 'lg:justify-center lg:px-0 lg:py-3' : ''"
                    title="Template Saya"
@@ -104,13 +104,13 @@
                         $sidebarThemesCount = Auth::user()->isSuperAdmin() ? \App\Models\Theme::where('is_active', true)->count() : Auth::user()->themes()->count();
                     @endphp
                     @if($sidebarThemesCount > 0)
-                        <span :class="sidebarCollapsed ? 'lg:hidden' : ''" class="sidebar-badge-count px-2 py-0.5 rounded-full {{ request()->routeIs('member.themes.*') ? 'bg-white/20 text-white' : 'bg-amber-500/20 text-amber-300' }} text-[10px] font-bold">{{ $sidebarThemesCount }}</span>
-                        <span :class="sidebarCollapsed ? 'lg:block' : 'hidden'" class="sidebar-indicator-dot hidden absolute top-1.5 right-2 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-charcoal-950"></span>
+                        <span :class="sidebarCollapsed ? 'lg:hidden' : ''" class="sidebar-badge-count px-2 py-0.5 rounded-full {{ request()->routeIs('member.themes.*') ? 'bg-white/20 text-white' : 'bg-brand-500/20 text-brand-300' }} text-[10px] font-bold">{{ $sidebarThemesCount }}</span>
+                        <span :class="sidebarCollapsed ? 'lg:block' : 'hidden'" class="sidebar-indicator-dot hidden absolute top-1.5 right-2 w-2 h-2 rounded-full bg-brand-400 ring-2 ring-charcoal-950"></span>
                     @endif
                 </a>
 
                 <a href="{{ route('member.guests.index') }}" 
-                   class="sidebar-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.guests.*') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
+                   class="sidebar-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.guests.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
                    {{ request()->routeIs('member.guests.*') ? 'data-active-link="true"' : '' }}
                    :class="sidebarCollapsed ? 'lg:justify-center lg:px-0 lg:py-3' : ''"
                    title="Daftar Tamu & Kirim WA"
@@ -122,7 +122,7 @@
                 </a>
 
                 <a href="{{ route('member.wishes.index') }}" 
-                   class="sidebar-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.wishes.*') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
+                   class="sidebar-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('member.wishes.*') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
                    {{ request()->routeIs('member.wishes.*') ? 'data-active-link="true"' : '' }}
                    :class="sidebarCollapsed ? 'lg:justify-center lg:px-0 lg:py-3' : ''"
                    title="Buku Tamu & Ucapan"
@@ -140,7 +140,7 @@
                 <div class="sidebar-section-divider hidden my-2 border-t border-charcoal-900" :class="sidebarCollapsed ? 'lg:block' : ''"></div>
 
                 <a href="{{ route('profile.edit') }}" 
-                   class="sidebar-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('profile.edit') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
+                   class="sidebar-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition {{ request()->routeIs('profile.edit') ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-md' : 'text-sand-300 hover:bg-charcoal-900 hover:text-white' }}" 
                    {{ request()->routeIs('profile.edit') ? 'data-active-link="true"' : '' }}
                    :class="sidebarCollapsed ? 'lg:justify-center lg:px-0 lg:py-3' : ''"
                    title="Pengaturan Akun"

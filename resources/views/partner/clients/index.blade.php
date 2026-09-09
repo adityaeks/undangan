@@ -51,7 +51,7 @@
                                 </td>
                                 <td class="py-3.5 px-4 text-sand-500 max-w-xs truncate">{{ $client->notes ?? '-' }}</td>
                                 <td class="py-3.5 px-4 text-right space-x-2">
-                                    <form action="{{ route('partner.clients.destroy', $client) }}" method="POST" class="inline" onsubmit="return confirm('Hapus klien ini?')">
+                                    <form action="{{ route('partner.clients.destroy', $client) }}" method="POST" class="inline" data-confirm="Hapus data klien {{ $client->name }}?" data-confirm-title="Hapus Klien?">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold">Hapus</button>
