@@ -149,6 +149,25 @@
     selectedDuration: '45_days',
     selectedServiceType: 'self_service',
 
+    csModalOpen: false,
+    csSearchQuery: '',
+    csCategory: 'all',
+    activeCsFaq: null,
+
+    openCsModal(cat = 'all') {
+        this.csCategory = cat;
+        this.csModalOpen = true;
+        this.$nextTick(() => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        });
+    },
+
+    closeCsModal() {
+        this.csModalOpen = false;
+    },
+
     openOrderModal(theme) {
         if (!theme) return;
         this.selectedTheme = theme;
@@ -1334,6 +1353,43 @@
 
             </div>
 
+            <!-- CS WHATSAPP DIRECT CALLOUT CARD -->
+            <div class="rounded-3xl bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-charcoal-950 text-white p-6 sm:p-8 border border-brand-500/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+                <div class="space-y-1.5 max-w-xl">
+                    <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-wider border border-emerald-500/30">
+                        <i data-lucide="message-circle" class="w-3 h-3"></i>
+                        <span>Customer Support Siap Membantu</span>
+                    </div>
+                    <h3 class="font-serif text-xl sm:text-2xl font-bold text-white">
+                        Punya Pertanyaan Lain yang Belum Terjawab?
+                    </h3>
+                    <p class="text-xs sm:text-sm text-sand-300 leading-relaxed">
+                        Hubungi tim Customer Service kami secara langsung melalui WhatsApp untuk konsultasi tema, tanya pemesanan, atau panduan kustomisasi.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
+                    <button 
+                        type="button" 
+                        @click="openCsModal()"
+                        class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                        <i data-lucide="help-circle" class="w-4 h-4 text-brand-400"></i>
+                        <span>Pusat Bantuan &amp; FAQ</span>
+                    </button>
+
+                    <a 
+                        href="https://wa.me/6281234567890?text=Halo%20Admin%20KlikMomen,%20saya%20ingin%20konsultasi%20seputar%20pembuatan%20undangan%20digital."
+                        target="_blank"
+                        class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-bold text-xs shadow-lg shadow-emerald-950/40 hover:scale-[1.02] active:scale-[0.98] transition flex items-center justify-center gap-2"
+                    >
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span>Chat CS WhatsApp</span>
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-80"></i>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -1450,6 +1506,9 @@
 
     <!-- DESIGN SELECTION VARIANT MODAL -->
     @include('themes.partials.design-selection-modal')
+
+    <!-- CUSTOMER SERVICE & FAQ MODAL + FLOATING BUTTON -->
+    @include('partials.customer-service-modal')
 
     <!-- INITIALIZE LUCIDE ICONS -->
     <script>

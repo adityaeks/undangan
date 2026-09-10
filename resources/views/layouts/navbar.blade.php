@@ -30,7 +30,7 @@
                 <a href="{{ route('themes.catalog') }}" class="hover:text-brand-600 transition-colors duration-200 {{ request()->routeIs('themes.catalog') || request()->routeIs('templates.index') ? 'text-brand-700 font-semibold' : '' }}">Katalog Tema</a>
                 <a href="{{ url('/#simulasi') }}" class="hover:text-brand-600 transition-colors duration-200">Simulasi Tamu</a>
                 <a href="{{ url('/#partner') }}" class="hover:text-brand-600 transition-colors duration-200">Join Partner (WO)</a>
-                <a href="{{ url('/#faq') }}" class="hover:text-brand-600 transition-colors duration-200">FAQ</a>
+                <a href="{{ url('/#faq') }}" @click="if (typeof openCsModal === 'function') { $event.preventDefault(); openCsModal(); }" class="hover:text-brand-600 transition-colors duration-200">FAQ &amp; Bantuan</a>
             </nav>
 
             <!-- AUTH & CTA BUTTONS -->
@@ -78,7 +78,7 @@
         <a href="{{ route('themes.catalog') }}" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Koleksi Tema</a>
         <a href="{{ url('/#simulasi') }}" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Simulasi Tamu</a>
         <a href="{{ url('/#partner') }}" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Join Partner (WO & Vendor)</a>
-        <a href="{{ url('/#faq') }}" @click="mobileMenuOpen = false" class="block text-base font-medium text-charcoal-900 py-1">Tanya Jawab (FAQ)</a>
+        <a href="{{ url('/#faq') }}" @click="mobileMenuOpen = false; if (typeof openCsModal === 'function') { $event.preventDefault(); openCsModal(); }" class="block text-base font-medium text-charcoal-900 py-1">Tanya Jawab (FAQ &amp; CS)</a>
         <div class="pt-3 border-t border-sand-200 flex flex-col gap-3">
             @if (Route::has('login'))
                 @auth
