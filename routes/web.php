@@ -56,6 +56,21 @@ Route::match(['GET', 'POST'], '/payment/webhook', [WebhookController::class, 'ha
 Route::match(['GET', 'POST'], '/api/webhooks/midtrans', [WebhookController::class, 'handle'])->name('midtrans.webhook');
 Route::match(['GET', 'POST'], '/api/webhook/midtrans', [WebhookController::class, 'handle']);
 
+// WordPress theme compatibility fallbacks (admin-ajax & useanyfont)
+Route::match(['GET', 'POST'], '/themes/{theme}/wp-admin/admin-ajax.php', function () {
+    return response()->json(['success' => true, 'data' => []]);
+});
+Route::match(['GET', 'POST'], '/wp-admin/admin-ajax.php', function () {
+    return response()->json(['success' => true, 'data' => []]);
+});
+Route::get('/wp-content/uploads/useanyfont/{file}', function (string $file) {
+    $path = public_path("themes/3d-motion-05/uploads/useanyfont/{$file}");
+    if (file_exists($path)) {
+        return response()->file($path);
+    }
+    abort(404);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Central Dashboard Dispatcher

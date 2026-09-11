@@ -5,6 +5,7 @@ $editorialPreset = [
     'name' => 'The Vogue Editorial Issue',
     'category' => 'Modern Dark Aesthetic',
     'tagline' => 'Cinematic, Deep Starlight & Cosmic Aura',
+    'has_story_images' => false,
     'is_dark' => true,
     'font_heading' => 'Plus Jakarta Sans',
     'font_body' => 'Plus Jakarta Sans',
@@ -34,6 +35,7 @@ $botanicalPreset = [
     'name' => 'The Ethereal Botanical Glass',
     'category' => 'Botanical & Rustic',
     'tagline' => 'Organic, Earthy & Ethereal Greenery',
+    'has_story_images' => false,
     'is_dark' => false,
     'font_heading' => 'Cormorant Garamond',
     'font_body' => 'Plus Jakarta Sans',
@@ -63,6 +65,7 @@ $classicPreset = [
     'name' => 'The Timeless Classic Card',
     'category' => 'Traditional Cultural',
     'tagline' => 'Majestic, Cultural & Golden Songket Batik',
+    'has_story_images' => false,
     'is_dark' => false,
     'font_heading' => 'Playfair Display',
     'font_body' => 'Plus Jakarta Sans',
@@ -92,6 +95,7 @@ $minimalistPreset = [
     'name' => 'The Warm Minimalist',
     'category' => 'Minimalist Editorial',
     'tagline' => 'Clean, Timeless & Editorial Serif',
+    'has_story_images' => false,
     'is_dark' => false,
     'font_heading' => 'Playfair Display',
     'font_body' => 'Plus Jakarta Sans',
@@ -121,6 +125,7 @@ $roseRomancePreset = [
     'name' => 'The Rose Romance Arch',
     'category' => 'Blush Romance',
     'tagline' => 'Delicate, Poetic & Soft Rose Watercolor',
+    'has_story_images' => false,
     'is_dark' => false,
     'font_heading' => 'Cormorant Garamond',
     'font_body' => 'Plus Jakarta Sans',
@@ -145,12 +150,72 @@ $roseRomancePreset = [
     'card_shadow' => 'shadow-sm',
 ];
 
+$motion01Preset = [
+    'id' => '3d-motion-01',
+    'name' => 'Tema 3D Motion 01 (Garden Pavilion)',
+    'category' => '3D Motion & Cinematic',
+    'tagline' => 'Immersive 3D Video Motion & Garden Aesthetics',
+    'has_story_images' => false,
+    'is_dark' => false,
+    'font_heading' => 'Playball',
+    'font_body' => 'Sora',
+    'font_accent' => 'Aston Script',
+    'cover_bg' => '/themes/3d-motion-01/uploads/2024/10/Garden-01-Ayat-1.jpg',
+    'groom_photo' => '/themes/3d-motion-01/uploads/2024/10/Garden-01-Couple-2-1.png',
+    'bride_photo' => '/themes/3d-motion-01/uploads/2024/10/Garden-01-Couple-1-1.png',
+    'audio_url' => '/themes/3d-motion-01/uploads/2024/10/Golden-Hour-JVKE-Cinematic-Violin-Cover.mp3',
+    'audio_title' => 'Golden Hour (Cinematic Violin Wedding Cover)',
+    'bg_main' => '#F4F7F4',
+    'bg_card' => '#FFFFFF',
+    'text_primary' => '#333333',
+    'text_secondary' => '#666666',
+    'accent' => '#85A57A',
+    'border_color' => '#E0E8DC',
+    'btn_bg' => '#85A57A',
+    'btn_text' => '#FFFFFF',
+    'button_style' => 'bg-[#85A57A] text-white hover:bg-[#74936A]',
+    'tag_bg' => '#EBF2EA',
+    'tag_text' => '#55724B',
+    'card_radius' => 'rounded-2xl',
+    'card_shadow' => 'shadow-md',
+];
+
+$motion05Preset = [
+    'id' => '3d-motion-05',
+    'name' => 'Tema 3D Motion 05 (Sage Arch)',
+    'category' => '3D Motion & Cinematic',
+    'tagline' => 'Cinematic 3D Video Perspective & Sage Blue Aesthetic',
+    'has_story_images' => true,
+    'is_dark' => false,
+    'font_heading' => 'Playball',
+    'font_body' => 'Sora',
+    'font_accent' => 'Aston Script',
+    'cover_bg' => '/themes/3d-motion-05/uploads/2024/10/Garden-05-Ayat.jpg',
+    'groom_photo' => '/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-2.png',
+    'bride_photo' => '/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-1.png',
+    'audio_url' => '/themes/3d-motion-05/uploads/2024/10/Howls-Moving-Castle.mp3',
+    'audio_title' => 'Howls Moving Castle (Cinematic Wedding Cover)',
+    'bg_main' => '#F5F7F8',
+    'bg_card' => '#FFFFFF',
+    'text_primary' => '#333333',
+    'text_secondary' => '#666666',
+    'accent' => '#7F96A8',
+    'border_color' => '#E2E8F0',
+    'btn_bg' => '#7F96A8',
+    'btn_text' => '#FFFFFF',
+    'button_style' => 'bg-[#7F96A8] text-white hover:bg-[#6D8394]',
+    'tag_bg' => '#EEF4F8',
+    'tag_text' => '#34495E',
+    'card_radius' => 'rounded-2xl',
+    'card_shadow' => 'shadow-md',
+];
+
 return [
     /*
     |--------------------------------------------------------------------------
-    | The 5 Canonical Themes Style Presets
+    | The Canonical Themes Style Presets
     |--------------------------------------------------------------------------
-    | Standardized aesthetic styling tokens for the 5 themes in KlikMomen.
+    | Standardized aesthetic styling tokens for the themes in KlikMomen.
     */
     'presets' => [
         'editorial' => $editorialPreset,
@@ -158,8 +223,14 @@ return [
         'classic' => $classicPreset,
         'minimalist' => $minimalistPreset,
         'rose-romance' => $roseRomancePreset,
+        '3d-motion-01' => $motion01Preset,
+        '3d-motion-05' => $motion05Preset,
 
         // Aliases for backward compatibility
+        'motion-01' => $motion01Preset,
+        '3d-motion' => $motion01Preset,
+        'motion-05' => $motion05Preset,
+        'm05' => $motion05Preset,
         'modern' => $editorialPreset,
         'nusantara' => $classicPreset,
         'romantic' => $roseRomancePreset,
@@ -173,12 +244,19 @@ return [
     | Maps public theme slugs to corresponding theme preset style keys.
     */
     'slug_to_preset' => [
-        // 5 Canonical Themes
+        // Canonical Themes
         'editorial' => 'editorial',
         'botanical' => 'botanical',
         'classic' => 'classic',
         'minimalist' => 'minimalist',
         'rose-romance' => 'rose-romance',
+        '3d-motion-01' => '3d-motion-01',
+        'motion-01' => '3d-motion-01',
+        '3d-motion' => '3d-motion-01',
+        'm01-tf' => '3d-motion-01',
+        '3d-motion-05' => '3d-motion-05',
+        'motion-05' => '3d-motion-05',
+        'm05' => '3d-motion-05',
 
         // Backward compatibility mappings
         'modern' => 'editorial',

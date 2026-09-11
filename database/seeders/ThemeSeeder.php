@@ -186,9 +186,77 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '1.450',
                 ],
             ],
+            [
+                'name' => 'Tema 3D Motion 01 (Garden Pavilion)',
+                'slug' => '3d-motion-01',
+                'category' => 'motion',
+                'thumbnail' => '/themes/3d-motion-01/uploads/2024/10/Garden-01-Overlay-1.jpg',
+                'view_path' => 'demo.3d-motion-01',
+                'price' => 59000,
+                'is_active' => true,
+                'is_premium' => true,
+                'metadata' => [
+                    'number' => 'Tema Desain 06',
+                    'category_label' => '3D Motion & Garden Pavilion',
+                    'tag' => '3D Motion',
+                    'tag_badge_class' => 'bg-emerald-700 text-emerald-50 font-bold shadow-sm',
+                    'secondary_image' => '/themes/3d-motion-01/uploads/2024/10/Garden-01-Ayat-1.jpg',
+                    'description' => 'Tema undangan video 3D Pavilion Garden yang imersif dengan transisi slide opening sinematik, efek floating couple, dan pemutar musik otomatis.',
+                    'typography' => 'Playball + Aston Script + Sora',
+                    'colors' => [
+                        ['hex' => '#F4F7F4', 'name' => 'Garden Sage'],
+                        ['hex' => '#85A57A', 'name' => 'Olive Olive'],
+                        ['hex' => '#333333', 'name' => 'Charcoal Dark'],
+                        ['hex' => '#FFFFFF', 'name' => 'Pure White'],
+                    ],
+                    'features' => [
+                        'Immersive 3D Motion Pavilion Garden Video Background',
+                        'Cinematic Slide-up Cover Animation',
+                        'Floating Couple Animated Illustration',
+                        'Direct Copy Bank Account & Local RSVP Form',
+                    ],
+                    'best_for' => 'Pasangan yang menginginkan konsep animasi 3D modern, garden party, dan undangan sinematik',
+                    'rating' => '5.00',
+                    'reviews_count' => '420',
+                ],
+            ],
+            [
+                'name' => 'Tema 3D Motion 05 (Sage Arch)',
+                'slug' => '3d-motion-05',
+                'category' => 'modern',
+                'thumbnail' => '/themes/3d-motion-05/uploads/2024/10/Garden-05-Overlay.jpg',
+                'view_path' => 'demo.3d-motion-05',
+                'price' => 59000,
+                'is_active' => true,
+                'is_premium' => true,
+                'metadata' => [
+                    'number' => 'Tema Desain 07',
+                    'category_label' => '3D Motion & Sage Arch',
+                    'tag' => '3D Motion',
+                    'tag_badge_class' => 'bg-slate-700 text-slate-50 font-bold shadow-sm',
+                    'secondary_image' => '/themes/3d-motion-05/uploads/2024/10/Garden-05-Ayat.jpg',
+                    'description' => 'Estetika modern 3D motion bertema Sage Arch dengan aksen biru lembut, transisi video dinamis, dan tipografi Playball & Sora yang anggun.',
+                    'typography' => 'Playball + Aston Script + Sora',
+                    'colors' => [
+                        ['hex' => '#F5F7F8', 'name' => 'Crisp Light'],
+                        ['hex' => '#7F96A8', 'name' => 'Sage Slate'],
+                        ['hex' => '#01928B', 'name' => 'Teal Accent'],
+                        ['hex' => '#333333', 'name' => 'Charcoal Dark'],
+                    ],
+                    'features' => [
+                        'Immersive 3D Motion Sage Arch Video Background',
+                        'Cinematic Perspective Couple Animation',
+                        'Interactive Gift Envelope & Copy Account Number',
+                        'Instant RSVP & Wishes Feed System',
+                    ],
+                    'best_for' => 'Pasangan pencinta nuansa modern elegan bernuansa sage-blue dan video animasi 3D',
+                    'rating' => '5.00',
+                    'reviews_count' => '380',
+                ],
+            ],
         ];
 
-        // 1. Upsert exactly the 5 canonical themes
+        // 1. Upsert canonical themes
         $persistedThemes = [];
         foreach ($canonicalThemes as $data) {
             $theme = Theme::updateOrCreate(

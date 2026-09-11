@@ -24,6 +24,10 @@ class Theme extends Model
         'is_for_partner',
     ];
 
+    protected $appends = [
+        'has_story_images',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -33,6 +37,25 @@ class Theme extends Model
             'is_premium' => 'boolean',
             'is_for_partner' => 'boolean',
         ];
+    }
+
+    /**
+     * Determine if the theme template supports story images.
+     */
+    public function getHasStoryImagesAttribute(): bool
+    {
+        $meta = $this->metadata ?? [];
+        if (isset($meta['has_story_images'])) {
+            return (bool) $meta['has_story_images'];
+        }
+
+        $canonicalSlug = config("themes.slug_to_preset.{$this->slug}", $this->slug);
+        $preset = config("themes.presets.{$canonicalSlug}", []);
+        if (isset($preset['has_story_images'])) {
+            return (bool) $preset['has_story_images'];
+        }
+
+        return in_array($canonicalSlug, ['3d-motion-05', 'motion-05', 'm05'], true);
     }
 
     /**
@@ -164,6 +187,7 @@ class Theme extends Model
             'assisted_fee' => format_rupiah($assistedFee),
             'raw_assisted_fee' => (float) $assistedFee,
             'is_premium' => $this->is_premium,
+            'has_story_images' => $this->has_story_images,
             'demo_url' => route('demo.show', ['slug' => $this->slug]),
             'checkout_url' => route('checkout.theme', ['theme' => $this->id]),
         ];

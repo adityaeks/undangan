@@ -99,7 +99,9 @@ class PublicInvitationController extends Controller
             'name' => $w->guest_name,
             'time' => $w->created_at ? $w->created_at->diffForHumans() : 'Baru saja',
             'status' => $w->attendance ?? 'Hadir',
+            'attendance' => $w->attendance ?? 'Hadir',
             'msg' => $w->message,
+            'message' => $w->message,
         ])->values()->all();
         $targetDate = $akad?->date ? $akad->date->format('Y-m-d') : ($invitation->event_date ? $invitation->event_date->format('Y-m-d') : null);
         $countdownTarget = $targetDate ? $targetDate.'T'.($akad?->start_time ? substr($akad->start_time, 0, 5) : '08:00').':00+07:00' : null;

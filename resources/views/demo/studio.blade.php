@@ -92,230 +92,7 @@
 
 <body 
     class="h-full bg-sand-100 text-charcoal-900 font-sans antialiased overflow-hidden flex flex-col selection:bg-brand-200 selection:text-charcoal-950"
-    x-data="{
-        themes: {{ Js::from($themes) }},
-        selectedThemeId: '{{ $selectedThemeSlug }}',
-        device: 'mobile', // 'mobile' | 'tablet' | 'desktop'
-        iframeLoading: false,
-
-        form: {
-            groomNickname: '{{ $defaultData['groom_nickname'] }}',
-            brideNickname: '{{ $defaultData['bride_nickname'] }}',
-            groomName: '{{ $defaultData['groom_name'] }}',
-            brideName: '{{ $defaultData['bride_name'] }}',
-            guestName: '{{ $defaultData['guest_name'] }}',
-            eventDate: '{{ $defaultData['event_date'] }}',
-            venueName: '{{ $defaultData['venue_name'] }}',
-            stories: {{ Js::from($defaultData['stories'] ?? []) }}
-        },
-
-        get currentTheme() {
-            return this.themes.find(t => t.id === this.selectedThemeId) || this.themes[0];
-        },
-
-        previewSrc: '{{ route('demo.show', ['slug' => $selectedThemeSlug, 'embed' => 1]) }}',
-
-        buildThemeUrl(themeId, bustCache = false) {
-            const params = new URLSearchParams({
-                embed: '1',
-                to: this.form.guestName,
-                groom_nickname: this.form.groomNickname,
-                bride_nickname: this.form.brideNickname,
-                groom_name: this.form.groomName,
-                bride_name: this.form.brideName,
-                date: this.form.eventDate,
-                venue: this.form.venueName
-            });
-            if (bustCache) {
-                params.set('_t', Date.now());
-            }
-            return '/demo/' + themeId + '?' + params.toString();
-        },
-
-        get standaloneUrl() {
-            const params = new URLSearchParams({
-                to: this.form.guestName,
-                groom_nickname: this.form.groomNickname,
-                bride_nickname: this.form.brideNickname,
-                groom_name: this.form.groomName,
-                bride_name: this.form.brideName,
-                date: this.form.eventDate,
-                venue: this.form.venueName
-            });
-            return '/demo/' + this.selectedThemeId + '?' + params.toString();
-        },
-
-        get registerUrl() {
-            return '{{ route('register') }}' + '?theme=' + encodeURIComponent(this.selectedThemeId);
-        },
-
-        init() {
-            window.addEventListener('message', (event) => {
-                if (event.data && event.data.type === 'KLIKMOMEN_DEMO_READY') {
-                    this.sendLiveUpdate();
-                }
-            });
-        },
-
-        selectTheme(themeId) {
-            if (this.selectedThemeId === themeId) return;
-            this.selectedThemeId = themeId;
-            this.iframeLoading = true;
-            this.previewSrc = this.buildThemeUrl(themeId);
-        },
-
-        reloadIframe() {
-            this.iframeLoading = true;
-            this.previewSrc = this.buildThemeUrl(this.selectedThemeId, true);
-        },
-
-        onIframeLoad() {
-            this.iframeLoading = false;
-            this.sendLiveUpdate();
-            setTimeout(() => this.sendLiveUpdate(), 60);
-            setTimeout(() => this.sendLiveUpdate(), 200);
-        },
-
-        sendLiveUpdate() {
-            if (!this.$refs.previewIframe || !this.$refs.previewIframe.contentWindow) return;
-            try {
-                const payload = JSON.parse(JSON.stringify({
-                    groomNickname: this.form.groomNickname,
-                    brideNickname: this.form.brideNickname,
-                    groomName: this.form.groomName,
-                    brideName: this.form.brideName,
-                    guestName: this.form.guestName,
-                    eventDate: this.form.eventDate,
-                    venueName: this.form.venueName,
-                    stories: this.form.stories
-                }));
-                this.$refs.previewIframe.contentWindow.postMessage({
-                    type: 'KLIKMOMEN_DEMO_UPDATE',
-                    payload: payload
-                }, '*');
-            } catch (e) {
-                console.error('Error sending live update:', e);
-            }
-        },
-
-        addStory() {
-            if (this.form.stories.length >= 6) return;
-            this.form.stories.push({
-                year: 'Bulan / Tahun',
-                title: 'Judul Momen Bahagia',
-                desc: 'Tuliskan deskripsi cerita singkat perjalanan cinta Anda di sini.'
-            });
-            this.$nextTick(() => {
-                if (window.lucide) window.lucide.createIcons();
-                this.sendLiveUpdate();
-            });
-        },
-
-        removeStory(index) {
-            if (this.form.stories.length <= 1) return;
-            this.form.stories.splice(index, 1);
-            this.$nextTick(() => {
-                this.sendLiveUpdate();
-            });
-        },
-
-        usePresetRakaArinda() {
-            this.form.groomNickname = 'Raka';
-            this.form.brideNickname = 'Arinda';
-            this.form.groomName = 'Raka Pratama, S.T.';
-            this.form.brideName = 'Arinda Putri Larasati, S.I.Kom';
-            this.form.guestName = 'Reyhan';
-            this.form.eventDate = 'Sabtu, 24 Oktober 2026';
-            this.form.venueName = 'Grand Ballroom The Ritz-Carlton, Jakarta';
-            this.form.stories = [
-                { year: 'Agustus 2020', title: 'Pertemuan Pertama', desc: 'Takdir mempertemukan kami di sebuah workshop desain dan arsitektur di Bandung. Berawal dari diskusi tugas dan obrolan secangkir kopi hangat.' },
-                { year: 'November 2022', title: 'Menjalin Komitmen', desc: 'Setelah dua tahun saling mengenal kepribadian dan berbagi mimpi, kami memutuskan untuk melangkah bersama dalam ikatan kasih yang tulus.' },
-                { year: 'Desember 2025', title: 'Hari Lamaran Resmi', desc: 'Di hadapan kedua keluarga besar, kami mengikat janji suci untuk melangkah ke jenjang pernikahan yang penuh berkah dan ridho Ilahi.' },
-                { year: 'Oktober 2026', title: 'Menuju Hari Bahagia', desc: 'Dengan penuh rasa syukur, kami siap menyatukan cinta dalam ikatan pernikahan kudus seumur hidup.' }
-            ];
-            this.sendLiveUpdate();
-        },
-
-        usePresetRyanVanya() {
-            this.form.groomNickname = 'Ryan';
-            this.form.brideNickname = 'Vanya';
-            this.form.groomName = 'Ryan Pratama, S.Kom.';
-            this.form.brideName = 'Vanya Citra Kirana, S.Ds.';
-            this.form.guestName = 'Dimas & Partner';
-            this.form.eventDate = 'Minggu, 15 November 2026';
-            this.form.venueName = 'Plataran Dharmawangsa, Jakarta Selatan';
-            this.form.stories = [
-                { year: 'November 2021', title: 'Awal Jumpa di Konservatori', desc: 'Takdir mempertemukan kami di sebuah workshop fotografi lanskap. Percakapan santai tentang sudut pandang kamera membuka pintu perkenalan yang hangat.' },
-                { year: 'Desember 2024', title: 'Mengikat Janji di Hadapan Keluarga', desc: 'Setelah bertumbuh bersama melewati berbagai cerita, Ryan melamar Vanya secara resmi dalam suasana hangat penuh doa restu kedua keluarga besar.' },
-                { year: 'Oktober 2026', title: 'Menuju Pelaminan Bahagia', desc: 'Hari yang kami nanti akhirnya tiba. Bersama kehadiran Anda sebagai saksi, kami mengucap janji suci pernikahan seumur hidup.' }
-            ];
-            this.sendLiveUpdate();
-        },
-
-        clearForm() {
-            this.form.groomNickname = 'Nama Pria';
-            this.form.brideNickname = 'Nama Wanita';
-            this.form.groomName = 'Nama Lengkap Pria, S.T.';
-            this.form.brideName = 'Nama Lengkap Wanita, S.I.Kom';
-            this.form.guestName = 'Tamu Undangan';
-            this.form.eventDate = 'Sabtu, 20 Desember 2026';
-            this.form.venueName = 'Gedung Pernikahan Impian';
-            this.form.stories = [
-                { year: 'Tahun 2020', title: 'Pertemuan Pertama', desc: 'Tuliskan kisah awal mula Anda dan pasangan pertama kali bertemu atau berkenalan.' },
-                { year: 'Tahun 2023', title: 'Menjalin Hubungan', desc: 'Tuliskan momen manis saat memutuskan untuk berkomitmen melangkah bersama.' },
-                { year: 'Tahun 2026', title: 'Menuju Pernikahan', desc: 'Tuliskan harapan dan doa menuju hari bahagia pernikahan suci Anda.' }
-            ];
-            this.sendLiveUpdate();
-        },
-
-        zoomLevel: 60,
-
-        get deviceDims() {
-            if (this.device === 'mobile') return { w: 385, h: 780 };
-            if (this.device === 'tablet') return { w: 640, h: 820 };
-            return { w: 980, h: 820 };
-        },
-
-        setDevice(d) {
-            this.device = d;
-            this.$nextTick(() => {
-                this.fitToScreen();
-                if (window.lucide) window.lucide.createIcons();
-            });
-        },
-
-        zoomIn() {
-            this.zoomLevel = Math.min(150, this.zoomLevel + 10);
-        },
-
-        zoomOut() {
-            this.zoomLevel = Math.max(30, this.zoomLevel - 10);
-        },
-
-        resetZoom() {
-            this.zoomLevel = 100;
-        },
-
-        fitToScreen() {
-            const container = this.$refs.canvasContainer;
-            if (!container) return;
-            const availH = container.clientHeight - 40;
-            const availW = container.clientWidth - 40;
-            const dims = this.deviceDims;
-            if (availH <= 0 || availW <= 0) return;
-
-            const scaleH = availH / dims.h;
-            const scaleW = availW / dims.w;
-            const optimal = Math.min(scaleH, scaleW);
-            const pct = Math.round((optimal * 100) / 5) * 5;
-            this.zoomLevel = Math.max(30, Math.min(100, pct));
-        }
-    }"
-    x-init="$nextTick(() => { 
-        if (window.lucide) lucide.createIcons(); 
-        setTimeout(() => fitToScreen(), 50); 
-        setTimeout(() => fitToScreen(), 250); 
-    });"
+    x-data="studioApp()"
 >
 
     <!-- ========================================================================= -->
@@ -850,7 +627,234 @@
 
         </section>
 
-    </main>
+    <script>
+        function studioApp() {
+            return {
+                themes: @json($themes),
+                selectedThemeId: '{{ $selectedThemeSlug }}',
+                device: 'mobile', // 'mobile' | 'tablet' | 'desktop'
+                iframeLoading: false,
 
+                form: {
+                    groomNickname: '{{ $defaultData['groom_nickname'] }}',
+                    brideNickname: '{{ $defaultData['bride_nickname'] }}',
+                    groomName: '{{ $defaultData['groom_name'] }}',
+                    brideName: '{{ $defaultData['bride_name'] }}',
+                    guestName: '{{ $defaultData['guest_name'] }}',
+                    eventDate: '{{ $defaultData['event_date'] }}',
+                    venueName: '{{ $defaultData['venue_name'] }}',
+                    stories: @json($defaultData['stories'] ?? [])
+                },
+
+                get currentTheme() {
+                    return this.themes.find(t => t.id === this.selectedThemeId) || this.themes[0];
+                },
+
+                previewSrc: '{{ route('demo.show', ['slug' => $selectedThemeSlug, 'embed' => 1]) }}',
+
+                buildThemeUrl(themeId, bustCache = false) {
+                    const params = new URLSearchParams({
+                        embed: '1',
+                        to: this.form.guestName,
+                        groom_nickname: this.form.groomNickname,
+                        bride_nickname: this.form.brideNickname,
+                        groom_name: this.form.groomName,
+                        bride_name: this.form.brideName,
+                        date: this.form.eventDate,
+                        venue: this.form.venueName
+                    });
+                    if (bustCache) {
+                        params.set('_t', Date.now());
+                    }
+                    return '/demo/' + themeId + '?' + params.toString();
+                },
+
+                get standaloneUrl() {
+                    const params = new URLSearchParams({
+                        to: this.form.guestName,
+                        groom_nickname: this.form.groomNickname,
+                        bride_nickname: this.form.brideNickname,
+                        groom_name: this.form.groomName,
+                        bride_name: this.form.brideName,
+                        date: this.form.eventDate,
+                        venue: this.form.venueName
+                    });
+                    return '/demo/' + this.selectedThemeId + '?' + params.toString();
+                },
+
+                get registerUrl() {
+                    return '{{ route('register') }}' + '?theme=' + encodeURIComponent(this.selectedThemeId);
+                },
+
+                init() {
+                    window.addEventListener('message', (event) => {
+                        if (event.data && event.data.type === 'KLIKMOMEN_DEMO_READY') {
+                            this.sendLiveUpdate();
+                        }
+                    });
+
+                    this.$nextTick(() => {
+                        if (window.lucide) lucide.createIcons();
+                        setTimeout(() => this.fitToScreen(), 50);
+                        setTimeout(() => this.fitToScreen(), 250);
+                    });
+                },
+
+                selectTheme(themeId) {
+                    if (this.selectedThemeId === themeId) return;
+                    this.selectedThemeId = themeId;
+                    this.iframeLoading = true;
+                    this.previewSrc = this.buildThemeUrl(themeId);
+                },
+
+                reloadIframe() {
+                    this.iframeLoading = true;
+                    this.previewSrc = this.buildThemeUrl(this.selectedThemeId, true);
+                },
+
+                onIframeLoad() {
+                    this.iframeLoading = false;
+                    this.sendLiveUpdate();
+                    setTimeout(() => this.sendLiveUpdate(), 60);
+                    setTimeout(() => this.sendLiveUpdate(), 200);
+                },
+
+                sendLiveUpdate() {
+                    if (!this.$refs.previewIframe || !this.$refs.previewIframe.contentWindow) return;
+                    try {
+                        const payload = JSON.parse(JSON.stringify({
+                            groomNickname: this.form.groomNickname,
+                            brideNickname: this.form.brideNickname,
+                            groomName: this.form.groomName,
+                            brideName: this.form.brideName,
+                            guestName: this.form.guestName,
+                            eventDate: this.form.eventDate,
+                            venueName: this.form.venueName,
+                            stories: this.form.stories
+                        }));
+                        this.$refs.previewIframe.contentWindow.postMessage({
+                            type: 'KLIKMOMEN_DEMO_UPDATE',
+                            payload: payload
+                        }, '*');
+                    } catch (e) {
+                        console.error('Error sending live update:', e);
+                    }
+                },
+
+                addStory() {
+                    if (this.form.stories.length >= 6) return;
+                    this.form.stories.push({
+                        year: 'Bulan / Tahun',
+                        title: 'Judul Momen Bahagia',
+                        desc: 'Tuliskan deskripsi cerita singkat perjalanan cinta Anda di sini.'
+                    });
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                        this.sendLiveUpdate();
+                    });
+                },
+
+                removeStory(index) {
+                    if (this.form.stories.length <= 1) return;
+                    this.form.stories.splice(index, 1);
+                    this.$nextTick(() => {
+                        this.sendLiveUpdate();
+                    });
+                },
+
+                usePresetRakaArinda() {
+                    this.form.groomNickname = 'Raka';
+                    this.form.brideNickname = 'Arinda';
+                    this.form.groomName = 'Raka Pratama, S.T.';
+                    this.form.brideName = 'Arinda Putri Larasati, S.I.Kom';
+                    this.form.guestName = 'Reyhan';
+                    this.form.eventDate = 'Sabtu, 24 Oktober 2026';
+                    this.form.venueName = 'Grand Ballroom The Ritz-Carlton, Jakarta';
+                    this.form.stories = [
+                        { year: 'Agustus 2020', title: 'Pertemuan Pertama', desc: 'Takdir mempertemukan kami di sebuah workshop desain dan arsitektur di Bandung. Berawal dari diskusi tugas dan obrolan secangkir kopi hangat.' },
+                        { year: 'November 2022', title: 'Menjalin Komitmen', desc: 'Setelah dua tahun saling mengenal kepribadian dan berbagi mimpi, kami memutuskan untuk melangkah bersama dalam ikatan kasih yang tulus.' },
+                        { year: 'Desember 2025', title: 'Hari Lamaran Resmi', desc: 'Di hadapan kedua keluarga besar, kami mengikat janji suci untuk melangkah ke jenjang pernikahan yang penuh berkah dan ridho Ilahi.' },
+                        { year: 'Oktober 2026', title: 'Menuju Hari Bahagia', desc: 'Dengan penuh rasa syukur, kami siap menyatukan cinta dalam ikatan pernikahan kudus seumur hidup.' }
+                    ];
+                    this.sendLiveUpdate();
+                },
+
+                usePresetRyanVanya() {
+                    this.form.groomNickname = 'Ryan';
+                    this.form.brideNickname = 'Vanya';
+                    this.form.groomName = 'Ryan Pratama, S.Kom.';
+                    this.form.brideName = 'Vanya Citra Kirana, S.Ds.';
+                    this.form.guestName = 'Dimas & Partner';
+                    this.form.eventDate = 'Minggu, 15 November 2026';
+                    this.form.venueName = 'Plataran Dharmawangsa, Jakarta Selatan';
+                    this.form.stories = [
+                        { year: 'November 2021', title: 'Awal Jumpa di Konservatori', desc: 'Takdir mempertemukan kami di sebuah workshop fotografi lanskap. Percakapan santai tentang sudut pandang kamera membuka pintu perkenalan yang hangat.' },
+                        { year: 'Desember 2024', title: 'Mengikat Janji di Hadapan Keluarga', desc: 'Setelah bertumbuh bersama melewati berbagai cerita, Ryan melamar Vanya secara resmi dalam suasana hangat penuh doa restu kedua keluarga besar.' },
+                        { year: 'Oktober 2026', title: 'Menuju Pelaminan Bahagia', desc: 'Hari yang kami nanti akhirnya tiba. Bersama kehadiran Anda sebagai saksi, kami mengucap janji suci pernikahan seumur hidup.' }
+                    ];
+                    this.sendLiveUpdate();
+                },
+
+                clearForm() {
+                    this.form.groomNickname = 'Nama Pria';
+                    this.form.brideNickname = 'Nama Wanita';
+                    this.form.groomName = 'Nama Lengkap Pria, S.T.';
+                    this.form.brideName = 'Nama Lengkap Wanita, S.I.Kom';
+                    this.form.guestName = 'Tamu Undangan';
+                    this.form.eventDate = 'Sabtu, 20 Desember 2026';
+                    this.form.venueName = 'Gedung Pernikahan Impian';
+                    this.form.stories = [
+                        { year: 'Tahun 2020', title: 'Pertemuan Pertama', desc: 'Tuliskan kisah awal mula Anda dan pasangan pertama kali bertemu atau berkenalan.' },
+                        { year: 'Tahun 2023', title: 'Menjalin Hubungan', desc: 'Tuliskan momen manis saat memutuskan untuk berkomitmen melangkah bersama.' },
+                        { year: 'Tahun 2026', title: 'Menuju Pernikahan', desc: 'Tuliskan harapan dan doa menuju hari bahagia pernikahan suci Anda.' }
+                    ];
+                    this.sendLiveUpdate();
+                },
+
+                zoomLevel: 60,
+
+                get deviceDims() {
+                    if (this.device === 'mobile') return { w: 385, h: 780 };
+                    if (this.device === 'tablet') return { w: 640, h: 820 };
+                    return { w: 980, h: 820 };
+                },
+
+                setDevice(d) {
+                    this.device = d;
+                    this.$nextTick(() => {
+                        this.fitToScreen();
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
+                zoomIn() {
+                    this.zoomLevel = Math.min(150, this.zoomLevel + 10);
+                },
+
+                zoomOut() {
+                    this.zoomLevel = Math.max(30, this.zoomLevel - 10);
+                },
+
+                resetZoom() {
+                    this.zoomLevel = 100;
+                },
+
+                fitToScreen() {
+                    const container = this.$refs.canvasContainer;
+                    if (!container) return;
+                    const availH = container.clientHeight - 40;
+                    const availW = container.clientWidth - 40;
+                    const dims = this.deviceDims;
+                    if (availH <= 0 || availW <= 0) return;
+
+                    const scaleH = availH / dims.h;
+                    const scaleW = availW / dims.w;
+                    const optimal = Math.min(scaleH, scaleW);
+                    const pct = Math.round((optimal * 100) / 5) * 5;
+                    this.zoomLevel = Math.max(30, Math.min(100, pct));
+                }
+            };
+        }
+    </script>
 </body>
 </html>

@@ -8,6 +8,10 @@
                 $initialThemeId = $themes->firstWhere('id', old('theme_id', request('theme_id')))?->id ?? $themes->first()?->id ?? '';
             @endphp
             selectedTheme: '{{ $initialThemeId }}',
+            themeStoryImageMap: @js($themes->mapWithKeys(fn($t) => [(string)$t->id => (bool)$t->has_story_images])),
+            themeSupportsStoryImages() {
+                return !!this.themeStoryImageMap[String(this.selectedTheme)];
+            },
             selectedMusic: '{{ old('music_preset', '/audio/payung-teduh-akad.mp3') }}',
             isPlayingAudio: false,
             audioPlayer: null,
@@ -790,9 +794,9 @@
                                     </button>
                                 </div>
 
-                                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
-                                    <!-- FOTO KENANGAN BABAK (OPSIONAL) -->
-                                    <div class="sm:col-span-3 flex flex-col items-center gap-2">
+                                <div class="grid grid-cols-1 gap-3 text-xs" :class="themeSupportsStoryImages() ? 'sm:grid-cols-12' : 'sm:grid-cols-1'">
+                                    <!-- FOTO KENANGAN BABAK (HANYA UNTUK TEMA YANG MEMILIKI GAMBAR LOVE STORY) -->
+                                    <div x-show="themeSupportsStoryImages()" class="sm:col-span-3 flex flex-col items-center gap-2">
                                         <div class="w-full aspect-[4/3] rounded-xl bg-sand-200 overflow-hidden border border-sand-300 relative flex items-center justify-center">
                                             <template x-if="story.imagePreview">
                                                 <img :src="story.imagePreview" class="w-full h-full object-cover">
@@ -814,7 +818,7 @@
                                     </div>
 
                                     <!-- FORM ISIAN BABAK KISAH -->
-                                    <div class="sm:col-span-9 space-y-2.5">
+                                    <div :class="themeSupportsStoryImages() ? 'sm:col-span-9' : 'w-full'" class="space-y-2.5">
                                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                                             <div class="sm:col-span-2">
                                                 <label class="font-bold text-charcoal-900 block mb-1">Judul Momen / Babak</label>

@@ -20,6 +20,8 @@ class DemoController extends Controller
                 'botanical' => 'botanical',
                 'minimalist' => 'minimalist',
                 'rose-romance' => 'rose-romance',
+                '3d-motion-01', 'motion-01', '3d-motion' => '3d-motion-01',
+                '3d-motion-05', 'motion-05', 'm05' => '3d-motion-05',
                 'classic' => 'classic',
                 default => 'classic',
             };
@@ -57,7 +59,7 @@ class DemoController extends Controller
     public function show(string $slug, Request $request): View
     {
         $canonicalSlug = config("themes.slug_to_preset.{$slug}", $slug);
-        $layout = in_array($canonicalSlug, ['editorial', 'botanical', 'classic', 'minimalist', 'rose-romance'], true)
+        $layout = in_array($canonicalSlug, ['editorial', 'botanical', 'classic', 'minimalist', 'rose-romance', '3d-motion-01', 'motion-01', '3d-motion', '3d-motion-05', 'motion-05', 'm05'], true)
             ? $canonicalSlug
             : 'classic';
 
@@ -129,6 +131,8 @@ class DemoController extends Controller
         ];
 
         $viewName = match ($layout) {
+            '3d-motion-01', 'motion-01', '3d-motion' => 'demo.3d-motion-01',
+            '3d-motion-05', 'motion-05', 'm05' => 'demo.3d-motion-05',
             'editorial' => 'demo.editorial',
             'botanical' => 'demo.botanical',
             'minimalist', 'warm-minimalist', 'royal-luxury' => 'demo.minimalist',

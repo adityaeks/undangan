@@ -282,6 +282,12 @@
                             class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
                             <span>Rose Romance</span>
                         </button>
+                        <button 
+                            @click="selectedCategory = 'motion'" 
+                            :class="selectedCategory === 'motion' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                            class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
+                            <span>3D Motion</span>
+                        </button>
                     </div>
 
                     <!-- VIEW MODE (GRID VS LIST) -->

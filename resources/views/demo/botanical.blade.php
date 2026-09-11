@@ -565,9 +565,13 @@
                         <div class="p-4 rounded-2xl glass-botanical space-y-1.5">
                             <div class="flex items-center justify-between gap-2">
                                 <span class="font-italiana font-bold text-sm text-[#183024]" x-text="w.name"></span>
-                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-[#204030] text-[9px] font-semibold" x-text="w.attendance"></span>
+                                <span 
+                                    class="px-2 py-0.5 rounded-full bg-emerald-100 text-[#204030] text-[9px] font-semibold" 
+                                    x-text="w.attendance || w.status"
+                                    x-show="w.attendance || w.status"
+                                ></span>
                             </div>
-                            <p class="text-xs text-[#406150] leading-relaxed italic" x-text="w.message"></p>
+                            <p class="text-xs text-[#406150] leading-relaxed italic" x-text="w.message || w.msg"></p>
                             <span class="text-[10px] opacity-60 block text-right" x-text="w.time"></span>
                         </div>
                     </template>
@@ -705,21 +709,50 @@
                 async submitWish() {
                     if (!this.wishForm.message.trim()) return;
                     this.wishForm.loading = true;
+                    const name = this.wishForm.name.trim() || 'Tamu Undangan';
+                    const attendance = this.wishForm.attendance || 'Hadir';
+                    const message = this.wishForm.message.trim();
+
                     try {
-                        const res = await fetch('{{ url('/u/' . ($invitation->slug ?? '')) }}/wishes', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-                            body: JSON.stringify({ guest_name: this.wishForm.name, attendance: this.wishForm.attendance, message: this.wishForm.message })
-                        });
-                        const json = await res.json();
-                        if (json.success) {
-                            this.wishes.unshift({ name: json.wish.name, attendance: json.wish.attendance, message: json.wish.message, time: json.wish.time });
-                            this.wishForm.message = '';
-                            this.showToast('Terima kasih! Doa restu Anda telah terkirim.');
+                        const slug = '{{ $invitation->slug ?? '' }}';
+                        if (slug) {
+                            const res = await fetch('{{ url('/u') }}/' + slug + '/wishes', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                                body: JSON.stringify({ guest_name: name, attendance: attendance, message: message })
+                            });
+                            const json = await res.json();
+                            if (json.success && json.wish) {
+                                this.wishes.unshift({ 
+                                    name: json.wish.name, 
+                                    attendance: json.wish.attendance, 
+                                    status: json.wish.attendance, 
+                                    message: json.wish.message, 
+                                    msg: json.wish.message, 
+                                    time: json.wish.time 
+                                });
+                                this.wishForm.message = '';
+                                this.showToast('Terima kasih! Doa restu Anda telah terkirim.');
+                                return;
+                            }
                         }
+                    } catch (e) {
+                        console.warn('Demo wish submit fallback to client state:', e);
                     } finally {
                         this.wishForm.loading = false;
                     }
+
+                    // Client-side fallback for Demo
+                    this.wishes.unshift({
+                        name: name,
+                        attendance: attendance,
+                        status: attendance,
+                        message: message,
+                        msg: message,
+                        time: 'Baru saja'
+                    });
+                    this.wishForm.message = '';
+                    this.showToast('Terima kasih! Doa restu Anda telah terkirim.');
                 },
 
                 startCountdown() {

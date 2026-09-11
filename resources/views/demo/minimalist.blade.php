@@ -96,121 +96,7 @@
 
 <body 
     class="bg-[#FBF9F5] text-[#24211D] font-sans antialiased selection:bg-[#DDD2BF] selection:text-[#151311] overflow-x-hidden min-h-screen"
-    x-data="{
-        isOpen: false,
-        isPlaying: false,
-        audio: null,
-        lightboxOpen: false,
-        lightboxImg: '',
-        copiedToast: false,
-        copiedMsg: '',
-        activeTab: 'all',
-        
-        // Countdown
-        days: '00',
-        hours: '00',
-        minutes: '00',
-        seconds: '00',
-
-        // RSVP
-        rsvpName: '{{ $guestName ?? '' }}',
-        rsvpGuests: '1',
-        rsvpStatus: 'hadir',
-        rsvpMessage: '',
-        rsvpSubmitted: false,
-        rsvpLoading: false,
-        wishes: @json($data['sample_wishes']),
-
-        init() {
-            this.audio = document.getElementById('bgm-audio');
-            this.startCountdown();
-        },
-
-        openInvitation() {
-            this.isOpen = true;
-            document.body.style.overflow = 'auto';
-            if (this.audio) {
-                this.audio.play().then(() => {
-                    this.isPlaying = true;
-                }).catch(() => {
-                    this.isPlaying = false;
-                });
-            }
-            setTimeout(() => {
-                lucide.createIcons();
-            }, 100);
-        },
-
-        toggleAudio() {
-            if (!this.audio) return;
-            if (this.isPlaying) {
-                this.audio.pause();
-                this.isPlaying = false;
-            } else {
-                this.audio.play();
-                this.isPlaying = true;
-            }
-        },
-
-        copyToClipboard(text, label) {
-            navigator.clipboard.writeText(text).then(() => {
-                this.copiedMsg = label + ' berhasil disalin';
-                this.copiedToast = true;
-                setTimeout(() => { this.copiedToast = false; }, 2800);
-            });
-        },
-
-        async submitRsvp() {
-            if (!this.rsvpName.trim() || !this.rsvpMessage.trim()) return;
-            this.rsvpLoading = true;
-            try {
-                const res = await fetch('{{ url('/u/' . ($invitation->slug ?? '')) }}/wishes', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-                    body: JSON.stringify({ guest_name: this.rsvpName, attendance: this.rsvpStatus + (this.rsvpGuests > 1 ? ' (' + this.rsvpGuests + ' Orang)' : ''), message: this.rsvpMessage })
-                });
-                const json = await res.json();
-                if (json.success) {
-                    this.wishes.unshift({ name: json.wish.name, time: json.wish.time, status: json.wish.attendance, msg: json.wish.message });
-                    this.rsvpSubmitted = true;
-                    this.rsvpMessage = '';
-                    setTimeout(() => { this.rsvpSubmitted = false; }, 4000);
-                }
-            } finally {
-                this.rsvpLoading = false;
-            }
-        },
-
-        openPhoto(url) {
-            this.lightboxImg = url;
-            this.lightboxOpen = true;
-        },
-
-        startCountdown() {
-            const targetStr = @json($data['countdown_target'] ?? '2026-10-24T08:00:00+07:00');
-            const target = new Date(targetStr).getTime();
-            
-            const update = () => {
-                const now = new Date().getTime();
-                const diff = target - now;
-                if (diff > 0) {
-                    this.days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-                    this.hours = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-                    this.minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-                    this.seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
-                } else {
-                    this.days = '00';
-                    this.hours = '00';
-                    this.minutes = '00';
-                    this.seconds = '00';
-                }
-            };
-
-            update();
-            setInterval(update, 1000);
-        }
-    }"
-    x-init="init()"
+    x-data="minimalistApp()"
 >
 
     <!-- HIDDEN BACKGROUND AUDIO -->
@@ -810,11 +696,18 @@
                         <div class="space-y-2.5 max-h-60 overflow-y-auto pr-1">
                             <template x-for="(w, idx) in wishes" :key="idx">
                                 <div class="p-3.5 rounded-2xl bg-[#FBF9F5] border hairline-border space-y-1">
-                                    <div class="flex items-center justify-between text-[11px]">
-                                        <span class="font-semibold text-stone-900" x-text="w.name"></span>
+                                    <div class="flex items-center justify-between text-[11px] gap-2">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-semibold text-stone-900" x-text="w.name"></span>
+                                            <span 
+                                                class="px-2 py-0.5 rounded-full text-[9px] font-medium bg-stone-200/80 text-stone-700" 
+                                                x-text="w.attendance || w.status"
+                                                x-show="w.attendance || w.status"
+                                            ></span>
+                                        </div>
                                         <span class="text-stone-400 text-[10px]" x-text="w.time"></span>
                                     </div>
-                                    <p class="text-xs text-stone-600 leading-relaxed" x-text="w.msg"></p>
+                                    <p class="text-xs text-stone-600 leading-relaxed" x-text="w.message || w.msg"></p>
                                 </div>
                             </template>
                         </div>
@@ -913,8 +806,154 @@
         </main>
     </div>
 
-    <!-- Initialize Lucide Icons -->
     <script>
+        function minimalistApp() {
+            return {
+                isOpen: false,
+                isPlaying: false,
+                audio: null,
+                lightboxOpen: false,
+                lightboxImg: '',
+                copiedToast: false,
+                copiedMsg: '',
+                activeTab: 'all',
+                
+                // Countdown
+                days: '00',
+                hours: '00',
+                minutes: '00',
+                seconds: '00',
+
+                // RSVP
+                rsvpName: @json($guestName ?? ''),
+                rsvpGuests: '1',
+                rsvpStatus: 'hadir',
+                rsvpMessage: '',
+                rsvpSubmitted: false,
+                rsvpLoading: false,
+                wishes: @json($data['sample_wishes'] ?? []),
+
+                init() {
+                    this.audio = document.getElementById('bgm-audio');
+                    this.startCountdown();
+                },
+
+                openInvitation() {
+                    this.isOpen = true;
+                    document.body.style.overflow = 'auto';
+                    if (this.audio) {
+                        this.audio.play().then(() => {
+                            this.isPlaying = true;
+                        }).catch(() => {
+                            this.isPlaying = false;
+                        });
+                    }
+                    setTimeout(() => {
+                        lucide.createIcons();
+                    }, 100);
+                },
+
+                toggleAudio() {
+                    if (!this.audio) return;
+                    if (this.isPlaying) {
+                        this.audio.pause();
+                        this.isPlaying = false;
+                    } else {
+                        this.audio.play();
+                        this.isPlaying = true;
+                    }
+                },
+
+                copyToClipboard(text, label) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        this.copiedMsg = label + ' berhasil disalin';
+                        this.copiedToast = true;
+                        setTimeout(() => { this.copiedToast = false; }, 2800);
+                    });
+                },
+
+                async submitRsvp() {
+                    if (!this.rsvpName.trim() || !this.rsvpMessage.trim()) return;
+                    this.rsvpLoading = true;
+                    const name = this.rsvpName.trim();
+                    const attendance = (this.rsvpStatus === 'hadir' ? 'Hadir' : 'Berhalangan') + (this.rsvpGuests > 1 ? ' (' + this.rsvpGuests + ' Orang)' : '');
+                    const message = this.rsvpMessage.trim();
+
+                    try {
+                        const slug = '{{ $invitation->slug ?? '' }}';
+                        if (slug) {
+                            const res = await fetch('{{ url('/u') }}/' + slug + '/wishes', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                                body: JSON.stringify({ guest_name: name, attendance: attendance, message: message })
+                            });
+                            const json = await res.json();
+                            if (json.success && json.wish) {
+                                this.wishes.unshift({ 
+                                    name: json.wish.name, 
+                                    time: json.wish.time, 
+                                    status: json.wish.attendance, 
+                                    attendance: json.wish.attendance, 
+                                    message: json.wish.message, 
+                                    msg: json.wish.message 
+                                });
+                                this.rsvpSubmitted = true;
+                                this.rsvpMessage = '';
+                                setTimeout(() => { this.rsvpSubmitted = false; }, 4000);
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Demo RSVP fallback to client state:', e);
+                    } finally {
+                        this.rsvpLoading = false;
+                    }
+
+                    // Client-side fallback for demo
+                    this.wishes.unshift({
+                        name: name,
+                        time: 'Baru saja',
+                        status: attendance,
+                        attendance: attendance,
+                        message: message,
+                        msg: message
+                    });
+                    this.rsvpSubmitted = true;
+                    this.rsvpMessage = '';
+                    setTimeout(() => { this.rsvpSubmitted = false; }, 4000);
+                },
+
+                openPhoto(url) {
+                    this.lightboxImg = url;
+                    this.lightboxOpen = true;
+                },
+
+                startCountdown() {
+                    const targetStr = @json($data['countdown_target'] ?? '2026-10-24T08:00:00+07:00');
+                    const target = new Date(targetStr).getTime();
+                    
+                    const update = () => {
+                        const now = new Date().getTime();
+                        const diff = target - now;
+                        if (diff > 0) {
+                            this.days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                            this.hours = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                            this.minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                            this.seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+                        } else {
+                            this.days = '00';
+                            this.hours = '00';
+                            this.minutes = '00';
+                            this.seconds = '00';
+                        }
+                    };
+
+                    update();
+                    setInterval(update, 1000);
+                }
+            };
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             lucide.createIcons();
         });
