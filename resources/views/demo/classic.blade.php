@@ -80,7 +80,7 @@
     x-init="initApp()"
 >
     <!-- AUDIO ELEMENT -->
-    <audio id="bgMusic" loop preload="auto">
+    <audio id="bgMusic" loop preload="none">
         <source src="{{ $data['background_music'] ?? '/audio/wedding-song.mp3' }}" type="audio/mp3">
     </audio>
 

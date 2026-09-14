@@ -147,33 +147,33 @@
             <div class="max-w-4xl mx-auto space-y-6">
                 
                 <!-- STANDALONE CHECKOUT HEADER -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-sand-200/80">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-4 border-b border-sand-200/80">
                     <div>
                         <a href="{{ route('themes.catalog') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-700 hover:text-brand-900 transition mb-2">
-                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
                             <span>Kembali ke Katalog Tema</span>
                         </a>
-                        <div class="flex items-center gap-2">
-                            <h1 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-950">Detail Pembelian & Tagihan</h1>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h1 class="font-serif text-xl sm:text-3xl font-bold text-charcoal-950">Detail Pembelian &amp; Tagihan</h1>
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-brand-100 text-brand-800 text-[10px] font-bold uppercase tracking-wider">Checkout Tema</span>
                         </div>
                         <p class="text-xs text-sand-500 mt-0.5">Kode Transaksi: <strong class="text-charcoal-900 font-mono">{{ $order->order_code }}</strong></p>
                     </div>
 
-                    <div>
+                    <div class="self-start sm:self-auto">
                         @if($order->isPaid())
-                            <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider shadow-sm border border-emerald-200">
+                            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider shadow-sm border border-emerald-200">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
                                 <span>Lunas &amp; Aktif</span>
                             </span>
                         @elseif($order->isExpired())
-                            <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-rose-100 text-rose-800 text-xs font-bold uppercase tracking-wider shadow-sm border border-rose-200">
+                            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-rose-100 text-rose-800 text-xs font-bold uppercase tracking-wider shadow-sm border border-rose-200">
                                 <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600"></i>
                                 <span>Kedaluwarsa</span>
                             </span>
                         @else
-                            <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider shadow-sm border border-amber-200">
-                                <i data-lucide="clock" class="w-4 h-4 text-amber-600"></i>
+                            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider shadow-sm border border-amber-200">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-600"></i>
                                 <span>Menunggu Pembayaran</span>
                             </span>
                         @endif

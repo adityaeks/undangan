@@ -202,7 +202,7 @@ class InvitationController extends Controller
 
         // Cover Image
         if ($request->hasFile('cover_image_file')) {
-            $coverPath = $request->file('cover_image_file')->store('invitations/covers', 'public');
+            $coverPath = upload_as_webp($request->file('cover_image_file'), 'invitations/covers');
             $coverImage = Storage::url($coverPath);
         } else {
             $coverImage = $validated['cover_image_url'] ?? null;
@@ -218,14 +218,14 @@ class InvitationController extends Controller
 
         // Groom & Bride Photos
         if ($request->hasFile('groom_photo_file')) {
-            $groomPath = $request->file('groom_photo_file')->store('invitations/couples', 'public');
+            $groomPath = upload_as_webp($request->file('groom_photo_file'), 'invitations/couples');
             $groomPhoto = Storage::url($groomPath);
         } else {
             $groomPhoto = $validated['groom_photo_url'] ?? null;
         }
 
         if ($request->hasFile('bride_photo_file')) {
-            $bridePath = $request->file('bride_photo_file')->store('invitations/couples', 'public');
+            $bridePath = upload_as_webp($request->file('bride_photo_file'), 'invitations/couples');
             $bridePhoto = Storage::url($bridePath);
         } else {
             $bridePhoto = $validated['bride_photo_url'] ?? null;
@@ -256,7 +256,10 @@ class InvitationController extends Controller
         ]);
 
         // Assign available theme license to this invitation
-        $this->themeOwnershipService->assignThemeLicenseToInvitation($user, $theme, $invitation);
+        $assignedLicense = $this->themeOwnershipService->assignThemeLicenseToInvitation($user, $theme, $invitation);
+        if ($assignedLicense && $assignedLicense->expires_at) {
+            $invitation->update(['expires_at' => $assignedLicense->expires_at]);
+        }
 
         // Settings
         $settingMetadata = [];
@@ -329,7 +332,7 @@ class InvitationController extends Controller
         $orderPos = 1;
         if ($request->hasFile('gallery_files')) {
             foreach ($request->file('gallery_files') as $file) {
-                $path = $file->store('invitations/galleries', 'public');
+                $path = upload_as_webp($file, 'invitations/galleries');
                 $invitation->media()->create([
                     'media_type' => 'photo',
                     'url' => Storage::url($path),
@@ -402,7 +405,7 @@ class InvitationController extends Controller
                 if (! empty($storyData['title']) || ! empty($storyData['story'])) {
                     $storyImageUrl = null;
                     if ($request->hasFile("stories.{$index}.image_file")) {
-                        $storyPath = $request->file("stories.{$index}.image_file")->store('invitations/stories', 'public');
+                        $storyPath = upload_as_webp($request->file("stories.{$index}.image_file"), 'invitations/stories');
                         $storyImageUrl = Storage::url($storyPath);
                     }
 

@@ -44,6 +44,9 @@ class WishController extends Controller
     public function toggleApproval(Wish $wish): RedirectResponse
     {
         $wish->update(['is_approved' => ! $wish->is_approved]);
+        if ($wish->invitation?->slug) {
+            clear_invitation_cache($wish->invitation->slug);
+        }
         $status = $wish->is_approved ? 'ditampilkan' : 'disembunyikan';
 
         return back()->with('success', "Ucapan dari {$wish->guest_name} berhasil {$status}.");
@@ -55,7 +58,11 @@ class WishController extends Controller
     public function destroy(Wish $wish): RedirectResponse
     {
         $guest = $wish->guest_name;
+        $slug = $wish->invitation?->slug;
         $wish->delete();
+        if ($slug) {
+            clear_invitation_cache($slug);
+        }
 
         return back()->with('success', "Ucapan dari {$guest} berhasil dihapus.");
     }

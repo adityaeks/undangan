@@ -22,6 +22,15 @@ class DemoController extends Controller
                 'rose-romance' => 'rose-romance',
                 '3d-motion-01', 'motion-01', '3d-motion' => '3d-motion-01',
                 '3d-motion-05', 'motion-05', 'm05' => '3d-motion-05',
+                '3d-motion-07', 'motion-07', 'm07' => '3d-motion-07',
+                '3d-motion-10', 'motion-10', 'm10' => '3d-motion-10',
+                '3d-motion-27', 'motion-27', 'm27' => '3d-motion-27',
+                '3d-motion-47', 'motion-47', 'm47' => '3d-motion-47',
+                '3d-motion-49', 'motion-49', 'm49' => '3d-motion-49',
+                '3d-motion-55', 'motion-55', 'm55' => '3d-motion-55',
+                'luxury-01', 'l01' => 'luxury-01',
+                'luxury-02', 'l02' => 'luxury-02',
+                'luxury-07', 'l07' => 'luxury-07',
                 'classic' => 'classic',
                 default => 'classic',
             };
@@ -59,7 +68,21 @@ class DemoController extends Controller
     public function show(string $slug, Request $request): View
     {
         $canonicalSlug = config("themes.slug_to_preset.{$slug}", $slug);
-        $layout = in_array($canonicalSlug, ['editorial', 'botanical', 'classic', 'minimalist', 'rose-romance', '3d-motion-01', 'motion-01', '3d-motion', '3d-motion-05', 'motion-05', 'm05'], true)
+        $validLayouts = [
+            'editorial', 'botanical', 'classic', 'minimalist', 'rose-romance',
+            '3d-motion-01', 'motion-01', '3d-motion',
+            '3d-motion-05', 'motion-05', 'm05',
+            '3d-motion-07', 'motion-07', 'm07',
+            '3d-motion-10', 'motion-10', 'm10',
+            '3d-motion-27', 'motion-27', 'm27',
+            '3d-motion-47', 'motion-47', 'm47',
+            '3d-motion-49', 'motion-49', 'm49',
+            '3d-motion-55', 'motion-55', 'm55',
+            'luxury-01', 'l01',
+            'luxury-02', 'l02',
+            'luxury-07', 'l07',
+        ];
+        $layout = in_array($canonicalSlug, $validLayouts, true)
             ? $canonicalSlug
             : 'classic';
 
@@ -133,6 +156,15 @@ class DemoController extends Controller
         $viewName = match ($layout) {
             '3d-motion-01', 'motion-01', '3d-motion' => 'demo.3d-motion-01',
             '3d-motion-05', 'motion-05', 'm05' => 'demo.3d-motion-05',
+            '3d-motion-07', 'motion-07', 'm07' => 'demo.3d-motion-07',
+            '3d-motion-10', 'motion-10', 'm10' => 'demo.3d-motion-10',
+            '3d-motion-27', 'motion-27', 'm27' => 'demo.3d-motion-27',
+            '3d-motion-47', 'motion-47', 'm47' => 'demo.3d-motion-47',
+            '3d-motion-49', 'motion-49', 'm49' => 'demo.3d-motion-49',
+            '3d-motion-55', 'motion-55', 'm55' => 'demo.3d-motion-55',
+            'luxury-01', 'l01' => 'demo.luxury-01',
+            'luxury-02', 'l02' => 'demo.luxury-02',
+            'luxury-07', 'l07' => 'demo.luxury-07',
             'editorial' => 'demo.editorial',
             'botanical' => 'demo.botanical',
             'minimalist', 'warm-minimalist', 'royal-luxury' => 'demo.minimalist',

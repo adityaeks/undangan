@@ -28,6 +28,16 @@ class InvitationMedia extends Model
     }
 
     /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::deleting(function (InvitationMedia $media) {
+            delete_storage_file($media->url ?? $media->file_url);
+        });
+    }
+
+    /**
      * Parent invitation.
      */
     public function invitation(): BelongsTo

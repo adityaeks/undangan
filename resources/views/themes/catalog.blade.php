@@ -288,6 +288,12 @@
                             class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
                             <span>3D Motion</span>
                         </button>
+                        <button 
+                            @click="selectedCategory = 'luxury'" 
+                            :class="selectedCategory === 'luxury' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                            class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
+                            <span>Luxury &amp; Elegant</span>
+                        </button>
                     </div>
 
                     <!-- VIEW MODE (GRID VS LIST) -->
@@ -316,7 +322,7 @@
     </section>
 
     <!-- TEMPLATES LISTING SECTION -->
-    <main class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1">
+    <main class="py-10 sm:py-16 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full flex-1">
         
         <!-- TEMPLATES CONTAINER -->
         <div>
@@ -324,13 +330,13 @@
             <!-- GRID VIEW -->
             <div 
                 x-show="viewMode === 'grid'" 
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6"
             >
                 @foreach ($themes as $theme)
                     <div 
                         x-show="matchesFilter(themes.find(t => t.id === '{{ $theme['id'] }}'))" 
                         x-transition 
-                        class="group rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:border-brand-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col bg-white"
+                        class="group rounded-2xl sm:rounded-3xl overflow-hidden glass-panel border border-sand-200 hover:border-brand-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col bg-white"
                     >
                         <!-- CARD TOP IMAGE WITH ACTION OVERLAY -->
                         <div class="relative aspect-[16/11] overflow-hidden bg-sand-200">
@@ -342,38 +348,38 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-charcoal-950/20 to-transparent"></div>
 
                             <!-- BADGES -->
-                            <div class="absolute top-4 left-4 right-4 flex items-center justify-between">
-                                <span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider shadow {{ $theme['tag_badge_class'] }}">
+                            <div class="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex items-center justify-between gap-1">
+                                <!-- <span class="px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-bold sm:font-semibold uppercase tracking-wide sm:tracking-wider shadow truncate max-w-[58%] {{ $theme['tag_badge_class'] }}">
                                     {{ $theme['tag'] }}
-                                </span>
-                                <span class="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-emerald-800 text-[10px] font-bold shadow">
+                                </span> -->
+                                <span class="px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/90 backdrop-blur-md text-emerald-800 text-[8px] sm:text-[10px] font-bold shadow shrink-0">
                                     {{ $theme['price'] }}
                                 </span>
                             </div>
 
                             <!-- HOVER QUICK ACTIONS -->
-                            <div class="absolute inset-0 bg-charcoal-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2.5 p-4">
+                            <div class="absolute inset-0 bg-charcoal-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2 p-2 sm:p-4">
                                 
                                 <a 
                                     href="{{ $theme['demo_url'] }}" 
                                     target="_blank" 
-                                    class="w-44 py-2.5 rounded-full bg-brand-500 text-white font-bold text-xs shadow-lg hover:bg-brand-600 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2"
+                                    class="w-auto px-3 sm:px-0 sm:w-44 py-1.5 sm:py-2.5 rounded-full bg-brand-500 text-white font-bold text-[10px] sm:text-xs shadow-lg hover:bg-brand-600 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-1.5 sm:gap-2"
                                 >
-                                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                    <i data-lucide="external-link" class="w-3 sm:w-3.5 h-3 sm:h-3.5"></i>
                                     <span>Buka Demo</span>
                                 </a>
                             </div>
 
                             <!-- COLOR PALETTE DOTS OVERLAY AT BOTTOM OF THUMBNAIL -->
-                            <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between">
-                                <div class="flex items-center gap-1.5 bg-charcoal-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-                                    <span class="text-[9px] text-sand-300 font-bold uppercase tracking-wider">Palet:</span>
+                            <div class="absolute bottom-2 sm:bottom-3 left-2 sm:left-4 right-2 sm:right-4 flex items-center justify-between">
+                                <div class="flex items-center gap-1 sm:gap-1.5 bg-charcoal-950/80 backdrop-blur-md px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-white/10">
+                                    <span class="text-[7px] sm:text-[9px] text-sand-300 font-bold uppercase tracking-wider">Palet:</span>
                                     <div class="flex items-center -space-x-1">
                                         @foreach ($theme['colors'] as $color)
                                             <span 
                                                 style="background-color: {{ $color['hex'] }};" 
                                                 title="{{ $color['name'] }} ({{ $color['hex'] }})" 
-                                                class="w-3.5 h-3.5 rounded-full border border-charcoal-950 shadow-sm cursor-help"
+                                                class="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 rounded-full border border-charcoal-950 shadow-sm cursor-help"
                                             ></span>
                                         @endforeach
                                     </div>
@@ -387,20 +393,17 @@
                         </div>
 
                         <!-- CARD BODY -->
-                        <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                        <div class="p-3 sm:p-6 space-y-2 sm:space-y-4 flex-1 flex flex-col justify-between">
                             
                             <!-- CONTENT -->
-                            <div class="space-y-2.5">
-                                <div class="flex items-center justify-between text-xs text-sand-500 font-medium">
-                                    <!-- <span class="text-brand-700 font-bold uppercase tracking-wider text-[11px]">{{ $theme['number'] }}</span> -->
-                                    <span>Kategori: <strong>{{ $theme['category_label'] }}</strong></span>
-                                </div>
+                            <div class="space-y-1.5 sm:space-y-2.5">
+                                
 
-                                <h2 class="font-serif text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors">
+                                <h2 class="font-serif text-sm sm:text-xl font-bold text-charcoal-950 group-hover:text-brand-600 transition-colors line-clamp-1 sm:line-clamp-none">
                                     {{ $theme['name'] }}
                                 </h2>
 
-                                <p class="text-xs text-charcoal-900/70 leading-relaxed">
+                                <p class="text-[10px] sm:text-xs text-charcoal-900/70 leading-relaxed line-clamp-2 sm:line-clamp-none">
                                     {{ $theme['description'] }}
                                 </p>
 
@@ -427,35 +430,25 @@
                             </div>
 
                             <!-- CARD FOOTER & ACTIONS -->
-                            <div class="pt-4 border-t border-sand-200 flex items-center justify-between gap-3">
-                                <!-- <button 
-                                    @click="openPreview(themes.find(t => t.id === '{{ $theme['id'] }}'))" 
-                                    class="text-xs font-semibold text-charcoal-900 hover:text-brand-600 flex items-center gap-1 py-1"
+                            <div class="pt-2 sm:pt-3 border-t border-sand-200/80 flex items-center gap-1.5 sm:gap-2">
+                                <a 
+                                    href="{{ $theme['checkout_url'] }}" 
+                                    @click.prevent="openOrderModal(themes.find(t => t.id === '{{ $theme['id'] }}'))"
+                                    class="flex-1 py-1.5 sm:py-2 px-2 rounded-xl bg-charcoal-950 text-brand-100 hover:bg-brand-600 hover:text-white text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1 shadow-sm cursor-pointer"
                                 >
-                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                    <span>Preview</span>
-                                </button> -->
+                                    <span>Beli</span>
+                                    <!-- <i data-lucide="arrow-right" class="w-3 h-3"></i> -->
+                                </a>
 
-                                <div class="flex items-center gap-2">
-                                    <!-- <a 
-                                        href="{{ $theme['demo_url'] }}" 
-                                        target="_blank" 
-                                        class="px-3.5 py-2 rounded-xl bg-sand-200/80 hover:bg-sand-300 text-charcoal-950 text-xs font-bold transition flex items-center gap-1"
-                                        title="Buka Live Demo di Tab Baru"
-                                    >
-                                        <span>Demo</span>
-                                        <i data-lucide="external-link" class="w-3 h-3"></i>
-                                    </a> -->
-
-                                    <a 
-                                        href="{{ $theme['checkout_url'] }}" 
-                                        @click.prevent="openOrderModal(themes.find(t => t.id === '{{ $theme['id'] }}'))"
-                                        class="px-4 py-2 rounded-xl bg-charcoal-950 text-brand-100 hover:bg-brand-600 hover:text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
-                                    >
-                                        <span>Pilih Desain</span>
-                                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                    </a>
-                                </div>
+                                <a 
+                                    href="{{ $theme['demo_url'] }}" 
+                                    target="_blank" 
+                                    class="flex-1 py-1.5 sm:py-2 px-2 rounded-xl bg-sand-200/90 hover:bg-sand-300 text-charcoal-950 border border-sand-300/70 text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1 shadow-xs"
+                                    title="Buka Live Demo di Tab Baru"
+                                >
+                                    <span>Demo</span>
+                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                </a>
                             </div>
 
                         </div>
@@ -482,11 +475,11 @@
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             >
                             <div class="absolute inset-0 bg-gradient-to-t from-charcoal-950/70 via-transparent to-transparent"></div>
-                            <div class="absolute top-3 left-3">
+                            <!-- <div class="absolute top-3 left-3">
                                 <span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider shadow {{ $theme['tag_badge_class'] }}">
                                     {{ $theme['tag'] }}
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
 
                         <!-- BODY (RIGHT) -->

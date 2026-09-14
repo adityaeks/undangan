@@ -160,7 +160,7 @@ class InvitationController extends Controller
             // Cover Image
             $coverImage = $validated['cover_image_url'] ?? null;
             if ($request->hasFile('cover_image_file')) {
-                $coverPath = $request->file('cover_image_file')->store('invitations/covers', 'public');
+                $coverPath = upload_as_webp($request->file('cover_image_file'), 'invitations/covers');
                 $coverImage = Storage::url($coverPath);
             }
 
@@ -174,13 +174,13 @@ class InvitationController extends Controller
             // Groom & Bride Photos
             $groomPhoto = $validated['groom_photo_url'] ?? null;
             if ($request->hasFile('groom_photo_file')) {
-                $groomPath = $request->file('groom_photo_file')->store('invitations/couples', 'public');
+                $groomPath = upload_as_webp($request->file('groom_photo_file'), 'invitations/couples');
                 $groomPhoto = Storage::url($groomPath);
             }
 
             $bridePhoto = $validated['bride_photo_url'] ?? null;
             if ($request->hasFile('bride_photo_file')) {
-                $bridePath = $request->file('bride_photo_file')->store('invitations/couples', 'public');
+                $bridePath = upload_as_webp($request->file('bride_photo_file'), 'invitations/couples');
                 $bridePhoto = Storage::url($bridePath);
             }
 
@@ -287,7 +287,7 @@ class InvitationController extends Controller
             $orderPos = 1;
             if ($request->hasFile('gallery_files')) {
                 foreach ($request->file('gallery_files') as $file) {
-                    $path = $file->store('invitations/galleries', 'public');
+                    $path = upload_as_webp($file, 'invitations/galleries');
                     $invitation->media()->create([
                         'media_type' => 'photo',
                         'url' => Storage::url($path),
@@ -344,7 +344,7 @@ class InvitationController extends Controller
                     if (! empty($storyData['title']) || ! empty($storyData['story'])) {
                         $storyImageUrl = null;
                         if ($request->hasFile("stories.{$index}.image_file")) {
-                            $storyPath = $request->file("stories.{$index}.image_file")->store('invitations/stories', 'public');
+                            $storyPath = upload_as_webp($request->file("stories.{$index}.image_file"), 'invitations/stories');
                             $storyImageUrl = Storage::url($storyPath);
                         }
 
@@ -503,18 +503,26 @@ class InvitationController extends Controller
             // Cover Image
             $coverImage = $invitation->cover_image;
             if ($request->hasFile('cover_image_file')) {
-                $coverPath = $request->file('cover_image_file')->store('invitations/covers', 'public');
+                delete_storage_file($invitation->cover_image);
+                $coverPath = upload_as_webp($request->file('cover_image_file'), 'invitations/covers');
                 $coverImage = Storage::url($coverPath);
             } elseif (! empty($validated['cover_image_url'])) {
+                if ($invitation->cover_image && $invitation->cover_image !== $validated['cover_image_url']) {
+                    delete_storage_file($invitation->cover_image);
+                }
                 $coverImage = $validated['cover_image_url'];
             }
 
             // Background Music
             $backgroundMusic = $invitation->background_music;
             if ($request->hasFile('music_file')) {
+                delete_storage_file($invitation->background_music);
                 $musicPath = $request->file('music_file')->store('invitations/music', 'public');
                 $backgroundMusic = Storage::url($musicPath);
             } elseif (! empty($validated['music_preset'])) {
+                if ($invitation->background_music && $invitation->background_music !== $validated['music_preset']) {
+                    delete_storage_file($invitation->background_music);
+                }
                 $backgroundMusic = $validated['music_preset'];
             }
 
@@ -522,18 +530,26 @@ class InvitationController extends Controller
             $groom = $invitation->couples()->where('role', 'groom')->first();
             $groomPhoto = $groom?->photo_url;
             if ($request->hasFile('groom_photo_file')) {
-                $groomPath = $request->file('groom_photo_file')->store('invitations/couples', 'public');
+                delete_storage_file($groom?->photo_url);
+                $groomPath = upload_as_webp($request->file('groom_photo_file'), 'invitations/couples');
                 $groomPhoto = Storage::url($groomPath);
             } elseif (! empty($validated['groom_photo_url'])) {
+                if ($groom && $groom->photo_url && $groom->photo_url !== $validated['groom_photo_url']) {
+                    delete_storage_file($groom->photo_url);
+                }
                 $groomPhoto = $validated['groom_photo_url'];
             }
 
             $bride = $invitation->couples()->where('role', 'bride')->first();
             $bridePhoto = $bride?->photo_url;
             if ($request->hasFile('bride_photo_file')) {
-                $bridePath = $request->file('bride_photo_file')->store('invitations/couples', 'public');
+                delete_storage_file($bride?->photo_url);
+                $bridePath = upload_as_webp($request->file('bride_photo_file'), 'invitations/couples');
                 $bridePhoto = Storage::url($bridePath);
             } elseif (! empty($validated['bride_photo_url'])) {
+                if ($bride && $bride->photo_url && $bride->photo_url !== $validated['bride_photo_url']) {
+                    delete_storage_file($bride->photo_url);
+                }
                 $bridePhoto = $validated['bride_photo_url'];
             }
 
@@ -643,14 +659,18 @@ class InvitationController extends Controller
 
             // Media deletions
             if (! empty($validated['delete_media_ids'])) {
-                $invitation->media()->whereIn('id', $validated['delete_media_ids'])->delete();
+                $mediasToDelete = $invitation->media()->whereIn('id', $validated['delete_media_ids'])->get();
+                foreach ($mediasToDelete as $mediaItem) {
+                    delete_storage_file($mediaItem->url ?? $mediaItem->file_url);
+                    $mediaItem->delete();
+                }
             }
 
             // New Galleries
             $currentMaxOrder = (int) $invitation->media()->max('order');
             if ($request->hasFile('gallery_files')) {
                 foreach ($request->file('gallery_files') as $file) {
-                    $path = $file->store('invitations/galleries', 'public');
+                    $path = upload_as_webp($file, 'invitations/galleries');
                     $invitation->media()->create([
                         'media_type' => 'photo',
                         'url' => Storage::url($path),
@@ -703,13 +723,26 @@ class InvitationController extends Controller
 
             // Stories
             if ($request->has('stories') && is_array($request->stories)) {
-                $invitation->stories()->delete();
+                $existingStories = $invitation->stories()->get();
+                $keptImages = [];
+                foreach ($request->stories as $index => $storyData) {
+                    if (! empty($storyData['existing_image']) && ! $request->hasFile("stories.{$index}.image_file")) {
+                        $keptImages[] = $storyData['existing_image'];
+                    }
+                }
+                foreach ($existingStories as $oldStory) {
+                    if ($oldStory->image_url && ! in_array($oldStory->image_url, $keptImages)) {
+                        delete_storage_file($oldStory->image_url);
+                    }
+                    $oldStory->delete();
+                }
+
                 $storyOrder = 1;
                 foreach ($request->stories as $index => $storyData) {
                     if (! empty($storyData['title']) || ! empty($storyData['story'])) {
                         $storyImageUrl = $storyData['existing_image'] ?? null;
                         if ($request->hasFile("stories.{$index}.image_file")) {
-                            $storyPath = $request->file("stories.{$index}.image_file")->store('invitations/stories', 'public');
+                            $storyPath = upload_as_webp($request->file("stories.{$index}.image_file"), 'invitations/stories');
                             $storyImageUrl = Storage::url($storyPath);
                         }
 
@@ -724,6 +757,8 @@ class InvitationController extends Controller
                 }
             }
         });
+
+        clear_invitation_cache($invitation->slug);
 
         return redirect()->route('partner.invitations.index')->with('success', 'Undangan digital untuk klien berhasil diperbarui!');
     }

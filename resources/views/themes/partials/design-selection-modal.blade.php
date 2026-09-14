@@ -17,7 +17,7 @@
 
     <!-- MODAL CONTAINER -->
     <div 
-        class="relative w-full max-w-lg sm:max-w-xl bg-white rounded-3xl shadow-2xl border border-sand-200/90 overflow-hidden my-auto flex flex-col"
+        class="relative w-full max-w-lg sm:max-w-xl bg-white rounded-3xl shadow-2xl border border-sand-200/90 overflow-hidden my-auto flex flex-col max-h-[92vh] sm:max-h-[90vh]"
         @click.stop
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 scale-95 translate-y-3"
@@ -26,8 +26,6 @@
         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
         x-transition:leave-end="opacity-0 scale-95 translate-y-3"
     >
-        <!-- TOP ACCENT LINE -->
-        <div class="h-1 w-full bg-gradient-to-r from-brand-500 via-brand-400 to-brand-600 shrink-0"></div>
 
         <!-- HEADER -->
         <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-sand-200/70 bg-gradient-to-b from-sand-50/80 to-white flex items-center justify-between gap-3 shrink-0">
@@ -42,11 +40,11 @@
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-2">
-                        <span 
+                        <!-- <span 
                             class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-wider"
                             :class="selectedTheme ? selectedTheme.tag_badge_class : 'bg-brand-500 text-white'"
                             x-text="selectedTheme ? selectedTheme.tag : 'Desain'"
-                        ></span>
+                        ></span> -->
                         <span class="text-[10px] text-sand-500 truncate" x-text="selectedTheme ? selectedTheme.category_label : ''"></span>
                     </div>
                     <h3 class="font-serif text-base sm:text-lg font-bold text-charcoal-950 truncate mt-0.5" x-text="selectedTheme ? selectedTheme.name : 'Pilih Varian Undangan'"></h3>
@@ -65,7 +63,7 @@
         </div>
 
         <!-- MODAL BODY -->
-        <div class="p-5 sm:p-6 space-y-4 sm:space-y-5">
+        <div class="p-5 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1">
 
             <!-- 1. PILIH MASA AKTIF -->
             <div class="space-y-2">
@@ -146,9 +144,9 @@
                 <div class="flex items-center justify-between">
                     <label class="text-[11px] font-bold uppercase tracking-wider text-charcoal-900 flex items-center gap-1.5">
                         <i data-lucide="edit-3" class="w-3.5 h-3.5 text-brand-600"></i>
-                        <span>2. Metode Pengisian Data Undangan</span>
+                        <span>2. Pengisian Data Undangan</span>
                     </label>
-                    <span class="text-[10px] text-sand-500 font-medium">Pilih kemudahan Anda</span>
+                    <span class="text-[10px] text-sand-500 font-medium">Pilih salah satu</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -218,28 +216,32 @@
 
         </div>
 
-        <!-- FOOTER: TOTAL BAYAR & CHECKOUT (CLEAN INTEGRATED ROW) -->
-        <div class="px-5 py-4 sm:px-6 bg-sand-50/90 border-t border-sand-200/80 flex items-center justify-between gap-3 shrink-0">
-            <div class="space-y-0.5">
-                <div class="flex items-center gap-1.5">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-sand-500">Total Biaya:</span>
-                    <span class="text-[10px] text-sand-600 font-medium" x-text="'(' + (selectedDuration === 'lifetime' ? 'Lifetime' : '45 Hari') + ' • ' + (selectedServiceType === 'assisted' ? 'Diisikan Tim' : 'Mandiri') + ')'"></span>
+        <!-- FOOTER: TOTAL BAYAR & CHECKOUT (RESPONSIVE 2-ROW ON MOBILE, 1-ROW ON DESKTOP) -->
+        <div class="px-5 py-3.5 sm:px-6 sm:py-4 bg-sand-50/95 border-t border-sand-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+            <div class="flex items-center justify-between sm:flex-col sm:items-start gap-1">
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-sand-500">Total Biaya:</span>
+                        <span class="text-[10px] text-brand-800 font-semibold bg-brand-100/70 px-2 py-0.5 rounded-full" x-text="(selectedDuration === 'lifetime' ? 'Lifetime' : '45 Hari') + ' • ' + (selectedServiceType === 'assisted' ? 'Diisikan Tim' : 'Mandiri')"></span>
+                    </div>
+                    <div class="hidden sm:block font-serif text-2xl font-bold text-charcoal-950 whitespace-nowrap mt-0.5" x-text="formatCurrency(getTotalPrice())"></div>
                 </div>
-                <div class="font-serif text-xl sm:text-2xl font-bold text-charcoal-950" x-text="formatCurrency(getTotalPrice())"></div>
+                <!-- Price on mobile: cleanly placed on the right of the summary row -->
+                <div class="sm:hidden font-serif text-xl font-bold text-charcoal-950 whitespace-nowrap" x-text="formatCurrency(getTotalPrice())"></div>
             </div>
 
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-2 w-full sm:w-auto">
                 <button 
                     type="button" 
                     @click="closeOrderModal()" 
-                    class="px-3.5 py-2.5 rounded-xl border border-sand-300 hover:bg-sand-200/70 text-charcoal-600 font-bold text-xs transition cursor-pointer"
+                    class="px-4 py-2.5 rounded-xl border border-sand-300 hover:bg-sand-200/70 text-charcoal-600 font-bold text-xs transition cursor-pointer shrink-0 text-center"
                 >
                     Batal
                 </button>
 
                 <a 
                     :href="getCheckoutUrl()" 
-                    class="px-5 py-2.5 rounded-xl bg-charcoal-950 hover:bg-brand-600 text-white font-bold text-xs shadow-sm hover:shadow-md transition flex items-center gap-1.5 cursor-pointer"
+                    class="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-charcoal-950 hover:bg-brand-600 text-white font-bold text-xs shadow-sm hover:shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
                 >
                     <span>Lanjut ke Checkout</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>

@@ -30,6 +30,7 @@ class Invitation extends Model
         'is_published',
         'status',
         'published_at',
+        'expires_at',
         'passcode',
     ];
 
@@ -39,7 +40,24 @@ class Invitation extends Model
             'event_date' => 'date',
             'is_published' => 'boolean',
             'published_at' => 'datetime',
+            'expires_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Determine if this invitation has expired.
+     */
+    public function isExpired(): bool
+    {
+        if ($this->expires_at !== null && $this->expires_at->isPast()) {
+            return true;
+        }
+
+        if ($this->relationLoaded('userTheme') && $this->userTheme && $this->userTheme->isExpired()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -57,6 +75,47 @@ class Invitation extends Model
         }
 
         return $slug;
+    }
+
+    /**
+     * Clear public cached page data for this invitation.
+     */
+    public function clearPublicCache(): void
+    {
+        if (! empty($this->slug)) {
+            clear_invitation_cache($this->slug);
+        }
+    }
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::saved(function (Invitation $invitation) {
+            $invitation->clearPublicCache();
+        });
+
+        static::deleting(function (Invitation $invitation) {
+            delete_storage_file($invitation->cover_image);
+            delete_storage_file($invitation->background_music);
+
+            foreach ($invitation->couples as $couple) {
+                delete_storage_file($couple->photo_url);
+            }
+
+            foreach ($invitation->media as $media) {
+                delete_storage_file($media->url ?? $media->file_url);
+            }
+
+            foreach ($invitation->stories as $story) {
+                delete_storage_file($story->image_url);
+            }
+        });
+
+        static::deleted(function (Invitation $invitation) {
+            $invitation->clearPublicCache();
+        });
     }
 
     /**

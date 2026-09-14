@@ -31,6 +31,16 @@ class InvitationStory extends Model
     }
 
     /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::deleting(function (InvitationStory $story) {
+            delete_storage_file($story->image_url);
+        });
+    }
+
+    /**
      * Parent invitation.
      */
     public function invitation(): BelongsTo

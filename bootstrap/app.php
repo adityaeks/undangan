@@ -21,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'payment/webhook',
             'api/webhooks/midtrans',
             'api/webhook/midtrans',
+            'wp-admin/*',
+            'themes/*/wp-admin/*',
+            'wp-json/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

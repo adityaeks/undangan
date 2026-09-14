@@ -63,6 +63,9 @@ Route::match(['GET', 'POST'], '/themes/{theme}/wp-admin/admin-ajax.php', functio
 Route::match(['GET', 'POST'], '/wp-admin/admin-ajax.php', function () {
     return response()->json(['success' => true, 'data' => []]);
 });
+Route::match(['GET', 'POST'], '/wp-json/{any?}', function () {
+    return response()->json(['success' => true, 'data' => []]);
+})->where('any', '.*');
 Route::get('/wp-content/uploads/useanyfont/{file}', function (string $file) {
     $path = public_path("themes/3d-motion-05/uploads/useanyfont/{$file}");
     if (file_exists($path)) {

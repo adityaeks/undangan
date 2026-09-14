@@ -1141,7 +1141,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-d94709f elementor-widget__width-auto elementor-widget-mobile__width-auto elementor-widget elementor-widget-heading" data-id="d94709f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">P</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">{{ $data['initials']['bride'] ?? 'P' }}</h2>				</div>
 				</div>
 				<div class="elementor-element elementor-element-a63425f elementor-widget__width-auto elementor-widget elementor-widget-image" data-id="a63425f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
@@ -1149,7 +1149,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 				</div>
 				<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-347cdf7 elementor-widget__width-auto elementor-widget-mobile__width-auto elementor-widget elementor-widget-heading" data-id="347cdf7" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">A</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">{{ $data['initials']['groom'] ?? 'A' }}</h2>				</div>
 				</div>
 					</div>
 		</div>
@@ -1372,7 +1372,7 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				</div>
 				<div class="elementor-element elementor-element-3a9ab45 inv-atas elementor-countdown--label-block elementor-widget elementor-widget-countdown" data-id="3a9ab45" data-element_type="widget" data-e-type="widget" data-widget_type="countdown.default">
 				<div class="elementor-widget-container">
-							<div class="elementor-countdown-wrapper" data-date="{{ strtotime($data['countdown_target'] ?? '2026-10-24 08:00:00') }}" >
+							<div class="elementor-countdown-wrapper" data-date="{{ $data['countdown_timestamp'] ?? strtotime('+30 days') }}" >
 			<div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-days"></span> <span class="elementor-countdown-label">Hari</span></div><div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-hours"></span> <span class="elementor-countdown-label">Jam</span></div><div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-minutes"></span> <span class="elementor-countdown-label">Menit</span></div><div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-seconds"></span> <span class="elementor-countdown-label">Detik</span></div>		</div>
 						</div>
 				</div>
@@ -1443,20 +1443,20 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				</div>
 				<div data-dce-title-color="#000000" class="elementor-element elementor-element-b17d2c6 playball elementor-widget elementor-widget-heading" data-id="b17d2c6" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">Minggu</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">{{ $data['events']['akad']['day'] ?? 'Minggu' }}</h2>				</div>
 				</div>
 				<div data-dce-title-color="#333333" class="elementor-element elementor-element-6c857a7 elementor-widget elementor-widget-heading" data-id="6c857a7" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">28</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">{{ $data['events']['akad']['day_num'] ?? '28' }}</h2>				</div>
 				</div>
 				<div data-dce-text-color="#333333" class="elementor-element elementor-element-4cf0710 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-inline elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="4cf0710" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 				<div class="elementor-widget-container">
 							<ul class="elementor-icon-list-items elementor-inline-items">
 							<li class="elementor-icon-list-item elementor-inline-item">
-										<span class="elementor-icon-list-text">Desember</span>
+										<span class="elementor-icon-list-text">{{ $data['events']['akad']['month'] ?? 'Desember' }}</span>
 									</li>
 								<li class="elementor-icon-list-item elementor-inline-item">
-										<span class="elementor-icon-list-text">2027</span>
+										<span class="elementor-icon-list-text">{{ $data['events']['akad']['year'] ?? '2026' }}</span>
 									</li>
 						</ul>
 						</div>
@@ -1467,7 +1467,7 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 							<li class="elementor-icon-list-item">
 											<span class="elementor-icon-list-icon">
 							<i aria-hidden="true" class="fas fa-clock"></i>						</span>
-										<span class="elementor-icon-list-text">08:00 WIB</span>
+										<span class="elementor-icon-list-text">{{ $data['events']['akad']['formatted_time'] ?? '08:00 WIB' }}</span>
 									</li>
 						</ul>
 						</div>
@@ -1483,7 +1483,7 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				<div data-dce-background-color="#7F96A8" class="elementor-element elementor-element-c75cc47 elementor-align-center wdsdv-enabled--yes elementor-mobile-align-center elementor-widget elementor-widget-button" data-id="c75cc47" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
-					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="https://maps.app.goo.gl/TsZCeupoF4p6bksT6" target="_blank" rel="nofollow">
+					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="{{ $data['events']['akad']['maps_link'] ?: 'https://maps.google.com' }}" target="_blank" rel="nofollow">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-icon">
 				<i aria-hidden="true" class="fas fa-map-marker-alt"></i>			</span>
@@ -1526,20 +1526,20 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				</div>
 				<div data-dce-title-color="#000000" class="elementor-element elementor-element-750b47d elementor-widget elementor-widget-heading" data-id="750b47d" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">Minggu</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">{{ $data['events']['resepsi']['day'] ?? 'Minggu' }}</h2>				</div>
 				</div>
 				<div data-dce-title-color="#333333" class="elementor-element elementor-element-837124c elementor-widget elementor-widget-heading" data-id="837124c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">28</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">{{ $data['events']['resepsi']['day_num'] ?? '28' }}</h2>				</div>
 				</div>
 				<div data-dce-text-color="#333333" class="elementor-element elementor-element-a9077c0 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-inline elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="a9077c0" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 				<div class="elementor-widget-container">
 							<ul class="elementor-icon-list-items elementor-inline-items">
 							<li class="elementor-icon-list-item elementor-inline-item">
-										<span class="elementor-icon-list-text">Desember</span>
+										<span class="elementor-icon-list-text">{{ $data['events']['resepsi']['month'] ?? 'Desember' }}</span>
 									</li>
 								<li class="elementor-icon-list-item elementor-inline-item">
-										<span class="elementor-icon-list-text">2027</span>
+										<span class="elementor-icon-list-text">{{ $data['events']['resepsi']['year'] ?? '2026' }}</span>
 									</li>
 						</ul>
 						</div>
@@ -1550,7 +1550,7 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 							<li class="elementor-icon-list-item">
 											<span class="elementor-icon-list-icon">
 							<i aria-hidden="true" class="fas fa-clock"></i>						</span>
-										<span class="elementor-icon-list-text">09:00 - 13:00 WIB</span>
+										<span class="elementor-icon-list-text">{{ $data['events']['resepsi']['formatted_time'] ?? '09:00 - 13:00 WIB' }}</span>
 									</li>
 						</ul>
 						</div>
@@ -1561,12 +1561,12 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				</div>
 				<div data-dce-title-color="#333333" class="elementor-element elementor-element-dd918d3 elementor-widget elementor-widget-heading" data-id="dd918d3" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<p class="elementor-heading-title elementor-size-default"><b>{{ $data['events']['akad']['venue'] ?? 'Menara 165' }}</b><br />{{ $data['events']['akad']['address'] ?? 'Jl. TB Simatupang Jakarta Selatan' }}</p>				</div>
+					<p class="elementor-heading-title elementor-size-default"><b>{{ $data['events']['resepsi']['venue'] ?? 'Menara 165' }}</b><br />{{ $data['events']['resepsi']['address'] ?? 'Jl. TB Simatupang Jakarta Selatan' }}</p>				</div>
 				</div>
 				<div data-dce-background-color="#7F96A8" class="elementor-element elementor-element-27179d2 elementor-align-center wdsdv-enabled--yes elementor-mobile-align-center elementor-widget elementor-widget-button" data-id="27179d2" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
-					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="https://maps.app.goo.gl/TsZCeupoF4p6bksT6" target="_blank" rel="nofollow">
+					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="{{ $data['events']['resepsi']['maps_link'] ?: 'https://maps.google.com' }}" target="_blank" rel="nofollow">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-icon">
 				<i aria-hidden="true" class="fas fa-map-marker-alt"></i>			</span>
@@ -2062,7 +2062,7 @@ let delaySection = 0;
 const isEditorActive = document.body.classList.contains('elementor-editor-active');
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.motionSection .elementor-background-video-container video').removeAttribute('autoplay');
+    var _vid = document.querySelector(".motionSection .elementor-background-video-container video"); if (_vid && typeof _vid.removeAttribute === "function") { _vid.removeAttribute("autoplay"); }
     document.querySelector('.kolomPertama').style.display = 'none';
 
     delaySection = document.querySelector('.kolomPertama').dataset.delayTime;
@@ -2071,17 +2071,17 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof elementorFrontendConfig === 'undefined') {
     disableScrolling();
     document.body.style.height = "100vh";
-    btn_open.onclick = function() {
+    if (btn_open) { btn_open.onclick = function() {
         enableScrolling();
         closeCover();
         myFunction();
-    };
+    }; }
 
 }
 
 function myFunction() {
     setTimeout(() => {
-        document.querySelector('.motionSection .elementor-background-video-container video').play();
+        var _mv = document.querySelector(".motionSection .elementor-background-video-container video"); if (_mv && typeof _mv.play === "function") { _mv.play(); }
     }, 100);
 
     setTimeout(() => {

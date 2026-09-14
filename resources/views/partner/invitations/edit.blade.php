@@ -15,6 +15,7 @@
             coverPreview: '{{ $invitation->cover_image ?? '' }}',
             groomPreview: '{{ $groom?->photo_url ?? '' }}',
             bridePreview: '{{ $bride?->photo_url ?? '' }}',
+            galleryFiles: [],
             galleryPreviews: [],
             stories: @js(old('stories', $invitation->stories->isNotEmpty() ? $invitation->stories->map(fn($s) => [
                 'title' => $s->title,
@@ -119,17 +120,103 @@
                     this.audioPlayer.play();
                 }
             },
-            previewFile(event, target) {
+            async convertToWebP(file, quality = 0.82, maxWidth = 1920) {
+                if (!file || !file.type.startsWith('image/') || file.type === 'image/webp') {
+                    return file;
+                }
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = new Image();
+                        img.onload = function() {
+                            let width = img.width;
+                            let height = img.height;
+                            if (width > maxWidth) {
+                                height = Math.round((height * maxWidth) / width);
+                                width = maxWidth;
+                            }
+                            const canvas = document.createElement('canvas');
+                            canvas.width = width;
+                            canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            canvas.toBlob(function(blob) {
+                                if (!blob) return resolve(file);
+                                const newName = file.name.replace(/\.[^/.]+$/, '') + '.webp';
+                                const webpFile = new File([blob], newName, {
+                                    type: 'image/webp',
+                                    lastModified: Date.now()
+                                });
+                                resolve(webpFile);
+                            }, 'image/webp', quality);
+                        };
+                        img.onerror = () => resolve(file);
+                        img.src = e.target.result;
+                    };
+                    reader.onerror = () => resolve(file);
+                    reader.readAsDataURL(file);
+                });
+            },
+            async previewFile(event, target) {
                 const file = event.target.files[0];
                 if (file) {
-                    this[target] = URL.createObjectURL(file);
+                    const webpFile = await this.convertToWebP(file);
+                    try {
+                        const dt = new DataTransfer();
+                        dt.items.add(webpFile);
+                        event.target.files = dt.files;
+                    } catch (e) {}
+                    this[target] = URL.createObjectURL(webpFile);
                 }
             },
+            async addGalleryFiles(event) {
+                const rawFiles = Array.from(event.target.files || []);
+                if (!rawFiles.length) return;
+                for (const file of rawFiles) {
+                    const webpFile = await this.convertToWebP(file);
+                    this.galleryFiles.push(webpFile);
+                    this.galleryPreviews.push({
+                        url: URL.createObjectURL(webpFile),
+                        name: webpFile.name
+                    });
+                }
+                this.syncGalleryInput();
+                event.target.value = '';
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
+            },
             previewMultipleGalleries(event) {
-                const files = event.target.files;
+                this.addGalleryFiles(event);
+            },
+            removeGalleryFile(index) {
+                if (this.galleryPreviews[index]?.url) {
+                    URL.revokeObjectURL(this.galleryPreviews[index].url);
+                }
+                this.galleryFiles.splice(index, 1);
+                this.galleryPreviews.splice(index, 1);
+                this.syncGalleryInput();
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
+            },
+            clearAllGalleryFiles() {
+                this.galleryPreviews.forEach(p => {
+                    if (p.url) URL.revokeObjectURL(p.url);
+                });
+                this.galleryFiles = [];
                 this.galleryPreviews = [];
-                for (let i = 0; i < files.length; i++) {
-                    this.galleryPreviews.push(URL.createObjectURL(files[i]));
+                this.syncGalleryInput();
+            },
+            syncGalleryInput() {
+                const input = this.$refs.galleryFilesInput;
+                if (!input) return;
+                try {
+                    const dt = new DataTransfer();
+                    this.galleryFiles.forEach(file => dt.items.add(file));
+                    input.files = dt.files;
+                } catch (e) {
+                    console.error('DataTransfer sync error:', e);
                 }
             },
             addStory() {
@@ -147,10 +234,16 @@
                     this.stories[0] = { title: '', date: '', story: '', existing_image: null, imagePreview: null };
                 }
             },
-            previewStoryFile(event, index) {
+            async previewStoryFile(event, index) {
                 const file = event.target.files[0];
                 if (file) {
-                    this.stories[index].imagePreview = URL.createObjectURL(file);
+                    const webpFile = await this.convertToWebP(file);
+                    try {
+                        const dt = new DataTransfer();
+                        dt.items.add(webpFile);
+                        event.target.files = dt.files;
+                    } catch (e) {}
+                    this.stories[index].imagePreview = URL.createObjectURL(webpFile);
                 }
             }
         }"
@@ -854,27 +947,110 @@
 
                         <div class="space-y-2 pt-2 border-t border-sand-200">
                             <label class="font-bold text-charcoal-900 block">Tambah Foto Prewedding Baru (Opsional)</label>
+
+                            <!-- Real file input yang disubmit bersama form -->
                             <input 
                                 type="file" 
                                 name="gallery_files[]" 
                                 multiple
                                 accept="image/*"
-                                @change="previewMultipleGalleries($event)"
-                                class="w-full text-xs text-sand-600 file:mr-2.5 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-charcoal-950 file:text-white hover:file:bg-brand-600 cursor-pointer"
+                                x-ref="galleryFilesInput"
+                                class="hidden"
                             >
+
+                            <!-- Temporary picker input -->
+                            <input 
+                                type="file" 
+                                accept="image/*"
+                                multiple
+                                @change="addGalleryFiles($event)"
+                                x-ref="galleryPickerInput"
+                                class="hidden"
+                            >
+
+                            <div class="flex flex-wrap items-center gap-2.5">
+                                <button 
+                                    type="button" 
+                                    @click="$refs.galleryPickerInput.click()"
+                                    class="px-3.5 py-2 rounded-xl bg-charcoal-950 hover:bg-brand-600 text-white font-bold text-xs shadow-sm transition flex items-center gap-2 cursor-pointer active:scale-95"
+                                >
+                                    <i data-lucide="plus-circle" class="w-4 h-4 text-brand-400"></i>
+                                    <span x-text="galleryPreviews.length > 0 ? '+ Tambah Foto Lagi' : 'Pilih Foto Baru'"></span>
+                                </button>
+                                
+                                <span class="text-[11px] text-sand-500" x-show="galleryPreviews.length === 0">
+                                    Bisa pilih satu per satu atau beberapa sekaligus.
+                                </span>
+                                <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200/60 flex items-center gap-1.5" x-show="galleryPreviews.length > 0">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                                    <span x-text="galleryPreviews.length + ' foto baru siap diunggah'"></span>
+                                </span>
+                            </div>
+
                             <p class="text-[9px] text-sand-500">Anda dapat memilih 4 - 10 foto prewedding terbaik untuk ditampilkan di album galeri.</p>
                         </div>
 
                         <!-- LIVE MULTI-PREVIEWS UNTUK FOTO BARU -->
                         <div x-show="galleryPreviews.length > 0" class="pt-2">
-                            <span class="text-[9px] font-bold uppercase tracking-wider text-sand-500 block mb-1.5">Foto Baru Yang Dipilih:</span>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                <template x-for="(img, idx) in galleryPreviews" :key="idx">
-                                    <div class="aspect-square rounded-xl bg-sand-200 overflow-hidden border border-sand-300 shadow-sm relative">
-                                        <img :src="img" class="w-full h-full object-cover">
-                                        <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-charcoal-950/75 text-white text-[8px] font-bold" x-text="idx + 1"></span>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[9px] font-bold uppercase tracking-wider text-sand-500 block">
+                                    Foto Baru Yang Dipilih (<span x-text="galleryPreviews.length"></span>):
+                                </span>
+                                <button 
+                                    type="button" 
+                                    @click="clearAllGalleryFiles()"
+                                    class="text-[10px] text-rose-600 hover:text-rose-700 font-semibold hover:underline cursor-pointer"
+                                >
+                                    Hapus Semua Foto Baru
+                                </button>
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                                <template x-for="(item, idx) in galleryPreviews" :key="idx">
+                                    <div class="aspect-square rounded-xl bg-sand-200 overflow-hidden border border-sand-300 shadow-sm relative group">
+                                        <img :src="item.url" :alt="item.name" class="w-full h-full object-cover">
+                                        
+                                        <!-- BADGE NOMOR URUT -->
+                                        <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-charcoal-950/75 backdrop-blur-sm text-white text-[9px] font-bold" x-text="idx + 1"></span>
+
+                                        <!-- TOMBOL DELETE DENGAN ICON SAMPAH -->
+                                        <button 
+                                            type="button" 
+                                            @click.stop="removeGalleryFile(idx)"
+                                            class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-rose-600 hover:bg-rose-700 active:scale-95 text-white flex items-center justify-center shadow hover:scale-110 transition cursor-pointer"
+                                            title="Hapus foto ini"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 6h18"/>
+                                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                                <line x1="10" y1="11" x2="10" y2="17"/>
+                                                <line x1="14" y1="11" x2="14" y2="17"/>
+                                            </svg>
+                                        </button>
+
+                                        <!-- NAMA FILE OVERLAY SAAT HOVER -->
+                                        <div class="absolute inset-x-0 bottom-0 p-1 bg-gradient-to-t from-charcoal-950/80 to-transparent text-white opacity-0 group-hover:opacity-100 transition pointer-events-none">
+                                            <p class="text-[8px] truncate" x-text="item.name"></p>
+                                        </div>
                                     </div>
                                 </template>
+
+                                <!-- KOTAK TAMBAH FOTO DI DALAM GRID -->
+                                <button 
+                                    type="button" 
+                                    @click="$refs.galleryPickerInput.click()"
+                                    class="aspect-square rounded-xl border-2 border-dashed border-sand-300 hover:border-brand-500 bg-sand-100/60 hover:bg-brand-50/50 flex flex-col items-center justify-center gap-1 text-sand-500 hover:text-brand-700 transition group cursor-pointer"
+                                    title="Tambah foto galeri baru satu per satu"
+                                >
+                                    <div class="w-7 h-7 rounded-full bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition text-brand-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                    </div>
+                                    <span class="text-[10px] font-bold">Tambah Foto</span>
+                                </button>
                             </div>
                         </div>
                     </div>

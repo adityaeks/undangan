@@ -1,0 +1,52 @@
+{
+    "luxury-01": {
+        "total": 40,
+        "existing": 40,
+        "missing": []
+    },
+    "luxury-02": {
+        "total": 70,
+        "existing": 70,
+        "missing": []
+    },
+    "luxury-07": {
+        "total": 47,
+        "existing": 47,
+        "missing": []
+    },
+    "3d-motion-05": {
+        "total": 58,
+        "existing": 58,
+        "missing": []
+    },
+    "3d-motion-07": {
+        "total": 67,
+        "existing": 67,
+        "missing": []
+    },
+    "3d-motion-10": {
+        "total": 70,
+        "existing": 70,
+        "missing": []
+    },
+    "3d-motion-27": {
+        "total": 57,
+        "existing": 57,
+        "missing": []
+    },
+    "3d-motion-47": {
+        "total": 56,
+        "existing": 56,
+        "missing": []
+    },
+    "3d-motion-49": {
+        "total": 60,
+        "existing": 60,
+        "missing": []
+    },
+    "3d-motion-55": {
+        "total": 57,
+        "existing": 57,
+        "missing": []
+    }
+}

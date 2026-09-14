@@ -121,7 +121,7 @@
 >
 
     <!-- AUDIO ELEMENT -->
-    <audio id="bgm-audio" loop preload="auto">
+    <audio id="bgm-audio" loop preload="none">
         <source src="{{ $data['background_music'] ?? $activeStyle['audio_url'] ?? '/audio/wedding-song.mp3' }}" type="audio/mpeg">
     </audio>
 

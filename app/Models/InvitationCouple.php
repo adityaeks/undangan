@@ -31,6 +31,16 @@ class InvitationCouple extends Model
     }
 
     /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::deleting(function (InvitationCouple $couple) {
+            delete_storage_file($couple->photo_url);
+        });
+    }
+
+    /**
      * Parent invitation.
      */
     public function invitation(): BelongsTo

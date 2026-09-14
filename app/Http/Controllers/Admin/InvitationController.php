@@ -127,7 +127,7 @@ class InvitationController extends Controller
         // 1. Process Uploads
         // Cover Image
         if ($request->hasFile('cover_image_file')) {
-            $coverPath = $request->file('cover_image_file')->store('invitations/covers', 'public');
+            $coverPath = upload_as_webp($request->file('cover_image_file'), 'invitations/covers');
             $coverImage = Storage::url($coverPath);
         } else {
             $coverImage = $validated['cover_image_url'] ?? 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&q=85';
@@ -143,7 +143,7 @@ class InvitationController extends Controller
 
         // Groom Photo
         if ($request->hasFile('groom_photo_file')) {
-            $groomPath = $request->file('groom_photo_file')->store('invitations/couples', 'public');
+            $groomPath = upload_as_webp($request->file('groom_photo_file'), 'invitations/couples');
             $groomPhoto = Storage::url($groomPath);
         } else {
             $groomPhoto = $validated['groom_photo_url'] ?? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80';
@@ -151,7 +151,7 @@ class InvitationController extends Controller
 
         // Bride Photo
         if ($request->hasFile('bride_photo_file')) {
-            $bridePath = $request->file('bride_photo_file')->store('invitations/couples', 'public');
+            $bridePath = upload_as_webp($request->file('bride_photo_file'), 'invitations/couples');
             $bridePhoto = Storage::url($bridePath);
         } else {
             $bridePhoto = $validated['bride_photo_url'] ?? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80';
@@ -252,7 +252,7 @@ class InvitationController extends Controller
 
         if ($request->hasFile('gallery_files')) {
             foreach ($request->file('gallery_files') as $file) {
-                $path = $file->store('invitations/galleries', 'public');
+                $path = upload_as_webp($file, 'invitations/galleries');
                 $invitation->media()->create([
                     'media_type' => 'photo',
                     'url' => Storage::url($path),

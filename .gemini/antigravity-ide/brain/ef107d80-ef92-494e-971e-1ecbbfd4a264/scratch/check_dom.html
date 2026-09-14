@@ -1,0 +1,31 @@
+<?php
+
+// Let's inspect e47b0ce and 848e89d in the browser
+// We can use a test HTML or run browser evaluation
+?>
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+window.onload = function() {
+    const e47 = document.querySelector('.elementor-element-e47b0ce');
+    const e84 = document.querySelector('.elementor-element-848e89d');
+    const el52 = document.querySelector('.elementor-element-52f6b538');
+    console.log('e47:', e47 ? {
+        display: getComputedStyle(e47).display,
+        visibility: getComputedStyle(e47).visibility,
+        zIndex: getComputedStyle(e47).zIndex,
+        rect: e47.getBoundingClientRect()
+    } : 'null');
+    console.log('e84:', e84 ? {
+        display: getComputedStyle(e84).display,
+        visibility: getComputedStyle(e84).visibility,
+        zIndex: getComputedStyle(e84).zIndex,
+        width: getComputedStyle(e84).width,
+        height: getComputedStyle(e84).height,
+        rect: e84.getBoundingClientRect()
+    } : 'null');
+};
+</script>
+</body>
+</html>

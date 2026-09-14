@@ -92,7 +92,7 @@
     x-init="initApp()"
 >
     <!-- AUDIO ELEMENT -->
-    <audio id="bgMusic" loop preload="auto">
+    <audio id="bgMusic" loop preload="none">
         <source src="{{ $data['background_music'] ?? '/audio/wedding-song.mp3' }}" type="audio/mp3">
     </audio>
 
@@ -134,7 +134,7 @@
             <!-- TOP MAGAZINE HEADER BAR -->
             <div class="relative z-10 flex items-center justify-between border-b border-white/20 pb-4">
                 <div class="space-y-0.5 text-left">
-                    <span class="font-display text-[10px] tracking-[0.35em] uppercase text-amber-200 block font-semibold">Special Edition</span>
+                    <!-- <span class="font-display text-[10px] tracking-[0.35em] uppercase text-amber-200 block font-semibold">Special Edition</span> -->
                     <span class="text-[9px] tracking-widest uppercase text-white/60">Vol. XXVI • {{ $data['events']['akad']['date'] ?? 'Autumn 2026' }}</span>
                 </div>
                 <div class="text-right space-y-0.5">
@@ -146,7 +146,7 @@
             <!-- CENTER: HIGH-FASHION EDITORIAL TYPOGRAPHY -->
             <div class="relative z-10 my-auto text-center space-y-4">
                 <div class="inline-block px-4 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] tracking-[0.3em] uppercase text-amber-300 font-semibold">
-                    The Wedding Issue
+                    The Wedding Event
                 </div>
 
                 <!-- OVERLAPPING INITIALS & NAMES -->
@@ -159,11 +159,11 @@
                     </h1>
                 </div>
 
-                <div class="flex items-center justify-center gap-3 text-xs tracking-[0.2em] uppercase text-white/80 font-light">
+                <!-- <div class="flex items-center justify-center gap-3 text-xs tracking-[0.2em] uppercase text-white/80 font-light">
                     <span>Holy Matrimony</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                     <span>Grand Reception</span>
-                </div>
+                </div> -->
             </div>
 
             <!-- BOTTOM: RECIPIENT CARD & GOLD WAX SEAL OPEN BUTTON -->
@@ -171,7 +171,7 @@
                 <div class="p-4 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/20 text-center space-y-1 max-w-xs mx-auto shadow-2xl">
                     <span class="text-[9px] uppercase font-bold tracking-[0.25em] text-white/60">Cordially Invited:</span>
                     <h4 class="font-serif text-lg sm:text-xl font-bold text-amber-200 tracking-wide" data-preview="guest-name">{{ $guestName }}</h4>
-                    <p class="text-[9px] text-white/50 italic">*Exclusive Guest Pass &amp; Wedding Narrative</p>
+                    <!-- <p class="text-[9px] text-white/50 italic">*Exclusive Guest Pass &amp; Wedding Narrative</p> -->
                 </div>
 
                 <!-- GOLD WAX SEAL OPEN BUTTON -->
@@ -230,9 +230,9 @@
             <!-- SECTION 1: EDITORIAL COVER HEADLINE -->
             <section id="sec-cover" class="relative text-center space-y-6 pt-6">
                 <div class="space-y-2">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] tracking-[0.25em] uppercase font-bold border" :style="{ borderColor: currentStyle.border_color, color: currentStyle.accent }">
+                    <!-- <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] tracking-[0.25em] uppercase font-bold border" :style="{ borderColor: currentStyle.border_color, color: currentStyle.accent }">
                         <span>Chapter 01 • The Unification</span>
-                    </div>
+                    </div> -->
                     <h2 class="font-serif text-5xl sm:text-6xl font-light tracking-tight leading-none" data-preview="couple-nickname">
                         {{ ($data['groom']['nickname'] ?? 'Raka') . ' & ' . ($data['bride']['nickname'] ?? 'Arinda') }}
                     </h2>
@@ -451,7 +451,7 @@
                     </div>
 
                     <!-- BENTO 4: DRESS CODE & GUEST PROTOCOL -->
-                    <div class="p-5 rounded-3xl border space-y-3 text-center" :style="{ backgroundColor: currentStyle.bg_card, borderColor: currentStyle.border_color }">
+                    <!-- <div class="p-5 rounded-3xl border space-y-3 text-center" :style="{ backgroundColor: currentStyle.bg_card, borderColor: currentStyle.border_color }">
                         <span class="text-[10px] font-bold uppercase tracking-[0.25em]" :style="{ color: currentStyle.accent }">Dress Code Guide</span>
                         <p class="text-xs font-medium" :style="{ color: currentStyle.text_secondary }">Formal Attire / Earthy &amp; Pastel Elegance</p>
                         <div class="flex items-center justify-center gap-2 pt-1">
@@ -460,7 +460,7 @@
                             <span class="w-5 h-5 rounded-full bg-[#C48B9F] border border-white/40 shadow-sm" title="Dusty Rose"></span>
                             <span class="w-5 h-5 rounded-full bg-[#1E293B] border border-white/40 shadow-sm" title="Midnight Navy"></span>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </section>

@@ -139,7 +139,7 @@
 
 <body class="bg-sand-50 text-charcoal-900 font-sans antialiased selection:bg-brand-200 selection:text-charcoal-950 overflow-x-hidden" x-data="{
     selectedTemplate: 'all',
-    guestNameInput: 'Aditya',
+    guestNameInput: 'Reyhan',
     activeFaq: null,
     mobileMenuOpen: false,
     themes: {{ Js::from($themes) }},
@@ -267,11 +267,12 @@
                             </a>
                         @endif
 
-                        <a href="{{ route('demo.index') }}" class="w-full sm:w-auto px-7 py-4 rounded-full bg-white/90 hover:bg-white border border-sand-300/90 text-charcoal-900 font-semibold text-base hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 group">
+                        <a href="{{ route('themes.catalog') }}" class="w-full sm:w-auto px-7 py-4 rounded-full bg-white/90 hover:bg-white border border-sand-300/90 text-charcoal-900 font-semibold text-base hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 group">
                             <span class="w-8 h-8 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                <i data-lucide="play" class="w-4 h-4 fill-current ml-0.5"></i>
+                                <!-- <i data-lucide="play" class="w-4 h-4 fill-current ml-0.5"></i> -->
+                                <i data-lucide="package" class="w-4 h-4 fill-current ml-0.5"></i>
                             </span>
-                            <span>Lihat Live Demo</span>
+                            <span>Lihat Katalog Tema</span>
                         </a>
                     </div>
 
@@ -1308,7 +1309,7 @@
                         <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" :class="activeFaq === 1 ? 'rotate-180' : ''"></i>
                     </button>
                     <div x-show="activeFaq === 1" x-transition class="px-6 pb-5 text-xs text-charcoal-900/70 leading-relaxed border-t border-sand-200/60 pt-3">
-                        Proses pembuatan bersifat otomatis dan instan! Anda hanya perlu memilih template, mengisi data acara dan foto, dan undangan Anda langsung aktif dan siap disebarkan dalam 5 hingga 10 menit saja.
+                        Undangan langsung aktif dalam 5-10 menit jika Anda mengisi data mandiri. Jika memilih layanan dibantu admin, selesai maksimal dalam 1x24 jam.
                     </div>
                 </div>
 
