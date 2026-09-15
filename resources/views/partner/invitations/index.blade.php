@@ -145,7 +145,7 @@
 
                         <div>
                             <h3 class="font-serif text-lg font-bold text-charcoal-950">{{ $invitation->title }}</h3>
-                            <p class="text-xs text-sand-600">Klien: <strong class="text-charcoal-900">{{ $invitation->client->name ?? 'Direct' }}</strong></p>
+                            <p class="text-xs text-sand-600">Klien: <strong class="text-charcoal-900">{{ $invitation->client->name ?? ($invitation->partner_id ? 'Direct' : 'Undangan Pribadi') }}</strong></p>
                             @if($invitation->event_date)
                                 <p class="text-[11px] text-sand-500 mt-1">Tanggal: {{ \Carbon\Carbon::parse($invitation->event_date)->isoFormat('D MMMM Y') }}</p>
                             @endif

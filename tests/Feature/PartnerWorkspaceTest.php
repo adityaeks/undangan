@@ -4,6 +4,7 @@ use App\Models\Invitation;
 use App\Models\Package;
 use App\Models\Theme;
 use App\Models\User;
+use App\Models\UserTheme;
 use App\Services\PaymentService;
 
 beforeEach(function () {
@@ -51,7 +52,7 @@ beforeEach(function () {
         'slug' => 'partner-theme-'.uniqid(),
         'category' => 'modern',
         'thumbnail' => 'https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=800',
-        'view_path' => 'demo.rose-romance',
+        'view_path' => 'demo.standart-01',
         'is_active' => true,
         'is_premium' => true,
         'is_for_partner' => true,
@@ -129,6 +130,7 @@ test('super admin can toggle theme partner availability', function () {
     expect($this->theme->is_for_partner)->toBeFalse();
 
     // Now partner cannot see this theme on create page
+    $this->flushSession();
     $partnerResponse = $this->actingAs($this->partner)->get(route('partner.invitations.create'));
     $partnerResponse->assertDontSee($this->theme->name);
 });
@@ -461,4 +463,76 @@ test('paying for package order updates partner package_id', function () {
 
     $this->partner->refresh();
     expect($this->partner->package_id)->toBe($proPackage->id);
+});
+
+test('member with unused theme licenses upgrading to partner has accumulated invitation quota', function () {
+    $starterPackage = Package::where('slug', 'partner-starter')->firstOrFail();
+    $starterPackage->update(['quota_invitations' => 10]);
+
+    $user = User::factory()->create(['role' => 'member']);
+
+    $theme1 = Theme::create([
+        'name' => 'Theme 1',
+        'slug' => 'theme-1-'.uniqid(),
+        'view_path' => 'demo.standart-01',
+        'is_active' => true,
+    ]);
+    $theme2 = Theme::create([
+        'name' => 'Theme 2',
+        'slug' => 'theme-2-'.uniqid(),
+        'view_path' => 'demo.standart-02',
+        'is_active' => true,
+    ]);
+    $theme3 = Theme::create([
+        'name' => 'Theme 3',
+        'slug' => 'theme-3-'.uniqid(),
+        'view_path' => 'demo.standart-03',
+        'is_active' => true,
+    ]);
+
+    // Member bought 3 themes
+    $license1 = UserTheme::create([
+        'user_id' => $user->id,
+        'theme_id' => $theme1->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+    UserTheme::create([
+        'user_id' => $user->id,
+        'theme_id' => $theme2->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+    UserTheme::create([
+        'user_id' => $user->id,
+        'theme_id' => $theme3->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    // Used 1 theme for member invitation
+    $invitation = Invitation::create([
+        'user_id' => $user->id,
+        'owner_id' => $user->id,
+        'theme_id' => $theme1->id,
+        'title' => 'Member Wedding',
+        'slug' => 'member-wedding-'.uniqid(),
+    ]);
+    $license1->update(['invitation_id' => $invitation->id]);
+
+    // Upgrade to partner with starter package (10 quota)
+    $user->update([
+        'role' => 'partner',
+        'package_id' => $starterPackage->id,
+    ]);
+
+    // Expected quota: 10 (from starter package) + 2 (from 2 unused member themes) = 12
+    expect($user->invitation_quota)->toBe(12)
+        ->and($user->canCreateInvitation())->toBeTrue();
+
+    // The previously created member invitation is visible in partner workspace
+    $response = $this->actingAs($user)->get(route('partner.invitations.index'));
+    $response->assertOk()
+        ->assertSee('Member Wedding')
+        ->assertSee('Undangan Pribadi');
 });

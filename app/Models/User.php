@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'google_id', 'avatar', 'role', 'status'])]
+#[Fillable(['name', 'email', 'password', 'google_id', 'avatar', 'role', 'status', 'package_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -62,6 +62,7 @@ class User extends Authenticatable
 
     /**
      * Get the invitation quota allowed for this partner.
+     * Calculated as active package quota + unused member theme licenses (Cara 1).
      * 0 or null could mean unlimited.
      */
     public function getInvitationQuotaAttribute(): int
@@ -71,7 +72,22 @@ class User extends Authenticatable
             return 0;
         }
 
-        return (int) $package->quota_invitations;
+        $baseQuota = (int) $package->quota_invitations;
+        if ($baseQuota <= 0) {
+            return 0;
+        }
+
+        // Akumulasi: Tambahkan sisa lisensi tema member yang belum digunakan
+        $unusedMemberLicensesCount = $this->userThemes()
+            ->where('is_active', true)
+            ->whereNull('invitation_id')
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                    ->orWhere('expires_at', '>', now());
+            })
+            ->count();
+
+        return $baseQuota + $unusedMemberLicensesCount;
     }
 
     /**

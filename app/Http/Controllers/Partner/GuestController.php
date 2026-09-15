@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invitation;
 use App\Models\InvitationGuest as Guest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,15 @@ class GuestController extends Controller
     public function index(Request $request): View
     {
         $user = $request->user();
-        $invitations = $user->partnerInvitations()->latest()->get();
+        $invitations = Invitation::query()
+            ->where(function ($query) use ($user) {
+                $query->where('partner_id', $user->id)
+                    ->orWhere('owner_id', $user->id)
+                    ->orWhere('user_id', $user->id);
+            })
+            ->with(['client', 'theme'])
+            ->latest()
+            ->get();
         $invitationIds = $invitations->pluck('id');
 
         $query = Guest::whereIn('invitation_id', $invitationIds)->with('invitation');
@@ -77,7 +86,14 @@ class GuestController extends Controller
             'pax' => 'nullable|integer|min:1|max:20',
         ]);
 
-        $invitation = $request->user()->partnerInvitations()->findOrFail($validated['invitation_id']);
+        $user = $request->user();
+        $invitation = Invitation::query()
+            ->where(function ($query) use ($user) {
+                $query->where('partner_id', $user->id)
+                    ->orWhere('owner_id', $user->id)
+                    ->orWhere('user_id', $user->id);
+            })
+            ->findOrFail($validated['invitation_id']);
 
         $baseSlug = Str::slug($validated['name']);
         $uniqueSlug = $baseSlug ?: 'tamu';
@@ -103,7 +119,15 @@ class GuestController extends Controller
      */
     public function destroy(Request $request, Guest $guest): RedirectResponse
     {
-        $hasAccess = $request->user()->partnerInvitations()->where('id', $guest->invitation_id)->exists();
+        $user = $request->user();
+        $hasAccess = Invitation::where('id', $guest->invitation_id)
+            ->where(function ($query) use ($user) {
+                $query->where('partner_id', $user->id)
+                    ->orWhere('owner_id', $user->id)
+                    ->orWhere('user_id', $user->id);
+            })
+            ->exists();
+
         abort_unless($hasAccess, 403, 'Anda tidak memiliki hak akses untuk menghapus tamu ini.');
 
         $guest->delete();
@@ -121,7 +145,14 @@ class GuestController extends Controller
             'whatsapp_template' => 'nullable|string|max:2000',
         ]);
 
-        $invitation = $request->user()->partnerInvitations()->findOrFail($validated['invitation_id']);
+        $user = $request->user();
+        $invitation = Invitation::query()
+            ->where(function ($query) use ($user) {
+                $query->where('partner_id', $user->id)
+                    ->orWhere('owner_id', $user->id)
+                    ->orWhere('user_id', $user->id);
+            })
+            ->findOrFail($validated['invitation_id']);
 
         $setting = $invitation->setting()->firstOrCreate(['invitation_id' => $invitation->id]);
         $metadata = $setting->metadata ?? [];

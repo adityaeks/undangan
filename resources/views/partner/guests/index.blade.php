@@ -165,7 +165,7 @@
                         <option value="">-- Semua Undangan Klien --</option>
                         @foreach($invitations as $inv)
                             <option value="{{ $inv->id }}" {{ request('invitation_id') == $inv->id ? 'selected' : '' }}>
-                                {{ $inv->title }} ({{ $inv->client->name ?? 'Klien WO' }})
+                                {{ $inv->title }} ({{ $inv->client->name ?? ($inv->partner_id ? 'Klien WO' : 'Undangan Pribadi') }})
                             </option>
                         @endforeach
                     </select>
@@ -391,7 +391,7 @@
                             class="w-full px-4 py-2.5 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         >
                             @foreach($invitations as $inv)
-                                <option value="{{ $inv->id }}">{{ $inv->title }} ({{ $inv->client->name ?? 'Klien WO' }})</option>
+                                <option value="{{ $inv->id }}">{{ $inv->title }} ({{ $inv->client->name ?? ($inv->partner_id ? 'Klien WO' : 'Undangan Pribadi') }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -505,7 +505,7 @@
                         <select name="invitation_id" x-model="invId" required class="w-full px-4 py-2.5 rounded-2xl border border-sand-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500">
                             @foreach($invitations as $inv)
                                 <option value="{{ $inv->id }}" {{ ($selectedInvitation?->id ?? '') == $inv->id ? 'selected' : '' }}>
-                                    {{ $inv->title }} (Klien: {{ $inv->client->name ?? 'Direct' }})
+                                    {{ $inv->title }} ({{ $inv->client->name ?? ($inv->partner_id ? 'Direct' : 'Undangan Pribadi') }})
                                 </option>
                             @endforeach
                         </select>

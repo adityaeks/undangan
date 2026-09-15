@@ -24,7 +24,12 @@ class InvitationController extends Controller
     public function index(Request $request): View
     {
         $user = $request->user();
-        $invitations = $user->partnerInvitations()
+        $invitations = Invitation::query()
+            ->where(function ($query) use ($user) {
+                $query->where('partner_id', $user->id)
+                    ->orWhere('owner_id', $user->id)
+                    ->orWhere('user_id', $user->id);
+            })
             ->with(['theme', 'client'])
             ->latest()
             ->paginate(12);
