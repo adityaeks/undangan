@@ -11,12 +11,10 @@
             
             <!-- BRAND LOGO -->
             <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-full bg-charcoal-900 text-brand-200 flex items-center justify-center font-serif text-xl font-bold shadow-md group-hover:scale-105 transition-transform duration-300 border border-brand-400/40">
-                    K
-                </div>
+                <img src="{{ asset('images/logo-klikmomen.png') }}" alt="KlikMomen" class="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300">
                 <div class="flex flex-col">
                     <span class="font-serif text-2xl font-bold tracking-tight text-charcoal-950 flex items-center gap-1">
-                        KlikMomen<span class="text-brand-500">.</span>
+                        KlikMomen
                     </span>
                     <span class="text-[10px] tracking-[0.25em] uppercase text-sand-500 font-semibold -mt-1">
                         Digital Invitation Studio

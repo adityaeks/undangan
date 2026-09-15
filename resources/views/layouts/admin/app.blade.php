@@ -7,6 +7,9 @@
 
     <title>{{ config('app.name', 'KlikMomen') }} - Admin Dashboard</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-klikmomen.png') }}">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

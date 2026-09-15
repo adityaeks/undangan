@@ -12,23 +12,20 @@ test('renders public theme catalog page successfully on /tema', function () {
 
     $response->assertOk()
         ->assertSee('Koleksi Template Undangan')
-        ->assertSee('The Vogue Editorial Issue')
-        ->assertSee('The Ethereal Botanical Glass')
-        ->assertSee('The Timeless Classic Card')
-        ->assertSee('The Warm Minimalist')
-        ->assertSee('The Rose Romance Arch')
-        ->assertSee('Tema Luxury 01 (Royal Gold)')
-        ->assertSee('Tema Luxury 02 (Minimal Luxe)')
-        ->assertSee('Tema Luxury 07 (Black & Gold Modern)')
-        ->assertSee('Tema 3D Motion 07 (Modern Bloom)')
-        ->assertSee('Tema 3D Motion 10 (Javanese Classic)')
-        ->assertSee('Tema 3D Motion 55 (Jawa Biru Asmaranala)')
-        ->assertSee('Editorial Modern')
-        ->assertSee('Botanical Sage')
-        ->assertSee('Nusantara Adat')
-        ->assertSee('Warm Minimalist')
-        ->assertSee('Rose Romance')
-        ->assertSee('Luxury &amp; Elegant', false);
+        ->assertSee('Standart 01')
+        ->assertSee('Standart 02')
+        ->assertSee('Standart 03')
+        ->assertSee('Standart 04')
+        ->assertSee('Standart 05')
+        ->assertSee('Special 01')
+        ->assertSee('Special 02')
+        ->assertSee('Special 03')
+        ->assertSee('3D Motion 01')
+        ->assertSee('3D Motion 02')
+        ->assertSee('3D Motion 08')
+        ->assertSee('Standart')
+        ->assertSee('Special')
+        ->assertSee('3D Motion');
 });
 
 test('renders public theme catalog page successfully on /templates alias', function () {
@@ -37,9 +34,9 @@ test('renders public theme catalog page successfully on /templates alias', funct
     $response = $this->get('/templates');
 
     $response->assertOk()
-        ->assertSee('The Vogue Editorial Issue')
-        ->assertSee('Tema Luxury 01 (Royal Gold)')
-        ->assertSee('Tema 3D Motion 07 (Modern Bloom)');
+        ->assertSee('Standart 01')
+        ->assertSee('Special 01')
+        ->assertSee('3D Motion 01');
 });
 
 test('theme catalog contains valid live demo links for all master themes', function () {
@@ -48,28 +45,23 @@ test('theme catalog contains valid live demo links for all master themes', funct
     $response = $this->get('/tema');
 
     $response->assertOk()
-        ->assertSee(route('demo.show', ['slug' => 'editorial']))
-        ->assertSee(route('demo.show', ['slug' => 'botanical']))
-        ->assertSee(route('demo.show', ['slug' => 'classic']))
-        ->assertSee(route('demo.show', ['slug' => 'minimalist']))
-        ->assertSee(route('demo.show', ['slug' => 'rose-romance']))
-        ->assertSee(route('demo.show', ['slug' => 'luxury-01']))
-        ->assertSee(route('demo.show', ['slug' => 'luxury-02']))
-        ->assertSee(route('demo.show', ['slug' => 'luxury-07']))
-        ->assertSee(route('demo.show', ['slug' => '3d-motion-07']))
-        ->assertSee(route('demo.show', ['slug' => '3d-motion-55']));
+        ->assertSee(route('demo.show', ['slug' => 'standart-01']))
+        ->assertSee(route('demo.show', ['slug' => 'standart-02']))
+        ->assertSee(route('demo.show', ['slug' => 'special-01']))
+        ->assertSee(route('demo.show', ['slug' => '3d-motion-01']))
+        ->assertSee(route('demo.show', ['slug' => '3d-motion-08']));
 });
 
 test('theme catalog supports category filter query parameter', function () {
     (new ThemeSeeder)->run();
 
-    $response = $this->get('/tema?kategori=romantic');
+    $response = $this->get('/tema?kategori=standart');
     $response->assertOk()
-        ->assertSee('The Rose Romance Arch');
+        ->assertSee('Standart 01');
 
-    $luxuryResponse = $this->get('/tema?kategori=luxury');
-    $luxuryResponse->assertOk()
-        ->assertSee('Tema Luxury 01 (Royal Gold)');
+    $specialResponse = $this->get('/tema?kategori=special');
+    $specialResponse->assertOk()
+        ->assertSee('Special 01');
 });
 
 test('welcome page renders all themes in exclusive collection slider', function () {
@@ -78,15 +70,15 @@ test('welcome page renders all themes in exclusive collection slider', function 
     $response = $this->get('/');
 
     $response->assertOk()
-        ->assertSee('Tema Luxury 01 (Royal Gold)')
-        ->assertSee('Tema Luxury 02 (Minimal Luxe)')
-        ->assertSee('Tema Luxury 07 (Black & Gold Modern)')
-        ->assertSee('Tema 3D Motion 07 (Modern Bloom)')
-        ->assertSee('Tema 3D Motion 55 (Jawa Biru Asmaranala)');
+        ->assertSee('Special 01')
+        ->assertSee('Special 02')
+        ->assertSee('Special 03')
+        ->assertSee('3D Motion 01')
+        ->assertSee('3D Motion 08');
 });
 
-test('renders warm minimalist demo page successfully', function () {
-    $response = $this->get('/demo/minimalist');
+test('renders standart-05 demo page successfully', function () {
+    $response = $this->get('/demo/standart-05');
 
     $response->assertOk()
         ->assertSee('Raka')
@@ -95,8 +87,8 @@ test('renders warm minimalist demo page successfully', function () {
         ->assertSee('Mempelai yang Berbahagia');
 });
 
-test('renders rose romance demo page successfully with user screenshot features', function () {
-    $response = $this->get('/demo/rose-romance');
+test('renders standart-01 demo page successfully with user screenshot features', function () {
+    $response = $this->get('/demo/standart-01');
 
     $response->assertOk()
         ->assertSee('Ryan')
@@ -106,8 +98,8 @@ test('renders rose romance demo page successfully with user screenshot features'
         ->assertSee('Our Love Story');
 });
 
-test('supports legacy royal-luxury alias to minimalist demo page', function () {
-    $response = $this->get('/demo/royal-luxury');
+test('renders special-01 demo page successfully', function () {
+    $response = $this->get('/demo/special-01');
 
     $response->assertOk()
         ->assertSee('Raka')

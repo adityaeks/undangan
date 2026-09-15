@@ -2,9 +2,7 @@
 <header class="w-full py-4 px-6 sm:px-10 border-b border-sand-200/80 bg-white/70 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
         <a href="{{ url('/') }}" class="flex items-center gap-2.5 group">
-            <div class="w-9 h-9 rounded-full bg-charcoal-950 text-brand-300 flex items-center justify-center font-serif font-bold text-base shadow-sm group-hover:scale-105 transition-transform duration-200">
-                K
-            </div>
+            <img src="{{ asset('images/logo-klikmomen.png') }}" alt="KlikMomen Logo" class="w-9 h-9 object-contain group-hover:scale-105 transition-transform duration-200">
             <div class="flex flex-col">
                 <span class="font-serif text-xl font-bold tracking-tight text-charcoal-950">
                     KlikMomen<span class="text-brand-500">.</span>

@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $couple = $invitation?->couple;
         $mainEvent = $invitation?->events->first();
 
-        $unlockedThemes = $user->themes;
+        $unlockedThemes = $user->themes()->get();
 
         return view('member.dashboard', compact(
             'invitation',

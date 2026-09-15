@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Katalog Template Tema Undangan Digital - {{ config('app.name', 'KlikMomen') }}</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-klikmomen.png') }}">
+
     <!-- Meta SEO -->
     <meta name="description" content="Jelajahi kumpulan template undangan pernikahan digital minimalis, editorial modern, botanical rustic, dan adat nusantara. Desain responsif, fitur RSVP realtime, amplop digital tanpa potongan.">
     <meta name="keywords" content="template undangan digital, katalog tema undangan, wedding invitation template, undangan online aesthetic, tema editorial modern, botanical rustic, adat nusantara">
@@ -253,46 +256,22 @@
                             <span class="text-[10px] opacity-75">({{ count($themes) }})</span>
                         </button>
                         <button 
-                            @click="selectedCategory = 'modern'" 
-                            :class="selectedCategory === 'modern' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                            @click="selectedCategory = 'Standart'" 
+                            :class="selectedCategory.toLowerCase() === 'standart' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
                             class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
-                            <span>Editorial Modern</span>
+                            <span>Standart</span>
                         </button>
                         <button 
-                            @click="selectedCategory = 'botanical'" 
-                            :class="selectedCategory === 'botanical' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                            @click="selectedCategory = 'Special'" 
+                            :class="selectedCategory.toLowerCase() === 'special' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
                             class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
-                            <span>Botanical Sage</span>
+                            <span>Special</span>
                         </button>
                         <button 
-                            @click="selectedCategory = 'classic'" 
-                            :class="selectedCategory === 'classic' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                            class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
-                            <span>Nusantara Adat</span>
-                        </button>
-                        <button 
-                            @click="selectedCategory = 'minimalist'" 
-                            :class="selectedCategory === 'minimalist' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                            class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
-                            <span>Warm Minimalist</span>
-                        </button>
-                        <button 
-                            @click="selectedCategory = 'romantic'" 
-                            :class="selectedCategory === 'romantic' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                            class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
-                            <span>Rose Romance</span>
-                        </button>
-                        <button 
-                            @click="selectedCategory = 'motion'" 
-                            :class="selectedCategory === 'motion' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
+                            @click="selectedCategory = '3D Motion'" 
+                            :class="selectedCategory.toLowerCase().includes('motion') ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
                             class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
                             <span>3D Motion</span>
-                        </button>
-                        <button 
-                            @click="selectedCategory = 'luxury'" 
-                            :class="selectedCategory === 'luxury' ? 'bg-charcoal-950 text-white shadow-sm' : 'text-charcoal-900 hover:text-brand-700'"
-                            class="px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-1.5">
-                            <span>Luxury &amp; Elegant</span>
                         </button>
                     </div>
 
@@ -767,9 +746,7 @@
     <footer class="bg-charcoal-900 text-sand-400 text-xs py-10 border-t border-sand-200/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-full bg-charcoal-950 text-brand-300 flex items-center justify-center font-serif font-bold text-sm border border-brand-400/40">
-                    K
-                </div>
+                <img src="{{ asset('images/logo-klikmomen.png') }}" alt="KlikMomen Logo" class="w-7 h-7 object-contain">
                 <span>&copy; {{ date('Y') }} KlikMomen Studio. All rights reserved.</span>
             </div>
             <div class="flex items-center gap-6">

@@ -443,7 +443,7 @@
                 <div class="rounded-3xl bg-white border border-sand-200 p-6 sm:p-8 space-y-5 shadow-sm">
                     <div class="flex items-center justify-between border-b border-sand-100 pb-4">
                         <div>
-                            <h3 class="font-serif text-lg font-bold text-charcoal-950">Tema yang Anda Miliki</h3>
+                            <h3 class="font-serif text-lg font-bold text-charcoal-950">Tema yang Telah Anda Miliki</h3>
                             <p class="text-xs text-sand-600">Template aktif yang siap Anda gunakan untuk membuat undangan.</p>
                         </div>
                         <a href="{{ route('member.themes.index') }}" class="text-xs font-bold text-brand-700 hover:underline">
@@ -457,7 +457,10 @@
                                 <div class="flex items-center gap-3">
                                     <img src="{{ $theme->thumbnail }}" alt="{{ $theme->name }}" class="w-14 h-14 rounded-xl object-cover border border-sand-200">
                                     <div class="space-y-0.5">
-                                        <span class="text-[10px] font-bold text-brand-700 uppercase tracking-wider">{{ ucfirst($theme->category) }}</span>
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="text-[10px] font-bold text-brand-700 uppercase tracking-wider">{{ ucfirst($theme->category) }}</span>
+                                            <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">Lunas</span>
+                                        </div>
                                         <h4 class="text-xs font-serif font-bold text-charcoal-950">{{ $theme->name }}</h4>
                                     </div>
                                 </div>

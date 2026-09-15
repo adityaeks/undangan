@@ -731,3 +731,35 @@ test('deleting an invitation frees the theme license for reuse', function () {
     expect($license->fresh()->isUsed())->toBeFalse();
     expect($license->fresh()->isAvailable())->toBeTrue();
 });
+
+test('used theme shows Sudah Digunakan badge and proper action buttons on member themes page', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Used Garden Theme', 'slug' => 'used-garden-'.uniqid()]);
+
+    $license = UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    $invitation = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'Pernikahan Garden',
+        'slug' => 'garden-'.uniqid(),
+        'is_published' => true,
+    ]);
+    $license->update(['invitation_id' => $invitation->id]);
+
+    $response = $this->actingAs($member)->get('/member/themes');
+
+    $response->assertOk()
+        ->assertSee('Used Garden Theme')
+        ->assertSee('Sudah Digunakan (1/1)')
+        ->assertSee('Demo')
+        ->assertSee('Lihat Undangan')
+        ->assertSee('Beli Lisensi Tambahan')
+        ->assertSee(route('checkout.theme', ['theme' => $theme->id, 'additional' => 1]));
+});

@@ -102,14 +102,20 @@ class InvitationController extends Controller
 
             // Events - Akad
             'akad_date' => 'required|date',
-            'akad_time' => 'required|string|max:100',
+            'akad_time' => 'nullable|string|max:100',
+            'akad_start_time' => 'nullable|string|max:50',
+            'akad_end_time' => 'nullable|string|max:50',
+            'akad_timezone' => 'nullable|string|max:10',
             'akad_venue' => 'required|string|max:255',
             'akad_address' => 'required|string',
             'akad_maps_link' => 'nullable|url|max:500',
 
             // Events - Resepsi
             'resepsi_date' => 'required|date',
-            'resepsi_time' => 'required|string|max:100',
+            'resepsi_time' => 'nullable|string|max:100',
+            'resepsi_start_time' => 'nullable|string|max:50',
+            'resepsi_end_time' => 'nullable|string|max:50',
+            'resepsi_timezone' => 'nullable|string|max:10',
             'resepsi_venue' => 'required|string|max:255',
             'resepsi_address' => 'required|string',
             'resepsi_maps_link' => 'nullable|url|max:500',
@@ -225,22 +231,32 @@ class InvitationController extends Controller
         ]);
 
         // 5. Create Events (Akad & Resepsi)
+        $akadStartTime = $request->input('akad_start_time') ?: ($validated['akad_time'] ?? '08:00');
+        $akadEndTime = $request->boolean('akad_is_until_finish') ? 'Selesai' : ($request->input('akad_end_time') ?: null);
+        $akadTz = $request->input('akad_timezone') ?: 'WIB';
+
         $invitation->events()->create([
             'title' => 'Akad Nikah',
             'date' => $validated['akad_date'],
-            'start_time' => $validated['akad_time'],
-            'timezone' => 'WIB',
+            'start_time' => $akadStartTime,
+            'end_time' => $akadEndTime,
+            'timezone' => $akadTz,
             'venue_name' => $validated['akad_venue'],
             'address' => $validated['akad_address'],
             'maps_url' => $validated['akad_maps_link'] ?? 'https://maps.google.com/?q=Jakarta',
             'order' => 1,
         ]);
 
+        $resepsiStartTime = $request->input('resepsi_start_time') ?: ($validated['resepsi_time'] ?? '11:00');
+        $resepsiEndTime = $request->boolean('resepsi_is_until_finish') ? 'Selesai' : ($request->input('resepsi_end_time') ?: null);
+        $resepsiTz = $request->input('resepsi_timezone') ?: 'WIB';
+
         $invitation->events()->create([
             'title' => 'Resepsi Pernikahan',
             'date' => $validated['resepsi_date'],
-            'start_time' => $validated['resepsi_time'],
-            'timezone' => 'WIB',
+            'start_time' => $resepsiStartTime,
+            'end_time' => $resepsiEndTime,
+            'timezone' => $resepsiTz,
             'venue_name' => $validated['resepsi_venue'],
             'address' => $validated['resepsi_address'],
             'maps_url' => $validated['resepsi_maps_link'] ?? 'https://maps.google.com/?q=Jakarta',

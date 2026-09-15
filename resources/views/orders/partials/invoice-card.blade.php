@@ -4,9 +4,7 @@
     <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-sand-200/80">
         <div class="space-y-2.5">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-charcoal-900 text-brand-200 flex items-center justify-center font-serif text-2xl font-bold shadow-sm border border-brand-400/40">
-                    K
-                </div>
+                <img src="{{ asset('images/logo-klikmomen.png') }}" alt="KlikMomen Logo" class="w-11 h-11 object-contain">
                 <div>
                     <span class="font-serif text-2xl font-bold text-charcoal-950 flex items-center gap-0.5">
                         KlikMomen<span class="text-brand-500">.</span>

@@ -576,7 +576,37 @@ return [
         'motion-55' => '3d-motion-55',
         'm55' => '3d-motion-55',
 
+        // Standard Series (standart-01 to standart-05)
+        'standart-01' => 'rose-romance',
+        'standart-02' => 'editorial',
+        'standart-03' => 'botanical',
+        'standart-04' => 'classic',
+        'standart-05' => 'minimalist',
+
+        // Special Series (special-01 to special-03)
+        'special-01' => 'luxury-01',
+        'special-02' => 'luxury-02',
+        'special-03' => 'luxury-07',
+
+        // 3D Motion Series (3d-motion-01 to 3d-motion-08)
+        '3d-motion-01' => '3d-motion-01',
+        '3d-motion-02' => '3d-motion-05',
+        '3d-motion-03' => '3d-motion-07',
+        '3d-motion-04' => '3d-motion-10',
+        '3d-motion-05' => '3d-motion-27',
+        '3d-motion-06' => '3d-motion-47',
+        '3d-motion-07' => '3d-motion-49',
+        '3d-motion-08' => '3d-motion-55',
+
         // Backward compatibility mappings
+        'editorial' => 'editorial',
+        'botanical' => 'botanical',
+        'classic' => 'classic',
+        'minimalist' => 'minimalist',
+        'rose-romance' => 'rose-romance',
+        'luxury-01' => 'luxury-01',
+        'luxury-02' => 'luxury-02',
+        'luxury-07' => 'luxury-07',
         'modern' => 'editorial',
         'vogue-editorial' => 'editorial',
         'editorial-magazine' => 'editorial',
@@ -727,5 +757,25 @@ return [
                 'time' => '3 jam yang lalu',
             ],
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Romantic Background Music Presets
+    |--------------------------------------------------------------------------
+    | Default music playlist available for invitations.
+    */
+    'music_presets' => [
+        'Payung Teduh - Akad' => '/audio/payung-teduh-akad.mp3',
+        'Sal Priadi - Mesra-mesraannya' => '/audio/sal-priadi-mesra-mesraannya.mp3',
+        'Ungu - Saat Bahagia' => '/audio/ungu-saat-bahagia.mp3',
+        'Virgoun - Surat Cinta Untuk Starla' => '/audio/virgoun-surat-cinta-untuk-starla.mp3',
+        'Romantic Wedding Instrumental' => '/audio/wedding-song.mp3',
+        'JVKE - Golden Hour (Violin)' => '/themes/3d-motion-01/uploads/2024/10/Golden-Hour-JVKE-Cinematic-Violin-Cover.mp3',
+        'Howl\'s Moving Castle' => '/themes/3d-motion-05/uploads/2024/10/Howls-Moving-Castle.mp3',
+        'Gamelan Jawa Modern' => '/themes/3d-motion-07/uploads/2024/10/Gamelan-Jawa-Beat.mp3',
+        'Martina McBride - My Valentine' => '/themes/luxury-01/uploads/2024/06/McBride-My-Valentine-Martina.mp3',
+        'Sara Kays - Remember That Night' => '/themes/luxury-02/uploads/2025/01/Sara-Kays-Remember-That-Night.mp3',
+        'Vancouver Sleep Clinic - Someone to Stay' => '/themes/luxury-07/uploads/2025/03/Vancouver-Sleep-Clinic-Someone-to-Stay.mp3',
     ],
 ];

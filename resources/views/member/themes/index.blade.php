@@ -173,49 +173,65 @@
                     </div>
 
                     <!-- CARD FOOTER ACTIONS -->
-                    <div class="p-4 pt-0 border-t border-sand-200/60 mt-2 flex items-center justify-between gap-2.5 pt-3">
-                        <a 
-                            href="{{ route('demo.show', $theme->slug) }}" 
-                            target="_blank"
-                            class="py-2 px-3 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 text-xs font-bold transition flex items-center justify-center gap-1.5 shrink-0"
-                        >
-                            <i data-lucide="play" class="w-3.5 h-3.5 text-brand-600"></i>
-                            <span>Demo</span>
-                        </a>
-
-                        @if($isExpired)
-                            <a 
-                                href="{{ route('checkout.theme', $theme->id) }}" 
-                                class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
-                            >
-                                <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
-                                <span>Beli Lisensi Lagi</span>
-                            </a>
-                        @elseif(!empty($theme->is_used))
-                            <a 
-                                href="{{ route('member.invitations.index') }}" 
-                                class="py-2 px-2.5 rounded-xl bg-sand-200 hover:bg-sand-300 text-charcoal-800 text-xs font-bold transition flex items-center justify-center gap-1 shrink-0"
-                                title="Lihat Undangan yang menggunakan tema ini"
-                            >
-                                <i data-lucide="mail" class="w-3.5 h-3.5"></i>
-                                <span>Lihat Undangan</span>
-                            </a>
-                            <a 
-                                href="{{ route('checkout.theme', ['theme' => $theme->id, 'additional' => 1]) }}" 
-                                class="flex-1 py-2 px-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1"
-                                title="Beli lisensi tambahan untuk membuat undangan lain dengan tema ini"
-                            >
-                                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-                                <span>+ Beli Lisensi Lagi</span>
-                            </a>
+                    <div class="p-4 border-t border-sand-200/60 mt-2 pt-3">
+                        @if(!empty($theme->is_used))
+                            <div class="space-y-2 w-full">
+                                <div class="flex items-center gap-2">
+                                    <a 
+                                        href="{{ route('demo.show', $theme->slug) }}" 
+                                        target="_blank"
+                                        class="py-2 px-3 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 text-xs font-bold transition flex items-center justify-center gap-1.5 shrink-0"
+                                    >
+                                        <i data-lucide="play" class="w-3.5 h-3.5 text-brand-600"></i>
+                                        <span>Demo</span>
+                                    </a>
+                                    <a 
+                                        href="{{ route('member.invitations.index') }}" 
+                                        class="flex-1 py-2 px-3 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-800 text-xs font-bold transition flex items-center justify-center gap-1.5"
+                                        title="Lihat Undangan yang menggunakan tema ini"
+                                    >
+                                        <i data-lucide="mail" class="w-3.5 h-3.5 text-sand-600"></i>
+                                        <span>Lihat Undangan</span>
+                                    </a>
+                                </div>
+                                <a 
+                                    href="{{ route('checkout.theme', ['theme' => $theme->id, 'additional' => 1]) }}" 
+                                    class="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
+                                    title="Beli lisensi tambahan untuk membuat undangan lain dengan tema ini"
+                                >
+                                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                                    <span>Beli Lisensi Tambahan</span>
+                                </a>
+                            </div>
                         @else
-                            <a 
-                                href="{{ route('member.invitations.create', ['theme_id' => $theme->id]) }}" 
-                                class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
-                            >
-                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                                <span>Gunakan Tema</span>
-                            </a>
+                            <div class="flex items-center justify-between gap-2.5">
+                                <a 
+                                    href="{{ route('demo.show', $theme->slug) }}" 
+                                    target="_blank"
+                                    class="py-2 px-3 rounded-xl bg-sand-100 hover:bg-sand-200 text-charcoal-900 text-xs font-bold transition flex items-center justify-center gap-1.5 shrink-0"
+                                >
+                                    <i data-lucide="play" class="w-3.5 h-3.5 text-brand-600"></i>
+                                    <span>Demo</span>
+                                </a>
+
+                                @if($isExpired)
+                                    <a 
+                                        href="{{ route('checkout.theme', $theme->id) }}" 
+                                        class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
+                                    >
+                                        <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                                        <span>Beli Lisensi Lagi</span>
+                                    </a>
+                                @else
+                                    <a 
+                                        href="{{ route('member.invitations.create', ['theme_id' => $theme->id]) }}" 
+                                        class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-sm hover:shadow transition flex items-center justify-center gap-1.5"
+                                    >
+                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                                        <span>Gunakan Tema</span>
+                                    </a>
+                                @endif
+                            </div>
                         @endif
                     </div>
                 </div>

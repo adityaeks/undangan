@@ -9,6 +9,7 @@ use App\Services\InvitationService;
 use App\Services\PaymentService;
 use App\Services\ThemeOwnershipService;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Config;
 
 test('super admin, partner, and member see role-appropriate dashboard', function () {
     $superAdmin = User::factory()->create(['role' => 'super_admin']);
@@ -137,10 +138,21 @@ test('payment webhook processes settlement idempotently', function () {
         'is_active' => true,
     ]);
 
+    $serverKey = 'SB-Mid-server-secret-key-xyz';
+    Config::set('services.midtrans.server_key', $serverKey);
+    Config::set('services.midtrans.client_key', 'SB-Mid-client-xyz');
+
     $order = $paymentService->createOrderForTheme($user, $theme);
+
+    $statusCode = '200';
+    $grossAmount = number_format((float) ($order->total_amount ?? $order->amount), 2, '.', '');
+    $signature = hash('sha512', $order->order_code.$statusCode.$grossAmount.$serverKey);
 
     $webhookPayload = [
         'order_id' => $order->order_code,
+        'status_code' => $statusCode,
+        'gross_amount' => $grossAmount,
+        'signature_key' => $signature,
         'transaction_status' => 'settlement',
         'transaction_id' => 'TRX-MIDTRANS-998877',
         'payment_type' => 'qris',
@@ -264,25 +276,24 @@ test('paid theme is displayed on member dashboard under owned themes section', f
     $theme = Theme::create([
         'name' => 'The Vogue Royal Edition',
         'slug' => 'the-vogue-royal-edition',
-        'view_path' => 'demo.editorial',
+        'view_path' => 'demo.standart-02',
         'price' => 49000.00,
         'is_premium' => true,
         'is_active' => true,
     ]);
 
-    // Before payment: dashboard shows empty state for owned themes
+    // Before payment: dashboard shows onboarding without owned themes
     $this->actingAs($user)->get('/dashboard')
         ->assertOk()
-        ->assertSee('Tema yang Telah Anda Miliki')
-        ->assertSee('Belum Ada Tema yang Dibeli');
+        ->assertSee('Portal Pengantin')
+        ->assertDontSee('The Vogue Royal Edition');
 
     // Create order and pay
     $order = $paymentService->createOrderForTheme($user, $theme);
     $paymentService->processSuccessfulPayment($order, 'PAY-SIM-123', 'qris');
-    $user->unsetRelation('themes');
 
     // After payment: dashboard shows the paid theme
-    $this->actingAs($user)->get('/dashboard')
+    $this->actingAs($user->fresh())->get('/dashboard')
         ->assertOk()
         ->assertSee('Tema yang Telah Anda Miliki')
         ->assertSee('The Vogue Royal Edition')

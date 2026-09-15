@@ -1,28 +1,30 @@
 @php
-    $coverPhotoUrl = $data['cover_image'] ?? $data['groom']['photo'] ?? $data['bride']['photo'] ?? '{{ $coverPhotoUrl }}';
-    $bridePhotoUrl = $data['bride']['photo'] ?? $data['cover_image'] ?? '/themes/3d-motion-05/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-5.jpeg';
-    $groomPhotoUrl = $data['groom']['photo'] ?? $data['cover_image'] ?? '/themes/3d-motion-05/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-6.jpeg';
-    $saveTheDateUrl = (!empty($data['galleries']) && count($data['galleries']) > 0) ? $data['galleries'][0] : ($data['cover_image'] ?? '/themes/3d-motion-05/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-10.jpeg');
-    $closingPhotoUrl = (!empty($data['galleries']) && count($data['galleries']) > 1) ? $data['galleries'][1] : ($saveTheDateUrl ?? '/themes/3d-motion-05/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-7.jpeg');
+    $coverPhotoUrl = $data['cover_image'] ?? $data['groom']['photo'] ?? $data['bride']['photo'] ?? '/themes/3d-motion-27/uploads/2026/01/preview-m27-reseller.jpg';
+    $bridePhotoUrl = $data['bride']['photo'] ?? $data['cover_image'] ?? '/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-12.jpeg';
+    $groomPhotoUrl = $data['groom']['photo'] ?? $data['cover_image'] ?? '/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-11.jpeg';
+    $saveTheDateUrl = (!empty($data['galleries']) && count($data['galleries']) > 0) ? $data['galleries'][0] : ($data['cover_image'] ?? '/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-10.jpeg');
+    $closingPhotoUrl = (!empty($data['galleries']) && count($data['galleries']) > 1) ? $data['galleries'][1] : ($saveTheDateUrl ?? '/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-12.jpeg');
 @endphp
 <!doctype html>
 <html lang="id" prefix="og: https://ogp.me/ns#">
 <head>
 	<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playball&family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playball&family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>{{ $data['title'] ?? ('The Wedding of ' . ($data['bride']['nickname'] ?? 'Putri') . ' & ' . ($data['groom']['nickname'] ?? 'Andika')) }}</title>
 
 <style id="wp-img-auto-sizes-contain-inline-css">
 img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-img-auto-sizes-contain-inline-css */
 </style>
-<link rel='stylesheet' id='dce-animations-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/animations.css' media='all' />
+<link rel='stylesheet' id='dce-animations-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/animations.css?ver=3.4.0' media='all' />
 
 <style id="wp-emoji-styles-inline-css">
 
@@ -404,59 +406,60 @@ html :where(.is-position-sticky) {
 :root { --wp-internal-comment: "Placeholder for wp_hoist_late_printed_styles() to replace with the block styles printed at wp_footer." }
 /*# sourceURL=wp-block-styles-placeholder-inline-css */
 </style>
-<link rel='stylesheet' id='dashicons-css' href='/themes/3d-motion-05/wp-includes/css/dashicons.css' media='all' />
-<link rel='stylesheet' id='jet-engine-frontend-css' href='/themes/3d-motion-05/plugins/jet-engine/assets/css/frontend.css' media='all' />
+<link rel='stylesheet' id='dashicons-css' href='/themes/3d-motion-05/wp-includes/css/dashicons.css?ver=7.0.4' media='all' />
+<link rel='stylesheet' id='jet-engine-frontend-css' href='/themes/3d-motion-05/plugins/jet-engine/assets/css/frontend.css?ver=3.8.14.3' media='all' />
 <style id="wp-global-styles-placeholder-inline-css">
 :root { --wp-internal-comment: "Placeholder for wp_hoist_late_printed_styles() to replace with the global-styles printed at wp_footer." }
 /*# sourceURL=wp-global-styles-placeholder-inline-css */
 </style>
-<link rel='stylesheet' id='uaf_client_css-css' href='/themes/3d-motion-05/uploads/useanyfont/uaf.css' media='all' />
-<link rel='stylesheet' id='wpb-lib-frontend-css' href='/themes/3d-motion-05/plugins/wpbits-addons-for-elementor/assets/css/frontend.min.css' media='all' />
-<link rel='stylesheet' id='wds-elementor-css' href='/themes/3d-motion-05/plugins/weddingsaas-pro/assets/css/wds-elementor.css' media='all' />
-<link rel='stylesheet' id='saic_style-css' href='/themes/3d-motion-05/plugins/weddingsaas-pro/assets/plugins/custom/commentpress/saic_style.css' media='screen' />
-<link rel='stylesheet' id='dce-style-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/style.css' media='all' />
-<link rel='stylesheet' id='dce-dynamic-visibility-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/dynamic-visibility.css' media='all' />
-<link rel='stylesheet' id='dce-tooltip-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/tooltip.css' media='all' />
-<link rel='stylesheet' id='wds-reset-css' href='/themes/3d-motion-05/themes/weddingsaas-wp/assets/css/reset.css' media='all' />
-<link rel='stylesheet' id='e-animation-rotateInDownLeft-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/rotateInDownLeft.css' media='all' />
-<link rel='stylesheet' id='elementor-frontend-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/frontend.css' media='all' />
+<link rel='stylesheet' id='uaf_client_css-css' href='/wp-content/uploads/useanyfont/uaf.css?ver=1786431129' media='all' />
+<link rel='stylesheet' id='wpb-lib-frontend-css' href='/themes/3d-motion-05/plugins/wpbits-addons-for-elementor/assets/css/frontend.min.css?ver=1.8.1' media='all' />
+<link rel='stylesheet' id='wds-elementor-css' href='/themes/3d-motion-05/plugins/weddingsaas-pro/assets/css/wds-elementor.css?ver=2.10.2.1' media='all' />
+<link rel='stylesheet' id='saic_style-css' href='/themes/3d-motion-05/plugins/weddingsaas-pro/assets/plugins/custom/commentpress/saic_style.css?ver=2.10.2.1' media='screen' />
+<link rel='stylesheet' id='dce-style-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/style.css?ver=3.4.0' media='all' />
+<link rel='stylesheet' id='dce-dynamic-visibility-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/dynamic-visibility.css?ver=3.4.0' media='all' />
+<link rel='stylesheet' id='dce-tooltip-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/tooltip.css?ver=3.4.0' media='all' />
+<link rel='stylesheet' id='wds-reset-css' href='#/wp-content/themes/weddingsaas-wp/assets/css/reset.css?ver=2.0.11' media='all' />
+<link rel='stylesheet' id='elementor-frontend-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/frontend.css?ver=4.2.4' media='all' />
 <style id="elementor-frontend-inline-css">
 @-webkit-keyframes ha_fadeIn{0%{opacity:0}to{opacity:1}}@keyframes ha_fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes ha_zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}@keyframes ha_zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}@-webkit-keyframes ha_rollIn{0%{opacity:0;-webkit-transform:translate3d(-100%,0,0) rotate3d(0,0,1,-120deg);transform:translate3d(-100%,0,0) rotate3d(0,0,1,-120deg)}to{opacity:1}}@keyframes ha_rollIn{0%{opacity:0;-webkit-transform:translate3d(-100%,0,0) rotate3d(0,0,1,-120deg);transform:translate3d(-100%,0,0) rotate3d(0,0,1,-120deg)}to{opacity:1}}@-webkit-keyframes ha_bounce{0%,20%,53%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}40%,43%{-webkit-transform:translate3d(0,-30px,0) scaleY(1.1);transform:translate3d(0,-30px,0) scaleY(1.1);-webkit-animation-timing-function:cubic-bezier(.755,.05,.855,.06);animation-timing-function:cubic-bezier(.755,.05,.855,.06)}70%{-webkit-transform:translate3d(0,-15px,0) scaleY(1.05);transform:translate3d(0,-15px,0) scaleY(1.05);-webkit-animation-timing-function:cubic-bezier(.755,.05,.855,.06);animation-timing-function:cubic-bezier(.755,.05,.855,.06)}80%{-webkit-transition-timing-function:cubic-bezier(.215,.61,.355,1);transition-timing-function:cubic-bezier(.215,.61,.355,1);-webkit-transform:translate3d(0,0,0) scaleY(.95);transform:translate3d(0,0,0) scaleY(.95)}90%{-webkit-transform:translate3d(0,-4px,0) scaleY(1.02);transform:translate3d(0,-4px,0) scaleY(1.02)}}@keyframes ha_bounce{0%,20%,53%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}40%,43%{-webkit-transform:translate3d(0,-30px,0) scaleY(1.1);transform:translate3d(0,-30px,0) scaleY(1.1);-webkit-animation-timing-function:cubic-bezier(.755,.05,.855,.06);animation-timing-function:cubic-bezier(.755,.05,.855,.06)}70%{-webkit-transform:translate3d(0,-15px,0) scaleY(1.05);transform:translate3d(0,-15px,0) scaleY(1.05);-webkit-animation-timing-function:cubic-bezier(.755,.05,.855,.06);animation-timing-function:cubic-bezier(.755,.05,.855,.06)}80%{-webkit-transition-timing-function:cubic-bezier(.215,.61,.355,1);transition-timing-function:cubic-bezier(.215,.61,.355,1);-webkit-transform:translate3d(0,0,0) scaleY(.95);transform:translate3d(0,0,0) scaleY(.95)}90%{-webkit-transform:translate3d(0,-4px,0) scaleY(1.02);transform:translate3d(0,-4px,0) scaleY(1.02)}}@-webkit-keyframes ha_bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}20%{-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}40%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}60%{opacity:1;-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}80%{-webkit-transform:scale3d(.97,.97,.97);transform:scale3d(.97,.97,.97)}to{opacity:1}}@keyframes ha_bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}20%{-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}40%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}60%{opacity:1;-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}80%{-webkit-transform:scale3d(.97,.97,.97);transform:scale3d(.97,.97,.97)}to{opacity:1}}@-webkit-keyframes ha_flipInX{0%{opacity:0;-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}60%{opacity:1;-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg)}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}}@keyframes ha_flipInX{0%{opacity:0;-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}60%{opacity:1;-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg)}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}}@-webkit-keyframes ha_flipInY{0%{opacity:0;-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}40%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-20deg);transform:perspective(400px) rotate3d(0,1,0,-20deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}60%{opacity:1;-webkit-transform:perspective(400px) rotate3d(0,1,0,10deg);transform:perspective(400px) rotate3d(0,1,0,10deg)}80%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-5deg);transform:perspective(400px) rotate3d(0,1,0,-5deg)}}@keyframes ha_flipInY{0%{opacity:0;-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}40%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-20deg);transform:perspective(400px) rotate3d(0,1,0,-20deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}60%{opacity:1;-webkit-transform:perspective(400px) rotate3d(0,1,0,10deg);transform:perspective(400px) rotate3d(0,1,0,10deg)}80%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-5deg);transform:perspective(400px) rotate3d(0,1,0,-5deg)}}@-webkit-keyframes ha_swing{20%{-webkit-transform:rotate3d(0,0,1,15deg);transform:rotate3d(0,0,1,15deg)}40%{-webkit-transform:rotate3d(0,0,1,-10deg);transform:rotate3d(0,0,1,-10deg)}60%{-webkit-transform:rotate3d(0,0,1,5deg);transform:rotate3d(0,0,1,5deg)}80%{-webkit-transform:rotate3d(0,0,1,-5deg);transform:rotate3d(0,0,1,-5deg)}}@keyframes ha_swing{20%{-webkit-transform:rotate3d(0,0,1,15deg);transform:rotate3d(0,0,1,15deg)}40%{-webkit-transform:rotate3d(0,0,1,-10deg);transform:rotate3d(0,0,1,-10deg)}60%{-webkit-transform:rotate3d(0,0,1,5deg);transform:rotate3d(0,0,1,5deg)}80%{-webkit-transform:rotate3d(0,0,1,-5deg);transform:rotate3d(0,0,1,-5deg)}}@-webkit-keyframes ha_slideInDown{0%{visibility:visible;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes ha_slideInDown{0%{visibility:visible;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes ha_slideInUp{0%{visibility:visible;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0)}}@keyframes ha_slideInUp{0%{visibility:visible;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0)}}@-webkit-keyframes ha_slideInLeft{0%{visibility:visible;-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0)}}@keyframes ha_slideInLeft{0%{visibility:visible;-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0)}}@-webkit-keyframes ha_slideInRight{0%{visibility:visible;-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0)}}@keyframes ha_slideInRight{0%{visibility:visible;-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0)}}.ha_fadeIn{-webkit-animation-name:ha_fadeIn;animation-name:ha_fadeIn}.ha_zoomIn{-webkit-animation-name:ha_zoomIn;animation-name:ha_zoomIn}.ha_rollIn{-webkit-animation-name:ha_rollIn;animation-name:ha_rollIn}.ha_bounce{-webkit-transform-origin:center bottom;-ms-transform-origin:center bottom;transform-origin:center bottom;-webkit-animation-name:ha_bounce;animation-name:ha_bounce}.ha_bounceIn{-webkit-animation-name:ha_bounceIn;animation-name:ha_bounceIn;-webkit-animation-duration:.75s;-webkit-animation-duration:calc(var(--animate-duration)*.75);animation-duration:.75s;animation-duration:calc(var(--animate-duration)*.75)}.ha_flipInX,.ha_flipInY{-webkit-animation-name:ha_flipInX;animation-name:ha_flipInX;-webkit-backface-visibility:visible!important;backface-visibility:visible!important}.ha_flipInY{-webkit-animation-name:ha_flipInY;animation-name:ha_flipInY}.ha_swing{-webkit-transform-origin:top center;-ms-transform-origin:top center;transform-origin:top center;-webkit-animation-name:ha_swing;animation-name:ha_swing}.ha_slideInDown{-webkit-animation-name:ha_slideInDown;animation-name:ha_slideInDown}.ha_slideInUp{-webkit-animation-name:ha_slideInUp;animation-name:ha_slideInUp}.ha_slideInLeft{-webkit-animation-name:ha_slideInLeft;animation-name:ha_slideInLeft}.ha_slideInRight{-webkit-animation-name:ha_slideInRight;animation-name:ha_slideInRight}.ha-css-transform-yes{-webkit-transition-duration:var(--ha-tfx-transition-duration, .2s);transition-duration:var(--ha-tfx-transition-duration, .2s);-webkit-transition-property:-webkit-transform;transition-property:transform;transition-property:transform,-webkit-transform;-webkit-transform:translate(var(--ha-tfx-translate-x, 0),var(--ha-tfx-translate-y, 0)) scale(var(--ha-tfx-scale-x, 1),var(--ha-tfx-scale-y, 1)) skew(var(--ha-tfx-skew-x, 0),var(--ha-tfx-skew-y, 0)) rotateX(var(--ha-tfx-rotate-x, 0)) rotateY(var(--ha-tfx-rotate-y, 0)) rotateZ(var(--ha-tfx-rotate-z, 0));transform:translate(var(--ha-tfx-translate-x, 0),var(--ha-tfx-translate-y, 0)) scale(var(--ha-tfx-scale-x, 1),var(--ha-tfx-scale-y, 1)) skew(var(--ha-tfx-skew-x, 0),var(--ha-tfx-skew-y, 0)) rotateX(var(--ha-tfx-rotate-x, 0)) rotateY(var(--ha-tfx-rotate-y, 0)) rotateZ(var(--ha-tfx-rotate-z, 0))}.ha-css-transform-yes:hover{-webkit-transform:translate(var(--ha-tfx-translate-x-hover, var(--ha-tfx-translate-x, 0)),var(--ha-tfx-translate-y-hover, var(--ha-tfx-translate-y, 0))) scale(var(--ha-tfx-scale-x-hover, var(--ha-tfx-scale-x, 1)),var(--ha-tfx-scale-y-hover, var(--ha-tfx-scale-y, 1))) skew(var(--ha-tfx-skew-x-hover, var(--ha-tfx-skew-x, 0)),var(--ha-tfx-skew-y-hover, var(--ha-tfx-skew-y, 0))) rotateX(var(--ha-tfx-rotate-x-hover, var(--ha-tfx-rotate-x, 0))) rotateY(var(--ha-tfx-rotate-y-hover, var(--ha-tfx-rotate-y, 0))) rotateZ(var(--ha-tfx-rotate-z-hover, var(--ha-tfx-rotate-z, 0)));transform:translate(var(--ha-tfx-translate-x-hover, var(--ha-tfx-translate-x, 0)),var(--ha-tfx-translate-y-hover, var(--ha-tfx-translate-y, 0))) scale(var(--ha-tfx-scale-x-hover, var(--ha-tfx-scale-x, 1)),var(--ha-tfx-scale-y-hover, var(--ha-tfx-scale-y, 1))) skew(var(--ha-tfx-skew-x-hover, var(--ha-tfx-skew-x, 0)),var(--ha-tfx-skew-y-hover, var(--ha-tfx-skew-y, 0))) rotateX(var(--ha-tfx-rotate-x-hover, var(--ha-tfx-rotate-x, 0))) rotateY(var(--ha-tfx-rotate-y-hover, var(--ha-tfx-rotate-y, 0))) rotateZ(var(--ha-tfx-rotate-z-hover, var(--ha-tfx-rotate-z, 0)))}.happy-addon>.elementor-widget-container{word-wrap:break-word;overflow-wrap:break-word}.happy-addon>.elementor-widget-container,.happy-addon>.elementor-widget-container *{-webkit-box-sizing:border-box;box-sizing:border-box}.happy-addon:not(:has(.elementor-widget-container)),.happy-addon:not(:has(.elementor-widget-container)) *{-webkit-box-sizing:border-box;box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}.happy-addon p:empty{display:none}.happy-addon .elementor-inline-editing{min-height:auto!important}.happy-addon-pro img{max-width:100%;height:auto;-o-object-fit:cover;object-fit:cover}.ha-screen-reader-text{position:absolute;overflow:hidden;clip:rect(1px,1px,1px,1px);margin:-1px;padding:0;width:1px;height:1px;border:0;word-wrap:normal!important;-webkit-clip-path:inset(50%);clip-path:inset(50%)}.ha-has-bg-overlay>.elementor-widget-container{position:relative;z-index:1}.ha-has-bg-overlay>.elementor-widget-container:before{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;content:""}.ha-has-bg-overlay:not(:has(.elementor-widget-container)){position:relative;z-index:1}.ha-has-bg-overlay:not(:has(.elementor-widget-container)):before{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;content:""}.ha-popup--is-enabled .ha-js-popup,.ha-popup--is-enabled .ha-js-popup img{cursor:-webkit-zoom-in!important;cursor:zoom-in!important}.mfp-wrap .mfp-arrow,.mfp-wrap .mfp-close{background-color:transparent}.mfp-wrap .mfp-arrow:focus,.mfp-wrap .mfp-close:focus{outline-width:thin}.ha-advanced-tooltip-enable{position:relative;cursor:pointer;--ha-tooltip-arrow-color:black;--ha-tooltip-arrow-distance:0}.ha-advanced-tooltip-enable .ha-advanced-tooltip-content{position:absolute;z-index:999;display:none;padding:5px 0;width:120px;height:auto;border-radius:6px;background-color:#000;color:#fff;text-align:center;opacity:0}.ha-advanced-tooltip-enable .ha-advanced-tooltip-content::after{position:absolute;border-width:5px;border-style:solid;content:""}.ha-advanced-tooltip-enable .ha-advanced-tooltip-content.no-arrow::after{visibility:hidden}.ha-advanced-tooltip-enable .ha-advanced-tooltip-content.show{display:inline-block;opacity:1}.ha-advanced-tooltip-enable.ha-advanced-tooltip-top .ha-advanced-tooltip-content,body[data-elementor-device-mode=tablet] .ha-advanced-tooltip-enable.ha-advanced-tooltip-tablet-top .ha-advanced-tooltip-content{top:unset;right:0;bottom:calc(101% + var(--ha-tooltip-arrow-distance));left:0;margin:0 auto}.ha-advanced-tooltip-enable.ha-advanced-tooltip-top .ha-advanced-tooltip-content::after,body[data-elementor-device-mode=tablet] .ha-advanced-tooltip-enable.ha-advanced-tooltip-tablet-top .ha-advanced-tooltip-content::after{top:100%;right:unset;bottom:unset;left:50%;border-color:var(--ha-tooltip-arrow-color) transparent transparent transparent;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}.ha-advanced-tooltip-enable.ha-advanced-tooltip-bottom .ha-advanced-tooltip-content,body[data-elementor-device-mode=tablet] .ha-advanced-tooltip-enable.ha-advanced-tooltip-tablet-bottom .ha-advanced-tooltip-content{top:calc(101% + var(--ha-tooltip-arrow-distance));right:0;bottom:unset;left:0;margin:0 auto}.ha-advanced-tooltip-enable.ha-advanced-tooltip-bottom .ha-advanced-tooltip-content::after,body[data-elementor-device-mode=tablet] .ha-advanced-tooltip-enable.ha-advanced-tooltip-tablet-bottom .ha-advanced-tooltip-content::after{top:unset;right:unset;bottom:100%;left:50%;border-color:transparent transparent var(--ha-tooltip-arrow-color) transparent;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}.ha-advanced-tooltip-enable.ha-advanced-tooltip-left .ha-advanced-tooltip-content,body[data-elementor-device-mode=tablet] .ha-advanced-tooltip-enable.ha-advanced-tooltip-tablet-left .ha-advanced-tooltip-content{top:50%;right:calc(101% + var(--ha-tooltip-arrow-distance));bottom:unset;left:unset;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.ha-advanced-tooltip-enable.ha-advanced-tooltip-left .ha-advanced-tooltip-content::after,body[data-elementor-device-mode=tablet] .ha-advanced-tooltip-enable.ha-advanced-tooltip-tablet-left .ha-advanced-tooltip-content::after{top:50%;right:unset;bottom:unset;left:100%;border-color:transparent transparent transparent var(--ha-tooltip-arrow-color);-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.ha-advanced-tooltip-enable.ha-advanced-tooltip-right .ha-advanced-tooltip-content,body[data-elementor-device-mode=tablet] .ha-advanced-tooltip-enable.ha-advanced-tooltip-tablet-right .ha-advanced-tooltip-content{top:50%;right:unset;bottom:unset;left:calc(101% + var(--ha-tooltip-arrow-distance));-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.ha-advanced-tooltip-enable.ha-advanced-tooltip-right .ha-advanced-tooltip-content::after,body[data-elementor-device-mode=tablet] .ha-advanced-tooltip-enable.ha-advanced-tooltip-tablet-right .ha-advanced-tooltip-content::after{top:50%;right:100%;bottom:unset;left:unset;border-color:transparent var(--ha-tooltip-arrow-color) transparent transparent;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}body[data-elementor-device-mode=mobile] .ha-advanced-tooltip-enable.ha-advanced-tooltip-mobile-top .ha-advanced-tooltip-content{top:unset;right:0;bottom:calc(101% + var(--ha-tooltip-arrow-distance));left:0;margin:0 auto}body[data-elementor-device-mode=mobile] .ha-advanced-tooltip-enable.ha-advanced-tooltip-mobile-top .ha-advanced-tooltip-content::after{top:100%;right:unset;bottom:unset;left:50%;border-color:var(--ha-tooltip-arrow-color) transparent transparent transparent;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}body[data-elementor-device-mode=mobile] .ha-advanced-tooltip-enable.ha-advanced-tooltip-mobile-bottom .ha-advanced-tooltip-content{top:calc(101% + var(--ha-tooltip-arrow-distance));right:0;bottom:unset;left:0;margin:0 auto}body[data-elementor-device-mode=mobile] .ha-advanced-tooltip-enable.ha-advanced-tooltip-mobile-bottom .ha-advanced-tooltip-content::after{top:unset;right:unset;bottom:100%;left:50%;border-color:transparent transparent var(--ha-tooltip-arrow-color) transparent;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}body[data-elementor-device-mode=mobile] .ha-advanced-tooltip-enable.ha-advanced-tooltip-mobile-left .ha-advanced-tooltip-content{top:50%;right:calc(101% + var(--ha-tooltip-arrow-distance));bottom:unset;left:unset;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}body[data-elementor-device-mode=mobile] .ha-advanced-tooltip-enable.ha-advanced-tooltip-mobile-left .ha-advanced-tooltip-content::after{top:50%;right:unset;bottom:unset;left:100%;border-color:transparent transparent transparent var(--ha-tooltip-arrow-color);-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}body[data-elementor-device-mode=mobile] .ha-advanced-tooltip-enable.ha-advanced-tooltip-mobile-right .ha-advanced-tooltip-content{top:50%;right:unset;bottom:unset;left:calc(101% + var(--ha-tooltip-arrow-distance));-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}body[data-elementor-device-mode=mobile] .ha-advanced-tooltip-enable.ha-advanced-tooltip-mobile-right .ha-advanced-tooltip-content::after{top:50%;right:100%;bottom:unset;left:unset;border-color:transparent var(--ha-tooltip-arrow-color) transparent transparent;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}body.elementor-editor-active .happy-addon.ha-gravityforms .gform_wrapper{display:block!important}.ha-scroll-to-top-wrap.ha-scroll-to-top-hide{display:none}.ha-scroll-to-top-wrap.edit-mode,.ha-scroll-to-top-wrap.single-page-off{display:none!important}.ha-scroll-to-top-button{position:fixed;right:15px;bottom:15px;z-index:9999;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;-ms-flex-align:center;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;width:50px;height:50px;border-radius:50px;background-color:#5636d1;color:#fff;text-align:center;opacity:1;cursor:pointer;-webkit-transition:all .3s;transition:all .3s}.ha-scroll-to-top-button i{color:#fff;font-size:16px}.ha-scroll-to-top-button:hover{background-color:#e2498a}
-.elementor-8021 .elementor-element.elementor-element-f864b3a:not(.elementor-motion-effects-element-type-background) > .elementor-widget-wrap, .elementor-8021 .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("{{ $coverPhotoUrl }}");}.elementor-8021 .elementor-element.elementor-element-62d8811 .elementor-heading-title{font-size:34px;}.elementor-8021 .elementor-element.elementor-element-7bde821 .elementor-heading-title{font-size:34px;}.elementor-8021 .elementor-element.elementor-element-1df9f90 .elementor-heading-title{font-size:55px;}.elementor-8021 .elementor-element.elementor-element-7d61f84 .elementor-heading-title{font-size:55px;}.elementor-8021 .elementor-element.elementor-element-8211d57:not(.elementor-motion-effects-element-type-background), .elementor-8021 .elementor-element.elementor-element-8211d57 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("{{ $coverPhotoUrl }}");}.elementor-8021 .elementor-element.elementor-element-7868560 .elementor-heading-title{font-size:34px;}.elementor-8021 .elementor-element.elementor-element-d8ad50b .elementor-heading-title{font-size:34px;}.elementor-8021 .elementor-element.elementor-element-1e2198b .elementor-heading-title{font-size:42px;}.elementor-8021 .elementor-element.elementor-element-c91c196 .elementor-heading-title{font-size:42px;}.elementor-8021 .elementor-element.elementor-element-f8c31f8 .elementor-heading-title{font-size:26px;}.elementor-8021 .elementor-element.elementor-element-98d7e88 .elementor-heading-title{font-size:26px;}.elementor-8021 .elementor-element.elementor-element-793af63 .elementor-heading-title{font-size:26px;}.elementor-8021 .elementor-element.elementor-element-493fd0f .elementor-heading-title{font-size:26px;}.elementor-8021 .elementor-element.elementor-element-ace10ab.elementor-view-stacked .elementor-icon{background-color:#7f96a8;}.elementor-8021 .elementor-element.elementor-element-ace10ab.elementor-view-framed .elementor-icon, .elementor-8021 .elementor-element.elementor-element-ace10ab.elementor-view-default .elementor-icon{color:#7f96a8;border-color:#7f96a8;}.elementor-8021 .elementor-element.elementor-element-ace10ab.elementor-view-framed .elementor-icon, .elementor-8021 .elementor-element.elementor-element-ace10ab.elementor-view-default .elementor-icon svg{fill:#7f96a8;}.elementor-8021 .elementor-element.elementor-element-7c6f2d3.elementor-view-stacked .elementor-icon{background-color:#ffffff;}.elementor-8021 .elementor-element.elementor-element-7c6f2d3.elementor-view-framed .elementor-icon, .elementor-8021 .elementor-element.elementor-element-7c6f2d3.elementor-view-default .elementor-icon{color:#ffffff;border-color:#ffffff;}.elementor-8021 .elementor-element.elementor-element-7c6f2d3.elementor-view-framed .elementor-icon, .elementor-8021 .elementor-element.elementor-element-7c6f2d3.elementor-view-default .elementor-icon svg{fill:#ffffff;}.elementor-8021 .elementor-element.elementor-element-17be9d8.elementor-view-stacked .elementor-icon{background-color:#000000;}.elementor-8021 .elementor-element.elementor-element-17be9d8.elementor-view-framed .elementor-icon, .elementor-8021 .elementor-element.elementor-element-17be9d8.elementor-view-default .elementor-icon{color:#000000;border-color:#000000;}.elementor-8021 .elementor-element.elementor-element-17be9d8.elementor-view-framed .elementor-icon, .elementor-8021 .elementor-element.elementor-element-17be9d8.elementor-view-default .elementor-icon svg{fill:#000000;}.elementor-8021 .elementor-element.elementor-element-404c5a5.elementor-view-stacked .elementor-icon{background-color:#000000;}.elementor-8021 .elementor-element.elementor-element-404c5a5.elementor-view-framed .elementor-icon, .elementor-8021 .elementor-element.elementor-element-404c5a5.elementor-view-default .elementor-icon{color:#000000;border-color:#000000;}.elementor-8021 .elementor-element.elementor-element-404c5a5.elementor-view-framed .elementor-icon, .elementor-8021 .elementor-element.elementor-element-404c5a5.elementor-view-default .elementor-icon svg{fill:#000000;}
+.elementor-138165 .elementor-element.elementor-element-f864b3a:not(.elementor-motion-effects-element-type-background) > .elementor-widget-wrap, .elementor-138165 .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg");}.elementor-138165 .elementor-element.elementor-element-62d8811 .elementor-heading-title{font-size:34px;}.elementor-138165 .elementor-element.elementor-element-7bde821 .elementor-heading-title{font-size:34px;}.elementor-138165 .elementor-element.elementor-element-1df9f90 .elementor-heading-title{font-size:55px;}.elementor-138165 .elementor-element.elementor-element-7d61f84 .elementor-heading-title{font-size:55px;}.elementor-138165 .elementor-element.elementor-element-8211d57:not(.elementor-motion-effects-element-type-background), .elementor-138165 .elementor-element.elementor-element-8211d57 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg");}.elementor-138165 .elementor-element.elementor-element-7868560 .elementor-heading-title{font-size:34px;}.elementor-138165 .elementor-element.elementor-element-d8ad50b .elementor-heading-title{font-size:34px;}.elementor-138165 .elementor-element.elementor-element-1e2198b .elementor-heading-title{font-size:42px;}.elementor-138165 .elementor-element.elementor-element-c91c196 .elementor-heading-title{font-size:42px;}.elementor-138165 .elementor-element.elementor-element-f8c31f8 .elementor-heading-title{font-size:26px;}.elementor-138165 .elementor-element.elementor-element-98d7e88 .elementor-heading-title{font-size:26px;}.elementor-138165 .elementor-element.elementor-element-793af63 .elementor-heading-title{font-size:26px;}.elementor-138165 .elementor-element.elementor-element-493fd0f .elementor-heading-title{font-size:26px;}.elementor-138165 .elementor-element.elementor-element-ace10ab.elementor-view-stacked .elementor-icon{background-color:#88775d;}.elementor-138165 .elementor-element.elementor-element-ace10ab.elementor-view-framed .elementor-icon, .elementor-138165 .elementor-element.elementor-element-ace10ab.elementor-view-default .elementor-icon{color:#88775d;border-color:#88775d;}.elementor-138165 .elementor-element.elementor-element-ace10ab.elementor-view-framed .elementor-icon, .elementor-138165 .elementor-element.elementor-element-ace10ab.elementor-view-default .elementor-icon svg{fill:#88775d;}.elementor-138165 .elementor-element.elementor-element-7c6f2d3.elementor-view-stacked .elementor-icon{background-color:#ffffff;}.elementor-138165 .elementor-element.elementor-element-7c6f2d3.elementor-view-framed .elementor-icon, .elementor-138165 .elementor-element.elementor-element-7c6f2d3.elementor-view-default .elementor-icon{color:#ffffff;border-color:#ffffff;}.elementor-138165 .elementor-element.elementor-element-7c6f2d3.elementor-view-framed .elementor-icon, .elementor-138165 .elementor-element.elementor-element-7c6f2d3.elementor-view-default .elementor-icon svg{fill:#ffffff;}.elementor-138165 .elementor-element.elementor-element-17be9d8.elementor-view-stacked .elementor-icon{background-color:#000000;}.elementor-138165 .elementor-element.elementor-element-17be9d8.elementor-view-framed .elementor-icon, .elementor-138165 .elementor-element.elementor-element-17be9d8.elementor-view-default .elementor-icon{color:#000000;border-color:#000000;}.elementor-138165 .elementor-element.elementor-element-17be9d8.elementor-view-framed .elementor-icon, .elementor-138165 .elementor-element.elementor-element-17be9d8.elementor-view-default .elementor-icon svg{fill:#000000;}.elementor-138165 .elementor-element.elementor-element-404c5a5.elementor-view-stacked .elementor-icon{background-color:#000000;}.elementor-138165 .elementor-element.elementor-element-404c5a5.elementor-view-framed .elementor-icon, .elementor-138165 .elementor-element.elementor-element-404c5a5.elementor-view-default .elementor-icon{color:#000000;border-color:#000000;}.elementor-138165 .elementor-element.elementor-element-404c5a5.elementor-view-framed .elementor-icon, .elementor-138165 .elementor-element.elementor-element-404c5a5.elementor-view-default .elementor-icon svg{fill:#000000;}
 /*# sourceURL=elementor-frontend-inline-css */
 </style>
-<link rel='stylesheet' id='widget-image-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-image.min.css' media='all' />
-<link rel='stylesheet' id='e-animation-rotateInDownRight-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/rotateInDownRight.css' media='all' />
-<link rel='stylesheet' id='e-animation-zoomIn-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/zoomIn.css' media='all' />
-<link rel='stylesheet' id='widget-heading-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-heading.min.css' media='all' />
-<link rel='stylesheet' id='e-animation-fadeInUp-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/fadeInUp.css' media='all' />
-<link rel='stylesheet' id='e-animation-shrink-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/e-animation-shrink.css' media='all' />
-<link rel='stylesheet' id='swiper-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/swiper/v8/css/swiper.css' media='all' />
-<link rel='stylesheet' id='e-swiper-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/conditionals/e-swiper.css' media='all' />
-<link rel='stylesheet' id='e-animation-fadeInDown-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/fadeInDown.css' media='all' />
-<link rel='stylesheet' id='widget-spacer-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-spacer.min.css' media='all' />
-<link rel='stylesheet' id='e-animation-rotateInUpLeft-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/rotateInUpLeft.css' media='all' />
-<link rel='stylesheet' id='widget-countdown-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/widget-countdown.min.css' media='all' />
-<link rel='stylesheet' id='widget-divider-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-divider.min.css' media='all' />
-<link rel='stylesheet' id='widget-icon-list-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-icon-list.min.css' media='all' />
-<link rel='stylesheet' id='jet-elements-css' href='/themes/3d-motion-05/plugins/jet-elements/assets/css/jet-elements.css' media='all' />
-<link rel='stylesheet' id='jet-timeline-css' href='/themes/3d-motion-05/plugins/jet-elements/assets/css/addons/jet-timeline.css' media='all' />
-<link rel='stylesheet' id='jet-timeline-skin-css' href='/themes/3d-motion-05/plugins/jet-elements/assets/css/skin/jet-timeline.css' media='all' />
-<link rel='stylesheet' id='e-animation-fadeIn-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/fadeIn.css' media='all' />
-<link rel='stylesheet' id='widget-gallery-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/widget-gallery.min.css' media='all' />
-<link rel='stylesheet' id='elementor-gallery-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/e-gallery/css/e-gallery.css' media='all' />
-<link rel='stylesheet' id='e-transitions-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/conditionals/transitions.min.css' media='all' />
-<link rel='stylesheet' id='dce-copy-to-clipboard-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/copy-to-clipboard.css' media='all' />
-<link rel='stylesheet' id='dce-prism-css-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism.min.css' media='all' />
-<link rel='stylesheet' id='dce-prism-line-numbers-css-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-line-numbers.min.css' media='all' />
-<link rel='stylesheet' id='e-animation-grow-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/e-animation-grow.css' media='all' />
-<link rel='stylesheet' id='elementor-icons-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/eicons/css/elementor-icons.css' media='all' />
-<link rel='stylesheet' id='elementor-post-7-css' href='/themes/3d-motion-05/uploads/elementor/css/post-7.css' media='all' />
-<link rel='stylesheet' id='font-awesome-5-all-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/all.css' media='all' />
-<link rel='stylesheet' id='font-awesome-4-shim-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/v4-shims.css' media='all' />
-<link rel='stylesheet' id='elementor-post-8021-css' href='/themes/3d-motion-05/uploads/elementor/css/post-8021.css' media='all' />
-<link rel='stylesheet' id='happy-icons-css' href='/themes/3d-motion-05/plugins/happy-elementor-addons/assets/fonts/style.min.css' media='all' />
-<link rel='stylesheet' id='font-awesome-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/font-awesome.css' media='all' />
+<link rel='stylesheet' id='widget-heading-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-heading.min.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='widget-lottie-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/widget-lottie.min.css?ver=4.2.3' media='all' />
+<link rel='stylesheet' id='e-animation-zoomIn-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/zoomIn.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='e-animation-fadeInUp-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/fadeInUp.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='e-animation-shrink-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/e-animation-shrink.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='swiper-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/swiper/v8/css/swiper.css?ver=8.4.5' media='all' />
+<link rel='stylesheet' id='e-swiper-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/conditionals/e-swiper.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='e-animation-fadeInDown-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/fadeInDown.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='widget-spacer-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-spacer.min.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='widget-image-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-image.min.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='e-animation-rotateInDownRight-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/rotateInDownRight.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='e-animation-rotateInUpLeft-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/rotateInUpLeft.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='widget-countdown-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/widget-countdown.min.css?ver=4.2.3' media='all' />
+<link rel='stylesheet' id='e-animation-rotateInDownLeft-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/rotateInDownLeft.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='widget-divider-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-divider.min.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='widget-icon-list-css' href='/themes/3d-motion-05/plugins/elementor/assets/css/widget-icon-list.min.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='jet-elements-css' href='/themes/3d-motion-05/plugins/jet-elements/assets/css/jet-elements.css?ver=2.9.2' media='all' />
+<link rel='stylesheet' id='jet-timeline-css' href='/themes/3d-motion-05/plugins/jet-elements/assets/css/addons/jet-timeline.css?ver=2.9.2' media='all' />
+<link rel='stylesheet' id='jet-timeline-skin-css' href='/themes/3d-motion-05/plugins/jet-elements/assets/css/skin/jet-timeline.css?ver=2.9.2' media='all' />
+<link rel='stylesheet' id='e-animation-fadeIn-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/fadeIn.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='widget-gallery-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/widget-gallery.min.css?ver=4.2.3' media='all' />
+<link rel='stylesheet' id='elementor-gallery-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/e-gallery/css/e-gallery.css?ver=1.2.0' media='all' />
+<link rel='stylesheet' id='e-transitions-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/conditionals/transitions.min.css?ver=4.2.3' media='all' />
+<link rel='stylesheet' id='dce-copy-to-clipboard-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/css/copy-to-clipboard.css?ver=3.4.0' media='all' />
+<link rel='stylesheet' id='dce-prism-css-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism.min.css?ver=3.4.0' media='all' />
+<link rel='stylesheet' id='dce-prism-line-numbers-css-css' href='/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-line-numbers.min.css?ver=3.4.0' media='all' />
+<link rel='stylesheet' id='e-animation-grow-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/animations/styles/e-animation-grow.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='elementor-icons-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/eicons/css/elementor-icons.css?ver=5.53.0' media='all' />
+<link rel='stylesheet' id='elementor-post-7-css' href='/themes/3d-motion-27/uploads/elementor/css/post-7.css?ver=1789183427' media='all' />
+<link rel='stylesheet' id='font-awesome-5-all-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/all.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='font-awesome-4-shim-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/v4-shims.css?ver=4.2.4' media='all' />
+<link rel='stylesheet' id='elementor-post-138165-css' href='/themes/3d-motion-27/uploads/elementor/css/post-138165.css?ver=1789183447' media='all' />
+<link rel='stylesheet' id='happy-icons-css' href='/themes/3d-motion-05/plugins/happy-elementor-addons/assets/fonts/style.min.css?ver=3.23.1' media='all' />
+<link rel='stylesheet' id='font-awesome-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/font-awesome.css?ver=4.7.0' media='all' />
 <style id="jet-form-builder-honeypot-inline-css">
 
 		.jfb-user-info,
@@ -485,18 +488,18 @@ html :where(.is-position-sticky) {
 <link rel='stylesheet' id='elementor-gf-notosanssorasompeng-css' href='https://fonts.googleapis.com/css?family=Noto+Sans+Sora+Sompeng:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&#038;display=auto' media='all' />
 <link rel='stylesheet' id='elementor-gf-sora-css' href='https://fonts.googleapis.com/css?family=Sora:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&#038;display=auto' media='all' />
 <link rel='stylesheet' id='elementor-gf-nunitosans-css' href='https://fonts.googleapis.com/css?family=Nunito+Sans:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&#038;display=auto' media='all' />
-<link rel='stylesheet' id='elementor-icons-shared-0-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/fontawesome.css' media='all' />
-<link rel='stylesheet' id='elementor-icons-fa-regular-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/regular.css' media='all' />
-<link rel='stylesheet' id='elementor-icons-fa-brands-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/brands.css' media='all' />
-<link rel='stylesheet' id='elementor-icons-fa-solid-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/solid.css' media='all' />
+<link rel='stylesheet' id='elementor-icons-shared-0-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/fontawesome.css?ver=5.15.3' media='all' />
+<link rel='stylesheet' id='elementor-icons-fa-solid-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/solid.css?ver=5.15.3' media='all' />
+<link rel='stylesheet' id='elementor-icons-fa-regular-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/regular.css?ver=5.15.3' media='all' />
+<link rel='stylesheet' id='elementor-icons-fa-brands-css' href='/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/css/brands.css?ver=5.15.3' media='all' />
 <script id="jquery-core-js-extra">
-var aagb_local_object = {"ajax_url":"/themes/3d-motion-05/wp-admin/admin-ajax.php","nonce":"2f8960a399","licensing":"","assets":"/themes/3d-motion-05/plugins/advanced-accordion-block/assets/"};
+var aagb_local_object = {"ajax_url":"/wp-admin/admin-ajax.php","nonce":"a5a4db8d9d","licensing":"","assets":"/themes/3d-motion-05/plugins/advanced-accordion-block/assets/"};
 //# sourceURL=jquery-core-js-extra
 </script>
-<script id="jquery-core-js" src="/themes/3d-motion-05/wp-includes/js/jquery/jquery.js"></script>
-<script id="jquery-migrate-js" src="/themes/3d-motion-05/wp-includes/js/jquery/jquery-migrate.js"></script>
-<script id="font-awesome-4-shim-js" src="/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/js/v4-shims.js"></script>
-<script id="dom-purify-js" src="/themes/3d-motion-05/plugins/happy-elementor-addons/assets/vendor/dom-purify/purify.min.js"></script>
+<script id="jquery-core-js" src="/themes/3d-motion-05/wp-includes/js/jquery/jquery.js?ver=3.7.1"></script>
+<script id="jquery-migrate-js" src="/themes/3d-motion-05/wp-includes/js/jquery/jquery-migrate.js?ver=3.4.1"></script>
+<script id="font-awesome-4-shim-js" src="/themes/3d-motion-05/plugins/elementor/assets/lib/font-awesome/js/v4-shims.js?ver=4.2.4"></script>
+<script id="dom-purify-js" src="/themes/3d-motion-05/plugins/happy-elementor-addons/assets/vendor/dom-purify/purify.min.js?ver=3.1.6"></script>
 <meta name="generator" content="WordPress 7.0.4" />
 	<meta name="color-scheme" content="light dark">
 	<meta name="google" content="notranslate" />
@@ -505,7 +508,7 @@ var aagb_local_object = {"ajax_url":"/themes/3d-motion-05/wp-admin/admin-ajax.ph
 			$("[name='viewport']").attr('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
 		});
 	</script>
-<meta name="generator" content="Elementor 4.1.4; features: additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-auto">
+<meta name="generator" content="Elementor 4.2.4; features: additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-auto">
 <script type="text/javascript">
         function hardReload() {
             localStorage.removeItem('hardReload');
@@ -545,10 +548,10 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-T4B3LZ2');</script>
-<!-- End Google Tag Manager --><link rel="icon" href="/themes/3d-motion-05/uploads/2024/10/cropped-cropped-icon-invisimple-32x32.png" sizes="32x32" />
-<link rel="icon" href="/themes/3d-motion-05/uploads/2024/10/cropped-cropped-icon-invisimple-192x192.png" sizes="192x192" />
-<link rel="apple-touch-icon" href="/themes/3d-motion-05/uploads/2024/10/cropped-cropped-icon-invisimple-180x180.png" />
-<meta name="msapplication-TileImage" content="/themes/3d-motion-05/uploads/2024/10/cropped-cropped-icon-invisimple-270x270.png" />
+<!-- End Google Tag Manager --><link rel="icon" href="/themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-32x32.png" sizes="32x32" />
+<link rel="icon" href="/themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-180x180.png" />
+<meta name="msapplication-TileImage" content="/themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-270x270.png" />
 <style id="wp-custom-css">
 body{
 	margin: 0 auto;
@@ -724,236 +727,13 @@ margin-right: 15px;
 	display: none !important;
 }
 </style>
-
-<style id="custom-theme-photo-overrides">
-/* ==================================================== */
-/* 1. COVER HERO ARCH FRAME (TERCROP DENGAN BINGKAI)     */
-/* ==================================================== */
-.elementor-element-bd19d27,
-.elementor-element-3b92468,
-.elementor-element-2d5c7db {
-    width: 210px !important;
-    height: 280px !important;
-    max-width: 210px !important;
-    max-height: 280px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    border-radius: 125px 125px 125px 125px !important;
-    overflow: hidden !important;
-    -webkit-mask-image: -webkit-radial-gradient(white, black) !important;
-    z-index: 1 !important;
-}
-
-.elementor-element-f864b3a,
-.elementor-element-f864b3a > .elementor-widget-wrap,
-.elementor-element-f864b3a > .elementor-element-populated,
-.elementor-element-f864b3a .elementor-motion-effects-layer,
-.dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap,
-.dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer,
-.elementor:is(.e-post-8019,.e-loop-item-8019) .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap,
-.elementor:is(.e-post-8019,.e-loop-item-8019) .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer {
-    width: 210px !important;
-    height: 280px !important;
-    max-width: 210px !important;
-    max-height: 280px !important;
-    border-radius: 125px 125px 125px 125px !important;
-    overflow: hidden !important;
-    -webkit-mask-image: -webkit-radial-gradient(white, black) !important;
-    background-image: url("{{ $coverPhotoUrl }}") !important;
-    --e-bg-lazyload: url("{{ $coverPhotoUrl }}") !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    z-index: 1 !important;
-}
-
-.elementor-element-f864b3a > .elementor-widget-wrap,
-.elementor-element-f864b3a > .elementor-element-populated {
-    border: 4px double #FFFCF3 !important;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.18) !important;
-    box-sizing: border-box !important;
-}
-
-/* ==================================================== */
-/* 2. INTRO COUPLE FRAME (BINGKAI PASANGAN INTRO)        */
-/* ==================================================== */
-.elementor-element-3f3f28c,
-.elementor-element-3f3f28c > .elementor-widget-wrap,
-.elementor-element-3f3f28c > .elementor-element-populated,
-.elementor-element-3f3f28c .elementor-background-slideshow,
-.elementor-element-3f3f28c .elementor-background-slideshow__slide,
-.elementor-element-3f3f28c .elementor-background-slideshow__slide__image {
-    border-radius: 24px !important;
-    overflow: hidden !important;
-    -webkit-mask-image: -webkit-radial-gradient(white, black) !important;
-    background-image: url("{{ $coverPhotoUrl }}") !important;
-    --e-bg-lazyload: url("{{ $coverPhotoUrl }}") !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    z-index: 1 !important;
-}
-
-/* ==================================================== */
-/* 3. BRIDE & GROOM PROFILE FRAMES                       */
-/* ==================================================== */
-.elementor-element-9fbe232,
-.elementor-element-7271310 {
-    width: 210px !important;
-    height: 280px !important;
-    max-width: 210px !important;
-    max-height: 280px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    border-radius: 125px 125px 125px 125px !important;
-}
-
-.elementor-element-6c9a0c8,
-.elementor-element-2e841c6 {
-    width: 210px !important;
-    height: 280px !important;
-    max-width: 210px !important;
-    max-height: 280px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    border-radius: 125px 125px 125px 125px !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    overflow: visible !important;
-    z-index: 2 !important;
-}
-
-.elementor-element-6c9a0c8 {
-    background-image: url("{{ $bridePhotoUrl }}") !important;
-    --e-bg-lazyload: url("{{ $bridePhotoUrl }}") !important;
-}
-
-.elementor-element-2e841c6 {
-    background-image: url("{{ $groomPhotoUrl }}") !important;
-    --e-bg-lazyload: url("{{ $groomPhotoUrl }}") !important;
-}
-
-.elementor-element-6c9a0c8 > .elementor-widget-wrap,
-.elementor-element-6c9a0c8 > .elementor-element-populated,
-.elementor-element-2e841c6 > .elementor-widget-wrap,
-.elementor-element-2e841c6 > .elementor-element-populated {
-    border-radius: 125px 125px 125px 125px !important;
-    overflow: visible !important;
-}
-
-.elementor-element-164087a > .elementor-widget-wrap,
-.elementor-element-680875c > .elementor-widget-wrap,
-.elementor-element-89ab320 > .elementor-widget-wrap {
-    overflow: visible !important;
-}
-
-.elementor-element-6c9a0c8 .elementor-background-slideshow,
-.elementor-element-6c9a0c8 .elementor-background-slideshow__slide,
-.elementor-element-6c9a0c8 .elementor-background-slideshow__slide__image,
-.elementor-element-2e841c6 .elementor-background-slideshow,
-.elementor-element-2e841c6 .elementor-background-slideshow__slide,
-.elementor-element-2e841c6 .elementor-background-slideshow__slide__image {
-    width: 210px !important;
-    height: 280px !important;
-    border-radius: 125px 125px 125px 125px !important;
-    overflow: hidden !important;
-    -webkit-mask-image: -webkit-radial-gradient(white, black) !important;
-    background-size: cover !important;
-    background-position: center center !important;
-}
-
-/* ==================================================== */
-/* 4. SAVE THE DATE & CLOSING FRAMES                     */
-/* ==================================================== */
-.elementor-element-7ce6984,
-.elementor-element-7ce6984 > .elementor-widget-wrap,
-.elementor-element-7ce6984 > .elementor-element-populated,
-.elementor-element-7ce6984 .elementor-background-slideshow,
-.elementor-element-7ce6984 .elementor-background-slideshow__slide,
-.elementor-element-7ce6984 .elementor-background-slideshow__slide__image {
-    border-radius: 24px !important;
-    overflow: hidden !important;
-    -webkit-mask-image: -webkit-radial-gradient(white, black) !important;
-    background-image: url("{{ $saveTheDateUrl }}") !important;
-    --e-bg-lazyload: url("{{ $saveTheDateUrl }}") !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    z-index: 1 !important;
-}
-
-.elementor-element-8734b90,
-.elementor-element-8734b90 > .elementor-widget-wrap,
-.elementor-element-8734b90 > .elementor-element-populated,
-.elementor-element-8734b90 .elementor-background-slideshow,
-.elementor-element-8734b90 .elementor-background-slideshow__slide,
-.elementor-element-8734b90 .elementor-background-slideshow__slide__image {
-    border-radius: 24px !important;
-    overflow: hidden !important;
-    -webkit-mask-image: -webkit-radial-gradient(white, black) !important;
-    background-image: url("{{ $closingPhotoUrl }}") !important;
-    --e-bg-lazyload: url("{{ $closingPhotoUrl }}") !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    z-index: 1 !important;
-}
-.elementor-element-555937f,
-.elementor-element-555937f > .elementor-widget-wrap,
-.elementor-element-555937f .elementor-background-slideshow__slide__image {
-    background-image: url("{{ $coverPhotoUrl }}") !important;
-    --e-bg-lazyload: url("{{ $coverPhotoUrl }}") !important;
-    background-size: cover !important;
-    background-position: center center !important;
-}
-
-/* ==================================================== */
-/* 5. DECORATIVE FLOWER ELEMENTS (ALWAYS IN FRONT)      */
-/* ==================================================== */
-.elementor-element-e762753,
-.elementor-element-1df4ace,
-.elementor-element-45fb361,
-.elementor-element-36c53cf,
-.elementor-element-d55bcc8,
-.elementor-element-40baf10,
-.elementor-element-625c7f7,
-.elementor-element-c52a3ca,
-.elementor-element-912ff38,
-.elementor-element-3527a19,
-.elementor-element-43feb16,
-.elementor-element-ff63a9d,
-.elementor-element-184a798,
-.elementor-widget-image.elementor-absolute {
-    z-index: 25 !important;
-}
-
-.elementor-element-e762753 img,
-.elementor-element-1df4ace img,
-.elementor-element-45fb361 img,
-.elementor-element-36c53cf img,
-.elementor-element-d55bcc8 img,
-.elementor-element-40baf10 img,
-.elementor-element-625c7f7 img,
-.elementor-element-c52a3ca img,
-.elementor-element-912ff38 img,
-.elementor-element-3527a19 img,
-.elementor-element-43feb16 img,
-.elementor-element-ff63a9d img,
-.elementor-element-184a798 img,
-img[src*="Garden-05-Couple"],
-img[src*="Garden-05-Bouquet"],
-.wp-image-8036,
-.wp-image-8037 {
-    position: relative !important;
-    z-index: 25 !important;
-    pointer-events: none !important;
-}
-</style>
-
 </head>
-<body class="wp-singular post-template-default single single-post postid-8019 single-format-standard wp-custom-logo wp-embed-responsive wp-theme-weddingsaas-wp wp-child-theme-weddingsaas-wp-child elementor-default elementor-template-full-width elementor-kit-7 elementor-page-8021 elementor-page-916707 elementor-page-843619 elementor-page-843600 elementor-page-805683">
+<body class="wp-singular post-template-default single single-post postid-138164 single-format-standard wp-custom-logo wp-embed-responsive wp-theme-weddingsaas-wp wp-child-theme-weddingsaas-wp-child elementor-default elementor-template-full-width elementor-kit-7 elementor-page-138165 elementor-page-916707 elementor-page-843619 elementor-page-843600 elementor-page-805683">
 
 	<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T4B3LZ2"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->		<div data-elementor-type="single-post" data-post-id="8019" data-obj-id="8019" data-elementor-id="8021" class="elementor elementor-8021 e-post-8019 elementor-location-single post-8019 post type-post status-publish format-standard has-post-thumbnail hentry category-pernikahan template-pernikahan-3d-motion-05" data-elementor-settings="{&quot;ha_cmc_init_switcher&quot;:&quot;no&quot;}" data-elementor-post-type="elementor_library">
+<!-- End Google Tag Manager (noscript) -->		<div data-elementor-type="single-post" data-post-id="138164" data-obj-id="138164" data-elementor-id="138165" class="elementor elementor-138165 e-post-138164 elementor-location-single post-138164 post type-post status-publish format-standard has-post-thumbnail hentry category-pernikahan template-pernikahan-3d-motion-27" data-elementor-settings="{&quot;ha_cmc_init_switcher&quot;:&quot;no&quot;}" data-elementor-post-type="elementor_library">
 					<section class="elementor-section elementor-top-section elementor-element elementor-element-5652679 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="5652679" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-no">
 					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-156ac58 elementor-hidden-mobile" data-id="156ac58" data-element_type="column" data-e-type="column">
@@ -962,20 +742,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</div>
 				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-c8cb692" data-id="c8cb692" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<section data-dce-background-overlay-color="#FFFFFF00" class="elementor-section elementor-inner-section elementor-element elementor-element-f32cf06 elementor-section-full_width elementor-section-height-min-height elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default" data-id="f32cf06" data-element_type="section" data-e-type="section" id="cover" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:8034,&quot;url&quot;:&quot;\/themes\/3d-motion-05\/uploads\/2024\/10\/Garden-05-Ayat.jpg&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_duration&quot;:5000,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_transition_duration&quot;:500,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
+						<section data-dce-background-overlay-color="#FFFFFF00" class="elementor-section elementor-inner-section elementor-element elementor-element-f32cf06 elementor-section-full_width elementor-section-height-min-height elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default" data-id="f32cf06" data-element_type="section" data-e-type="section" id="cover" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:138161,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/2025\/05\/motion-jawa-03-bg-2.jpg&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_duration&quot;:5000,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_transition_duration&quot;:500,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-89ab320" data-id="89ab320" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div class="elementor-element elementor-element-e762753 elementor-widget__width-auto elementor-absolute animated-slow elementor-invisible elementor-widget elementor-widget-image" data-id="e762753" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownLeft&quot;,&quot;_animation_delay&quot;:600}" data-widget_type="image.default">
+						<div class="elementor-element elementor-element-73be108 elementor-absolute elementor-align-center elementor-widget elementor-widget-lottie" data-id="73be108" data-element_type="widget" data-e-type="widget" data-settings="{&quot;source_json&quot;:{&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/2024\/10\/10115-birds.json&quot;,&quot;id&quot;:8579,&quot;size&quot;:&quot;&quot;,&quot;alt&quot;:&quot;&quot;,&quot;source&quot;:&quot;library&quot;},&quot;loop&quot;:&quot;yes&quot;,&quot;_position&quot;:&quot;absolute&quot;,&quot;source&quot;:&quot;media_file&quot;,&quot;caption_source&quot;:&quot;none&quot;,&quot;link_to&quot;:&quot;none&quot;,&quot;trigger&quot;:&quot;arriving_to_viewport&quot;,&quot;viewport&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;play_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;start_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;end_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:100,&quot;sizes&quot;:[]},&quot;renderer&quot;:&quot;svg&quot;}" data-widget_type="lottie.default">
 				<div class="elementor-widget-container">
-															<img fetchpriority="high" width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-2.png" class="attachment-full size-full wp-image-8037" alt="" />															</div>
+					<div class="e-lottie__container"><div class="e-lottie__animation"></div></div>				</div>
 				</div>
-				<div class="elementor-element elementor-element-1df4ace elementor-widget__width-auto elementor-absolute animated-slow e-transform elementor-invisible elementor-widget elementor-widget-image" data-id="1df4ace" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownRight&quot;,&quot;_animation_delay&quot;:1400,&quot;_transform_rotateZ_effect&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;_transform_rotateZ_effect_tablet&quot;:{&quot;unit&quot;:&quot;deg&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;_transform_rotateZ_effect_mobile&quot;:{&quot;unit&quot;:&quot;deg&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]}}" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-															<img width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-1.png" class="attachment-full size-full wp-image-8036" alt="" />															</div>
-				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-153f83d elementor-invisible elementor-widget elementor-widget-heading" data-id="153f83d" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;}" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-153f83d elementor-invisible elementor-widget elementor-widget-heading" data-id="153f83d" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">The Wedding Of</h2>				</div>
 				</div>
@@ -995,10 +771,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</div>
 					</div>
 		</section>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-2d5c7db elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="2d5c7db" data-element_type="section" data-e-type="section" style="width: 210px !important; height: 280px !important; margin: 0 auto !important; border-radius: 125px !important; overflow: hidden !important;" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
-						<div class="elementor-container elementor-column-gap-default" style="width: 100% !important; height: 100% !important;">
-					<div data-dce-background-image-url="{{ $coverPhotoUrl }}" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-f864b3a" style="background-image: url('{{ $coverPhotoUrl }}') !important; background-size: cover !important; background-position: center center !important; border-radius: 125px !important; overflow: hidden !important; width: 210px !important; height: 280px !important; margin: 0 auto !important;" data-id="f864b3a" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-			<div class="elementor-widget-wrap elementor-element-populated" style="border-radius: 125px !important; overflow: hidden !important; border: 4px double #FFFCF3 !important; width: 100% !important; height: 100% !important; box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important; box-sizing: border-box !important;">
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-2d5c7db elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="2d5c7db" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div data-dce-background-image-url="/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-f864b3a" data-id="f864b3a" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
 							</div>
 		</div>
 					</div>
@@ -1007,27 +783,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</div>
 					</div>
 		</section>
-				<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-62d8811 wdsdv-enabled--yes playball elementor-invisible elementor-widget elementor-widget-heading" data-id="62d8811" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:800}" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-62d8811 wdsdv-enabled--yes playball elementor-invisible elementor-widget elementor-widget-heading" data-id="62d8811" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:800}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['bride']['nickname'] ?? 'Putri' }} &amp; {{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default" data-preview="couple-nickname">{{ $data['bride']['nickname'] ?? 'Putri' }} &amp; {{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
 				</div>
 					</div>
 		</div>
 					</div>
 		</section>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-c976d75 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="c976d75" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:1000}" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-c976d75 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="c976d75" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:1000}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">Kepada Yth.<br>Bapak/Ibu/Saudara/i</h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-f558323 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="f558323" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:1400}" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-2cb4373 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="2cb4373" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:1400}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $guestName ?? ($to ?? 'Tamu Undangan') }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default"><span data-preview="guest-name">{{ $guestName ?? ($to ?? 'Tamu Undangan') }}</span></h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-e754120 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="e754120" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:1800}" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-e754120 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="e754120" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:1800}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">*Mohon maaf jika ada kesalahan dalam penulisan nama / gelar.</h2>				</div>
 				</div>
-				<div data-dce-background-color="#7F96A8" class="elementor-element elementor-element-686eff4 elementor-align-center elementor-mobile-align-center animated-slow elementor-invisible elementor-widget elementor-widget-button" data-id="686eff4" data-element_type="widget" data-e-type="widget" id="btn_open" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:2200}" data-widget_type="button.default">
+				<div data-dce-background-color="#88775D" class="elementor-element elementor-element-686eff4 elementor-align-center elementor-mobile-align-center animated-slow elementor-invisible elementor-widget elementor-widget-button" data-id="686eff4" data-element_type="widget" data-e-type="widget" id="btn_open" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:2200}" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
 					<a class="elementor-button elementor-size-sm elementor-animation-shrink" role="button">
@@ -1049,7 +825,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-e642c2a" data-id="e642c2a" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-5f8f911 elementor-section-full_width elementor-section-height-min-height elementor-section-content-middle motionSection elementor-section-height-default" data-id="5f8f911" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;video&quot;,&quot;background_video_link&quot;:&quot;\/themes\/3d-motion-05\/uploads\/2025\/10\/05.-FOUNTAIN-GARDEN-15S.mp4&quot;,&quot;background_play_once&quot;:&quot;yes&quot;,&quot;background_play_on_mobile&quot;:&quot;yes&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-5f8f911 elementor-section-full_width elementor-section-height-min-height elementor-section-content-middle motionSection elementor-section-height-default" data-id="5f8f911" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;video&quot;,&quot;background_video_link&quot;:&quot;\/themes\/3d-motion-27\/uploads\/2025\/05\/motion-jawa-03-motion.mp4&quot;,&quot;background_play_once&quot;:&quot;yes&quot;,&quot;background_play_on_mobile&quot;:&quot;yes&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
 								<div class="elementor-background-video-container">
 													<video class="elementor-background-video-hosted" role="presentation" autoplay muted playsinline></video>
 											</div>
@@ -1060,7 +836,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 						<div class="elementor-container elementor-column-gap-no">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-4e75036 kolomPertama" data-id="4e75036" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div data-dce-title-color="#333333" class="elementor-element elementor-element-13c46f6 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="13c46f6" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;}" data-widget_type="heading.default">
+						<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-13c46f6 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="13c46f6" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">The Wedding Of</h2>				</div>
 				</div>
@@ -1068,25 +844,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-656cc9a" data-id="656cc9a" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-1e2198b wdsdv-enabled--yes animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="1e2198b" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:400}" data-widget_type="heading.default">
+						<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-1e2198b wdsdv-enabled--yes animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="1e2198b" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:400}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['bride']['nickname'] ?? 'Putri' }}<br><span style="font-family:aston-script;font-size:24px;font-weight:normal;color:#333">&amp;</span><br>{{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">Putri<br><span style="font-family:aston-script;font-size:24px;font-weight:normal">&amp;</span><br>Andika</h2>				</div>
 				</div>
 					</div>
 		</div>
 					</div>
 		</section>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-0537883 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="0537883" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:800}" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-0537883 animated-slow elementor-invisible elementor-widget elementor-widget-heading" data-id="0537883" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:800}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<p class="elementor-heading-title elementor-size-default">{{ $data['events']['akad']['date'] ?? 'Minggu, 28 Desember 2027' }}</p>				</div>
+					<p class="elementor-heading-title elementor-size-default">Minggu, 28 Desember 2027</p>				</div>
 				</div>
-				<div class="elementor-element elementor-element-4705908 elementor-widget__width-auto elementor-widget-mobile__width-auto animated-slow elementor-invisible elementor-widget elementor-widget-html" data-id="4705908" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInDown&quot;,&quot;_animation_delay&quot;:1200}" data-widget_type="html.default">
+				<div class="elementor-element elementor-element-d46a42c elementor-widget__width-auto elementor-widget-mobile__width-auto animated-slow elementor-invisible elementor-widget elementor-widget-html" data-id="d46a42c" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInDown&quot;,&quot;_animation_delay&quot;:1200}" data-widget_type="html.default">
 				<div class="elementor-widget-container">
-					<script src="https://unpkg.com/@@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+					<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
 
-    <dotlottie-player src="/themes/3d-motion-05/uploads/2025/12/LOTTIE-MOUSE-HITAM.json" background="transparent" speed="1" style="width: 40px; height: 40px;" loop autoplay></dotlottie-player>
+    <dotlottie-player src="/themes/3d-motion-27/uploads/2025/12/LOTTIE-MOUSE-PUTIH.json" background="transparent" speed="1" style="width: 40px; height: 40px;" loop autoplay></dotlottie-player>
 <script>
-    document.querySelector('.kolomPertama').setAttribute("data-delay-time", 10500);
+    document.querySelector('.kolomPertama').setAttribute("data-delay-time", 12000);
 </script>
 				</div>
 				</div>
@@ -1104,22 +880,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</section>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-d1acbe0 elementor-section-full_width elementor-section-content-middle elementor-section-height-default elementor-section-height-default" data-id="d1acbe0" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-no">
-					<div data-dce-background-overlay-image-url="{{ $data['cover_image'] ?? '/themes/3d-motion-05/uploads/2024/10/Garden-05-Ayat.jpg' }}" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-8c54868" data-id="8c54868" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div data-dce-background-overlay-color="#744C2F" data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/motion-jawa-03-pattern.png" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-8c54868" data-id="8c54868" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
-						<div class="elementor-element elementor-element-45fb361 elementor-widget__width-auto elementor-absolute animated-slow inv-kiri elementor-invisible elementor-widget elementor-widget-image" data-id="45fb361" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownLeft&quot;,&quot;_animation_delay&quot;:500}" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-															<img fetchpriority="high" width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-2.png" class="attachment-full size-full wp-image-8037" alt="" />															</div>
-				</div>
-				<div class="elementor-element elementor-element-36c53cf elementor-widget__width-auto elementor-absolute animated-slow inv-kanan elementor-invisible elementor-widget elementor-widget-image" data-id="36c53cf" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownRight&quot;,&quot;_animation_delay&quot;:500}" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-															<img width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-1.png" class="attachment-full size-full wp-image-8036" alt="" />															</div>
-				</div>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-d1eab11 elementor-section-full_width elementor-section-height-min-height wdsdv-enabled--yes inv-zoom-in elementor-section-height-default" data-id="d1eab11" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-ee48c72 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="ee48c72" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-no">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-3f3f28c reveal" style="background-image: url('{{ $coverPhotoUrl }}') !important; background-size: cover !important; background-position: center !important;" data-id="3f3f28c" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7661,&quot;url&quot;:&quot;{{ $coverPhotoUrl }}&quot;},{&quot;id&quot;:7662,&quot;url&quot;:&quot;{{ $saveTheDateUrl }}&quot;},{&quot;id&quot;:7663,&quot;url&quot;:&quot;{{ $closingPhotoUrl }}&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
+					<div data-dce-background-color="#744C2F" data-dce-background-overlay-image-url="/themes/3d-motion-27/uploads/2025/05/motion-jawa-03-bg.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-68f7698 reveal" data-id="68f7698" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div class="elementor-element elementor-element-e1eda62 elementor-widget elementor-widget-spacer" data-id="e1eda62" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
+					<div class="elementor-background-overlay"></div>
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-0938f1f elementor-section-full_width elementor-section-height-min-height inv-zoom-in wdsdv-enabled--yes elementor-section-height-default" data-id="0938f1f" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-66dd800" data-id="66dd800" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7661,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-2.jpeg&quot;},{&quot;id&quot;:7662,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-3.jpeg&quot;},{&quot;id&quot;:7663,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-4.jpeg&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-4f25607 elementor-widget elementor-widget-spacer" data-id="4f25607" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">
 							<div class="elementor-spacer">
 			<div class="elementor-spacer-inner"></div>
@@ -1130,24 +903,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</div>
 					</div>
 		</section>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-ee48c72 elementor-section-full_width inv-atas elementor-section-height-default elementor-section-height-default" data-id="ee48c72" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
-						<div class="elementor-container elementor-column-gap-no">
-					<div data-dce-background-color="#F5F7F8" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-68f7698 reveal" data-id="68f7698" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;gradient&quot;}">
-			<div class="elementor-widget-wrap elementor-element-populated">
-					<div class="elementor-background-overlay"></div>
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-36f21b0 wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="36f21b0" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-36f21b0 wdsdv-enabled--yes elementor-section-full_width elementor-section-height-min-height elementor-section-height-default" data-id="36f21b0" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-b562819" data-id="b562819" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-d94709f elementor-widget__width-auto elementor-widget-mobile__width-auto elementor-widget elementor-widget-heading" data-id="d94709f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+						<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-d94709f elementor-widget__width-auto elementor-widget-mobile__width-auto inv-kiri elementor-widget elementor-widget-heading" data-id="d94709f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">{{ $data['initials']['bride'] ?? 'P' }}</h2>				</div>
 				</div>
-				<div class="elementor-element elementor-element-a63425f elementor-widget__width-auto elementor-widget elementor-widget-image" data-id="a63425f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-element elementor-element-a63425f elementor-widget__width-auto inv-zoom-in elementor-widget elementor-widget-image" data-id="a63425f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img width="272" height="300" src="/themes/3d-motion-05/uploads/2024/10/05.png" class="attachment-full size-full wp-image-8070" alt="" />															</div>
+															<img fetchpriority="high" width="425" height="398" src="/themes/3d-motion-27/uploads/2024/10/white-06.png" class="attachment-full size-full wp-image-8560" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/white-06.png 425w, /themes/3d-motion-27/uploads/2024/10/white-06-300x281.png 300w" sizes="(max-width: 425px) 100vw, 425px" />															</div>
 				</div>
-				<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-347cdf7 elementor-widget__width-auto elementor-widget-mobile__width-auto elementor-widget elementor-widget-heading" data-id="347cdf7" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-347cdf7 elementor-widget__width-auto elementor-widget-mobile__width-auto inv-kanan elementor-widget elementor-widget-heading" data-id="347cdf7" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">{{ $data['initials']['groom'] ?? 'A' }}</h2>				</div>
 				</div>
@@ -1162,13 +930,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</div>
 						</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-a8508d0 elementor-widget elementor-widget-heading" data-id="a8508d0" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-a8508d0 inv-atas elementor-widget elementor-widget-heading" data-id="a8508d0" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<p class="elementor-heading-title elementor-size-default">"{{ $data['quote_text'] ?? 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.' }}"</p>				</div>
+					<p class="elementor-heading-title elementor-size-default">"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."</p>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-a889795 elementor-widget elementor-widget-heading" data-id="a889795" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-a889795 inv-atas elementor-widget elementor-widget-heading" data-id="a889795" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<p class="elementor-heading-title elementor-size-default">{{ $data['quote_source'] ?? 'Q.S Ar-Rum : 21' }}</p>				</div>
+					<p class="elementor-heading-title elementor-size-default">Q.S Ar-Rum : 21</p>				</div>
 				</div>
 					</div>
 		</div>
@@ -1180,14 +948,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</section>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-9751aa3 elementor-section-full_width elementor-section-content-middle elementor-section-height-default elementor-section-height-default" data-id="9751aa3" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-no">
-					<div data-dce-background-overlay-color="#F5F7F8" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-412717f" data-id="412717f" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div data-dce-background-color="#F3F1EFED" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-412717f" data-id="412717f" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-6abf555 inv-bawah wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="6abf555" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-cc9a454 inv-bawah wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="cc9a454" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-70ca1ce" data-id="70ca1ce" data-element_type="column" data-e-type="column">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-59eba23" data-id="59eba23" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div data-dce-title-color="#333333" class="elementor-element elementor-element-0c3e8c2 wdsdv-enabled--yes elementor-widget elementor-widget-heading" data-id="0c3e8c2" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+						<div data-dce-title-color="#333333" class="elementor-element elementor-element-1b542f1 wdsdv-enabled--yes elementor-widget elementor-widget-heading" data-id="1b542f1" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">Bride &amp; Groom</h2>				</div>
 				</div>
@@ -1220,9 +988,9 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-b3a84d2" data-id="b3a84d2" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div class="elementor-element elementor-element-d55bcc8 elementor-widget__width-auto elementor-absolute animated-slow elementor-invisible elementor-widget elementor-widget-image" data-id="d55bcc8" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:1000}" data-widget_type="image.default">
+						<div class="elementor-element elementor-element-d55bcc8 elementor-widget__width-auto elementor-absolute animated-slow e-transform elementor-invisible elementor-widget elementor-widget-image" data-id="d55bcc8" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:1000,&quot;_transform_flipX_effect&quot;:&quot;transform&quot;}" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img fetchpriority="high" width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-2.png" class="attachment-full size-full wp-image-8037" alt="" />															</div>
+															<img width="500" height="600" src="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png" class="attachment-full size-full wp-image-8667" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png 500w, /themes/3d-motion-27/uploads/2024/10/asset-motion-07-min-250x300.png 250w" sizes="(max-width: 500px) 100vw, 500px" />															</div>
 				</div>
 					</div>
 		</div>
@@ -1230,11 +998,11 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</section>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-9fbe232 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="9fbe232" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
 						<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-6c9a0c8" style="background-image: url('{{ $bridePhotoUrl }}') !important; background-size: cover !important; background-position: center !important; border-radius: 125px !important;" data-id="6c9a0c8" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7664,&quot;url&quot;:&quot;{{ $bridePhotoUrl }}&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;}">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-6c9a0c8" data-id="6c9a0c8" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7664,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-5.jpeg&quot;},{&quot;id&quot;:7665,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-5-2.jpeg&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-40baf10 elementor-widget__width-auto elementor-absolute animated-slow elementor-invisible elementor-widget elementor-widget-image" data-id="40baf10" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownRight&quot;,&quot;_animation_delay&quot;:1000}" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-1.png" class="attachment-full size-full wp-image-8036" alt="" />															</div>
+															<img width="500" height="600" src="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png" class="attachment-full size-full wp-image-8667" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png 500w, /themes/3d-motion-27/uploads/2024/10/asset-motion-07-min-250x300.png 250w" sizes="(max-width: 500px) 100vw, 500px" />															</div>
 				</div>
 					</div>
 		</div>
@@ -1244,23 +1012,23 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 					</div>
 		</section>
-				<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-328f28e inv-atas elementor-widget elementor-widget-heading" data-id="328f28e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#88775D" class="elementor-element elementor-element-328f28e inv-atas elementor-widget elementor-widget-heading" data-id="328f28e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['bride']['nickname'] ?? 'Putri' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default" data-preview="bride-nickname">{{ $data['bride']['nickname'] ?? 'Putri' }}</h2>				</div>
 				</div>
 				<div data-dce-title-color="#333333" class="elementor-element elementor-element-f8c31f8 inv-atas elementor-widget elementor-widget-heading" data-id="f8c31f8" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['bride']['name'] ?? 'Putri Cantika Sari' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default" data-preview="bride-name">{{ $data['bride']['name'] ?? 'Putri Cantika Sari' }}</h2>				</div>
 				</div>
 				<div data-dce-title-color="#333333" class="elementor-element elementor-element-e38c59e inv-atas elementor-widget elementor-widget-heading" data-id="e38c59e" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;none&quot;}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<p class="elementor-heading-title elementor-size-default">Putri {{ $data['bride']['child_order'] ?? 'Pertama' }} dari</p>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-71adc5e inv-atas elementor-widget elementor-widget-heading" data-id="71adc5e" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;none&quot;}" data-widget_type="heading.default">
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-32307d7 inv-atas elementor-widget elementor-widget-heading" data-id="32307d7" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;none&quot;}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<p class="elementor-heading-title elementor-size-default">{{ (!empty($data['bride']['father']) || !empty($data['bride']['mother'])) ? (($data['bride']['father'] ? 'Bapak ' . $data['bride']['father'] : '') . ($data['bride']['father'] && $data['bride']['mother'] ? ' dan ' : '') . ($data['bride']['mother'] ? 'Ibu ' . $data['bride']['mother'] : '')) : 'Bapak Abdul Rozak dan Ibu Adelia Marni' }}</p>				</div>
 				</div>
-				<div data-dce-background-color="#7F96A8" class="elementor-element elementor-element-7172afa wdsdv-enabled--yes elementor-align-center elementor-mobile-align-center inv-zoom-in elementor-widget elementor-widget-button" data-id="7172afa" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+				<div data-dce-background-color="#88775D" class="elementor-element elementor-element-11d9b45 wdsdv-enabled--yes elementor-align-center elementor-mobile-align-center inv-zoom-in elementor-widget elementor-widget-button" data-id="11d9b45" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
 					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="https://www.instagram.com/{{ ltrim($data['bride']['instagram'] ?? 'user_ig_wanita', '@') }}/" target="_blank" rel="nofollow">
@@ -1275,7 +1043,7 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				</div>
 				<div class="elementor-element elementor-element-ea27043 elementor-widget__width-inherit inv-zoom-in elementor-widget elementor-widget-image" data-id="ea27043" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img width="272" height="300" src="/themes/3d-motion-05/uploads/2024/10/05.png" class="attachment-full size-full wp-image-8070" alt="" />															</div>
+															<img width="425" height="398" src="/themes/3d-motion-27/uploads/2024/10/06.png" class="attachment-full size-full wp-image-8520" alt="" />															</div>
 				</div>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-57a3914 elementor-section-full_width wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="57a3914" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
 						<div class="elementor-container elementor-column-gap-default">
@@ -1287,7 +1055,7 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-625c7f7 elementor-widget__width-auto elementor-absolute animated-slow elementor-invisible elementor-widget elementor-widget-image" data-id="625c7f7" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:1000}" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-1.png" class="attachment-full size-full wp-image-8036" alt="" />															</div>
+															<img width="500" height="600" src="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png" class="attachment-full size-full wp-image-8667" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png 500w, /themes/3d-motion-27/uploads/2024/10/asset-motion-07-min-250x300.png 250w" sizes="(max-width: 500px) 100vw, 500px" />															</div>
 				</div>
 					</div>
 		</div>
@@ -1295,11 +1063,11 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</section>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-7271310 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="7271310" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
 						<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-2e841c6 wdsdv-enabled--yes" style="background-image: url('{{ $groomPhotoUrl }}') !important; background-size: cover !important; background-position: center !important; border-radius: 125px !important;" data-id="2e841c6" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7666,&quot;url&quot;:&quot;{{ $groomPhotoUrl }}&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;}">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-2e841c6 wdsdv-enabled--yes" data-id="2e841c6" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7666,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-6.jpeg&quot;},{&quot;id&quot;:7667,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-6-2.jpeg&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div class="elementor-element elementor-element-c52a3ca elementor-widget__width-auto elementor-absolute animated-slow elementor-invisible elementor-widget elementor-widget-image" data-id="c52a3ca" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInUpLeft&quot;,&quot;_animation_delay&quot;:1000}" data-widget_type="image.default">
+						<div class="elementor-element elementor-element-c52a3ca elementor-widget__width-auto elementor-absolute animated-slow e-transform elementor-invisible elementor-widget elementor-widget-image" data-id="c52a3ca" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInUpLeft&quot;,&quot;_animation_delay&quot;:1000,&quot;_transform_flipX_effect&quot;:&quot;transform&quot;}" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img fetchpriority="high" width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-2.png" class="attachment-full size-full wp-image-8037" alt="" />															</div>
+															<img width="500" height="600" src="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png" class="attachment-full size-full wp-image-8667" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png 500w, /themes/3d-motion-27/uploads/2024/10/asset-motion-07-min-250x300.png 250w" sizes="(max-width: 500px) 100vw, 500px" />															</div>
 				</div>
 					</div>
 		</div>
@@ -1309,13 +1077,13 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 					</div>
 		</section>
-				<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-3f814ac inv-atas elementor-widget elementor-widget-heading" data-id="3f814ac" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#88775D" class="elementor-element elementor-element-3f814ac inv-atas elementor-widget elementor-widget-heading" data-id="3f814ac" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default" data-preview="groom-nickname">{{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
 				</div>
 				<div data-dce-title-color="#333333" class="elementor-element elementor-element-98d7e88 inv-atas elementor-widget elementor-widget-heading" data-id="98d7e88" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['groom']['name'] ?? 'Putra Andika Pratama' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default" data-preview="groom-name">{{ $data['groom']['name'] ?? 'Putra Andika Pratama' }}</h2>				</div>
 				</div>
 				<div data-dce-title-color="#333333" class="elementor-element elementor-element-8c62d5f inv-atas elementor-widget elementor-widget-heading" data-id="8c62d5f" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;none&quot;}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
@@ -1325,7 +1093,7 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				<div class="elementor-widget-container">
 					<p class="elementor-heading-title elementor-size-default">{{ (!empty($data['groom']['father']) || !empty($data['groom']['mother'])) ? (($data['groom']['father'] ? 'Bapak ' . $data['groom']['father'] : '') . ($data['groom']['father'] && $data['groom']['mother'] ? ' dan ' : '') . ($data['groom']['mother'] ? 'Ibu ' . $data['groom']['mother'] : '')) : 'Bapak Deni Bastian dan Ibu Aisha Dania' }}</p>				</div>
 				</div>
-				<div data-dce-background-color="#7F96A8" class="elementor-element elementor-element-99d4e30 wdsdv-enabled--yes elementor-align-center elementor-mobile-align-center inv-zoom-in elementor-widget elementor-widget-button" data-id="99d4e30" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+				<div data-dce-background-color="#88775D" class="elementor-element elementor-element-5d401f1 wdsdv-enabled--yes elementor-align-center elementor-mobile-align-center inv-zoom-in elementor-widget elementor-widget-button" data-id="5d401f1" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
 					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="https://www.instagram.com/{{ ltrim($data['groom']['instagram'] ?? 'user_ig_pria', '@') }}/" target="_blank" rel="nofollow">
@@ -1346,41 +1114,31 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 					</div>
 		</section>
-				<section data-dce-background-overlay-color="#7F96A8" class="elementor-section elementor-inner-section elementor-element elementor-element-28eadb5 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="28eadb5" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+				<section data-dce-background-overlay-color="#744C2F" class="elementor-section elementor-inner-section elementor-element elementor-element-2614251 elementor-section-full_width elementor-section-content-middle elementor-section-height-default elementor-section-height-default" data-id="2614251" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-22487b4" data-id="22487b4" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section data-dce-background-overlay-color="#55000000" class="elementor-section elementor-inner-section elementor-element elementor-element-82aeade elementor-section-height-min-height wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default" data-id="82aeade" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7691,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/e6fb52c108655e3dbb47bfeccce12131\/2024\/10\/img-sample-01-9.jpeg&quot;},{&quot;id&quot;:7690,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/e6fb52c108655e3dbb47bfeccce12131\/2024\/10\/img-sample-01-8.jpeg&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-6c87e46" data-id="6c87e46" data-element_type="column" data-e-type="column">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-cc1f7ed" data-id="cc1f7ed" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_gallery&quot;:[],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_duration&quot;:5000,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_transition_duration&quot;:500}">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-43278da elementor-section-height-min-height wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default" data-id="43278da" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
-						<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-7ce6984 inv-zoom-in" style="background-image: url('{{ $saveTheDateUrl }}') !important; background-size: cover !important; background-position: center !important;" data-id="7ce6984" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7668,&quot;url&quot;:&quot;{{ $saveTheDateUrl }}&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
-			<div class="elementor-widget-wrap elementor-element-populated">
-						<div class="elementor-element elementor-element-ac89744 elementor-widget elementor-widget-spacer" data-id="ac89744" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-							<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-						</div>
-				</div>
-					</div>
-		</div>
-					</div>
-		</section>
-				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-6c4d235 inv-atas elementor-widget elementor-widget-heading" data-id="6c4d235" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+						<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-a1c6fdd inv-atas elementor-widget elementor-widget-heading" data-id="a1c6fdd" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">Save The Date</h2>				</div>
 				</div>
-				<div class="elementor-element elementor-element-3a9ab45 inv-atas elementor-countdown--label-block elementor-widget elementor-widget-countdown" data-id="3a9ab45" data-element_type="widget" data-e-type="widget" data-widget_type="countdown.default">
+				<div class="elementor-element elementor-element-f65f6b3 inv-atas elementor-countdown--label-block elementor-widget elementor-widget-countdown" data-id="f65f6b3" data-element_type="widget" data-e-type="widget" data-widget_type="countdown.default">
 				<div class="elementor-widget-container">
-							<div class="elementor-countdown-wrapper" data-date="{{ $data['countdown_timestamp'] ?? strtotime('+30 days') }}" >
+							<div class="elementor-countdown-wrapper" data-date="{{ $data['countdown_timestamp'] ?? strtotime('+30 days') }}">
 			<div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-days"></span> <span class="elementor-countdown-label">Hari</span></div><div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-hours"></span> <span class="elementor-countdown-label">Jam</span></div><div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-minutes"></span> <span class="elementor-countdown-label">Menit</span></div><div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-seconds"></span> <span class="elementor-countdown-label">Detik</span></div>		</div>
 						</div>
 				</div>
-				<div data-dce-background-color="#FFFFFFED" class="elementor-element elementor-element-bcb8781 inv-atas elementor-align-center elementor-widget elementor-widget-wds_calendar" data-id="bcb8781" data-element_type="widget" data-e-type="widget" data-widget_type="wds_calendar.default">
+				<div data-dce-background-color="#FFFFFFED" class="elementor-element elementor-element-c16a412 inv-atas elementor-align-center elementor-widget elementor-widget-wds_calendar" data-id="c16a412" data-element_type="widget" data-e-type="widget" data-widget_type="wds_calendar.default">
 				<div class="elementor-widget-container">
 							<div class="elementor-button-wrapper">
 
-			<a href="{{ $data['google_calendar_url'] ?? '#' }}"  class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" target="_blank" rel="nofollow" role="button">		<span class="elementor-button-content-wrapper wds-flexbox">
+			<a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Tema%203D%20Motion%2027&amp;details=The%20Wedding%20Of%20%3A%3Cbr%3E%3Cbr%3EPutri%20Cantika%20Sari%3Cbr%3E%26amp%3B%3Cbr%3EPutra%20Andika%20Pratama%3Cbr%3E%3Cbr%3EMinggu%2C%2028%20Desember%202027&amp;dates=20271228T010000Z%2F20271229T010000Z" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" target="_blank" rel="nofollow" role="button">		<span class="elementor-button-content-wrapper wds-flexbox">
 							<span class="elementor-button-icon elementor-align-icon-row">
 					<i aria-hidden="true" class="fas fa-calendar-check"></i>				</span>
 						<span class="elementor-button-text">Simpan Tanggal</span>
@@ -1390,50 +1148,33 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-912ff38 elementor-widget__width-auto elementor-absolute animated-slow inv-kiri elementor-invisible elementor-widget elementor-widget-image" data-id="912ff38" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownLeft&quot;,&quot;_animation_delay&quot;:500}" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-															<img fetchpriority="high" width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-2.png" class="attachment-full size-full wp-image-8037" alt="" />															</div>
-				</div>
-				<div class="elementor-element elementor-element-3527a19 elementor-widget__width-auto elementor-absolute animated-slow inv-kanan elementor-invisible elementor-widget elementor-widget-image" data-id="3527a19" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownRight&quot;,&quot;_animation_delay&quot;:500}" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-															<img width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-1.png" class="attachment-full size-full wp-image-8036" alt="" />															</div>
-				</div>
 					</div>
 		</div>
 					</div>
 		</section>
-				<section data-dce-background-overlay-color="#7F96A8" class="elementor-section elementor-inner-section elementor-element elementor-element-c5dee11 elementor-section-full_width elementor-section-content-middle elementor-section-height-default elementor-section-height-default" data-id="c5dee11" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
-							<div class="elementor-background-overlay"></div>
-							<div class="elementor-container elementor-column-gap-no">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-849b242" data-id="849b242" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-			<div class="elementor-widget-wrap elementor-element-populated">
-						<div class="elementor-element elementor-element-43feb16 inv-zoom-in elementor-widget elementor-widget-image" data-id="43feb16" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-															<img loading="lazy" width="1000" height="1000" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Bouquet.png" class="attachment-full size-full wp-image-8041" alt="" srcset="/themes/3d-motion-05/uploads/2024/10/Garden-05-Bouquet.png 1000w, /themes/3d-motion-05/uploads/2024/10/Garden-05-Bouquet-150x150.png 150w" sizes="(max-width: 1000px) 100vw, 1000px" />															</div>
-				</div>
-				<div class="elementor-element elementor-element-22bba19 elementor-widget elementor-widget-spacer" data-id="22bba19" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
+				<div class="elementor-element elementor-element-9805f75 elementor-widget elementor-widget-spacer" data-id="9805f75" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">
 							<div class="elementor-spacer">
 			<div class="elementor-spacer-inner"></div>
 		</div>
 						</div>
 				</div>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-989440a elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="989440a" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-7961e64 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="7961e64" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-no">
-					<div data-dce-background-overlay-color="#F5F7F8" data-dce-background-image-url="/themes/3d-motion-05/uploads/2024/10/Garden-05-Overlay.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-70a61fd inv-atas" data-id="70a61fd" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/motion-jawa-03-bg.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-38da4bb inv-atas" data-id="38da4bb" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-479f0f5 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="479f0f5" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-294e5ad elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="294e5ad" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-default">
-					<div data-dce-background-overlay-color="#F5F7F8" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-2e901c3" data-id="2e901c3" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div data-dce-background-color="#FFFBF4DE" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-ccf007b" data-id="ccf007b" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
-						<div data-dce-title-color="#333333" class="elementor-element elementor-element-5deab6d playball elementor-widget elementor-widget-heading" data-id="5deab6d" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+						<div data-dce-title-color="#333333" class="elementor-element elementor-element-4821475 playball elementor-widget elementor-widget-heading" data-id="4821475" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">Akad Nikah</h2>				</div>
 				</div>
-				<div class="elementor-element elementor-element-c148545 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="c148545" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+				<div class="elementor-element elementor-element-b1383a6 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="b1383a6" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
 				<div class="elementor-widget-container">
 							<div class="elementor-divider">
 			<span class="elementor-divider-separator">
@@ -1441,27 +1182,27 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 						</div>
 				</div>
-				<div data-dce-title-color="#000000" class="elementor-element elementor-element-b17d2c6 playball elementor-widget elementor-widget-heading" data-id="b17d2c6" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#000000" class="elementor-element elementor-element-85b472f playball elementor-widget elementor-widget-heading" data-id="85b472f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['events']['akad']['day'] ?? 'Minggu' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">Minggu</h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-6c857a7 elementor-widget elementor-widget-heading" data-id="6c857a7" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#744C2F" class="elementor-element elementor-element-148b2a4 elementor-widget elementor-widget-heading" data-id="148b2a4" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['events']['akad']['day_num'] ?? '28' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">28</h2>				</div>
 				</div>
-				<div data-dce-text-color="#333333" class="elementor-element elementor-element-4cf0710 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-inline elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="4cf0710" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div data-dce-text-color="#333333" class="elementor-element elementor-element-b544764 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-inline elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="b544764" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 				<div class="elementor-widget-container">
 							<ul class="elementor-icon-list-items elementor-inline-items">
 							<li class="elementor-icon-list-item elementor-inline-item">
-										<span class="elementor-icon-list-text">{{ $data['events']['akad']['month'] ?? 'Desember' }}</span>
+										<span class="elementor-icon-list-text">Desember</span>
 									</li>
 								<li class="elementor-icon-list-item elementor-inline-item">
-										<span class="elementor-icon-list-text">{{ $data['events']['akad']['year'] ?? '2026' }}</span>
+										<span class="elementor-icon-list-text">2027</span>
 									</li>
 						</ul>
 						</div>
 				</div>
-				<div data-dce-text-color="#333333" class="elementor-element elementor-element-839c710 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="839c710" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div data-dce-text-color="#333333" class="elementor-element elementor-element-8edaec5 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="8edaec5" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 				<div class="elementor-widget-container">
 							<ul class="elementor-icon-list-items">
 							<li class="elementor-icon-list-item">
@@ -1472,15 +1213,15 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 						</ul>
 						</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-01d33be wdsdv-enabled--yes elementor-widget elementor-widget-heading" data-id="01d33be" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-3de7220 wdsdv-enabled--yes elementor-widget elementor-widget-heading" data-id="3de7220" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">Lokasi Acara</h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-77c884f elementor-widget elementor-widget-heading" data-id="77c884f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-aa7c463 elementor-widget elementor-widget-heading" data-id="aa7c463" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<p class="elementor-heading-title elementor-size-default"><b>{{ $data['events']['akad']['venue'] ?? 'Menara 165' }}</b><br />{{ $data['events']['akad']['address'] ?? 'Jl. TB Simatupang Jakarta Selatan' }}</p>				</div>
+					<p class="elementor-heading-title elementor-size-default" data-preview="venue-name"><b>{{ $data['events']['akad']['venue'] ?? 'Menara 165' }}</b><br />{{ $data['events']['akad']['address'] ?? 'Jl. TB Simatupang Jakarta Selatan' }}</p>				</div>
 				</div>
-				<div data-dce-background-color="#7F96A8" class="elementor-element elementor-element-c75cc47 elementor-align-center wdsdv-enabled--yes elementor-mobile-align-center elementor-widget elementor-widget-button" data-id="c75cc47" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+				<div data-dce-background-color="#D6B788" class="elementor-element elementor-element-3494a54 elementor-align-center wdsdv-enabled--yes elementor-mobile-align-center elementor-widget elementor-widget-button" data-id="3494a54" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
 					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="{{ $data['events']['akad']['maps_link'] ?: 'https://maps.google.com' }}" target="_blank" rel="nofollow">
@@ -1501,22 +1242,22 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 					</div>
 		</section>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-8479d19 elementor-section-full_width wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="8479d19" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-c6caa0b elementor-section-full_width wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="c6caa0b" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-no">
-					<div data-dce-background-overlay-color="#F5F7F8" data-dce-background-image-url="/themes/3d-motion-05/uploads/2024/10/Garden-05-Overlay.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-ae5883f inv-atas" data-id="ae5883f" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/motion-jawa-03-bg.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-86ad94e inv-atas" data-id="86ad94e" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-fc01eda elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="fc01eda" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-0524d08 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="0524d08" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-default">
-					<div data-dce-background-overlay-color="#F5F7F8" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-e3da8d6" data-id="e3da8d6" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div data-dce-background-color="#FFFBF4DE" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-ed19dad" data-id="ed19dad" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
-						<div data-dce-title-color="#333333" class="elementor-element elementor-element-6c2298e playball elementor-widget elementor-widget-heading" data-id="6c2298e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+						<div data-dce-title-color="#333333" class="elementor-element elementor-element-ea68420 playball elementor-widget elementor-widget-heading" data-id="ea68420" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">Resepsi</h2>				</div>
 				</div>
-				<div class="elementor-element elementor-element-a6a7245 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="a6a7245" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+				<div class="elementor-element elementor-element-77e5e6e elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="77e5e6e" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
 				<div class="elementor-widget-container">
 							<div class="elementor-divider">
 			<span class="elementor-divider-separator">
@@ -1524,49 +1265,49 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 						</div>
 				</div>
-				<div data-dce-title-color="#000000" class="elementor-element elementor-element-750b47d elementor-widget elementor-widget-heading" data-id="750b47d" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#000000" class="elementor-element elementor-element-db04588 elementor-widget elementor-widget-heading" data-id="db04588" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['events']['resepsi']['day'] ?? 'Minggu' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">Minggu</h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-837124c elementor-widget elementor-widget-heading" data-id="837124c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#744C2F" class="elementor-element elementor-element-f450a6b elementor-widget elementor-widget-heading" data-id="f450a6b" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['events']['resepsi']['day_num'] ?? '28' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">28</h2>				</div>
 				</div>
-				<div data-dce-text-color="#333333" class="elementor-element elementor-element-a9077c0 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-inline elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="a9077c0" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div data-dce-text-color="#333333" class="elementor-element elementor-element-e7922b9 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-inline elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="e7922b9" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 				<div class="elementor-widget-container">
 							<ul class="elementor-icon-list-items elementor-inline-items">
 							<li class="elementor-icon-list-item elementor-inline-item">
-										<span class="elementor-icon-list-text">{{ $data['events']['resepsi']['month'] ?? 'Desember' }}</span>
+										<span class="elementor-icon-list-text">Desember</span>
 									</li>
 								<li class="elementor-icon-list-item elementor-inline-item">
-										<span class="elementor-icon-list-text">{{ $data['events']['resepsi']['year'] ?? '2026' }}</span>
+										<span class="elementor-icon-list-text">2027</span>
 									</li>
 						</ul>
 						</div>
 				</div>
-				<div data-dce-text-color="#333333" class="elementor-element elementor-element-28d7359 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="28d7359" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div data-dce-text-color="#333333" class="elementor-element elementor-element-8f3b333 elementor-align-center wdsdv-enabled--yes elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="8f3b333" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 				<div class="elementor-widget-container">
 							<ul class="elementor-icon-list-items">
 							<li class="elementor-icon-list-item">
 											<span class="elementor-icon-list-icon">
 							<i aria-hidden="true" class="fas fa-clock"></i>						</span>
-										<span class="elementor-icon-list-text">{{ $data['events']['resepsi']['formatted_time'] ?? '09:00 - 13:00 WIB' }}</span>
+										<span class="elementor-icon-list-text">{{ $data['events']['resepsi']['formatted_time'] ?? '11:00 - 14:00 WIB' }}</span>
 									</li>
 						</ul>
 						</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-76a0f9f wdsdv-enabled--yes elementor-widget elementor-widget-heading" data-id="76a0f9f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-2dff088 wdsdv-enabled--yes elementor-widget elementor-widget-heading" data-id="2dff088" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">Lokasi Acara</h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-dd918d3 elementor-widget elementor-widget-heading" data-id="dd918d3" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-cfcd2ed elementor-widget elementor-widget-heading" data-id="cfcd2ed" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<p class="elementor-heading-title elementor-size-default"><b>{{ $data['events']['resepsi']['venue'] ?? 'Menara 165' }}</b><br />{{ $data['events']['resepsi']['address'] ?? 'Jl. TB Simatupang Jakarta Selatan' }}</p>				</div>
+					<p class="elementor-heading-title elementor-size-default" data-preview="venue-name"><b>{{ $data['events']['akad']['venue'] ?? 'Menara 165' }}</b><br />{{ $data['events']['akad']['address'] ?? 'Jl. TB Simatupang Jakarta Selatan' }}</p>				</div>
 				</div>
-				<div data-dce-background-color="#7F96A8" class="elementor-element elementor-element-27179d2 elementor-align-center wdsdv-enabled--yes elementor-mobile-align-center elementor-widget elementor-widget-button" data-id="27179d2" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+				<div data-dce-background-color="#D6B788" class="elementor-element elementor-element-d4a00c6 elementor-align-center wdsdv-enabled--yes elementor-mobile-align-center elementor-widget elementor-widget-button" data-id="d4a00c6" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
-					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="{{ $data['events']['resepsi']['maps_link'] ?: 'https://maps.google.com' }}" target="_blank" rel="nofollow">
+					<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-shrink" href="{{ $data['events']['akad']['maps_link'] ?: 'https://maps.google.com' }}" target="_blank" rel="nofollow">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-icon">
 				<i aria-hidden="true" class="fas fa-map-marker-alt"></i>			</span>
@@ -1588,9 +1329,78 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 					</div>
 		</section>
-				@if (!empty($data['stories']) && count($data['stories']) > 0)
-				<section data-dce-background-color="#7F96A8" class="elementor-section elementor-inner-section elementor-element elementor-element-83dc9fe elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="83dc9fe" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-8aac2de elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="8aac2de" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-cc746cd reveal" data-id="cc746cd" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-25615be elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="25615be" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div data-dce-background-color="#F3F1EFED" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-3596692 inv-atas" data-id="3596692" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div data-dce-title-color="#333333" class="elementor-element elementor-element-bdaee4b playball elementor-widget elementor-widget-heading" data-id="bdaee4b" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Dresscode</h2>				</div>
+				</div>
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-4a689fa elementor-widget elementor-widget-heading" data-id="4a689fa" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Kami dengan hormat menganjurkan tamu kami untuk mengenakan warna-warna ini untuk hari istimewa kami.</p>				</div>
+				</div>
+				<div class="elementor-element elementor-element-ace10ab elementor-widget__width-auto wdsdv-enabled--yes elementor-view-default elementor-widget elementor-widget-icon" data-id="ace10ab" data-element_type="widget" data-e-type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<i aria-hidden="true" class="fas fa-circle"></i>			</div>
+		</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-7c6f2d3 elementor-widget__width-auto wdsdv-enabled--yes elementor-view-default elementor-widget elementor-widget-icon" data-id="7c6f2d3" data-element_type="widget" data-e-type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<i aria-hidden="true" class="fas fa-circle"></i>			</div>
+		</div>
+						</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-e232a02 elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="e232a02" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div data-dce-background-color="#F3F1EFED" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-766df7e inv-atas" data-id="766df7e" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div data-dce-title-color="#333333" class="elementor-element elementor-element-ee9fd9e playball elementor-widget elementor-widget-heading" data-id="ee9fd9e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Live Streaming</h2>				</div>
+				</div>
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-94631c7 elementor-widget elementor-widget-heading" data-id="94631c7" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Temui kami secara virtual untuk menyaksikan acara pernikahan kami yang insyaaAllah akan disiarkan langsung melalui link dibawah ini.</p>				</div>
+				</div>
+				<div data-dce-background-color="#88775D" class="elementor-element elementor-element-a9913e2 elementor-align-center elementor-mobile-align-center elementor-widget elementor-widget-button" data-id="a9913e2" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-size-sm elementor-animation-shrink" role="button">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-icon">
+				<i aria-hidden="true" class="fas fa-video"></i>			</span>
+									<span class="elementor-button-text">Lihat Live Streaming</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section data-dce-background-color="#744C2F" class="elementor-section elementor-inner-section elementor-element elementor-element-83dc9fe elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="83dc9fe" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-no">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-b045cd2 reveal" data-id="b045cd2" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-3a7cc1c inv-atas elementor-widget elementor-widget-heading" data-id="3a7cc1c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
@@ -1601,40 +1411,355 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				<div class="elementor-widget-container">
 					<div class="elementor-jet-timeline jet-elements"><div class="jet-timeline jet-timeline--align-left jet-timeline--align-top">
 	<div class="jet-timeline__line"><div class="jet-timeline__line-progress"></div></div>
-	<div class="jet-timeline-list">
-@foreach ($data['stories'] as $index => $story)
-	<div class="jet-timeline-item jet-timeline-item--animated elementor-repeater-item-0363b0b-{{ $index }} jet-timeline-item--image-inside">
+	<div class="jet-timeline-list"><div class="jet-timeline-item jet-timeline-item--animated elementor-repeater-item-0363b0b-0 jet-timeline-item--image-inside">
 	<div class="timeline-item__card">
 		<div class="timeline-item__card-inner">
-				@php
-					$storyImg = $story['image_url'] ?? $story['image'] ?? null;
-				@endphp
-				@if (!empty($storyImg))
-				<div class="timeline-item__card-img"><img loading="lazy" width="1000" height="667" src="{{ $storyImg }}" class="attachment-full size-full" alt="{{ $story['title'] ?? 'Love Story' }}" decoding="async" /></div>
-				@endif
-				<div class="timeline-item__card-content">
-					<div class="timeline-item__meta"></div>
-					<h5 class="timeline-item__card-title">{{ strtoupper($story['date'] ?? $story['year'] ?? ($story['title'] ?? '')) }}</h5>
-					@if (!empty($story['title']) && !empty($story['date'] ?? $story['year']))
-					<div style="font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #333333;">{{ $story['title'] }}</div>
-					@endif
-					<div class="timeline-item__card-desc">{{ $story['story'] ?? $story['desc'] ?? '' }}</div>
-				</div>
-		</div>
+				<div class="timeline-item__card-img"><img loading="lazy" width="1000" height="667" src="/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-12.jpeg" class="attachment-full size-full wp-image-7687" alt="" decoding="async" /></div>				<div class="timeline-item__card-content">
+					<div class="timeline-item__meta"></div><h5 class="timeline-item__card-title">25 AGUSTUS 2023</h5><div class="timeline-item__card-desc">Berawal dari tempat pekerjaan Cianjur-2023, kami mengenal satu sama lain dan belum ada benih cinta kala itu, hanya sebatas teman kerja.</div>				</div>
+						</div>
 		<div class="timeline-item__card-arrow"></div>
 	</div>
-	<div class="timeline-item__point"><div class="timeline-item__point-content timeline-item__point-content--icon"><span class="jet-elements-icon"><i aria-hidden="true" class="fas fa-heart"></i></span></div></div><div class="timeline-item__meta"></div>
+	<div class="timeline-item__point"><div class="timeline-item__point-content timeline-item__point-content--icon"><span class="jet-elements-icon"><i aria-hidden="true" class="fas fa-heart"></i></span></div></div><div class="timeline-item__meta"></div></div><div class="jet-timeline-item jet-timeline-item--animated elementor-repeater-item-0363b0b-1 jet-timeline-item--image-inside">
+	<div class="timeline-item__card">
+		<div class="timeline-item__card-inner">
+				<div class="timeline-item__card-img"><img loading="lazy" width="1000" height="667" src="/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-10.jpeg" class="attachment-full size-full wp-image-7688" alt="" decoding="async" /></div>				<div class="timeline-item__card-content">
+					<div class="timeline-item__meta"></div><h5 class="timeline-item__card-title">03 JUNI 2024</h5><div class="timeline-item__card-desc">Setelah cukup mengenal satu sama lain, satu tahun kurang lebih nya kami menjalin hubungan. 03 Juni 2024 Akhirnya kita memutuskan untuk melanjutkan ke Hubungan yang lebih serius mempertemukan kedua keluarga.</div>				</div>
+						</div>
+		<div class="timeline-item__card-arrow"></div>
 	</div>
-@endforeach
-	</div></div></div>				</div>
+	<div class="timeline-item__point"><div class="timeline-item__point-content timeline-item__point-content--icon"><span class="jet-elements-icon"><i aria-hidden="true" class="fas fa-heart"></i></span></div></div><div class="timeline-item__meta"></div></div><div class="jet-timeline-item jet-timeline-item--animated elementor-repeater-item-0363b0b-2 jet-timeline-item--image-inside">
+	<div class="timeline-item__card">
+		<div class="timeline-item__card-inner">
+				<div class="timeline-item__card-img"><img loading="lazy" width="1000" height="667" src="/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-11.jpeg" class="attachment-full size-full wp-image-7689" alt="" decoding="async" /></div>				<div class="timeline-item__card-content">
+					<div class="timeline-item__meta"></div><h5 class="timeline-item__card-title">29 DESEMBER 2025</h5><div class="timeline-item__card-desc">Sampai tanggal ini kami melaksanakan akad terlebih dahulu dan akhirnya kami mengubah status hingga menjadi pasangan suami istri. Semoga allah swt. Memberikan keberkahan pernikahan ini. "AMIN</div>				</div>
+						</div>
+		<div class="timeline-item__card-arrow"></div>
+	</div>
+	<div class="timeline-item__point"><div class="timeline-item__point-content timeline-item__point-content--icon"><span class="jet-elements-icon"><i aria-hidden="true" class="fas fa-heart"></i></span></div></div><div class="timeline-item__meta"></div></div></div></div></div>				</div>
 				</div>
 					</div>
 		</div>
 					</div>
 		</section>
-@endif
-				@if (!empty($data['galleries']) && count($data['galleries']) > 0)
-				<section data-dce-background-overlay-color="#7F96A8" class="elementor-section elementor-inner-section elementor-element elementor-element-c76bd69 elementor-section-full_width elementor-section-content-middle jedv-enabled--yes wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="c76bd69" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+				<section data-dce-background-overlay-color="#744C2F" class="elementor-section elementor-inner-section elementor-element elementor-element-1f09732 elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes jedv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="1f09732" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_gallery&quot;:[],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_duration&quot;:5000,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_transition_duration&quot;:500}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-2136e46" data-id="2136e46" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[],&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+					<div class="elementor-background-overlay"></div>
+						<div class="elementor-element elementor-element-f610016 elementor-widget elementor-widget-ams-video" data-id="f610016" data-element_type="widget" data-e-type="widget" data-widget_type="ams-video.default">
+				<div class="elementor-widget-container">
+					
+        <style>
+            .videoWrapper {
+                position: relative;
+                padding-bottom: 56.25%;
+                padding-top: 0;
+                height: 0;
+                overflow: hidden;
+            }
+
+            .videoWrapper iframe,
+            .videoWrapper #video-yt {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+        </style>
+
+        <div class="videoWrapper" data-ams-video-widget="f610016">
+            <div id="video-yt"></div>
+        </div>
+
+        <script>
+        (function () {
+            'use strict';
+
+            var currentScript = document.currentScript;
+            var localWrapper = currentScript ? currentScript.previousElementSibling : null;
+            var root = localWrapper && localWrapper.classList && localWrapper.classList.contains('videoWrapper')
+                ? localWrapper.querySelector('#video-yt')
+                : document.getElementById('video-yt');
+
+            if (!root || root.dataset.amsInitialized === '1') {
+                return;
+            }
+            root.dataset.amsInitialized = '1';
+
+            var sourceUrl = "https:\/\/www.youtube.com\/watch?v=2hyN1_2qHCU";
+            var autoPlay = 1;
+            var player = null;
+            var playing = false;
+            var retriedWithNoCookie = false;
+            var widgetId = "f610016";
+
+            function isGoogleDrive(url) {
+                return /(^|\.)drive\.google\.com/i.test((url || '').replace(/^https?:\/\//i, '').split('/')[0]) ||
+                    /drive\.google\.com/i.test(url || '');
+            }
+
+            function getDriveEmbed(url) {
+                var match = (url || '').match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    return 'https://drive.google.com/file/d/' + match[1] + '/preview';
+                }
+                return url;
+            }
+
+            function extractVideoId(url) {
+                if (!url) return '';
+
+                var value = String(url).trim();
+
+                // Allow a raw 11-character YouTube video ID.
+                if (/^[a-zA-Z0-9_-]{11}$/.test(value)) {
+                    return value;
+                }
+
+                var patterns = [
+                    /[?&]v=([a-zA-Z0-9_-]{11})/,
+                    /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+                    /youtube(?:-nocookie)?\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+                    /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+                    /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/
+                ];
+
+                for (var i = 0; i < patterns.length; i++) {
+                    var match = value.match(patterns[i]);
+                    if (match && match[1]) return match[1];
+                }
+
+                return '';
+            }
+
+            function getOrigin() {
+                if (window.location && window.location.origin && /^https?:\/\//i.test(window.location.origin)) {
+                    return window.location.origin;
+                }
+                return window.location.protocol + '//' + window.location.host;
+            }
+
+            function waitForYouTubeAPI(callback) {
+                if (window.YT && typeof window.YT.Player === 'function') {
+                    callback();
+                    return;
+                }
+
+                if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+                    var script = document.createElement('script');
+                    script.src = 'https://www.youtube.com/iframe_api';
+                    script.async = true;
+                    script.dataset.amsYoutubeApi = '1';
+                    (document.head || document.documentElement).appendChild(script);
+                }
+
+                var attempts = 0;
+                var timer = window.setInterval(function () {
+                    attempts++;
+                    if (window.YT && typeof window.YT.Player === 'function') {
+                        window.clearInterval(timer);
+                        callback();
+                    } else if (attempts >= 200) {
+                        window.clearInterval(timer);
+                    }
+                }, 50);
+            }
+
+            function pauseBackgroundAudio() {
+                if (typeof window.pauseAudio === 'function') window.pauseAudio();
+                if (typeof window.audioInactive === 'function') window.audioInactive();
+            }
+
+            function resumeBackgroundAudio() {
+                if (typeof window.playAudio === 'function') window.playAudio();
+                if (typeof window.audioActive === 'function') window.audioActive();
+            }
+
+            function buildIframe(videoId, useNoCookie) {
+                var origin = getOrigin();
+                var host = useNoCookie ? 'https://www.youtube-nocookie.com' : 'https://www.youtube.com';
+                var iframe = document.createElement('iframe');
+                var iframeId = 'ams-video-youtube-' + widgetId + (useNoCookie ? '-privacy' : '');
+
+                var params = new URLSearchParams({
+                    enablejsapi: '1',
+                    autoplay: String(autoPlay),
+                    mute: String(autoPlay),
+                    loop: String(autoPlay),
+                    playlist: videoId,
+                    playsinline: '1',
+                    rel: '0',
+                    origin: origin,
+                    widget_referrer: window.location.href
+                });
+
+                iframe.id = iframeId;
+                iframe.src = host + '/embed/' + encodeURIComponent(videoId) + '?' + params.toString();
+                iframe.title = 'YouTube video player';
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                iframe.allowFullscreen = true;
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = '0';
+
+                root.innerHTML = '';
+                root.appendChild(iframe);
+                return iframe;
+            }
+
+            function showExternalFallback(videoId) {
+                var watchUrl = 'https://www.youtube.com/watch?v=' + encodeURIComponent(videoId);
+                var link = document.createElement('a');
+                link.href = watchUrl;
+                link.target = '_blank';
+                link.rel = 'noopener';
+                link.setAttribute('aria-label', 'Tonton video di YouTube');
+                link.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#111;text-decoration:none;overflow:hidden;';
+
+                var image = document.createElement('img');
+                image.src = 'https://i.ytimg.com/vi/' + encodeURIComponent(videoId) + '/hqdefault.jpg';
+                image.alt = '';
+                image.loading = 'lazy';
+                image.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.82;';
+
+                var play = document.createElement('span');
+                play.textContent = '▶';
+                play.setAttribute('aria-hidden', 'true');
+                play.style.cssText = 'position:relative;z-index:2;display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.72);color:#fff;font-size:28px;line-height:1;padding-left:4px;';
+
+                link.appendChild(image);
+                link.appendChild(play);
+                root.innerHTML = '';
+                root.appendChild(link);
+            }
+
+            function attachPlayer(iframe, videoId, useNoCookie) {
+                waitForYouTubeAPI(function () {
+                    try {
+                        player = new YT.Player(iframe, {
+                            events: {
+                                onStateChange: onPlayerStateChange,
+                                onError: function (event) {
+                                    // Error 153 = missing/invalid player identity / Referer.
+                                    // Retry once through the privacy-enhanced host while keeping
+                                    // an explicit referrer policy and origin.
+                                    if (Number(event.data) === 153 && !retriedWithNoCookie && !useNoCookie) {
+                                        retriedWithNoCookie = true;
+                                        try {
+                                            if (player && typeof player.destroy === 'function') player.destroy();
+                                        } catch (e) {}
+                                        var retryIframe = buildIframe(videoId, true);
+                                        window.setTimeout(function () {
+                                            attachPlayer(retryIframe, videoId, true);
+                                        }, 150);
+                                    } else if (Number(event.data) === 153) {
+                                        // Some iOS Safari/WebKit builds currently reject YouTube embeds
+                                        // even with a valid referrer. Avoid leaving a broken Error 153 box.
+                                        showExternalFallback(videoId);
+                                    }
+                                }
+                            }
+                        });
+                    } catch (e) {
+                        // Keep the native iframe visible even if the JS API cannot attach.
+                    }
+                });
+            }
+
+            function onPlayerStateChange(event) {
+                if (!player || !window.YT) return;
+
+                var isMuted = false;
+                try {
+                    isMuted = player.isMuted();
+                } catch (e) {}
+
+                if (event.data === YT.PlayerState.PLAYING) {
+                    if (!isMuted) pauseBackgroundAudio();
+                    playing = true;
+                } else if (event.data === YT.PlayerState.PAUSED) {
+                    if (!isMuted) resumeBackgroundAudio();
+                    playing = false;
+                } else if (event.data === YT.PlayerState.ENDED) {
+                    playing = false;
+                    if (autoPlay && player) {
+                        try {
+                            player.seekTo(0, true);
+                            player.playVideo();
+                        } catch (e) {}
+                    } else {
+                        resumeBackgroundAudio();
+                    }
+                }
+            }
+
+            function toggleMute() {
+                if (!player) return;
+
+                try {
+                    if (player.isMuted()) {
+                        player.unMute();
+                        // Once video audio is audible, background music should stop.
+                        if (playing) pauseBackgroundAudio();
+                    } else {
+                        player.mute();
+                        // Muted video may coexist with background music.
+                        resumeBackgroundAudio();
+                    }
+                } catch (e) {}
+            }
+
+            // Preserve the old global helper name for pages that call toggleMute() themselves.
+            window.toggleMute = toggleMute;
+
+            if (!sourceUrl) {
+                return;
+            }
+
+            if (isGoogleDrive(sourceUrl)) {
+                var driveIframe = document.createElement('iframe');
+                driveIframe.src = getDriveEmbed(sourceUrl);
+                driveIframe.style.width = '100%';
+                driveIframe.style.height = '100%';
+                driveIframe.style.border = '0';
+                driveIframe.allow = 'autoplay; fullscreen';
+                driveIframe.allowFullscreen = true;
+                driveIframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+                root.innerHTML = '';
+                root.appendChild(driveIframe);
+                return;
+            }
+
+            var videoId = extractVideoId(sourceUrl);
+            if (!videoId) {
+                return;
+            }
+
+            // Create the iframe ourselves first so the very first request already carries
+            // referrerpolicy="strict-origin-when-cross-origin". The JS API is attached after.
+            var youtubeIframe = buildIframe(videoId, false);
+            attachPlayer(youtubeIframe, videoId, false);
+
+            var muteBtn = document.getElementById('mute-button');
+            if (muteBtn && !muteBtn.dataset.amsVideoBound) {
+                muteBtn.dataset.amsVideoBound = '1';
+                muteBtn.addEventListener('click', toggleMute);
+            }
+        })();
+        </script>
+
+        				</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section data-dce-background-overlay-color="#744C2F" class="elementor-section elementor-inner-section elementor-element elementor-element-c76bd69 elementor-section-full_width elementor-section-content-middle jedv-enabled--yes wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="c76bd69" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-no">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-0f545c7" data-id="0f545c7" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
@@ -1642,360 +1767,506 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 					<div class="elementor-background-overlay"></div>
 						<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-1dceb05 inv-atas elementor-widget elementor-widget-heading" data-id="1dceb05" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default" style="font-family: 'Playball', cursive; font-size: 38px; color: #FFFFFF; text-align: center; margin: 0 0 20px; font-weight: normal; text-shadow: 0 2px 10px rgba(0,0,0,0.15); letter-spacing: 0.5px;">Our Moments</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">Our Moments</h2>				</div>
 				</div>
-				<div class="elementor-element elementor-element-17f5026 wdsdv-enabled--yes inv-zoom-in elementor-widget elementor-widget-gallery" data-id="17f5026" data-element_type="widget" data-e-type="widget">
+				<div class="elementor-element elementor-element-17f5026 wdsdv-enabled--yes inv-zoom-in elementor-widget elementor-widget-gallery" data-id="17f5026" data-element_type="widget" data-e-type="widget" data-settings="{&quot;gallery_layout&quot;:&quot;justified&quot;,&quot;ideal_row_height&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:245,&quot;sizes&quot;:[]},&quot;ideal_row_height_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:245,&quot;sizes&quot;:[]},&quot;image_hover_animation&quot;:&quot;grow&quot;,&quot;ideal_row_height_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:245,&quot;sizes&quot;:[]},&quot;lazyload&quot;:&quot;yes&quot;,&quot;gap&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;gap_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;gap_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;link_to&quot;:&quot;file&quot;,&quot;overlay_background&quot;:&quot;yes&quot;,&quot;content_hover_animation&quot;:&quot;fade-in&quot;}" data-widget_type="gallery.default">
 				<div class="elementor-widget-container">
-					<div class="custom-mosaic-gallery" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; padding: 0 10px 24px 10px; max-width: 440px; margin: 0 auto; box-sizing: border-box;">
-						@php
-							$totalPhotos = count($data['galleries']);
-							$galleriesList = array_values($data['galleries']);
-						@endphp
-
-						@foreach ($galleriesList as $gIdx => $gPhoto)
-							@php
-								$cycle = $gIdx % 8;
-								$remaining = $totalPhotos - $gIdx;
-
-								if ($cycle === 0) {
-									// Row 1 Left: narrower portrait (~33.3%)
-									$colSpan = ($remaining === 1) ? 6 : 2;
-									$cardHeight = ($remaining === 1) ? '240px' : '185px';
-								} elseif ($cycle === 1) {
-									// Row 1 Right: wider landscape (~66.7%)
-									$colSpan = 4;
-									$cardHeight = '185px';
-								} elseif ($cycle === 2) {
-									// Row 2: Col 1 of 3 (~33.3%)
-									if ($remaining === 1) {
-										$colSpan = 6;
-										$cardHeight = '240px';
-									} elseif ($remaining === 2) {
-										$colSpan = 3;
-										$cardHeight = '185px';
-									} else {
-										$colSpan = 2;
-										$cardHeight = '185px';
-									}
-								} elseif ($cycle === 3) {
-									// Row 2: Col 2 of 3 (~33.3%)
-									if ($remaining === 1) {
-										$colSpan = 4;
-										$cardHeight = '185px';
-									} else {
-										$colSpan = 2;
-										$cardHeight = '185px';
-									}
-								} elseif ($cycle === 4) {
-									// Row 2: Col 3 of 3 (~33.3%)
-									$colSpan = 2;
-									$cardHeight = '185px';
-								} elseif ($cycle === 5) {
-									// Row 3: Full width landscape (100%)
-									$colSpan = 6;
-									$cardHeight = '240px';
-								} elseif ($cycle === 6) {
-									// Row 4: Col 1 of 2 (~50%)
-									if ($remaining === 1) {
-										$colSpan = 6;
-										$cardHeight = '240px';
-									} else {
-										$colSpan = 3;
-										$cardHeight = '185px';
-									}
-								} else { // $cycle === 7
-									// Row 4: Col 2 of 2 (~50%)
-									$colSpan = 3;
-									$cardHeight = '185px';
-								}
-							@endphp
-							<div
-								class="mosaic-gallery-item"
-								onclick="openGalleryModal({{ $gIdx }})"
-								style="grid-column: span {{ $colSpan }}; height: {{ $cardHeight }}; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.14); position: relative; cursor: pointer; transition: transform 0.25s ease, box-shadow 0.25s ease; background-color: #CBD5E1;"
-								onmouseover="this.style.transform='scale(1.02) translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.22)';"
-								onmouseout="this.style.transform='scale(1) translateY(0)'; this.style.boxShadow='0 4px 14px rgba(0,0,0,0.14)';"
-							>
-								<div
-									style="width: 100%; height: 100%; background-image: url('{{ $gPhoto }}'); background-size: cover; background-position: center center; background-repeat: no-repeat; transition: transform 0.4s ease;"
-									onmouseover="this.style.transform='scale(1.05)';"
-									onmouseout="this.style.transform='scale(1)';"
-								></div>
-								<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,0.28) 100%); pointer-events: none;"></div>
-							</div>
-						@endforeach
+							<div class="elementor-gallery__container">
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-2.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="17f5026" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NzY3NSwidXJsIjoiaHR0cHM6XC9cL3RoZS5pbnZpc2ltcGxlLmlkXC93cC1jb250ZW50XC91cGxvYWRzXC9qZXQtZm9ybS1idWlsZGVyXC9lNmZiNTJjMTA4NjU1ZTNkYmI0N2JmZWNjY2UxMjEzMVwvMjAyNFwvMTBcL2ltZy1zYW1wbGUtMDEtMi5qcGVnIiwic2xpZGVzaG93IjoiMTdmNTAyNiJ9">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-2.jpeg" data-width="667" data-height="1000" aria-label="" role="img" ></div>
+											<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-12.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="17f5026" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NzY3NiwidXJsIjoiaHR0cHM6XC9cL3RoZS5pbnZpc2ltcGxlLmlkXC93cC1jb250ZW50XC91cGxvYWRzXC9qZXQtZm9ybS1idWlsZGVyXC9lNmZiNTJjMTA4NjU1ZTNkYmI0N2JmZWNjY2UxMjEzMVwvMjAyNFwvMTBcL2ltZy1zYW1wbGUtMDEtMTIuanBlZyIsInNsaWRlc2hvdyI6IjE3ZjUwMjYifQ%3D%3D">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-12.jpeg" data-width="1000" data-height="667" aria-label="" role="img" ></div>
+											<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-3.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="17f5026" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NzY3NywidXJsIjoiaHR0cHM6XC9cL3RoZS5pbnZpc2ltcGxlLmlkXC93cC1jb250ZW50XC91cGxvYWRzXC9qZXQtZm9ybS1idWlsZGVyXC9lNmZiNTJjMTA4NjU1ZTNkYmI0N2JmZWNjY2UxMjEzMVwvMjAyNFwvMTBcL2ltZy1zYW1wbGUtMDEtMy5qcGVnIiwic2xpZGVzaG93IjoiMTdmNTAyNiJ9">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-3.jpeg" data-width="667" data-height="1000" aria-label="" role="img" ></div>
+											<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-4.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="17f5026" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NzY3OCwidXJsIjoiaHR0cHM6XC9cL3RoZS5pbnZpc2ltcGxlLmlkXC93cC1jb250ZW50XC91cGxvYWRzXC9qZXQtZm9ybS1idWlsZGVyXC9lNmZiNTJjMTA4NjU1ZTNkYmI0N2JmZWNjY2UxMjEzMVwvMjAyNFwvMTBcL2ltZy1zYW1wbGUtMDEtNC5qcGVnIiwic2xpZGVzaG93IjoiMTdmNTAyNiJ9">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-4.jpeg" data-width="667" data-height="1000" aria-label="" role="img" ></div>
+											<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-7.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="17f5026" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NzY3OSwidXJsIjoiaHR0cHM6XC9cL3RoZS5pbnZpc2ltcGxlLmlkXC93cC1jb250ZW50XC91cGxvYWRzXC9qZXQtZm9ybS1idWlsZGVyXC9lNmZiNTJjMTA4NjU1ZTNkYmI0N2JmZWNjY2UxMjEzMVwvMjAyNFwvMTBcL2ltZy1zYW1wbGUtMDEtNy5qcGVnIiwic2xpZGVzaG93IjoiMTdmNTAyNiJ9">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-7.jpeg" data-width="667" data-height="1000" aria-label="" role="img" ></div>
+											<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-10.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="17f5026" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NzY4MCwidXJsIjoiaHR0cHM6XC9cL3RoZS5pbnZpc2ltcGxlLmlkXC93cC1jb250ZW50XC91cGxvYWRzXC9qZXQtZm9ybS1idWlsZGVyXC9lNmZiNTJjMTA4NjU1ZTNkYmI0N2JmZWNjY2UxMjEzMVwvMjAyNFwvMTBcL2ltZy1zYW1wbGUtMDEtMTAuanBlZyIsInNsaWRlc2hvdyI6IjE3ZjUwMjYifQ%3D%3D">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-10.jpeg" data-width="1000" data-height="667" aria-label="" role="img" ></div>
+											<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-8.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="17f5026" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NzY5MCwidXJsIjoiaHR0cHM6XC9cL3RoZS5pbnZpc2ltcGxlLmlkXC93cC1jb250ZW50XC91cGxvYWRzXC9qZXQtZm9ybS1idWlsZGVyXC9lNmZiNTJjMTA4NjU1ZTNkYmI0N2JmZWNjY2UxMjEzMVwvMjAyNFwvMTBcL2ltZy1zYW1wbGUtMDEtOC5qcGVnIiwic2xpZGVzaG93IjoiMTdmNTAyNiJ9">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-8.jpeg" data-width="667" data-height="1000" aria-label="" role="img" ></div>
+											<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-9.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="17f5026" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NzY5MSwidXJsIjoiaHR0cHM6XC9cL3RoZS5pbnZpc2ltcGxlLmlkXC93cC1jb250ZW50XC91cGxvYWRzXC9qZXQtZm9ybS1idWlsZGVyXC9lNmZiNTJjMTA4NjU1ZTNkYmI0N2JmZWNjY2UxMjEzMVwvMjAyNFwvMTBcL2ltZy1zYW1wbGUtMDEtOS5qcGVnIiwic2xpZGVzaG93IjoiMTdmNTAyNiJ9">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="/themes/3d-motion-27/uploads/jet-form-builder/e6fb52c108655e3dbb47bfeccce12131/2024/10/img-sample-01-9.jpeg" data-width="667" data-height="1000" aria-label="" role="img" ></div>
+											<div class="elementor-gallery-item__overlay"></div>
+														</a>
 					</div>
-				</div>
+					</div>
 				</div>
 					</div>
 		</div>
 					</div>
 		</section>
-
-		<!-- GALLERY LIGHTBOX MODAL -->
-		<div id="gallery_lightbox_modal" style="display: none; position: fixed; inset: 0; z-index: 999999; background: rgba(10, 15, 25, 0.94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; flex-direction: column; padding: 20px; box-sizing: border-box;" onclick="closeGalleryModal(event)">
-			<button onclick="closeGalleryModal(event, true)" style="position: absolute; top: 18px; right: 18px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: #FFF; width: 42px; height: 42px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background 0.2s;">
-				<i class="fas fa-times"></i>
-			</button>
-			<button id="modal_prev_btn" onclick="prevGalleryModal(event)" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: #FFF; width: 44px; height: 44px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background 0.2s;">
-				<i class="fas fa-chevron-left"></i>
-			</button>
-			<button id="modal_next_btn" onclick="nextGalleryModal(event)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: #FFF; width: 44px; height: 44px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background 0.2s;">
-				<i class="fas fa-chevron-right"></i>
-			</button>
-			<div style="max-width: 92vw; max-height: 82vh; display: flex; align-items: center; justify-content: center; position: relative;">
-				<img id="gallery_lightbox_img" src="" style="max-width: 100%; max-height: 82vh; object-fit: contain; border-radius: 14px; box-shadow: 0 15px 50px rgba(0,0,0,0.6);" alt="Gallery view" />
-			</div>
-			<div id="gallery_lightbox_counter" style="margin-top: 14px; color: rgba(255,255,255,0.75); font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 500;"></div>
-		</div>
-@endif
-				<section data-dce-background-overlay-color="#FAFDF9" class="elementor-section elementor-inner-section elementor-element elementor-element-c001933 elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="c001933" data-element_type="section" data-e-type="section" style="background-color: #FAFDF9 !important; background: #FAFDF9 !important; padding: 48px 16px 40px; position: relative; z-index: 2;">
-	<div class="elementor-background-overlay"></div>
-	<div class="elementor-container elementor-column-gap-no">
-		<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-3158c5c" data-id="3158c5c" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-			<div class="elementor-widget-wrap elementor-element-populated" style="max-width: 440px; margin: 0 auto; width: 100%;">
-				<div class="elementor-background-overlay"></div>
-				
-				<!-- Heading -->
-				<div class="elementor-element inv-atas elementor-widget elementor-widget-heading" style="text-align: center; margin-bottom: 8px;">
-					<div class="elementor-widget-container">
-						<h2 style="font-family: 'Playball', cursive; font-size: 42px; color: #1E293B; margin: 0; font-weight: 700; line-height: 1.2;">Wedding Gift</h2>
-					</div>
-				</div>
-
-				<!-- Subtitle -->
-				<div class="elementor-element inv-atas elementor-widget elementor-widget-heading" style="text-align: center; margin-bottom: 24px;">
-					<div class="elementor-widget-container">
-						<p style="font-family: 'Sora', sans-serif; font-size: 13px; color: #4B5563; font-weight: 500; line-height: 1.65; max-width: 400px; margin: 0 auto;">
-							Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberi melalui rekening di bawah ini.
-						</p>
-					</div>
-				</div>
-
-				<!-- Bank Accounts & Gift Address Cards -->
-				<div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
-					@php
-						$bankAccounts = $data['bank_accounts'] ?? [
-							[
-								'bank' => 'Bank Central Asia (BCA)',
-								'account_number' => '8801 2345 67',
-								'account_name' => $data['bride']['name'] ?? 'Putri Cantika Sari',
-							],
-							[
-								'bank' => 'Bank Mandiri',
-								'account_number' => '1370 0192 8374 1',
-								'account_name' => $data['groom']['name'] ?? 'Putra Andika Pratama',
-							]
-						];
-					@endphp
-
-					@foreach($bankAccounts as $bank)
-						<div style="background: linear-gradient(135deg, #7F96A8 0%, #4D6475 100%); border-radius: 20px; padding: 22px 20px; color: #FFFFFF; box-shadow: 0 10px 25px rgba(77, 100, 117, 0.25); text-align: left; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.25);">
-							<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
-								<span style="font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">{{ $bank['bank'] ?? 'Rekening Bank' }}</span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.85;"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-							</div>
-							<div style="margin-bottom: 16px;">
-								<span style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.75; display: block; margin-bottom: 4px; font-family: 'Sora', sans-serif;">Nomor Rekening</span>
-								<div style="font-family: 'Courier New', monospace; font-size: 18px; font-weight: bold; letter-spacing: 0.12em;">
-									{{ $bank['account_number'] ?? '123456789' }}
-								</div>
-								<span style="font-size: 12px; opacity: 0.9; margin-top: 4px; display: block; font-family: 'Sora', sans-serif;">a.n {{ $bank['account_name'] ?? 'Mempelai' }}</span>
-							</div>
-							<button 
-								type="button" 
-								onclick="copyGiftText('{{ str_replace(' ', '', $bank['account_number'] ?? '') }}', 'Nomor Rekening {{ $bank['bank'] ?? '' }}')"
-								style="display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 10px; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3); color: #FFFFFF; font-size: 11.5px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Sora', sans-serif;"
-								onmouseover="this.style.background='rgba(255,255,255,0.28)'"
-								onmouseout="this.style.background='rgba(255,255,255,0.18)'"
-							>
-								<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-								<span>Salin No. Rekening</span>
-							</button>
-						</div>
-					@endforeach
-
-					@if(!empty($data['gift_address']))
-						<div style="background: #FFFFFF; border-radius: 20px; padding: 22px 20px; color: #1E293B; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); border: 1px solid rgba(127, 150, 168, 0.3); text-align: left;">
-							<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-								<span style="font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5B7285;">Kirim Kado Fisik</span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B7285" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
-							</div>
-							<p style="font-size: 12.5px; line-height: 1.6; color: #4B5563; margin: 0 0 12px; font-family: 'Sora', sans-serif;">
-								{{ $data['gift_address'] }}
-							</p>
-							<button 
-								type="button" 
-								onclick="copyGiftText('{{ $data['gift_address'] }}', 'Alamat Pengiriman Kado')"
-								style="display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 10px; background: #FAFDF9; border: 1px solid rgba(127, 150, 168, 0.4); color: #2C3E50; font-size: 11.5px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Sora', sans-serif;"
-								onmouseover="this.style.background='#EEF4F8'"
-								onmouseout="this.style.background='#FAFDF9'"
-							>
-								<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-								<span>Salin Alamat Lengkap</span>
-							</button>
-						</div>
-					@endif
-				</div>
-
-			</div>
-		</div>
-	</div>
-</section>
-<section data-dce-background-overlay-color="#F5F7F8" class="elementor-section elementor-inner-section elementor-element elementor-element-731caf7 elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="731caf7" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
-	<div class="elementor-background-overlay"></div>
-	<div class="elementor-container elementor-column-gap-no">
-		<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-ae2dba2" data-id="ae2dba2" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-c001933 elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="c001933" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div data-dce-background-color="#F3F1EFED" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-00b0e4a" data-id="00b0e4a" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
-				<div class="elementor-background-overlay"></div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-5963b2e inv-atas elementor-widget elementor-widget-heading" data-id="5963b2e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-					<div class="elementor-widget-container">
-						<h2 class="elementor-heading-title elementor-size-default">Wishes</h2>
-					</div>
+						<div data-dce-title-color="#333333" class="elementor-element elementor-element-4679a99 inv-atas elementor-widget elementor-widget-heading" data-id="4679a99" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Wedding Gift</h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-317081d inv-atas elementor-widget elementor-widget-heading" data-id="317081d" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-					<div class="elementor-widget-container">
-						<p class="elementor-heading-title elementor-size-default">Berikan doa dan ucapan terbaik untuk kami.</p>
-					</div>
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-63c1939 inv-atas elementor-widget elementor-widget-heading" data-id="63c1939" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Doa Restu Anda merupakan<br />
+karunia yang sangat berarti bagi kami.<br />
+<br />
+Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberi melalui dibawah ini.</p>				</div>
 				</div>
-				<div class="elementor-element elementor-element-9a74557 inv-zoom-in elementor-widget" data-id="9a74557" data-element_type="widget" data-widget_type="html.default" style="max-width: 440px; margin: 0 auto; padding: 0 16px;">
-					<div class="elementor-widget-container">
-						<!-- WISH CARD FORM -->
-						<div style="background: #FFFFFF; border-radius: 20px; padding: 22px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); border: 1px solid rgba(127, 150, 168, 0.25); text-align: left; margin-bottom: 24px;">
-							<form id="klikmomen_wish_form" onsubmit="event.preventDefault(); return handleWishSubmit(event);">
-								<div style="margin-bottom: 14px;">
-									<label style="font-family: 'Sora', sans-serif; font-weight: 700; font-size: 13px; color: #1E293B; display: block; margin-bottom: 6px;">Nama Lengkap</label>
-									<input 
-										type="text" 
-										id="wish_name" 
-										name="name" 
-										required 
-										value="{{ $guestName ?? ($to ?? '') }}" 
-										placeholder="Nama Anda"
-										style="width: 100%; box-sizing: border-box; padding: 10px 14px; border-radius: 12px; border: 1px solid #D1D5DB; background: #FFFFFF; color: #1F2937; font-size: 13px; font-family: 'Sora', sans-serif; outline: none; transition: border-color 0.2s;"
-										onfocus="this.style.borderColor='#7F96A8'; this.style.boxShadow='0 0 0 3px rgba(127,150,168,0.2)';"
-										onblur="this.style.borderColor='#D1D5DB'; this.style.boxShadow='none';"
-									>
-								</div>
-
-								<div style="margin-bottom: 14px;">
-									<label style="font-family: 'Sora', sans-serif; font-weight: 700; font-size: 13px; color: #1E293B; display: block; margin-bottom: 6px;">Konfirmasi Kehadiran</label>
-									<select 
-										id="wish_attendance" 
-										name="attendance"
-										style="width: 100%; box-sizing: border-box; padding: 10px 14px; border-radius: 12px; border: 1px solid #D1D5DB; background: #FFFFFF; color: #1F2937; font-size: 13px; font-family: 'Sora', sans-serif; outline: none; transition: border-color 0.2s; cursor: pointer;"
-										onfocus="this.style.borderColor='#7F96A8'; this.style.boxShadow='0 0 0 3px rgba(127,150,168,0.2)';"
-										onblur="this.style.borderColor='#D1D5DB'; this.style.boxShadow='none';"
-									>
-										<option value="Hadir (1 Orang)">Hadir (1 Orang)</option>
-										<option value="Hadir (2 Orang)">Hadir (2 Orang)</option>
-										<option value="Masih Ragu">Masih Ragu</option>
-										<option value="Tidak Hadir">Mohon Maaf, Tidak Bisa Hadir</option>
-									</select>
-								</div>
-
-								<div style="margin-bottom: 18px;">
-									<label style="font-family: 'Sora', sans-serif; font-weight: 700; font-size: 13px; color: #1E293B; display: block; margin-bottom: 6px;">Pesan &amp; Doa Restu</label>
-									<textarea 
-										id="wish_message" 
-										name="message" 
-										rows="3" 
-										required 
-										placeholder="Tuliskan ucapan selamat &amp; doa restu Anda..."
-										style="width: 100%; box-sizing: border-box; padding: 10px 14px; border-radius: 12px; border: 1px solid #D1D5DB; background: #FFFFFF; color: #1F2937; font-size: 13px; font-family: 'Sora', sans-serif; outline: none; resize: vertical; min-height: 80px; transition: border-color 0.2s;"
-										onfocus="this.style.borderColor='#7F96A8'; this.style.boxShadow='0 0 0 3px rgba(127,150,168,0.2)';"
-										onblur="this.style.borderColor='#D1D5DB'; this.style.boxShadow='none';"
-									></textarea>
-								</div>
-
-								<button 
-									type="button" 
-									onclick="handleWishSubmit(event)"
-									id="wish_btn_submit"
-									style="width: 100%; padding: 13px 18px; border-radius: 14px; background: #7F96A8; color: #FFFFFF; font-family: 'Sora', sans-serif; font-weight: 700; font-size: 13px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(127,150,168,0.35); transition: all 0.2s;"
-									onmouseover="this.style.opacity='0.92'; this.style.transform='translateY(-1px)';"
-									onmouseout="this.style.opacity='1'; this.style.transform='translateY(0)';"
-								>
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(45deg); margin-top: -2px;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-									<span>Kirim Ucapan &amp; Konfirmasi</span>
-								</button>
-							</form>
-						</div>
-
-						<!-- WISHES LIST STREAM -->
-						<div id="wishes_stream_container" style="max-height: 380px; overflow-y: auto; padding-right: 2px; display: flex; flex-direction: column; gap: 12px;">
-							@php
-								$sampleWishes = $data['sample_wishes'] ?? [
-									[
-										'name' => 'Dimas & Anisa',
-										'attendance' => 'Hadir (2 Orang)',
-										'message' => "Selamat menempuh hidup baru " . ($data['bride']['nickname'] ?? 'Putri') . " & " . ($data['groom']['nickname'] ?? 'Andika') . "! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Bahagia selamanya!",
-										'time' => '10 menit yang lalu'
-									],
-									[
-										'name' => 'Keluarga Bpk. Hendrawan',
-										'attendance' => 'Hadir (2 Orang)',
-										'message' => "Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fii khair. Selamat berbahagia!",
-										'time' => '30 menit yang lalu'
-									],
-									[
-										'name' => 'Sarah & Rekan Kerja',
-										'attendance' => 'Hadir (1 Orang)',
-										'message' => 'Happy wedding! Lancar sampai hari H yaa.',
-										'time' => '1 jam yang lalu'
-									]
-								];
-							@endphp
-
-							@foreach($sampleWishes as $w)
-								<div class="wish-item-card" style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); text-align: left;">
-									<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;">
-										<span style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 13.5px; color: #1E293B;">{{ $w['name'] ?? 'Tamu' }}</span>
-										<span style="background: #EEF4F8; color: #34495E; font-size: 9.5px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; font-family: 'Sora', sans-serif; white-space: nowrap;">{{ $w['attendance'] ?? $w['status'] ?? 'Hadir' }}</span>
-									</div>
-									<p style="font-size: 12px; color: #4B5563; font-style: italic; line-height: 1.55; margin: 0 0 6px; font-family: 'Sora', sans-serif;">
-										{{ $w['message'] ?? $w['msg'] ?? '' }}
-									</p>
-									<span style="font-size: 10px; color: #9CA3AF; display: block; text-align: right; font-family: 'Sora', sans-serif;">{{ $w['time'] ?? 'Baru saja' }}</span>
-								</div>
-							@endforeach
-						</div>
-					</div>
+				<div data-dce-background-color="#88775D" class="elementor-element elementor-element-e88ce79 elementor-align-center wdsdv-enabled--yes elementor-mobile-align-center inv-atas elementor-widget elementor-widget-button" data-id="e88ce79" data-element_type="widget" data-e-type="widget" id="btn_gift" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-size-sm elementor-animation-shrink" role="button">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-icon">
+				<i aria-hidden="true" class="fas fa-credit-card"></i>			</span>
+									<span class="elementor-button-text">Klik di Sini</span>
+					</span>
+					</a>
 				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section data-dce-background-overlay-color="#F5F7F8" class="elementor-section elementor-inner-section elementor-element elementor-element-0445f91 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="0445f91" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+								</div>
+				</div>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-5866f93 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="5866f93" data-element_type="section" data-e-type="section" id="sec_gift" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-a80df3c" data-id="a80df3c" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-4c12931 wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="4c12931" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-86f959e" data-id="86f959e" data-element_type="column" data-e-type="column">
+					<div data-dce-background-overlay-color="#BD682C" data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/bg-card-01-bw.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-4952275 inv-atas" data-id="4952275" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-9cc1bdb elementor-section-full_width wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="9cc1bdb" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
-						<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-906fcf5" data-id="906fcf5" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div class="elementor-background-overlay"></div>
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-45e23ce elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="45e23ce" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-c6ec5be" data-id="c6ec5be" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-10227c0 elementor-section-full_width elementor-section-height-min-height elementor-section-height-default" data-id="10227c0" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
-						<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-3acc1a9" data-id="3acc1a9" data-element_type="column" data-e-type="column">
-			<div class="elementor-widget-wrap elementor-element-populated">
-						<div class="elementor-element elementor-element-ff63a9d elementor-widget__width-auto elementor-absolute animated-slow inv-atas elementor-invisible elementor-widget elementor-widget-image" data-id="ff63a9d" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:1000}" data-widget_type="image.default">
+						<div data-dce-advanced-background-color="#FFFFFF" class="elementor-element elementor-element-5a6da4b elementor-widget__width-auto ha-has-bg-overlay elementor-widget elementor-widget-image" data-id="5a6da4b" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-1.png" class="attachment-full size-full wp-image-8036" alt="" />															</div>
+															<img loading="lazy" width="153" height="50" src="/themes/3d-motion-27/uploads/2024/10/bca.png" class="attachment-full size-full wp-image-6268" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/bca.png 153w, /themes/3d-motion-27/uploads/2024/10/bca-150x50.png 150w" sizes="(max-width: 153px) 100vw, 153px" />															</div>
 				</div>
-				<div class="elementor-element elementor-element-184a798 elementor-widget__width-auto elementor-absolute animated-slow inv-atas elementor-invisible elementor-widget elementor-widget-image" data-id="184a798" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:1000}" data-widget_type="image.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-3525c24 content elementor-widget elementor-widget-heading" data-id="3525c24" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-															<img fetchpriority="high" width="500" height="600" src="/themes/3d-motion-05/uploads/2024/10/Garden-05-Couple-2.png" class="attachment-full size-full wp-image-8037" alt="" />															</div>
+					<p class="elementor-heading-title elementor-size-default">No Rekening</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-b6f5a5b content elementor-widget elementor-widget-heading" data-id="b6f5a5b" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">{{ $data['bank_accounts'][0]['account_number'] ?? '123123123' }}</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-fd59a0f content elementor-widget elementor-widget-heading" data-id="fd59a0f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Atas Nama</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-e5f2cf5 content elementor-widget elementor-widget-heading" data-id="e5f2cf5" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Putri Cantika Sari</p>				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-d335432" data-id="d335432" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-5f00010 elementor-widget elementor-widget-image" data-id="5f00010" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" width="100" height="74" src="/themes/3d-motion-27/uploads/2024/10/chip-ilustration.png" class="attachment-full size-full wp-image-6335" alt="" />															</div>
+				</div>
+				<div data-dce-background-color="#FFFFFF" class="elementor-element elementor-element-d00f976 elementor-align-center elementor-widget__width-auto content elementor-widget elementor-widget-dce-copy-to-clipboard" data-id="d00f976" data-element_type="widget" data-e-type="widget" data-settings="{&quot;animation_on_copy&quot;:&quot;shake-animation&quot;,&quot;dce_clipboard_type&quot;:&quot;text&quot;}" data-widget_type="dce-copy-to-clipboard.default">
+				<div class="elementor-widget-container">
+					
+		<div class="dce-clipboard-wrapper dce-clipboard-wrapper-text">
+					<button class="elementor-button elementor-size-sm elementor-animation-shrink" type="button" id="dce-clipboard-btn-1" data-clipboard-text="{{ $data['bank_accounts'][0]['account_number'] ?? '123123123' }}" onclick="copyGiftText('{{ $data['bank_accounts'][0]['account_number'] ?? '123123123' }}', 'Nomor Rekening')">
+			<span class="elementor-button-content-wrapper dce-flexbox">
+									<span class="elementor-button-icon elementor-align-icon-left">
+						<i aria-hidden="true" class="far fa-copy"></i>					</span>
+								<span class="elementor-button-text">Salin</span>
+			</span>
+		</button>
+				</div>
+						</div>
 				</div>
 					</div>
 		</div>
 					</div>
 		</section>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-33f718e elementor-section-full_width elementor-section-height-min-height elementor-section-height-default" data-id="33f718e" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
-						<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-8734b90 inv-zoom-out" style="background-image: url('{{ $closingPhotoUrl }}') !important; background-size: cover !important; background-position: center !important;" data-id="8734b90" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7671,&quot;url&quot;:&quot;{{ $closingPhotoUrl }}&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
+					</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-4506cb1 wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="4506cb1" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-default">
+					<div data-dce-background-overlay-color="#BD682C" data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/bg-card-01-bw.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-2fd3a85 inv-atas" data-id="2fd3a85" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<div class="elementor-element elementor-element-a1483fb elementor-widget elementor-widget-spacer" data-id="a1483fb" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
+					<div class="elementor-background-overlay"></div>
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-4cc8304 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="4cc8304" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-6291dc0" data-id="6291dc0" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div data-dce-advanced-background-color="#FFFFFF" class="elementor-element elementor-element-198808f elementor-widget__width-auto ha-has-bg-overlay elementor-widget elementor-widget-image" data-id="198808f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" width="153" height="50" src="/themes/3d-motion-27/uploads/2024/10/bri.png" class="attachment-full size-full wp-image-6272" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/bri.png 153w, /themes/3d-motion-27/uploads/2024/10/bri-150x50.png 150w" sizes="(max-width: 153px) 100vw, 153px" />															</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-eb59065 content elementor-widget elementor-widget-heading" data-id="eb59065" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">No Rekening</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-94016cc content elementor-widget elementor-widget-heading" data-id="94016cc" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">{{ $data['bank_accounts'][1]['account_number'] ?? '321321321' }}</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-0791d6f content elementor-widget elementor-widget-heading" data-id="0791d6f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Atas Nama</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-ddd72c9 content elementor-widget elementor-widget-heading" data-id="ddd72c9" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Putra Andika Pratama</p>				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-bdcd608" data-id="bdcd608" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-7afe718 elementor-widget elementor-widget-image" data-id="7afe718" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" width="100" height="74" src="/themes/3d-motion-27/uploads/2024/10/chip-ilustration.png" class="attachment-full size-full wp-image-6335" alt="" />															</div>
+				</div>
+				<div data-dce-background-color="#FFFFFF" class="elementor-element elementor-element-0f2aa10 elementor-align-center elementor-widget__width-auto content elementor-widget elementor-widget-dce-copy-to-clipboard" data-id="0f2aa10" data-element_type="widget" data-e-type="widget" data-settings="{&quot;animation_on_copy&quot;:&quot;shake-animation&quot;,&quot;dce_clipboard_type&quot;:&quot;text&quot;}" data-widget_type="dce-copy-to-clipboard.default">
+				<div class="elementor-widget-container">
+					
+		<div class="dce-clipboard-wrapper dce-clipboard-wrapper-text">
+					<button class="elementor-button elementor-size-sm elementor-animation-shrink" type="button" id="dce-clipboard-btn-2" data-clipboard-text="{{ $data['bank_accounts'][1]['account_number'] ?? '321321321' }}" onclick="copyGiftText('{{ $data['bank_accounts'][1]['account_number'] ?? '321321321' }}', 'Nomor Rekening')">
+			<span class="elementor-button-content-wrapper dce-flexbox">
+									<span class="elementor-button-icon elementor-align-icon-left">
+						<i aria-hidden="true" class="far fa-copy"></i>					</span>
+								<span class="elementor-button-text">Salin</span>
+			</span>
+		</button>
+				</div>
+						</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-1abf2d7 wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="1abf2d7" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-default">
+					<div data-dce-background-overlay-color="#BD682C" data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/bg-card-01-bw.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-d05ed24 inv-atas" data-id="d05ed24" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+					<div class="elementor-background-overlay"></div>
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-c609474 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="c609474" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-50e4668" data-id="50e4668" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div data-dce-advanced-background-color="#FFFFFF" class="elementor-element elementor-element-89def1a elementor-widget__width-auto ha-has-bg-overlay elementor-widget elementor-widget-image" data-id="89def1a" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" width="153" height="50" src="/themes/3d-motion-27/uploads/2024/10/bni.png" class="attachment-full size-full wp-image-6271" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/bni.png 153w, /themes/3d-motion-27/uploads/2024/10/bni-150x50.png 150w" sizes="(max-width: 153px) 100vw, 153px" />															</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-ea12ecc content elementor-widget elementor-widget-heading" data-id="ea12ecc" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">No Rekening</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-f4b4bd2 content elementor-widget elementor-widget-heading" data-id="f4b4bd2" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">123111222</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-2d91866 content elementor-widget elementor-widget-heading" data-id="2d91866" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Atas Nama</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-c3c71a3 content elementor-widget elementor-widget-heading" data-id="c3c71a3" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Putra Andika Pratama</p>				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-caf5aca" data-id="caf5aca" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-49e57b1 elementor-widget elementor-widget-image" data-id="49e57b1" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" width="100" height="74" src="/themes/3d-motion-27/uploads/2024/10/chip-ilustration.png" class="attachment-full size-full wp-image-6335" alt="" />															</div>
+				</div>
+				<div data-dce-background-color="#FFFFFF" class="elementor-element elementor-element-2a876c9 elementor-align-center elementor-widget__width-auto content elementor-widget elementor-widget-dce-copy-to-clipboard" data-id="2a876c9" data-element_type="widget" data-e-type="widget" data-settings="{&quot;animation_on_copy&quot;:&quot;shake-animation&quot;,&quot;dce_clipboard_type&quot;:&quot;text&quot;}" data-widget_type="dce-copy-to-clipboard.default">
+				<div class="elementor-widget-container">
+					
+		<div class="dce-clipboard-wrapper dce-clipboard-wrapper-text">
+					<button class="elementor-button elementor-size-sm elementor-animation-shrink" type="button" id="dce-clipboard-btn-3" data-clipboard-text="123111222">
+			<span class="elementor-button-content-wrapper dce-flexbox">
+									<span class="elementor-button-icon elementor-align-icon-left">
+						<i aria-hidden="true" class="far fa-copy"></i>					</span>
+								<span class="elementor-button-text">Salin</span>
+			</span>
+		</button>
+				</div>
+						</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-480dfbe wdsdv-enabled--yes elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="480dfbe" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-default">
+					<div data-dce-background-overlay-color="#BD682C" data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/bg-card-01-bw.jpg" class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-8e64a64 inv-atas" data-id="8e64a64" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+					<div class="elementor-background-overlay"></div>
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-efceae5 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="efceae5" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-edefcd1" data-id="edefcd1" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-159c924 content elementor-widget elementor-widget-heading" data-id="159c924" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Kado</h2>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-f84ae1a content elementor-widget elementor-widget-heading" data-id="f84ae1a" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Nama Penerima</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-412fff5 content elementor-widget elementor-widget-heading" data-id="412fff5" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Putri / Putra</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-cd30a4e content elementor-widget elementor-widget-heading" data-id="cd30a4e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">( +6285150000715 )</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-d88376a content elementor-widget elementor-widget-heading" data-id="d88376a" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Alamat Penerima</p>				</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-2e5f907 content elementor-widget elementor-widget-heading" data-id="2e5f907" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Jl. Raya Cilandak KKO No.27<br />
+Jakarta Selatan</p>				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-29c7a2f" data-id="29c7a2f" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-ab81d86 elementor-view-default elementor-widget elementor-widget-icon" data-id="ab81d86" data-element_type="widget" data-e-type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<i aria-hidden="true" class="fas fa-gift"></i>			</div>
+		</div>
+						</div>
+				</div>
+				<div data-dce-background-color="#FFFFFF" class="elementor-element elementor-element-c690e5b elementor-align-center elementor-widget__width-auto content elementor-widget elementor-widget-dce-copy-to-clipboard" data-id="c690e5b" data-element_type="widget" data-e-type="widget" data-settings="{&quot;dce_clipboard_type&quot;:&quot;textarea&quot;,&quot;animation_on_copy&quot;:&quot;shake-animation&quot;}" data-widget_type="dce-copy-to-clipboard.default">
+				<div class="elementor-widget-container">
+					
+		<div class="dce-clipboard-wrapper dce-clipboard-wrapper-textarea">
+					<button class="elementor-button elementor-size-sm elementor-animation-shrink" type="button" id="dce-clipboard-btn-4" data-clipboard-text="Jl. Raya Cilandak KKO No.27&lt;br /&gt;
+Jakarta Selatan">
+			<span class="elementor-button-content-wrapper dce-flexbox">
+									<span class="elementor-button-icon elementor-align-icon-left">
+						<i aria-hidden="true" class="far fa-copy"></i>					</span>
+								<span class="elementor-button-text">Salin</span>
+			</span>
+		</button>
+				</div>
+						</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+					</div>
+		</section>
+				<div class="elementor-element elementor-element-4d69cc0 elementor-widget elementor-widget-html" data-id="4d69cc0" data-element_type="widget" data-e-type="widget" data-widget_type="html.default">
+				<div class="elementor-widget-container">
+					<script>
+var btn_gift = document.getElementById('btn_gift');
+var sec_gift = document.getElementById("sec_gift");
+
+btn_gift.onclick = function(){   
+    if (sec_gift.style.display === "block") {
+        $("#sec_gift").slideUp(1500, 'easeInOutCubic');
+    } 
+    else{
+        $("#sec_gift").slideDown(1500, 'easeInOutCubic');
+         $("#btn_gift").animate({ opacity: 0 }, 1000, 'easeInOutCirc');
+         window.setTimeout(function(){
+          btn_gift.style.display = 'none';
+        },2000);
+    }
+};
+</script>				</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section data-dce-background-overlay-color="#F3F1EF" class="elementor-section elementor-inner-section elementor-element elementor-element-731caf7 elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="731caf7" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-ae2dba2" data-id="ae2dba2" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+					<div class="elementor-background-overlay"></div>
+						<div data-dce-title-color="#333333" class="elementor-element elementor-element-5963b2e inv-atas elementor-widget elementor-widget-heading" data-id="5963b2e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Wishes</h2>				</div>
+				</div>
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-317081d inv-atas elementor-widget elementor-widget-heading" data-id="317081d" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Berikan doa dan ucapan terbaik untuk kami.</p>				</div>
+				</div>
+				<!-- KLIKMOMEN DYNAMIC WISHES & RSVP FORM -->
+<div class="klikmomen-wishes-section" style="max-width: 440px; margin: 0 auto; padding: 0 16px;">
+    <div style="background: #FFFFFF; border-radius: 20px; padding: 22px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); border: 1px solid rgba(182, 126, 34, 0.25); text-align: left; margin-bottom: 24px;">
+        <form id="klikmomen_wish_form" onsubmit="event.preventDefault(); return handleWishSubmit(event);">
+            <div style="margin-bottom: 14px;">
+                <label style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 13px; color: #1E293B; display: block; margin-bottom: 6px;">Nama Lengkap</label>
+                <input 
+                    type="text" 
+                    id="wish_name" 
+                    name="name" 
+                    required 
+                    value="{{ $guestName ?? ($to ?? '') }}" 
+                    placeholder="Nama Anda"
+                    style="width: 100%; box-sizing: border-box; padding: 10px 14px; border-radius: 12px; border: 1px solid #D1D5DB; background: #FFFFFF; color: #1F2937; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; transition: border-color 0.2s;"
+                >
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 13px; color: #1E293B; display: block; margin-bottom: 6px;">Konfirmasi Kehadiran</label>
+                <select 
+                    id="wish_attendance" 
+                    name="attendance"
+                    style="width: 100%; box-sizing: border-box; padding: 10px 14px; border-radius: 12px; border: 1px solid #D1D5DB; background: #FFFFFF; color: #1F2937; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; transition: border-color 0.2s; cursor: pointer;"
+                >
+                    <option value="Hadir (1 Orang)">Hadir (1 Orang)</option>
+                    <option value="Hadir (2 Orang)">Hadir (2 Orang)</option>
+                    <option value="Masih Ragu">Masih Ragu</option>
+                    <option value="Tidak Hadir">Mohon Maaf, Tidak Bisa Hadir</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <label style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 13px; color: #1E293B; display: block; margin-bottom: 6px;">Pesan &amp; Doa Restu</label>
+                <textarea 
+                    id="wish_message" 
+                    name="message" 
+                    rows="3" 
+                    required 
+                    placeholder="Tuliskan ucapan selamat &amp; doa restu Anda..."
+                    style="width: 100%; box-sizing: border-box; padding: 10px 14px; border-radius: 12px; border: 1px solid #D1D5DB; background: #FFFFFF; color: #1F2937; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; resize: vertical; min-height: 80px;"
+                ></textarea>
+            </div>
+
+            <button 
+                type="button" 
+                onclick="handleWishSubmit(event)"
+                id="wish_btn_submit"
+                style="width: 100%; padding: 13px 18px; border-radius: 14px; background: #B67E22; color: #FFFFFF; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 13px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(182, 126, 34, 0.35); transition: all 0.2s;"
+            >
+                <span>Kirim Ucapan &amp; Konfirmasi</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- WISHES LIST STREAM -->
+    <div id="wishes_stream_container" style="max-height: 380px; overflow-y: auto; padding-right: 2px; display: flex; flex-direction: column; gap: 12px;">
+        @php
+            $sampleWishes = $data['sample_wishes'] ?? [
+                [
+                    'name' => 'Dimas & Anisa',
+                    'attendance' => 'Hadir (2 Orang)',
+                    'message' => "Selamat menempuh hidup baru " . ($data['bride']['nickname'] ?? 'Putri') . " & " . ($data['groom']['nickname'] ?? 'Andika') . "! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Bahagia selamanya!",
+                    'time' => '10 menit yang lalu'
+                ],
+                [
+                    'name' => 'Keluarga Bpk. Hendrawan',
+                    'attendance' => 'Hadir (2 Orang)',
+                    'message' => "Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fii khair. Selamat berbahagia!",
+                    'time' => '30 menit yang lalu'
+                ],
+                [
+                    'name' => 'Sarah & Rekan Kerja',
+                    'attendance' => 'Hadir (1 Orang)',
+                    'message' => 'Happy wedding! Lancar sampai hari H yaa.',
+                    'time' => '1 jam yang lalu'
+                ]
+            ];
+        @endphp
+
+        @foreach($sampleWishes as $w)
+            <div class="wish-item-card" style="background: #FFFFFF; border-radius: 16px; border: 1px solid #ECDDCB; padding: 14px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: left;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;">
+                    <span style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 14px; color: #1E293B;">{{ $w['name'] ?? '' }}</span>
+                    @php
+                        $isNotComing = str_contains($w['attendance'] ?? '', 'Tidak');
+                        $badgeBg = $isNotComing ? '#FED7D7' : '#F5E6D3';
+                        $badgeCol = $isNotComing ? '#9B2C2C' : '#5B1A21';
+                    @endphp
+                    <span style="background: {{ $badgeBg }}; color: {{ $badgeCol }}; font-size: 9.5px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; font-family: 'Plus Jakarta Sans', sans-serif; white-space: nowrap;">
+                        {{ $w['attendance'] ?? 'Hadir' }}
+                    </span>
+                </div>
+                <p style="font-size: 12px; color: #4B5563; font-style: italic; line-height: 1.55; margin: 0 0 6px; font-family: 'Plus Jakarta Sans', sans-serif;">{{ $w['message'] ?? ($w['msg'] ?? '') }}</p>
+                <span style="font-size: 10px; color: #9CA3AF; display: block; text-align: right; font-family: 'Plus Jakarta Sans', sans-serif;">{{ $w['time'] ?? 'Baru saja' }}</span>
+            </div>
+        @endforeach
+    </div>
+</div>
+				<div class="elementor-element elementor-element-07e7b4e elementor-widget__width-auto elementor-absolute animated-slow inv-kiri e-transform elementor-invisible elementor-widget elementor-widget-image" data-id="07e7b4e" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownLeft&quot;,&quot;_animation_delay&quot;:500,&quot;_transform_flipX_effect&quot;:&quot;transform&quot;}" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img width="500" height="600" src="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png" class="attachment-full size-full wp-image-8667" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png 500w, /themes/3d-motion-27/uploads/2024/10/asset-motion-07-min-250x300.png 250w" sizes="(max-width: 500px) 100vw, 500px" />															</div>
+				</div>
+				<div class="elementor-element elementor-element-e09dba3 elementor-widget__width-auto elementor-absolute animated-slow inv-kanan elementor-invisible elementor-widget elementor-widget-image" data-id="e09dba3" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;,&quot;_animation&quot;:&quot;rotateInDownRight&quot;,&quot;_animation_delay&quot;:500}" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img width="500" height="600" src="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png" class="attachment-full size-full wp-image-8667" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/asset-motion-07-min.png 500w, /themes/3d-motion-27/uploads/2024/10/asset-motion-07-min-250x300.png 250w" sizes="(max-width: 500px) 100vw, 500px" />															</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section data-dce-background-overlay-color="#FFFBF4DE" class="elementor-section elementor-inner-section elementor-element elementor-element-7db1188 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="7db1188" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-efdd1b3" data-id="efdd1b3" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-b883545 elementor-section-full_width wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="b883545" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-7de9805" data-id="7de9805" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-e9d3965 elementor-section-full_width elementor-section-height-min-height elementor-section-height-default" data-id="e9d3965" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-afa1207" data-id="afa1207" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap">
+							</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-1476a2a elementor-section-full_width elementor-section-height-min-height elementor-section-height-default" data-id="1476a2a" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-54aacfd inv-zoom-out" data-id="54aacfd" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_slide_duration&quot;:1000,&quot;background_slideshow_transition_duration&quot;:3000,&quot;background_slideshow_ken_burns&quot;:&quot;yes&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:7671,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-7.jpeg&quot;},{&quot;id&quot;:7672,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-8.jpeg&quot;},{&quot;id&quot;:7673,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-9.jpeg&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_ken_burns_zoom_direction&quot;:&quot;in&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-bfef33f elementor-widget elementor-widget-spacer" data-id="bfef33f" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">
 							<div class="elementor-spacer">
 			<div class="elementor-spacer-inner"></div>
@@ -2010,44 +2281,832 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 					</div>
 		</section>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-b214edc inv-atas elementor-widget elementor-widget-heading" data-id="b214edc" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-b85deaa inv-atas elementor-widget elementor-widget-heading" data-id="b85deaa" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">Terima Kasih</h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-07f424c inv-atas elementor-widget elementor-widget-heading" data-id="07f424c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-e5c0d1c inv-atas elementor-widget elementor-widget-heading" data-id="e5c0d1c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<p class="elementor-heading-title elementor-size-default">Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir dan memberikan do’a restu kepada kami.<br />
 <br />
 <b>Wassalamu’alaikum warahmatullahi wabarakatuh</b></p>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-010a456 inv-atas elementor-widget elementor-widget-heading" data-id="010a456" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#333333" class="elementor-element elementor-element-1eac028 inv-atas elementor-widget elementor-widget-heading" data-id="1eac028" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<p class="elementor-heading-title elementor-size-default">Kami Yang Berbahagia</p>				</div>
 				</div>
-				<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-4ca0f89 wdsdv-enabled--yes inv-atas elementor-widget elementor-widget-heading" data-id="4ca0f89" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div data-dce-title-color="#997949" class="elementor-element elementor-element-f9bd8e0 wdsdv-enabled--yes inv-atas elementor-widget elementor-widget-heading" data-id="f9bd8e0" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['bride']['nickname'] ?? 'Putri' }} &amp; {{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default" data-preview="couple-nickname">{{ $data['bride']['nickname'] ?? 'Putri' }} &amp; {{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
 				</div>
 					</div>
 		</div>
 					</div>
 		</section>
-				<section data-dce-background-color="#FAFDF9" style="background-color: #FAFDF9 !important; border-top: 1px solid #E2E8F0; padding: 48px 16px 40px;" class="elementor-section elementor-inner-section elementor-element elementor-element-cc953ce elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="cc953ce" data-element_type="section" data-e-type="section">
-    <div class="elementor-container elementor-column-gap-default">
-        <div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-1ce1d4d" data-id="1ce1d4d" data-element_type="column" data-e-type="column">
-            <div class="klikmomen-signature-footer" style="text-align: center; max-width: 420px; margin: 0 auto; padding: 4px 12px; font-family: 'Sora', sans-serif;">
-							<div style="font-size: 11px; color: #7B8F82; display: flex; align-items: center; justify-content: center; gap: 7px;">
-								<a href="{{ route('themes.catalog') }}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit; transition: opacity 0.2s;">
-									<span style="font-size: 11px; color: #4A6354;">
-										Platform Undangan Digital oleh KlikMomen.id
-									</span>
-								</a>
-							</div>
+				<section data-dce-background-color="#744C2F" class="elementor-section elementor-inner-section elementor-element elementor-element-cc953ce elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="cc953ce" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-eba9903" data-id="eba9903" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-3c20de0 elementor-widget elementor-widget-shortcode" data-id="3c20de0" data-element_type="widget" data-e-type="widget" data-widget_type="shortcode.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-shortcode">		<footer data-elementor-type="footer" data-elementor-id="370686" class="elementor elementor-370686 elementor-location-single" data-elementor-settings="{&quot;ha_cmc_init_switcher&quot;:&quot;no&quot;}" data-elementor-post-type="elementor_library">
+					<section class="elementor-section elementor-top-section elementor-element elementor-element-aa6fb47 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="aa6fb47" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-d2bd4c8" data-id="d2bd4c8" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-2ce6c4c elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="2ce6c4c" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-07d627f" data-id="07d627f" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-0f864e4 elementor-widget__width-auto elementor-widget elementor-widget-image" data-id="0f864e4" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" width="512" height="512" src="/themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple.png" class="attachment-full size-full wp-image-5541" alt="" srcset="/themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple.png 512w, /themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-150x150.png 150w, /themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-270x270.png 270w, /themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-192x192.png 192w, /themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-180x180.png 180w, /themes/3d-motion-27/uploads/2024/10/cropped-cropped-icon-invisimple-32x32.png 32w" sizes="(max-width: 512px) 100vw, 512px" />															</div>
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-2bb9a84 elementor-widget__width-auto elementor-widget elementor-widget-heading" data-id="2bb9a84" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">invisimple.id</h2>				</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				<div data-dce-text-color="#FFFFFF" class="elementor-element elementor-element-41defac elementor-icon-list--layout-inline elementor-align-center elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="41defac" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items elementor-inline-items">
+							<li class="elementor-icon-list-item elementor-inline-item">
+											<a href="https://www.instagram.com/invisimple.id/" target="_blank" rel="nofollow">
+
+												<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fab fa-instagram"></i>						</span>
+										<span class="elementor-icon-list-text"></span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item elementor-inline-item">
+											<a href="https://api.whatsapp.com/send/?phone=6285150000715&#038;text=Halo,+saya+ingin+tanya+mengenai+Undangan+Website,+saya+mendapatkan+WA+dari+undangan+yang+telah+disebar." target="_blank" rel="nofollow">
+
+												<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fab fa-whatsapp"></i>						</span>
+										<span class="elementor-icon-list-text"></span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item elementor-inline-item">
+											<a href="https://www.tiktok.com/@invisimple.id" target="_blank" rel="nofollow">
+
+												<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fab fa-tiktok"></i>						</span>
+										<span class="elementor-icon-list-text"></span>
+											</a>
+									</li>
+						</ul>
 						</div>
-        </div>
-    </div>
-</section>
-<section class="elementor-section elementor-inner-section elementor-element elementor-element-651aeac elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="651aeac" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
+				</div>
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-6883180 elementor-widget elementor-widget-heading" data-id="6883180" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><a href="https://api.whatsapp.com/send/?phone=6285150000715&#038;text=Halo,+saya+ingin+tanya+mengenai+Undangan+Website,+saya+mendapatkan+WA+dari+undangan+yang+telah+disebar." target="_blank" rel="nofollow">HUBUNGI KAMI</a></h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-360632b elementor-view-stacked elementor-widget__width-auto elementor-fixed elementor-hidden-desktop elementor-hidden-tablet elementor-hidden-mobile elementor-shape-circle elementor-widget elementor-widget-icon" data-id="360632b" data-element_type="widget" data-e-type="widget" id="999" data-settings="{&quot;_position&quot;:&quot;fixed&quot;}" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-icon-wrapper">
+			<a class="elementor-icon elementor-animation-shrink" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjkxMzgxNyIsInRvZ2dsZSI6ZmFsc2V9">
+			<i aria-hidden="true" class="fas fa-qrcode"></i>			</a>
+		</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-73703ab elementor-absolute wdsdv-enabled--yes elementor-view-default elementor-shape-circle elementor-widget elementor-widget-ams-audio" data-id="73703ab" data-element_type="widget" data-e-type="widget" data-settings="{&quot;audio_loop&quot;:&quot;yes&quot;,&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="ams-audio.default">
+				<div class="elementor-widget-container">
+					
+        <style>
+            #wds-audio-container {
+                transition: transform .75s ease-in-out;
+            }
+
+            #mute-sound {
+                -webkit-animation: rotating 8s linear infinite;
+            }
+
+            #mute-sound {
+                -moz-animation: rotating 8s linear infinite;
+            }
+
+            #mute-sound {
+                -ms-animation: rotating 8s linear infinite;
+            }
+
+            #mute-sound {
+                -o-animation: rotating 8s linear infinite;
+            }
+
+            #mute-sound {
+                animation: rotating 8s linear infinite;
+            }
+
+            @keyframes rotating {
+                from {
+                    -ms-transform: rotate(0deg);
+                    -moz-transform: rotate(0deg);
+                    -webkit-transform: rotate(0deg);
+                    -o-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    -ms-transform: rotate(360deg);
+                    -moz-transform: rotate(360deg);
+                    -webkit-transform: rotate(360deg);
+                    -o-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+            [class~=slide-right] {
+                transform: translateX(150%);
+            }
+
+            [class~=slide-left] {
+                transform: translateX(0);
+            }
+        </style>
+
+        
+            <div id="wds-audio-container" class="wds-audio-box" style="position:fixed;z-index:50;bottom:0;right:0;">
+
+                
+                                        
+                    <audio id="song" loop>
+                        <source src="/themes/3d-motion-27/uploads/2024/10/Resepsi-Nurhana.mp3" type="audio/mp3">
+                    </audio>
+
+                
+                <div class="elementor-icon-wrapper" id="unmute-sound" style="display: block; line-height: 0;">
+                    <div class="elementor-icon" style="cursor: pointer;">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 45.75 45.75"><defs><style>.b088c895-30ef-4b38-8bef-465c79cceef2{stroke:#000;stroke-miterlimit:10;stroke-width:0.25px;fill:url(#add51f77-6c43-4e92-98c1-48c56afe77db);}.a95d47f6-75cd-4161-8b64-9641bbc2a22b{fill:url(#fe3aecdf-9a06-4e57-bc62-aff2babc5340);}.ad4c80e8-1f3e-4ae5-bd8f-56eead1a3d35{fill:#fff;fill-rule:evenodd;}</style><linearGradient id="add51f77-6c43-4e92-98c1-48c56afe77db" x1="0.13" y1="22.87" x2="50.96" y2="22.87" gradientUnits="userSpaceOnUse"><stop offset="0.09" stop-color="#0c0c0c"></stop><stop offset="0.17" stop-color="#101010"></stop><stop offset="0.26" stop-color="#1d1e1e"></stop><stop offset="0.35" stop-color="#313434"></stop><stop offset="0.44" stop-color="#4b4f4f"></stop><stop offset="0.54" stop-color="#333636"></stop><stop offset="0.68" stop-color="#151616"></stop><stop offset="0.76" stop-color="#0a0a0a"></stop></linearGradient><linearGradient id="fe3aecdf-9a06-4e57-bc62-aff2babc5340" x1="12.8" y1="27.1" x2="33.91" y2="18.24" gradientUnits="userSpaceOnUse"><stop offset="0.46" stop-color="#00928b"></stop><stop offset="0.77" stop-color="#00736d"></stop><stop offset="1" stop-color="#00625d"></stop></linearGradient></defs><title>Asset 2</title><g id="a0582147-efb1-4ecf-91cf-63f6669d9ac9" data-name="Layer 2"><g id="ae69d7be-e777-4282-9194-3cadb6813425" data-name="Layer 1"><circle class="b088c895-30ef-4b38-8bef-465c79cceef2" cx="22.87" cy="22.87" r="22.75"></circle><circle class="a95d47f6-75cd-4161-8b64-9641bbc2a22b" cx="22.87" cy="22.87" r="11.21"></circle><path class="ad4c80e8-1f3e-4ae5-bd8f-56eead1a3d35" d="M20.16,16A1.27,1.27,0,1,1,18.9,17.3,1.27,1.27,0,0,1,20.16,16Zm1.27,13.25A5.41,5.41,0,0,1,18.9,24.7V19.29h0a2.51,2.51,0,0,1,2.5,2.5v7.5Z"></path><path class="ad4c80e8-1f3e-4ae5-bd8f-56eead1a3d35" d="M25.58,16.46a1.27,1.27,0,1,1-1.26,1.26,1.26,1.26,0,0,1,1.26-1.26Zm1.27,13.25a5.42,5.42,0,0,1-2.53-4.59V19.7h0a2.51,2.51,0,0,1,2.5,2.5v7.51Z"></path></g></g></svg>                    </div>
+                </div>
+
+                <div class="elementor-icon-wrapper" id="mute-sound" style="display: none; line-height: 0;">
+                    <div class="elementor-icon" style="cursor: pointer;">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="a23e99a7-4f9a-4212-82bf-846542e15be3" data-name="Layer 1" viewBox="0 0 45.74686 45.74686"><defs><style>      .e6b615f0-3a34-4966-9b0f-fa8f36adb2f9 {        stroke: #000;        stroke-miterlimit: 10;        stroke-width: 0.25px;        fill: url(#eb30a15e-de7f-402d-8331-fcf7dede9ed7);      }      .a9172555-7ee9-4b9b-b7d7-58b349085bf6 {        fill: url(#f86929c6-8c25-4754-a222-5e6d3ff0148a);      }      .ec20c653-b043-416a-a11f-32db94110313 {        fill: #fff;      }    </style><linearGradient id="eb30a15e-de7f-402d-8331-fcf7dede9ed7" x1="0.125" y1="25.12657" x2="50.95953" y2="25.12657" gradientTransform="matrix(1, 0, 0, -1, 0, 48)" gradientUnits="userSpaceOnUse"><stop offset="0.09096" stop-color="#0c0c0c"></stop><stop offset="0.17232" stop-color="#101010"></stop><stop offset="0.26163" stop-color="#1d1e1e"></stop><stop offset="0.35434" stop-color="#313434"></stop><stop offset="0.44121" stop-color="#4b4f4f"></stop><stop offset="0.53874" stop-color="#333636"></stop><stop offset="0.68102" stop-color="#151616"></stop><stop offset="0.76007" stop-color="#0a0a0a"></stop></linearGradient><linearGradient id="f86929c6-8c25-4754-a222-5e6d3ff0148a" x1="12.8031" y1="20.89854" x2="33.90705" y2="29.75903" gradientTransform="matrix(1, 0, 0, -1, 0, 48)" gradientUnits="userSpaceOnUse"><stop offset="0.45725" stop-color="#00928b"></stop><stop offset="0.77455" stop-color="#00736d"></stop><stop offset="1" stop-color="#00625d"></stop></linearGradient></defs><title>icon-audio-invisimple</title><g id="b4e59988-9b80-4119-9938-2513d707876a" data-name="b6468ed4-3545-4f34-9fb7-c938e0b9d8e9"><g id="b3b0dd33-6cd0-46df-9657-c6aceee1b551" data-name="ea460610-dc09-4185-bce2-3dccd975cfed"><circle class="e6b615f0-3a34-4966-9b0f-fa8f36adb2f9" cx="22.87343" cy="22.87343" r="22.74843"></circle><circle class="a9172555-7ee9-4b9b-b7d7-58b349085bf6" cx="22.87343" cy="22.87343" r="11.21049"></circle><path class="ec20c653-b043-416a-a11f-32db94110313" d="M20.11842,18.37793a.52877.52877,0,0,0-.33191.49076v7.16513a1.98982,1.98982,0,1,0,.9198,1.87062h.00037V27.897c.00539-.05969.00914-.11987.00914-.181s-.00375-.12127-.00914-.181V20.69581l5.87859-2.35809v5.016a1.99048,1.99048,0,1,0-.93534,3.663,2.02737,2.02737,0,0,0,1.85551-2.04222V15.97461h0a.37864.37864,0,0,0-.51961-.35142Z"></path></g></g></svg>                    </div>
+                </div>
+
+            </div>
+
+                <script type="text/javascript">
+        (function () {
+            'use strict';
+
+            var isYoutube = false;
+            var fadeDuration = 2000;
+            var song = document.getElementById('song');
+            var youtubeContainer = document.getElementById('youtube-audio');
+            var pauseTimer = null;
+            var isFirstPlay = true;
+            var loopStartTime = 0;
+            var loopEndTime = null;
+            var ytPlayer = null;
+            var ytReady = false;
+            var ytShouldPlay = true;
+
+            var songStartSetting = "";
+            var songEndSetting = "";
+            var youtubeStartSetting = "";
+            var youtubeEndSetting = "";
+            var youtubeUrl = "";
+            var audioLoopEnabled = true;
+
+            function parseTime(time) {
+                if (time === null || typeof time === 'undefined' || time === '') return 0;
+
+                time = String(time).trim();
+                if (!time) return 0;
+
+                if (/^\d+(?:\.\d+)?$/.test(time) && time.indexOf('.') === -1) {
+                    return parseFloat(time);
+                }
+
+                // Existing AMS behavior: dot may be used as a colon, e.g. 01.30.
+                time = time.replace(/\./g, ':');
+                var parts = time.split(':').map(function (part) {
+                    return Number(part);
+                });
+
+                if (parts.some(function (part) { return Number.isNaN(part); })) return 0;
+
+                if (parts.length === 2) {
+                    return (parts[0] * 60) + parts[1];
+                }
+
+                if (parts.length === 3) {
+                    return (parts[0] * 3600) + (parts[1] * 60) + parts[2];
+                }
+
+                return Number(parts[0]) || 0;
+            }
+
+            function parseTimeRange(value) {
+                if (!value) {
+                    return { start: 0, end: null };
+                }
+
+                var parts = String(value).split('-');
+                return {
+                    start: parseTime(parts[0].trim()),
+                    end: parts[1] ? parseTime(parts[1].trim()) : null
+                };
+            }
+
+            function audioActive() {
+                if (window.jQuery) {
+                    jQuery('#mute-sound').show();
+                    jQuery('#unmute-sound').hide();
+                }
+            }
+
+            function audioInactive() {
+                if (window.jQuery) {
+                    jQuery('#mute-sound').hide();
+                    jQuery('#unmute-sound').show();
+                }
+            }
+
+            // Keep these names global because AMS Video and existing pages may call them.
+            window.audioActive = audioActive;
+            window.audioInactive = audioInactive;
+
+            function waitForYouTubeAPI(callback) {
+                if (window.YT && typeof window.YT.Player === 'function') {
+                    callback();
+                    return;
+                }
+
+                if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+                    var script = document.createElement('script');
+                    script.src = 'https://www.youtube.com/iframe_api';
+                    script.async = true;
+                    script.dataset.amsYoutubeApi = '1';
+                    (document.head || document.documentElement).appendChild(script);
+                }
+
+                var attempts = 0;
+                var timer = window.setInterval(function () {
+                    attempts++;
+                    if (window.YT && typeof window.YT.Player === 'function') {
+                        window.clearInterval(timer);
+                        callback();
+                    } else if (attempts >= 200) {
+                        window.clearInterval(timer);
+                    }
+                }, 50);
+            }
+
+            function getOrigin() {
+                if (window.location && window.location.origin && /^https?:\/\//i.test(window.location.origin)) {
+                    return window.location.origin;
+                }
+                return window.location.protocol + '//' + window.location.host;
+            }
+
+            function extractVideoID(url) {
+                if (!url) return '';
+                var value = String(url).trim();
+                if (/^[a-zA-Z0-9_-]{11}$/.test(value)) return value;
+
+                var patterns = [
+                    /[?&]v=([a-zA-Z0-9_-]{11})/,
+                    /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+                    /youtube(?:-nocookie)?\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+                    /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+                    /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/
+                ];
+
+                for (var i = 0; i < patterns.length; i++) {
+                    var match = value.match(patterns[i]);
+                    if (match && match[1]) return match[1];
+                }
+                return '';
+            }
+
+            /**
+             * Elementor background videos are decorative media and should always be silent.
+             * Some Android/WebView builds can briefly restore audio after a user gesture or
+             * when Elementor rebuilds the background player. Keep them hard-muted without
+             * pausing the visual video, and do not touch normal/foreground video widgets.
+             */
+            function initElementorBackgroundVideoAudioGuard() {
+                if (window.__amsElementorBackgroundAudioGuard === true) {
+                    if (typeof window.amsMuteElementorBackgroundVideos === 'function') {
+                        window.amsMuteElementorBackgroundVideos();
+                    }
+                    return;
+                }
+
+                window.__amsElementorBackgroundAudioGuard = true;
+
+                var nativeSelector = 'video.elementor-background-video-hosted, .elementor-background-video-container video';
+                var iframeSelector = '.elementor-background-video-container iframe, .elementor-background-video-embed iframe';
+                var youtubePattern = /(?:youtube\.com|youtube-nocookie\.com)/i;
+                var vimeoPattern = /player\.vimeo\.com/i;
+                var mutationTimer = null;
+                var gestureTimer = null;
+
+                function isBackgroundNativeVideo(video) {
+                    return !!(
+                        video &&
+                        video.nodeType === 1 &&
+                        video.matches &&
+                        (
+                            video.matches('video.elementor-background-video-hosted') ||
+                            video.matches('.elementor-background-video-container video')
+                        )
+                    );
+                }
+
+                function isBackgroundIframe(iframe) {
+                    if (!iframe || iframe.nodeType !== 1 || !iframe.matches || !iframe.matches('iframe')) return false;
+                    return !!(
+                        iframe.closest('.elementor-background-video-container') ||
+                        iframe.closest('.elementor-background-video-embed')
+                    );
+                }
+
+                function muteNativeVideo(video) {
+                    if (!isBackgroundNativeVideo(video)) return;
+                    if (video.__amsApplyingBackgroundMute) return;
+
+                    video.__amsApplyingBackgroundMute = true;
+                    try {
+                        // Use both DOM properties and HTML attributes. Some Android/WebView
+                        // implementations behave differently depending on when the media is initialized.
+                        video.muted = true;
+                        video.defaultMuted = true;
+                        if (video.volume !== 0) video.volume = 0;
+                        video.setAttribute('muted', '');
+                        video.setAttribute('playsinline', '');
+                        video.setAttribute('webkit-playsinline', '');
+                    } catch (e) {}
+                    video.__amsApplyingBackgroundMute = false;
+
+                    if (video.dataset && video.dataset.amsBackgroundMuteBound !== '1') {
+                        video.dataset.amsBackgroundMuteBound = '1';
+
+                        ['loadedmetadata', 'canplay', 'play', 'playing', 'volumechange'].forEach(function (eventName) {
+                            video.addEventListener(eventName, function () {
+                                muteNativeVideo(video);
+                            }, true);
+                        });
+                    }
+                }
+
+                function muteBackgroundIframe(iframe) {
+                    if (!isBackgroundIframe(iframe)) return;
+
+                    var src = iframe.getAttribute('src') || '';
+                    var target = iframe.contentWindow;
+                    if (!target) return;
+
+                    try {
+                        if (youtubePattern.test(src)) {
+                            // YouTube IFrame Player API command format.
+                            target.postMessage(JSON.stringify({ event: 'command', func: 'mute', args: [] }), '*');
+                            target.postMessage(JSON.stringify({ event: 'command', func: 'setVolume', args: [0] }), '*');
+                        } else if (vimeoPattern.test(src)) {
+                            // Vimeo player postMessage API.
+                            target.postMessage(JSON.stringify({ method: 'setVolume', value: 0 }), '*');
+                            target.postMessage(JSON.stringify({ method: 'setMuted', value: true }), '*');
+                        }
+                    } catch (e) {}
+
+                    if (iframe.dataset && iframe.dataset.amsBackgroundMuteBound !== '1') {
+                        iframe.dataset.amsBackgroundMuteBound = '1';
+                        iframe.addEventListener('load', function () {
+                            scheduleMutePass(document);
+                        });
+                    }
+                }
+
+                function scanBackgroundVideos(root) {
+                    root = root || document;
+
+                    if (root.nodeType === 1) {
+                        if (isBackgroundNativeVideo(root)) muteNativeVideo(root);
+                        if (isBackgroundIframe(root)) muteBackgroundIframe(root);
+                    }
+
+                    if (!root.querySelectorAll) return;
+
+                    root.querySelectorAll(nativeSelector).forEach(function (video) {
+                        muteNativeVideo(video);
+                    });
+
+                    root.querySelectorAll(iframeSelector).forEach(function (iframe) {
+                        muteBackgroundIframe(iframe);
+                    });
+                }
+
+                function scheduleMutePass(root) {
+                    scanBackgroundVideos(root || document);
+
+                    // Embedded players may not accept mute commands until their API is ready.
+                    // Retry only a few times; native videos are already protected by events.
+                    [80, 250, 650, 1400, 2800].forEach(function (delay) {
+                        window.setTimeout(function () {
+                            scanBackgroundVideos(document);
+                        }, delay);
+                    });
+                }
+
+                function scheduleGestureMutePass() {
+                    if (gestureTimer) window.clearTimeout(gestureTimer);
+                    scanBackgroundVideos(document);
+                    gestureTimer = window.setTimeout(function () {
+                        scanBackgroundVideos(document);
+                    }, 180);
+                    window.setTimeout(function () {
+                        scanBackgroundVideos(document);
+                    }, 700);
+                }
+
+                // Expose one harmless helper for troubleshooting/manual calls.
+                window.amsMuteElementorBackgroundVideos = function () {
+                    scheduleMutePass(document);
+                };
+
+                scheduleMutePass(document);
+
+                // Elementor may insert/rebuild the background player after its frontend handlers run.
+                if (window.MutationObserver && document.documentElement) {
+                    var observer = new MutationObserver(function (mutations) {
+                        var needsScan = false;
+
+                        for (var i = 0; i < mutations.length && !needsScan; i++) {
+                            var addedNodes = mutations[i].addedNodes || [];
+                            for (var j = 0; j < addedNodes.length; j++) {
+                                var node = addedNodes[j];
+                                if (!node || node.nodeType !== 1) continue;
+
+                                if (
+                                    isBackgroundNativeVideo(node) ||
+                                    isBackgroundIframe(node) ||
+                                    (node.querySelector && (
+                                        node.querySelector(nativeSelector) ||
+                                        node.querySelector(iframeSelector)
+                                    ))
+                                ) {
+                                    needsScan = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!needsScan) return;
+                        if (mutationTimer) window.clearTimeout(mutationTimer);
+                        mutationTimer = window.setTimeout(function () {
+                            scheduleMutePass(document);
+                        }, 40);
+                    });
+
+                    observer.observe(document.documentElement, {
+                        childList: true,
+                        subtree: true
+                    });
+                }
+
+                // A user gesture can unlock audible autoplay on some Android browsers/WebViews.
+                // Use pointerdown when available so one physical tap does not trigger three guard passes.
+                if ('PointerEvent' in window) {
+                    document.addEventListener('pointerdown', scheduleGestureMutePass, true);
+                } else {
+                    document.addEventListener('touchstart', scheduleGestureMutePass, true);
+                    document.addEventListener('click', scheduleGestureMutePass, true);
+                }
+
+                // Especially important because AMS Audio starts from this same user gesture.
+                var openButton = document.getElementById('btn_open');
+                if (openButton) {
+                    openButton.addEventListener('click', function () {
+                        scheduleMutePass(document);
+                    }, true);
+                }
+
+                document.addEventListener('visibilitychange', function () {
+                    if (document.visibilityState === 'visible') {
+                        scheduleMutePass(document);
+                    }
+                });
+
+                window.addEventListener('pageshow', function () {
+                    scheduleMutePass(document);
+                });
+            }
+
+            function bindScrollAnimation() {
+                var audioBox = document.getElementById('wds-audio-container');
+                if (!audioBox || audioBox.dataset.amsScrollBound === '1') return;
+                audioBox.dataset.amsScrollBound = '1';
+
+                var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+                window.addEventListener('scroll', function () {
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+                    if (scrollTop > lastScrollTop) {
+                        audioBox.classList.remove('slide-left');
+                        audioBox.classList.add('slide-right');
+                    } else {
+                        audioBox.classList.remove('slide-right');
+                        audioBox.classList.add('slide-left');
+                    }
+                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+                }, { passive: true });
+            }
+
+            function bindCommonVisibilityHandlers() {
+                document.addEventListener('visibilitychange', function () {
+                    if (document.visibilityState === 'visible') {
+                        if (typeof window.playAudio === 'function') window.playAudio();
+                    } else if (typeof window.pauseAudio === 'function') {
+                        // Immediate pause when leaving the tab, matching the old behavior.
+                        if (!isYoutube && song) {
+                            try { song.pause(); } catch (e) {}
+                        } else {
+                            window.pauseAudio(true);
+                        }
+                    }
+                });
+            }
+
+            initElementorBackgroundVideoAudioGuard();
+
+            if (!isYoutube) {
+                if (!song) {
+                    bindScrollAnimation();
+                    return;
+                }
+
+                var range = parseTimeRange(songStartSetting);
+                loopStartTime = range.start;
+                loopEndTime = range.end;
+
+                // Preserve support for the separate End Time control.
+                if (loopEndTime === null && songEndSetting !== '') {
+                    var explicitEnd = parseTime(songEndSetting);
+                    if (explicitEnd > loopStartTime) loopEndTime = explicitEnd;
+                }
+
+                if (loopEndTime !== null && loopEndTime <= loopStartTime) {
+                    loopEndTime = null;
+                }
+
+                function fadeAudio(targetVolume, duration) {
+                    if (!song) return;
+                    var startVolume = Number(song.volume);
+                    if (!Number.isFinite(startVolume)) startVolume = 1;
+                    var startTime = Date.now();
+
+                    function step() {
+                        if (!song) return;
+                        var elapsed = Date.now() - startTime;
+                        if (elapsed < duration) {
+                            var fraction = elapsed / duration;
+                            song.volume = Math.max(0, Math.min(1, startVolume + ((targetVolume - startVolume) * fraction)));
+                            window.requestAnimationFrame(step);
+                        } else {
+                            song.volume = Math.max(0, Math.min(1, targetVolume));
+                        }
+                    }
+                    window.requestAnimationFrame(step);
+                }
+
+                function nativePlayAudio() {
+                    if (!song) return;
+                    if (pauseTimer) {
+                        window.clearTimeout(pauseTimer);
+                        pauseTimer = null;
+                    }
+
+                    if (isFirstPlay) {
+                        try {
+                            song.currentTime = loopStartTime;
+                        } catch (e) {}
+                        isFirstPlay = false;
+                    }
+
+                    if (!song.paused) {
+                        audioActive();
+                        return;
+                    }
+
+                    song.volume = 0;
+                    var promise;
+                    try {
+                        promise = song.play();
+                    } catch (e) {
+                        audioInactive();
+                        return;
+                    }
+
+                    if (promise && typeof promise.then === 'function') {
+                        promise.then(function () {
+                            fadeAudio(1, fadeDuration);
+                            audioActive();
+                        }).catch(function () {
+                            // Autoplay may be blocked until #btn_open/user interaction.
+                            audioInactive();
+                        });
+                    } else {
+                        fadeAudio(1, fadeDuration);
+                        audioActive();
+                    }
+                }
+
+                function nativePauseAudio(immediate) {
+                    if (!song) return;
+                    if (pauseTimer) {
+                        window.clearTimeout(pauseTimer);
+                        pauseTimer = null;
+                    }
+
+                    if (immediate) {
+                        try { song.pause(); } catch (e) {}
+                        audioInactive();
+                        return;
+                    }
+
+                    fadeAudio(0, fadeDuration);
+                    pauseTimer = window.setTimeout(function () {
+                        try { song.pause(); } catch (e) {}
+                        pauseTimer = null;
+                    }, fadeDuration);
+                    audioInactive();
+                }
+
+                function toggleNativeAudio() {
+                    if (song.paused) nativePlayAudio();
+                    else nativePauseAudio(false);
+                }
+
+                window.playAudio = nativePlayAudio;
+                window.pauseAudio = nativePauseAudio;
+                window.toggleAudio = toggleNativeAudio;
+
+                song.addEventListener('timeupdate', function () {
+                    if (loopEndTime !== null && song.currentTime >= (loopEndTime - 0.05)) {
+                        song.currentTime = loopStartTime;
+                        if (song.paused) nativePlayAudio();
+                    }
+                });
+
+                if (window.jQuery) {
+                    jQuery('#unmute-sound .elementor-icon').off('click.amsAudio').on('click.amsAudio', toggleNativeAudio);
+                    jQuery('#btn_open').off('click.amsAudio').on('click.amsAudio', nativePlayAudio);
+                    jQuery('#mute-sound .elementor-icon').off('click.amsAudio').on('click.amsAudio', function () {
+                        if (!song.paused) toggleNativeAudio();
+                    });
+                }
+
+                bindCommonVisibilityHandlers();
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', nativePlayAudio, { once: true });
+                } else {
+                    nativePlayAudio();
+                }
+            } else {
+                var videoId = extractVideoID(youtubeUrl);
+                var ytStart = parseTime(youtubeStartSetting);
+                var ytEnd = youtubeEndSetting !== '' ? parseTime(youtubeEndSetting) : null;
+                if (ytEnd !== null && ytEnd <= ytStart) ytEnd = null;
+
+                function youtubePlayAudio() {
+                    ytShouldPlay = true;
+                    if (!ytReady || !ytPlayer) return;
+                    try {
+                        if (ytStart > 0 && ytPlayer.getCurrentTime && ytPlayer.getCurrentTime() < (ytStart - 0.5)) {
+                            ytPlayer.seekTo(ytStart, true);
+                        }
+                        ytPlayer.playVideo();
+                    } catch (e) {}
+                }
+
+                function youtubePauseAudio() {
+                    ytShouldPlay = false;
+                    if (!ytReady || !ytPlayer) {
+                        audioInactive();
+                        return;
+                    }
+                    try { ytPlayer.pauseVideo(); } catch (e) {}
+                    audioInactive();
+                }
+
+                function toggleYoutubeAudio() {
+                    if (!ytReady || !ytPlayer) {
+                        ytShouldPlay = true;
+                        return;
+                    }
+                    try {
+                        var state = ytPlayer.getPlayerState();
+                        if (state === 1 || state === 3) youtubePauseAudio();
+                        else youtubePlayAudio();
+                    } catch (e) {}
+                }
+
+                window.playAudio = youtubePlayAudio;
+                window.pauseAudio = youtubePauseAudio;
+                window.toggleAudio = toggleYoutubeAudio;
+
+                if (youtubeContainer && videoId) {
+                    youtubeContainer.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;';
+
+                    var iframe = document.createElement('iframe');
+                    var params = new URLSearchParams({
+                        enablejsapi: '1',
+                        playsinline: '1',
+                        origin: getOrigin(),
+                        widget_referrer: window.location.href,
+                        start: String(Math.max(0, Math.floor(ytStart)))
+                    });
+
+                    if (ytEnd !== null) params.set('end', String(Math.max(0, Math.floor(ytEnd))));
+                    if (audioLoopEnabled) {
+                        params.set('loop', '1');
+                        params.set('playlist', videoId);
+                    }
+
+                    iframe.id = 'youtube-player';
+                    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?' + params.toString();
+                    iframe.title = 'YouTube audio player';
+                    iframe.allow = 'autoplay; encrypted-media';
+                    iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+                    iframe.setAttribute('frameborder', '0');
+                    iframe.style.width = '1px';
+                    iframe.style.height = '1px';
+                    iframe.style.border = '0';
+
+                    youtubeContainer.innerHTML = '';
+                    youtubeContainer.appendChild(iframe);
+
+                    waitForYouTubeAPI(function () {
+                        try {
+                            ytPlayer = new YT.Player(iframe, {
+                                events: {
+                                    onReady: function (event) {
+                                        ytReady = true;
+                                        try { event.target.setPlaybackQuality('small'); } catch (e) {}
+                                        if (ytShouldPlay) youtubePlayAudio();
+                                    },
+                                    onStateChange: function (event) {
+                                        if (!window.YT) return;
+                                        if (event.data === YT.PlayerState.PLAYING) {
+                                            audioActive();
+                                        } else if (event.data === YT.PlayerState.PAUSED) {
+                                            audioInactive();
+                                        } else if (event.data === YT.PlayerState.ENDED) {
+                                            if (audioLoopEnabled || ytEnd !== null) {
+                                                try {
+                                                    ytPlayer.seekTo(ytStart, true);
+                                                    if (ytShouldPlay) ytPlayer.playVideo();
+                                                } catch (e) {}
+                                            } else {
+                                                audioInactive();
+                                            }
+                                        }
+                                    },
+                                    onError: function () {
+                                        audioInactive();
+                                    }
+                                }
+                            });
+                            window.amsAudioPlayer = ytPlayer;
+                        } catch (e) {
+                            audioInactive();
+                        }
+                    });
+                }
+
+                if (window.jQuery) {
+                    jQuery('#btn_open').off('click.amsAudio').on('click.amsAudio', youtubePlayAudio);
+                    jQuery('#unmute-sound .elementor-icon').off('click.amsAudio').on('click.amsAudio', toggleYoutubeAudio);
+                    jQuery('#mute-sound .elementor-icon').off('click.amsAudio').on('click.amsAudio', youtubePauseAudio);
+                }
+
+                bindCommonVisibilityHandlers();
+            }
+
+            bindScrollAnimation();
+        })();
+        </script>
+
+    				</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				</footer>
+		</div>
+						</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-651aeac elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="651aeac" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-8bb700e" data-id="8bb700e" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
@@ -2116,7 +3175,7 @@ function munculKolom() {
 				</div>
 				<div class="elementor-element elementor-element-e9fcb34 elementor-widget elementor-widget-html" data-id="e9fcb34" data-element_type="widget" data-e-type="widget" data-widget_type="html.default">
 				<div class="elementor-widget-container">
-					<meta name="theme-color" content="#7F96A8">
+					<meta name="theme-color" content="#744C2F">
 <script>
 if ('scrollRestoration' in history) {
 					history.scrollRestoration = 'manual';
@@ -2266,33 +3325,34 @@ window.addEventListener("scroll", function() {
 		</section>
 				<section class="elementor-section elementor-top-section elementor-element elementor-element-d3c31bc elementor-section-full_width elementor-section-height-min-height elementor-section-items-stretch elementor-section-content-middle elementor-section-height-default" data-id="d3c31bc" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[]}">
 						<div class="elementor-container elementor-column-gap-no">
-					<div data-dce-background-overlay-color="#00000000" data-dce-background-image-url="/themes/3d-motion-05/uploads/2024/10/Garden-05-Ayat.jpg" class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-f3a4387 elementor-hidden-mobile" data-id="f3a4387" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div data-dce-background-overlay-color="#00000000" data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/motion-jawa-03-fallback.jpg" class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-f3a4387 elementor-hidden-mobile" data-id="f3a4387" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
-						<div data-dce-title-color="#333333" class="elementor-element elementor-element-674b44d elementor-invisible elementor-widget elementor-widget-heading" data-id="674b44d" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;}" data-widget_type="heading.default">
+						<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-674b44d elementor-invisible elementor-widget elementor-widget-heading" data-id="674b44d" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">The Wedding Of</h2>				</div>
 				</div>
-				<div data-dce-title-color="#7F96A8" class="elementor-element elementor-element-1e37561 wdsdv-enabled--yes animated-slow playball elementor-invisible elementor-widget elementor-widget-heading" data-id="1e37561" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:400}" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-1e37561 wdsdv-enabled--yes animated-slow playball elementor-invisible elementor-widget elementor-widget-heading" data-id="1e37561" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:400}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['bride']['nickname'] ?? 'Putri' }} &amp; {{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default" data-preview="couple-nickname">{{ $data['bride']['nickname'] ?? 'Putri' }} &amp; {{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
 				</div>
-				<div data-dce-title-color="#333333" class="elementor-element elementor-element-a368302 elementor-invisible elementor-widget elementor-widget-heading" data-id="a368302" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:800}" data-widget_type="heading.default">
+				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-a368302 elementor-invisible elementor-widget elementor-widget-heading" data-id="a368302" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:800}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<p class="elementor-heading-title elementor-size-default">{{ $data['events']['akad']['date'] ?? 'Minggu, 28 Desember 2027' }}</p>				</div>
+					<p class="elementor-heading-title elementor-size-default">Minggu, 28 Desember 2027</p>				</div>
 				</div>
 					</div>
 		</div>
 				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-6239dc8" data-id="6239dc8" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<section class="elementor-section elementor-inner-section elementor-element elementor-element-bc6bba3 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default" data-id="bc6bba3" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;video&quot;,&quot;background_video_link&quot;:&quot;\/themes\/3d-motion-05\/uploads\/2024\/10\/Garden-05-Video-BG.mp4&quot;,&quot;background_play_on_mobile&quot;:&quot;yes&quot;}">
-								<div class="elementor-background-video-container">
-													<video class="elementor-background-video-hosted" role="presentation" autoplay muted playsinline loop></video>
-											</div>
-								<div class="elementor-container elementor-column-gap-no">
+						<section data-dce-background-image-url="/themes/3d-motion-27/uploads/2025/05/motion-jawa-03-bg.jpg" class="elementor-section elementor-inner-section elementor-element elementor-element-bc6bba3 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default" data-id="bc6bba3" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-no">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-0a9eba2" data-id="0a9eba2" data-element_type="column" data-e-type="column">
-			<div class="elementor-widget-wrap">
-							</div>
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-9586555 elementor-absolute elementor-align-center elementor-widget elementor-widget-lottie" data-id="9586555" data-element_type="widget" data-e-type="widget" data-settings="{&quot;source_json&quot;:{&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/2024\/10\/10115-birds.json&quot;,&quot;id&quot;:8579,&quot;size&quot;:&quot;&quot;,&quot;alt&quot;:&quot;&quot;,&quot;source&quot;:&quot;library&quot;},&quot;loop&quot;:&quot;yes&quot;,&quot;_position&quot;:&quot;absolute&quot;,&quot;source&quot;:&quot;media_file&quot;,&quot;caption_source&quot;:&quot;none&quot;,&quot;link_to&quot;:&quot;none&quot;,&quot;trigger&quot;:&quot;arriving_to_viewport&quot;,&quot;viewport&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;play_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;start_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;end_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:100,&quot;sizes&quot;:[]},&quot;renderer&quot;:&quot;svg&quot;}" data-widget_type="lottie.default">
+				<div class="elementor-widget-container">
+					<div class="e-lottie__container"><div class="e-lottie__animation"></div></div>				</div>
+				</div>
+					</div>
 		</div>
 					</div>
 		</section>
@@ -2313,7 +3373,7 @@ window.addEventListener("scroll", function() {
 			document.documentElement.style.setProperty('--vh', `${vh}px`);
 		});
 	</script>
-<style id="elementor-post-dynamic-913817">.elementor-913817 .elementor-element.elementor-element-81d06c9 .elementor-heading-title{font-size:42px;}.elementor-913817 .elementor-element.elementor-element-03ae64e .elementor-heading-title{font-size:42px;}</style>		<div data-elementor-type="popup" data-post-id="8019" data-obj-id="8019" data-elementor-id="913817" class="elementor elementor-913817 e-post-8019 elementor-location-popup" data-elementor-settings="{&quot;entrance_animation&quot;:&quot;fadeIn&quot;,&quot;exit_animation&quot;:&quot;fadeInDown&quot;,&quot;entrance_animation_duration&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1.2,&quot;sizes&quot;:[]},&quot;ha_cmc_init_switcher&quot;:&quot;no&quot;,&quot;a11y_navigation&quot;:&quot;yes&quot;,&quot;timing&quot;:[]}" data-elementor-post-type="elementor_library">
+<style id="elementor-post-dynamic-913817">.elementor-913817 .elementor-element.elementor-element-81d06c9 .elementor-heading-title{font-size:42px;}.elementor-913817 .elementor-element.elementor-element-03ae64e .elementor-heading-title{font-size:42px;}</style>		<div data-elementor-type="popup" data-post-id="138164" data-obj-id="138164" data-elementor-id="913817" class="elementor elementor-913817 e-post-138164 elementor-location-popup" data-elementor-settings="{&quot;entrance_animation&quot;:&quot;fadeIn&quot;,&quot;exit_animation&quot;:&quot;fadeInDown&quot;,&quot;entrance_animation_duration&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1.2,&quot;sizes&quot;:[]},&quot;ha_cmc_init_switcher&quot;:&quot;no&quot;,&quot;a11y_navigation&quot;:&quot;yes&quot;,&quot;timing&quot;:[]}" data-elementor-post-type="elementor_library">
 					<section data-dce-background-color="#222222" class="elementor-section elementor-top-section elementor-element elementor-element-8e0edac elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="8e0edac" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;classic&quot;}">
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-6eafdff" data-id="6eafdff" data-element_type="column" data-e-type="column">
@@ -2337,7 +3397,7 @@ window.addEventListener("scroll", function() {
 						<div class="elementor-container elementor-column-gap-no">
 					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-94cb6a0" data-id="94cb6a0" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-widget-wrap elementor-element-populated">
-						<section data-dce-background-overlay-color="#101010" class="elementor-section elementor-inner-section elementor-element elementor-element-555937f elementor-section-full_width elementor-section-height-min-height elementor-section-content-middle elementor-section-height-default" data-id="555937f" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:8137,&quot;url&quot;:&quot;{{ $coverPhotoUrl }}&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_duration&quot;:5000,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_transition_duration&quot;:500}">
+						<section data-dce-background-overlay-color="#101010" class="elementor-section elementor-inner-section elementor-element elementor-element-555937f elementor-section-full_width elementor-section-height-min-height elementor-section-content-middle elementor-section-height-default" data-id="555937f" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_gallery&quot;:[{&quot;id&quot;:8590,&quot;url&quot;:&quot;\/themes\/3d-motion-27\/uploads\/jet-form-builder\/291ebc13dd6538bae3ec7959b8d770dc\/2024\/10\/img-sample-01-1-1-1.jpeg&quot;}],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_duration&quot;:5000,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_transition_duration&quot;:500}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-no">
 					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-7cde5ca" data-id="7cde5ca" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_gallery&quot;:[],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_duration&quot;:5000,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_transition_duration&quot;:500}">
@@ -2353,7 +3413,7 @@ window.addEventListener("scroll", function() {
 				</div>
 				<div data-dce-title-color="#FFFFFF" class="elementor-element elementor-element-81d06c9 wdsdv-enabled--yes elementor-widget elementor-widget-heading" data-id="81d06c9" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">{{ $data['bride']['nickname'] ?? 'Putri' }} &amp; {{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default" data-preview="couple-nickname">{{ $data['bride']['nickname'] ?? 'Putri' }} &amp; {{ $data['groom']['nickname'] ?? 'Andika' }}</h2>				</div>
 				</div>
 					</div>
 		</div>
@@ -2916,37 +3976,39 @@ function downloadURI(uri, name) {
 			</script>
 		
 					<script>
-				const lazyloadRunObserver = () => {
-					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );
-					const lazyloadBackgroundObserver = new IntersectionObserver( ( entries ) => {
-						entries.forEach( ( entry ) => {
-							if ( entry.isIntersecting ) {
-								let lazyloadBackground = entry.target;
-								if( lazyloadBackground ) {
-									lazyloadBackground.classList.add( 'e-lazyloaded' );
+				( () => {
+					const lazyloadRunObserver = () => {
+						const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );
+						const lazyloadBackgroundObserver = new IntersectionObserver( ( entries ) => {
+							entries.forEach( ( entry ) => {
+								if ( entry.isIntersecting ) {
+									let lazyloadBackground = entry.target;
+									if( lazyloadBackground ) {
+										lazyloadBackground.classList.add( 'e-lazyloaded' );
+									}
+									lazyloadBackgroundObserver.unobserve( entry.target );
 								}
-								lazyloadBackgroundObserver.unobserve( entry.target );
-							}
-						});
-					}, { rootMargin: '200px 0px 200px 0px' } );
-					lazyloadBackgrounds.forEach( ( lazyloadBackground ) => {
-						lazyloadBackgroundObserver.observe( lazyloadBackground );
+							});
+						}, { rootMargin: '200px 0px 200px 0px' } );
+						lazyloadBackgrounds.forEach( ( lazyloadBackground ) => {
+							lazyloadBackgroundObserver.observe( lazyloadBackground );
+						} );
+					};
+					const events = [
+						'DOMContentLoaded',
+						'elementor/lazyload/observe',
+					];
+					events.forEach( ( event ) => {
+						document.addEventListener( event, lazyloadRunObserver );
 					} );
-				};
-				const events = [
-					'DOMContentLoaded',
-					'elementor/lazyload/observe',
-				];
-				events.forEach( ( event ) => {
-					document.addEventListener( event, lazyloadRunObserver );
-				} );
+				} )();
 			</script>
 			<style id="template-fix-f864b3a-inline-inline-css">
-.dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-f864b3a:not(.elementor-motion-effects-element-type-background) > .elementor-widget-wrap, .dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image: url("{{ $coverPhotoUrl }}");}
+.dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-f864b3a:not(.elementor-motion-effects-element-type-background) > .elementor-widget-wrap, .dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image: url("/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg");}
 /*# sourceURL=template-fix-f864b3a-inline-inline-css */
 </style>
 <style id="template-fix-8211d57-inline-inline-css">
-.dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-8211d57:not(.elementor-motion-effects-element-type-background), .dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-8211d57 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image: url("{{ $coverPhotoUrl }}");}
+.dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-8211d57:not(.elementor-motion-effects-element-type-background), .dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-8211d57 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image: url("/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg");}
 /*# sourceURL=template-fix-8211d57-inline-inline-css */
 </style>
 <style id="template-fix-ace10ab-inline-inline-css">
@@ -2965,7 +4027,7 @@ function downloadURI(uri, name) {
 .dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-404c5a5.elementor-view-stacked .elementor-icon{background-color: #01928B;}.dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-404c5a5.elementor-view-framed .elementor-icon, .dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-404c5a5.elementor-view-default .elementor-icon{color: #01928B; border-color: #01928B;}.dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-404c5a5.elementor-view-framed .elementor-icon, .dce-fix-background-loop .dce-elementor-rendering-id-0 .elementor-element.elementor-element-404c5a5.elementor-view-default .elementor-icon svg{fill: #01928B;}
 /*# sourceURL=template-fix-404c5a5-inline-inline-css */
 </style>
-<link rel='stylesheet' id='elementor-post-370686-css' href='/themes/3d-motion-05/uploads/elementor/css/post-370686.css' media='all' />
+<link rel='stylesheet' id='elementor-post-370686-css' href='/themes/3d-motion-27/uploads/elementor/css/post-370686.css?ver=1789183425' media='all' />
 <style id="global-styles-inline-css">
 :root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}:where(body) { margin: 0; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
 /*# sourceURL=global-styles-inline-css */
@@ -2977,77 +4039,78 @@ function downloadURI(uri, name) {
 
 /*# sourceURL=core-block-supports-inline-css */
 </style>
-<link rel='stylesheet' id='elementor-post-913817-css' href='/themes/3d-motion-05/uploads/elementor/css/post-913817.css' media='all' />
-<link rel='stylesheet' id='e-popup-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/conditionals/popup.min.css' media='all' />
+<link rel='stylesheet' id='elementor-post-913817-css' href='/themes/3d-motion-27/uploads/elementor/css/post-913817.css?ver=1789183451' media='all' />
+<link rel='stylesheet' id='e-popup-css' href='/themes/3d-motion-05/plugins/elementor-pro/assets/css/conditionals/popup.min.css?ver=4.2.3' media='all' />
 <link rel='stylesheet' id='elementor-gf-poppins-css' href='https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&#038;display=auto' media='all' />
-<link rel='stylesheet' id='elementor-icons-huge-icons-css' href='/themes/3d-motion-05/plugins/happy-elementor-addons/assets/fonts/huge-icons/huge-icons.min.css' media='all' />
-<script id="imagesloaded-js" src="/themes/3d-motion-05/wp-includes/js/imagesloaded.min.js"></script>
-<script id="masonry-js" src="/themes/3d-motion-05/wp-includes/js/masonry.min.js"></script>
-<script id="betterdocs-categorygrid-js" src="/themes/3d-motion-05/plugins/betterdocs/assets/build/blocks/categorygrid/frontend.js"></script>
-<script id="saic_library-js" src="/themes/3d-motion-05/plugins/weddingsaas-pro/assets/plugins/custom/commentpress/saic_lib.js"></script>
+<link rel='stylesheet' id='elementor-icons-huge-icons-css' href='/themes/3d-motion-05/plugins/happy-elementor-addons/assets/fonts/huge-icons/huge-icons.min.css?ver=3.23.1' media='all' />
+<script id="imagesloaded-js" src="/themes/3d-motion-05/wp-includes/js/imagesloaded.min.js?ver=5.0.0"></script>
+<script id="masonry-js" src="/themes/3d-motion-05/wp-includes/js/masonry.min.js?ver=4.2.2"></script>
+<script id="betterdocs-categorygrid-js" src="/themes/3d-motion-05/plugins/betterdocs/assets/build/blocks/categorygrid/frontend.js?ver=a4a7e7ed1fd9a2aaf85a"></script>
+<script id="saic_library-js" src="/themes/3d-motion-05/plugins/weddingsaas-pro/assets/plugins/custom/commentpress/saic_lib.js?ver=2.10.2.1"></script>
 <script id="wds_rsvp-js-extra">
-var WDS_RSVP = {"ajaxurl":"/themes/3d-motion-05/wp-admin/admin-ajax.php","nonce":"9114be834b","jPagesNum":"100","textCounterNum":"300","thanksComment":"Terimakasih atas ucapan Anda!","duplicateComment":"Anda mungkin membiarkan salah satu kolom kosong, atau menggandakan komentar","guestMax":"2","textNavNext":"Next","textNavPrev":"Previous"};
+var WDS_RSVP = {"ajaxurl":"/wp-admin/admin-ajax.php","nonce":"019b03f4f6","jPagesNum":"100","textCounterNum":"300","thanksComment":"Terimakasih atas ucapan Anda!","duplicateComment":"Anda mungkin membiarkan salah satu kolom kosong, atau menggandakan komentar","guestMax":"2","textNavNext":"Next","textNavPrev":"Previous"};
 //# sourceURL=wds_rsvp-js-extra
 </script>
-<script id="wds_rsvp-js" src="/themes/3d-motion-05/plugins/weddingsaas-pro/assets/js/wds-rsvp.js"></script>
-<script id="dce-fix-background-loop-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/fix-background-loop.js"></script>
-<script id="dce-settings-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/settings.js"></script>
-<script id="dce-formatted-number-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/formatted-number.js"></script>
-<script id="dce-dynamic-select-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/dynamic-select.js"></script>
-<script id="dce-tooltip-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/tooltip.js"></script>
-<script id="dce-popper-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/popperjs/popper.min.js"></script>
-<script id="dce-tippy-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/tippy.js/tippy-bundle.umd.min.js"></script>
-<script id="wdsfa-dfu-theme-capture-js" src="/themes/3d-motion-05/plugins/wds-feature-addons/assets/js/done-for-you-theme-capture.js"></script>
-<script id="elementor-webpack-runtime-js" src="/themes/3d-motion-05/plugins/elementor/assets/js/webpack.runtime.js"></script>
-<script id="elementor-frontend-modules-js" src="/themes/3d-motion-05/plugins/elementor/assets/js/frontend-modules.js"></script>
-<script id="jquery-ui-core-js" src="/themes/3d-motion-05/wp-includes/js/jquery/ui/core.js"></script>
+<script id="wds_rsvp-js" src="/themes/3d-motion-05/plugins/weddingsaas-pro/assets/js/wds-rsvp.js?ver=2.10.2.1"></script>
+<script id="dce-fix-background-loop-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/fix-background-loop.js?ver=3.4.0"></script>
+<script id="dce-settings-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/settings.js?ver=3.4.0"></script>
+<script id="dce-formatted-number-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/formatted-number.js?ver=3.4.0"></script>
+<script id="dce-dynamic-select-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/dynamic-select.js?ver=3.4.0"></script>
+<script id="dce-tooltip-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/tooltip.js?ver=3.4.0"></script>
+<script id="dce-popper-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/popperjs/popper.min.js?ver=3.4.0"></script>
+<script id="dce-tippy-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/tippy.js/tippy-bundle.umd.min.js?ver=3.4.0"></script>
+<script id="wdsfa-dfu-theme-capture-js" src="/themes/3d-motion-05/plugins/wds-feature-addons/assets/js/done-for-you-theme-capture.js?ver=0.3.0"></script>
+<script id="elementor-webpack-runtime-js" src="/themes/3d-motion-05/plugins/elementor/assets/js/webpack.runtime.js?ver=4.2.4"></script>
+<script id="elementor-frontend-modules-js" src="/themes/3d-motion-05/plugins/elementor/assets/js/frontend-modules.js?ver=4.2.4"></script>
+<script id="jquery-ui-core-js" src="/themes/3d-motion-05/wp-includes/js/jquery/ui/core.js?ver=1.13.3"></script>
 <script id="elementor-frontend-js-before">
-var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":true},"i18n":{"shareOnFacebook":"Bagikan di Facebook","shareOnTwitter":"Bagikan di Twitter","pinIt":"Buat Pin","download":"Unduh","downloadImage":"Unduh gambar","fullscreen":"Layar Penuh","zoom":"Perbesar","share":"Bagikan","playVideo":"Putar Video","previous":"Sebelumnya","next":"Selanjutnya","close":"Tutup","a11yCarouselPrevSlideMessage":"Slide sebelumnya","a11yCarouselNextSlideMessage":"Slide selanjutnya","a11yCarouselFirstSlideMessage":"This is the first slide","a11yCarouselLastSlideMessage":"This is the last slide","a11yCarouselPaginationBulletMessage":"Go to slide"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Layar lebar","value":2400,"default_value":2400,"direction":"min","is_enabled":false}},"hasCustomBreakpoints":false},"version":"4.1.4","is_static":false,"experimentalFeatures":{"additional_custom_breakpoints":true,"e_panel_promotions":true,"theme_builder_v2":true,"global_classes_should_enforce_capabilities":true,"e_variables":true,"e_opt_in_v4_page":true,"e_components":true,"e_interactions":true,"e_widget_creation":true,"import-export-customization":true,"e_pro_atomic_form":true,"e_pro_variables":true,"e_pro_interactions":true},"urls":{"assets":"\/themes\/3d-motion-05\/plugins\/elementor\/assets\/","ajaxurl":"\/themes\/3d-motion-05\/wp-admin\/admin-ajax.php","uploadUrl":"\/themes\/3d-motion-05\/uploads"},"nonces":{"floatingButtonsClickTracking":"edabf8bb06","atomicFormsSendForm":"6ce74f06cb"},"swiperClass":"swiper","settings":{"page":{"ha_cmc_init_switcher":"no"},"editorPreferences":[],"dynamicooo":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","ha_rpb_enable":"no"},"post":{"id":8019,"title":"Tema%203D%20Motion%2005","excerpt":"","featuredImage":"\/themes\/3d-motion-05\/uploads\/2026\/01\/preview-m05-reseller.jpg"}};
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":true},"i18n":{"shareOnFacebook":"Bagikan di Facebook","shareOnX":"Share on X","pinIt":"Buat Pin","download":"Unduh","downloadImage":"Unduh gambar","fullscreen":"Layar Penuh","zoom":"Perbesar","share":"Bagikan","playVideo":"Putar Video","previous":"Sebelumnya","next":"Selanjutnya","close":"Tutup","a11yCarouselPrevSlideMessage":"Slide sebelumnya","a11yCarouselNextSlideMessage":"Slide selanjutnya","a11yCarouselFirstSlideMessage":"This is the first slide","a11yCarouselLastSlideMessage":"This is the last slide","a11yCarouselPaginationBulletMessage":"Go to slide"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Layar lebar","value":2400,"default_value":2400,"direction":"min","is_enabled":false}},"hasCustomBreakpoints":false},"version":"4.2.4","is_static":false,"experimentalFeatures":{"additional_custom_breakpoints":true,"e_panel_promotions":true,"theme_builder_v2":true,"global_classes_should_enforce_capabilities":true,"e_variables":true,"e_opt_in_v4_page":true,"e_components":true,"e_interactions":true,"e_widget_creation":true,"import-export-customization":true,"e_pro_atomic_form":true,"e_pro_collection_loop":true,"e_pro_variables":true,"e_pro_interactions":true},"urls":{"assets":"\/themes\/3d-motion-05\/plugins\/elementor\/assets\/","ajaxurl":"\/wp-admin\/admin-ajax.php","uploadUrl":"\/themes\/3d-motion-05\/uploads"},"nonces":{"floatingButtonsClickTracking":"578a570890","atomicFormsSendForm":"e3c32ef756"},"swiperClass":"swiper","settings":{"page":{"ha_cmc_init_switcher":"no"},"editorPreferences":[],"dynamicooo":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","ha_rpb_enable":"no"},"post":{"id":138164,"title":"Tema%203D%20Motion%2027","excerpt":"","featuredImage":"\/themes\/3d-motion-27\/uploads\/2026\/01\/preview-m27-reseller.jpg"}};
 //# sourceURL=elementor-frontend-js-before
 </script>
-<script id="elementor-frontend-js" src="/themes/3d-motion-05/plugins/elementor/assets/js/frontend.js"></script>
-<script id="swiper-js" src="/themes/3d-motion-05/plugins/elementor/assets/lib/swiper/v8/swiper.js"></script>
-<script id="jet-tween-js-js" src="/themes/3d-motion-05/plugins/jet-elements/assets/js/lib/tweenjs/tweenjs.min.js"></script>
+<script id="elementor-frontend-js" src="/themes/3d-motion-05/plugins/elementor/assets/js/frontend.js?ver=4.2.4"></script>
+<script id="lottie-js" src="/themes/3d-motion-05/plugins/elementor-pro/assets/lib/lottie/lottie.js?ver=5.6.6"></script>
+<script id="swiper-js" src="/themes/3d-motion-05/plugins/elementor/assets/lib/swiper/v8/swiper.js?ver=8.4.5"></script>
+<script id="jet-tween-js-js" src="/themes/3d-motion-05/plugins/jet-elements/assets/js/lib/tweenjs/tweenjs.min.js?ver=2.0.2"></script>
 <script id="jet-elements-js-extra">
-var jetElements = {"ajaxUrl":"/themes/3d-motion-05/wp-admin/admin-ajax.php","isMobile":"false","templateApiUrl":"/themes/3d-motion-05/wp-json/jet-elements-api/v1/elementor-template","devMode":"false","mapboxToken":"","messages":{"invalidMail":"Please specify a valid e-mail"}};
+var jetElements = {"ajaxUrl":"/wp-admin/admin-ajax.php","isMobile":"false","templateApiUrl":"/wp-json/jet-elements-api/v1/elementor-template","devMode":"false","mapboxToken":"","messages":{"invalidMail":"Please specify a valid e-mail"}};
 //# sourceURL=jet-elements-js-extra
 </script>
-<script id="jet-elements-js" src="/themes/3d-motion-05/plugins/jet-elements/assets/js/jet-elements.js"></script>
-<script id="jet-timeline-js" src="/themes/3d-motion-05/plugins/jet-elements/assets/js/addons/jet-timeline.js"></script>
-<script id="elementor-gallery-js" src="/themes/3d-motion-05/plugins/elementor/assets/lib/e-gallery/js/e-gallery.js"></script>
-<script id="dce-prism-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism.js"></script>
-<script id="dce-prism-markup-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-markup.min.js"></script>
-<script id="dce-prism-markup-templating-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-markup-templating.min.js"></script>
-<script id="dce-prism-php-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-php.min.js"></script>
-<script id="dce-prism-line-numbers-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-line-numbers.min.js"></script>
-<script id="dce-clipboard-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/clipboard/clipboard.min.js"></script>
-<script id="dce-copy-to-clipboard-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/copy-to-clipboard.js"></script>
+<script id="jet-elements-js" src="/themes/3d-motion-05/plugins/jet-elements/assets/js/jet-elements.js?ver=2.9.2"></script>
+<script id="jet-timeline-js" src="/themes/3d-motion-05/plugins/jet-elements/assets/js/addons/jet-timeline.js?ver=2.9.2"></script>
+<script id="elementor-gallery-js" src="/themes/3d-motion-05/plugins/elementor/assets/lib/e-gallery/js/e-gallery.js?ver=1.2.0"></script>
+<script id="dce-prism-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism.js?ver=3.4.0"></script>
+<script id="dce-prism-markup-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-markup.min.js?ver=3.4.0"></script>
+<script id="dce-prism-markup-templating-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-markup-templating.min.js?ver=3.4.0"></script>
+<script id="dce-prism-php-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-php.min.js?ver=3.4.0"></script>
+<script id="dce-prism-line-numbers-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/prismjs/prism-line-numbers.min.js?ver=3.4.0"></script>
+<script id="dce-clipboard-js-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/node/clipboard/clipboard.min.js?ver=3.4.0"></script>
+<script id="dce-copy-to-clipboard-js" src="/themes/3d-motion-05/plugins/dynamic-content-for-elementor-new-version/assets/js/copy-to-clipboard.js?ver=3.4.0"></script>
 <script id="happy-elementor-addons-js-extra">
-var HappyLocalize = {"ajax_url":"/themes/3d-motion-05/wp-admin/admin-ajax.php","nonce":"e731c5c050","pdf_js_lib":"/themes/3d-motion-05/plugins/happy-elementor-addons/assets/vendor/pdfjs/lib"};
+var HappyLocalize = {"ajax_url":"/wp-admin/admin-ajax.php","nonce":"6436d11a6e","pdf_js_lib":"/themes/3d-motion-05/plugins/happy-elementor-addons/assets/vendor/pdfjs/lib"};
 //# sourceURL=happy-elementor-addons-js-extra
 </script>
-<script id="happy-elementor-addons-js" src="/themes/3d-motion-05/plugins/happy-elementor-addons/assets/js/happy-addons.js"></script>
-<script id="happy-reading-progress-bar-js" src="/themes/3d-motion-05/plugins/happy-elementor-addons/assets/js/extension-reading-progress-bar.js"></script>
+<script id="happy-elementor-addons-js" src="/themes/3d-motion-05/plugins/happy-elementor-addons/assets/js/happy-addons.js?ver=3.23.1"></script>
+<script id="happy-reading-progress-bar-js" src="/themes/3d-motion-05/plugins/happy-elementor-addons/assets/js/extension-reading-progress-bar.js?ver=3.23.1"></script>
 <script id="wdsfa-rsvp-guard-js-extra">
-var WDSFARsvpGuard = {"postId":"8019","ajaxUrl":"/themes/3d-motion-05/wp-admin/admin-ajax.php","browserChallenge":"1","behaviorGuard":"1","turnstileEnabled":"0","turnstileSiteKey":"","challengeMinAge":"4","ticketRequired":"1","ticketExpiresIn":"180"};
+var WDSFARsvpGuard = {"postId":"138164","ajaxUrl":"/wp-admin/admin-ajax.php","browserChallenge":"1","behaviorGuard":"1","turnstileEnabled":"0","turnstileSiteKey":"","challengeMinAge":"4","ticketRequired":"1","ticketExpiresIn":"180"};
 //# sourceURL=wdsfa-rsvp-guard-js-extra
 </script>
-<script id="wdsfa-rsvp-guard-js" src="/themes/3d-motion-05/plugins/wds-feature-addons/assets/js/rsvp-guard.js"></script>
-<script id="unitegallery-js" src="/themes/3d-motion-05/plugins/unlimited-elements-for-elementor-premium/assets_libraries/unitegallery/js/unitegallery.min.js"></script>
-<script id="uc_ac_assets_file_ug_theme_compact_js_9736-js" src="/themes/3d-motion-05/uploads/ac_assets/uc_compact_image_theme/ug-theme-compact.js"></script>
-<script id="elementor-pro-webpack-runtime-js" src="/themes/3d-motion-05/plugins/elementor-pro/assets/js/webpack-pro.runtime.js"></script>
-<script id="wp-hooks-js" src="/themes/3d-motion-05/wp-includes/js/dist/hooks.js"></script>
-<script id="wp-i18n-js" src="/themes/3d-motion-05/wp-includes/js/dist/i18n.js"></script>
+<script id="wdsfa-rsvp-guard-js" src="/themes/3d-motion-05/plugins/wds-feature-addons/assets/js/rsvp-guard.js?ver=0.3.0"></script>
+<script id="unitegallery-js" src="/themes/3d-motion-05/plugins/unlimited-elements-for-elementor-premium/assets_libraries/unitegallery/js/unitegallery.min.js?ver=1.5.109"></script>
+<script id="uc_ac_assets_file_ug_theme_compact_js_9736-js" src="/themes/3d-motion-27/uploads/ac_assets/uc_compact_image_theme/ug-theme-compact.js?ver=1.5.109"></script>
+<script id="elementor-pro-webpack-runtime-js" src="/themes/3d-motion-05/plugins/elementor-pro/assets/js/webpack-pro.runtime.js?ver=4.2.3"></script>
+<script id="wp-hooks-js" src="/themes/3d-motion-05/wp-includes/js/dist/hooks.js?ver=7496969728ca0f95732d"></script>
+<script id="wp-i18n-js" src="/themes/3d-motion-05/wp-includes/js/dist/i18n.js?ver=781d11515ad3d91786ec"></script>
 <script id="wp-i18n-js-after">
 wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 //# sourceURL=wp-i18n-js-after
 </script>
 <script id="elementor-pro-frontend-js-before">
-var ElementorProFrontendConfig = {"ajaxurl":"\/themes\/3d-motion-05\/wp-admin\/admin-ajax.php","nonce":"2780e9f183","urls":{"assets":"\/themes\/3d-motion-05\/plugins\/elementor-pro\/assets\/","rest":"\/wp-json\/"},"settings":{"lazy_load_background_images":true},"popup":{"hasPopUps":true},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"},"x-twitter":{"title":"X"},"threads":{"title":"Threads"}},"facebook_sdk":{"lang":"id_ID","app_id":""},"lottie":{"defaultAnimationUrl":"\/themes\/3d-motion-05\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+var ElementorProFrontendConfig = {"ajaxurl":"\/wp-admin\/admin-ajax.php","nonce":"e259e5bc7e","urls":{"assets":"\/themes\/3d-motion-05\/plugins\/elementor-pro\/assets\/","rest":"\/wp-json\/"},"settings":{"lazy_load_background_images":true},"popup":{"hasPopUps":true},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"},"x-twitter":{"title":"X"},"threads":{"title":"Threads"}},"facebook_sdk":{"lang":"id_ID","app_id":""},"lottie":{"defaultAnimationUrl":"\/themes\/3d-motion-05\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
 //# sourceURL=elementor-pro-frontend-js-before
 </script>
-<script id="elementor-pro-frontend-js" src="/themes/3d-motion-05/plugins/elementor-pro/assets/js/frontend.js"></script>
-<script id="pro-elements-handlers-js" src="/themes/3d-motion-05/plugins/elementor-pro/assets/js/elements-handlers.js"></script>
+<script id="elementor-pro-frontend-js" src="/themes/3d-motion-05/plugins/elementor-pro/assets/js/frontend.js?ver=4.2.3"></script>
+<script id="pro-elements-handlers-js" src="/themes/3d-motion-05/plugins/elementor-pro/assets/js/elements-handlers.js?ver=4.2.3"></script>
 
 <!--   Unlimited Elements 1.5.109 Scripts --> 
 <script type='text/javascript' id='unlimited-elements-scripts'>
@@ -3055,9 +4118,9 @@ var ElementorProFrontendConfig = {"ajaxurl":"\/themes\/3d-motion-05\/wp-admin\/a
 /* Compact Gallery scripts: */ 
 
 jQuery(document).ready(function(){	
-function uc_uc_compact_image_theme_elementor_3fa3003_start(){
+function uc_uc_compact_image_theme_elementor_1f0c24c_start(){
 
-  var objGallery = jQuery("#uc_uc_compact_image_theme_elementor_3fa3003");
+  var objGallery = jQuery("#uc_uc_compact_image_theme_elementor_1f0c24c");
   
   var api = objGallery.unitegallery({
     gallery_theme:"compact",
@@ -3083,7 +4146,7 @@ function uc_uc_compact_image_theme_elementor_3fa3003_start(){
 	
 					gallery_preserve_ratio: true,				//true, false - preserver ratio when on window resize
 					gallery_debug_errors:true,					//show error message when there is some error on the gallery area.
-					slider_background_color:"#7F96A8",
+					slider_background_color:"#744C2F",
                                     
 					//slider options: 
 					slider_video_autoplay: false,
@@ -3204,7 +4267,7 @@ function uc_uc_compact_image_theme_elementor_3fa3003_start(){
 					thumb_image_overlay_type: "blur",				//bw , blur, sepia - the type of image effect overlay, black and white, sepia and blur.
 					thumb_transition_duration: 200,				//thumb effect transition duration
 					thumb_transition_easing: "easeOutQuad",		//thumb effect transition easing        
-					strippanel_background_color:"#7F96A8",
+					strippanel_background_color:"#744C2F",
   });
 
   objGallery.data("unitegallery-api",api);
@@ -3218,12 +4281,12 @@ function uc_uc_compact_image_theme_elementor_3fa3003_start(){
    });
 
   
-}if(jQuery("#uc_uc_compact_image_theme_elementor_3fa3003").length) uc_uc_compact_image_theme_elementor_3fa3003_start(); else
-	jQuery( document ).on( 'elementor/popup/show', () => { if(jQuery("#uc_uc_compact_image_theme_elementor_3fa3003").length) uc_uc_compact_image_theme_elementor_3fa3003_start();});
+}if(jQuery("#uc_uc_compact_image_theme_elementor_1f0c24c").length) uc_uc_compact_image_theme_elementor_1f0c24c_start(); else
+	jQuery( document ).on( 'elementor/popup/show', () => { if(jQuery("#uc_uc_compact_image_theme_elementor_1f0c24c").length) uc_uc_compact_image_theme_elementor_1f0c24c_start();});
 });
 </script>
 <script id="wp-emoji-settings" type="application/json">
-{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"wpemoji":"/themes/3d-motion-05/wp-includes/js/wp-emoji.js","twemoji":"/themes/3d-motion-05/wp-includes/js/twemoji.js"}}
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"wpemoji":"/themes/3d-motion-05/wp-includes/js/wp-emoji.js?ver=7.0.4","twemoji":"/themes/3d-motion-05/wp-includes/js/twemoji.js?ver=7.0.4"}}
 </script>
 <script type="module">
 /**
@@ -3667,84 +4730,33 @@ new Promise( ( resolve ) => {
 	} );
 //# sourceURL=/themes/3d-motion-05/wp-includes/js/wp-emoji-loader.js
 </script>
-<style id="e-addons-template-dynamic-f864b3a-inline">.elementor:is(.e-post-8019,.e-loop-item-8019) .elementor-element.elementor-element-f864b3a:not(.elementor-motion-effects-element-type-background) > .elementor-widget-wrap, .elementor:is(.e-post-8019,.e-loop-item-8019) .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image: url("{{ $coverPhotoUrl }}");--e-bg-lazyload:url("{{ $coverPhotoUrl }}");background-position: center center;background-size: cover;}</style><style id="e-addons-template-dynamic-8211d57-inline">.elementor:is(.e-post-8019,.e-loop-item-8019) .elementor-element.elementor-element-8211d57:not(.elementor-motion-effects-element-type-background), .elementor:is(.e-post-8019,.e-loop-item-8019) .elementor-element.elementor-element-8211d57 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image: url("{{ $coverPhotoUrl }}");--e-bg-lazyload:url("{{ $coverPhotoUrl }}");background-position: center center;background-size: cover;}</style>
-
+<style id="e-addons-template-dynamic-f864b3a-inline">.elementor:is(.e-post-138164,.e-loop-item-138164) .elementor-element.elementor-element-f864b3a:not(.elementor-motion-effects-element-type-background) > .elementor-widget-wrap, .elementor:is(.e-post-138164,.e-loop-item-138164) .elementor-element.elementor-element-f864b3a > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image: url("/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg");--e-bg-lazyload:url("/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg");background-position: center center;background-size: cover;}</style><style id="e-addons-template-dynamic-8211d57-inline">.elementor:is(.e-post-138164,.e-loop-item-138164) .elementor-element.elementor-element-8211d57:not(.elementor-motion-effects-element-type-background), .elementor:is(.e-post-138164,.e-loop-item-138164) .elementor-element.elementor-element-8211d57 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image: url("/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg");--e-bg-lazyload:url("/themes/3d-motion-27/uploads/jet-form-builder/291ebc13dd6538bae3ec7959b8d770dc/2024/10/img-sample-01-1-1-1.jpeg");background-position: center center;background-size: cover;}</style>
+<!-- KLIKMOMEN INTERACTIVE CONTROLLERS -->
 <script>
-// ponytail: ?to= handler for static clone
-(function(){
-  const to = new URLSearchParams(location.search).get('to');
-  if(!to) return;
-  const decoded = decodeURIComponent(to.replace(/\+/g,' '));
-  // Find the guest name h2 that currently shows "Tes" or "Tamu"
-  for(const h of document.querySelectorAll('h2.elementor-heading-title')){
-    if(h.textContent.trim()==='Tes' || h.textContent.trim()==='Tamu' || h.textContent.trim()==='Tamu Undangan'){
-      h.textContent = decoded;
-      break;
-    }
-  }
-})();
-</script>
-
-
-<!-- TOAST NOTIFICATION CONTAINER -->
-<div id="klikmomen_toast" style="display:none; position:fixed; bottom:28px; left:50%; transform:translateX(-50%); z-index:999999; background:rgba(30, 41, 59, 0.95); backdrop-filter:blur(10px); color:#FFFFFF; padding:12px 22px; border-radius:50px; font-size:12.5px; font-weight:600; font-family:'Sora', sans-serif; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); align-items:center; gap:8px;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#68D391" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-    <span id="klikmomen_toast_msg">Berhasil disalin!</span>
-</div>
-
-<script>
-// Antigravity 3D Motion 05 Template Helpers
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Robust Countdown Timer
-    var countdownWrapper = document.querySelector('.elementor-countdown-wrapper');
-    if (countdownWrapper) {
-        var targetTimestamp = parseInt(countdownWrapper.getAttribute('data-date'), 10);
-        if (targetTimestamp) {
-            var targetMs = targetTimestamp * 1000;
-            function updateCountdown() {
-                var now = new Date().getTime();
-                var diff = targetMs - now;
-                if (diff < 0) diff = 0;
-
-                var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                var dEl = countdownWrapper.querySelector('.elementor-countdown-days');
-                var hEl = countdownWrapper.querySelector('.elementor-countdown-hours');
-                var mEl = countdownWrapper.querySelector('.elementor-countdown-minutes');
-                var sEl = countdownWrapper.querySelector('.elementor-countdown-seconds');
-
-                if (dEl) dEl.textContent = String(days).padStart(2, '0');
-                if (hEl) hEl.textContent = String(hours).padStart(2, '0');
-                if (mEl) mEl.textContent = String(minutes).padStart(2, '0');
-                if (sEl) sEl.textContent = String(seconds).padStart(2, '0');
-            }
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-        }
-    }
-
-    // 2. Toast System
+    // 1. Toast Notification Helper
     window.showToast = function(msg) {
-        var t = document.getElementById('klikmomen_toast');
-        var m = document.getElementById('klikmomen_toast_msg');
-        if (!t || !m) return;
-        m.textContent = msg;
-        t.style.display = 'flex';
-        t.style.opacity = '1';
-        clearTimeout(window._toastTimer);
-        window._toastTimer = setTimeout(function() {
-            t.style.display = 'none';
-        }, 3200);
+        var toast = document.createElement('div');
+        toast.className = 'klikmomen-toast';
+        toast.textContent = msg;
+        toast.style.cssText = 'position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #2B0E11; color: #FDF8F2; padding: 11px 22px; border-radius: 9999px; font-size: 13px; font-weight: 600; z-index: 99999; box-shadow: 0 8px 24px rgba(0,0,0,0.3); font-family: "Plus Jakarta Sans", sans-serif; pointer-events: none; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease; text-align: center; border: 1px solid #B67E22;';
+        document.body.appendChild(toast);
+        setTimeout(function() {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(-50%) translateY(-6px)';
+        }, 10);
+        setTimeout(function() {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+        }, 2800);
     };
 
-    // 3. Copy Text Helper
+    // 2. 1-Click Clipboard Copy
     window.copyGiftText = function(text, label) {
         if (!text) return;
         navigator.clipboard.writeText(text).then(function() {
-            showToast((label || 'Teks') + ' berhasil disalin ke clipboard!');
+            showToast((label || 'Teks') + ' berhasil disalin!');
         }).catch(function() {
             var tempInput = document.createElement('input');
             tempInput.value = text;
@@ -3756,21 +4768,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    // 4. Gift Toggle Box
-    var btnGift = document.getElementById('btn_gift');
-    var secGift = document.getElementById('sec_gift');
-    if (btnGift && secGift) {
-        btnGift.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (secGift.style.display === 'none' || secGift.style.display === '') {
-                secGift.style.display = 'block';
-                btnGift.style.display = 'none';
-                secGift.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    }
-
-    // 5. Interactive Wish Submission
+    // 3. Interactive Wish Submission
     window.handleWishSubmit = function(e) {
         if (e) {
             if (typeof e.preventDefault === 'function') e.preventDefault();
@@ -3814,7 +4812,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             var card = document.createElement('div');
             card.className = 'wish-item-card';
-            card.style.cssText = 'background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; padding: 14px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: left;';
+            card.style.cssText = 'background: #FFFFFF; border-radius: 16px; border: 1px solid #ECDDCB; padding: 14px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: left;';
             
             function esc(t) {
                 var d = document.createElement('div');
@@ -3822,22 +4820,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 return d.innerHTML;
             }
 
-            var badgeBg = '#EEF4F8';
-            var badgeCol = '#34495E';
-            if (attendance.indexOf('Tidak') !== -1) {
-                badgeBg = '#FED7D7';
-                badgeCol = '#9B2C2C';
-            } else if (attendance.indexOf('Hadir') !== -1) {
-                badgeBg = '#E8F3E5';
-                badgeCol = '#2D5A27';
-            }
+            var isNotComing = attendance.indexOf('Tidak') !== -1;
+            var badgeBg = isNotComing ? '#FED7D7' : '#F5E6D3';
+            var badgeCol = isNotComing ? '#9B2C2C' : '#5B1A21';
 
             card.innerHTML = '<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;">' +
-                '<span style="font-family: \'Playfair Display\', serif; font-weight: 700; font-size: 13.5px; color: #1E293B;">' + esc(name) + '</span>' +
-                '<span style="background: ' + badgeBg + '; color: ' + badgeCol + '; font-size: 9.5px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; font-family: \'Sora\', sans-serif; white-space: nowrap;">' + esc(attendance) + '</span>' +
+                '<span style="font-family: \'Playfair Display\', serif; font-weight: 700; font-size: 14px; color: #1E293B;">' + esc(name) + '</span>' +
+                '<span style="background: ' + badgeBg + '; color: ' + badgeCol + '; font-size: 9.5px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; font-family: \'Plus Jakarta Sans\', sans-serif; white-space: nowrap;">' + esc(attendance) + '</span>' +
                 '</div>' +
-                '<p style="font-size: 12px; color: #4B5563; font-style: italic; line-height: 1.55; margin: 0 0 6px; font-family: \'Sora\', sans-serif;">' + esc(message) + '</p>' +
-                '<span style="font-size: 10px; color: #9CA3AF; display: block; text-align: right; font-family: \'Sora\', sans-serif;">Baru saja</span>';
+                '<p style="font-size: 12px; color: #4B5563; font-style: italic; line-height: 1.55; margin: 0 0 6px; font-family: \'Plus Jakarta Sans\', sans-serif;">' + esc(message) + '</p>' +
+                '<span style="font-size: 10px; color: #9CA3AF; display: block; text-align: right; font-family: \'Plus Jakarta Sans\', sans-serif;">Baru saja</span>';
 
             if (container.firstChild) {
                 container.insertBefore(card, container.firstChild);
@@ -3856,76 +4848,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return false;
     };
-
-    // GALLERY MODAL LIGHTBOX
-    var galleryPhotos = {!! json_encode(array_values($data['galleries'] ?? [])) !!};
-    var currentGalleryIdx = 0;
-
-    window.openGalleryModal = function(idx) {
-        if (!galleryPhotos || galleryPhotos.length === 0) return;
-        currentGalleryIdx = idx;
-        updateModalPhoto();
-        var modal = document.getElementById('gallery_lightbox_modal');
-        if (modal) {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-    };
-
-    window.closeGalleryModal = function(e, force) {
-        if (force || (e && (e.target && e.target.id === 'gallery_lightbox_modal'))) {
-            var modal = document.getElementById('gallery_lightbox_modal');
-            if (modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-        }
-    };
-
-    window.prevGalleryModal = function(e) {
-        if (e) e.stopPropagation();
-        if (galleryPhotos.length <= 1) return;
-        currentGalleryIdx = (currentGalleryIdx - 1 + galleryPhotos.length) % galleryPhotos.length;
-        updateModalPhoto();
-    };
-
-    window.nextGalleryModal = function(e) {
-        if (e) e.stopPropagation();
-        if (galleryPhotos.length <= 1) return;
-        currentGalleryIdx = (currentGalleryIdx + 1) % galleryPhotos.length;
-        updateModalPhoto();
-    };
-
-    function updateModalPhoto() {
-        var img = document.getElementById('gallery_lightbox_img');
-        var counter = document.getElementById('gallery_lightbox_counter');
-        if (img && galleryPhotos[currentGalleryIdx]) {
-            img.src = galleryPhotos[currentGalleryIdx];
-        }
-        if (counter) {
-            counter.textContent = (currentGalleryIdx + 1) + ' / ' + galleryPhotos.length;
-        }
-        var prevBtn = document.getElementById('modal_prev_btn');
-        var nextBtn = document.getElementById('modal_next_btn');
-        if (prevBtn) prevBtn.style.display = galleryPhotos.length > 1 ? 'flex' : 'none';
-        if (nextBtn) nextBtn.style.display = galleryPhotos.length > 1 ? 'flex' : 'none';
-    }
-
-    document.addEventListener('keydown', function(e) {
-        var modal = document.getElementById('gallery_lightbox_modal');
-        if (modal && modal.style.display === 'flex') {
-            if (e.key === 'Escape') closeGalleryModal(null, true);
-            if (e.key === 'ArrowLeft') prevGalleryModal(null);
-            if (e.key === 'ArrowRight') nextGalleryModal(null);
-        }
-    });
 });
 </script>
 @include('demo.partials.preview-sync')
-
 </body>
 </html>
 <!-- Performance optimized by Redis Object Cache. Learn more: https://wprediscache.com -->
 
 
-<!-- Page uncached by LiteSpeed Cache 7.9 on 2026-09-11 09:43:28 -->
+<!-- Page uncached by LiteSpeed Cache 7.9.1 on 2026-09-12 11:58:13 -->

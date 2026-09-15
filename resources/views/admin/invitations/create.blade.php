@@ -496,9 +496,50 @@
                                     <label class="font-bold text-charcoal-900 block mb-1">Tanggal <span class="text-rose-500">*</span></label>
                                     <input type="date" name="akad_date" value="{{ old('akad_date', '2026-10-24') }}" required class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white">
                                 </div>
-                                <div>
-                                    <label class="font-bold text-charcoal-900 block mb-1">Waktu Acara <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="akad_time" value="{{ old('akad_time', '08.00 - 10.00 WIB') }}" placeholder="Contoh: 08.00 - 10.00 WIB" required class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white">
+                                <div x-data="{
+                                    startTime: '08:00',
+                                    endTime: '10:00',
+                                    untilFinish: false,
+                                    timezone: 'WIB',
+                                    get formattedTime() {
+                                        let t = this.startTime;
+                                        if (this.untilFinish) {
+                                            t += ' - Selesai';
+                                        } else if (this.endTime) {
+                                            t += ' - ' + this.endTime;
+                                        }
+                                        if (this.timezone) {
+                                            t += ' ' + this.timezone;
+                                        }
+                                        return t;
+                                    }
+                                }">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <label class="font-bold text-charcoal-900 block">Waktu Acara <span class="text-rose-500">*</span></label>
+                                        <label class="inline-flex items-center gap-1 cursor-pointer select-none text-[10px] text-sand-600">
+                                            <input type="checkbox" name="akad_is_until_finish" value="1" x-model="untilFinish" class="rounded border-sand-300 text-brand-600 w-3 h-3">
+                                            <span>Sampai Selesai</span>
+                                        </label>
+                                    </div>
+                                    <div class="grid grid-cols-12 gap-1.5">
+                                        <div class="col-span-5">
+                                            <input type="time" name="akad_start_time" x-model="startTime" required class="w-full px-2 py-2 rounded-xl border border-sand-200 bg-white text-xs">
+                                        </div>
+                                        <div class="col-span-4" x-show="!untilFinish">
+                                            <input type="time" name="akad_end_time" x-model="endTime" :disabled="untilFinish" class="w-full px-2 py-2 rounded-xl border border-sand-200 bg-white text-xs">
+                                        </div>
+                                        <div class="col-span-4 flex items-center justify-center border border-dashed border-sand-300 rounded-xl bg-sand-100/70 text-sand-500 text-[10px] font-medium" x-show="untilFinish" style="display: none;">
+                                            Selesai
+                                        </div>
+                                        <div class="col-span-3">
+                                            <select name="akad_timezone" x-model="timezone" class="w-full px-1.5 py-2 rounded-xl border border-sand-200 bg-white text-xs font-medium">
+                                                <option value="WIB">WIB</option>
+                                                <option value="WITA">WITA</option>
+                                                <option value="WIT">WIT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="akad_time" :value="formattedTime">
                                 </div>
                                 <div>
                                     <label class="font-bold text-charcoal-900 block mb-1">Nama Tempat / Gedung <span class="text-rose-500">*</span></label>
@@ -528,9 +569,50 @@
                                     <label class="font-bold text-charcoal-900 block mb-1">Tanggal <span class="text-rose-500">*</span></label>
                                     <input type="date" name="resepsi_date" value="{{ old('resepsi_date', '2026-10-24') }}" required class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white">
                                 </div>
-                                <div>
-                                    <label class="font-bold text-charcoal-900 block mb-1">Waktu Acara <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="resepsi_time" value="{{ old('resepsi_time', '11.00 - 14.00 WIB & 18.30 - 21.00 WIB') }}" placeholder="Contoh: 11.00 - 14.00 WIB" required class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white">
+                                <div x-data="{
+                                    startTime: '11:00',
+                                    endTime: '13:00',
+                                    untilFinish: false,
+                                    timezone: 'WIB',
+                                    get formattedTime() {
+                                        let t = this.startTime;
+                                        if (this.untilFinish) {
+                                            t += ' - Selesai';
+                                        } else if (this.endTime) {
+                                            t += ' - ' + this.endTime;
+                                        }
+                                        if (this.timezone) {
+                                            t += ' ' + this.timezone;
+                                        }
+                                        return t;
+                                    }
+                                }">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <label class="font-bold text-charcoal-900 block">Waktu Acara <span class="text-rose-500">*</span></label>
+                                        <label class="inline-flex items-center gap-1 cursor-pointer select-none text-[10px] text-sand-600">
+                                            <input type="checkbox" name="resepsi_is_until_finish" value="1" x-model="untilFinish" class="rounded border-sand-300 text-brand-600 w-3 h-3">
+                                            <span>Sampai Selesai</span>
+                                        </label>
+                                    </div>
+                                    <div class="grid grid-cols-12 gap-1.5">
+                                        <div class="col-span-5">
+                                            <input type="time" name="resepsi_start_time" x-model="startTime" required class="w-full px-2 py-2 rounded-xl border border-sand-200 bg-white text-xs">
+                                        </div>
+                                        <div class="col-span-4" x-show="!untilFinish">
+                                            <input type="time" name="resepsi_end_time" x-model="endTime" :disabled="untilFinish" class="w-full px-2 py-2 rounded-xl border border-sand-200 bg-white text-xs">
+                                        </div>
+                                        <div class="col-span-4 flex items-center justify-center border border-dashed border-sand-300 rounded-xl bg-sand-100/70 text-sand-500 text-[10px] font-medium" x-show="untilFinish" style="display: none;">
+                                            Selesai
+                                        </div>
+                                        <div class="col-span-3">
+                                            <select name="resepsi_timezone" x-model="timezone" class="w-full px-1.5 py-2 rounded-xl border border-sand-200 bg-white text-xs font-medium">
+                                                <option value="WIB">WIB</option>
+                                                <option value="WITA">WITA</option>
+                                                <option value="WIT">WIT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="resepsi_time" :value="formattedTime">
                                 </div>
                                 <div>
                                     <label class="font-bold text-charcoal-900 block mb-1">Nama Tempat / Gedung <span class="text-rose-500">*</span></label>

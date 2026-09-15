@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invitation;
+use App\Models\InvitationEvent;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -39,12 +40,31 @@ class PublicInvitationController extends Controller
 
         // Tentukan view layout dari database theme view_path atau override query parameter
         $requestedLayout = $request->query('layout');
-        if ($requestedLayout && view()->exists("demo.{$requestedLayout}")) {
-            $viewName = "demo.{$requestedLayout}";
-        } elseif (! empty($payload['defaultViewName']) && view()->exists($payload['defaultViewName'])) {
-            $viewName = $payload['defaultViewName'];
+        $rawViewName = $requestedLayout ? "demo.{$requestedLayout}" : ($payload['defaultViewName'] ?? 'demo.standart-04');
+
+        if (view()->exists($rawViewName)) {
+            $viewName = $rawViewName;
         } else {
-            $viewName = 'demo.classic';
+            $cleanSlug = str_replace('demo.', '', $rawViewName);
+            $viewName = match ($cleanSlug) {
+                'standart-01', 'rose-romance', 'romantic', 'rose-floral' => 'demo.standart-01',
+                'standart-02', 'editorial', 'vogue-editorial', 'modern' => 'demo.standart-02',
+                'standart-03', 'botanical', 'ethereal-botanical', 'sage-botanical' => 'demo.standart-03',
+                'standart-04', 'classic', 'timeless-classic', 'nusantara' => 'demo.standart-04',
+                'standart-05', 'minimalist', 'warm-minimalist', 'royal-luxury' => 'demo.standart-05',
+                'special-01', 'luxury-01', 'l01' => 'demo.special-01',
+                'special-02', 'luxury-02', 'l02' => 'demo.special-02',
+                'special-03', 'luxury-07', 'l07' => 'demo.special-03',
+                '3d-motion-01', 'motion-01', '3d-motion' => 'demo.3d-motion-01',
+                '3d-motion-02', '3d-motion-05', 'motion-05', 'm05' => 'demo.3d-motion-02',
+                '3d-motion-03', '3d-motion-07', 'motion-07', 'm07' => 'demo.3d-motion-03',
+                '3d-motion-04', '3d-motion-10', 'motion-10', 'm10' => 'demo.3d-motion-04',
+                '3d-motion-05', '3d-motion-27', 'motion-27', 'm27' => 'demo.3d-motion-05',
+                '3d-motion-06', '3d-motion-47', 'motion-47', 'm47' => 'demo.3d-motion-06',
+                '3d-motion-07', '3d-motion-49', 'motion-49', 'm49' => 'demo.3d-motion-07',
+                '3d-motion-08', '3d-motion-55', 'motion-55', 'm55' => 'demo.3d-motion-08',
+                default => 'demo.standart-04',
+            };
         }
         $layout = str_replace('demo.', '', $viewName);
 
@@ -89,6 +109,15 @@ class PublicInvitationController extends Controller
         $groomChildOrder = $groom?->child_number ?: '';
         $groomInstagram = $groom?->instagram ? ltrim(trim($groom->instagram), '@') : '';
         $groomPhoto = $groom?->photo_url ?: ($activeStyle['groom_photo'] ?? null);
+        $groomPhotos = $invitation->media
+            ->filter(fn ($m) => ($m->media_type ?? '') === 'groom' || ($m->media_type ?? '') === 'groom_photo')
+            ->map(fn ($m) => $m->url ?? $m->file_url)
+            ->filter()
+            ->values()
+            ->toArray();
+        if (empty($groomPhotos) && $groomPhoto) {
+            $groomPhotos = [$groomPhoto];
+        }
 
         $brideName = $bride?->full_name ?: '';
         $brideNickname = $bride?->nickname ?: ($bride?->full_name ? explode(' ', trim($bride->full_name))[0] : '');
@@ -98,9 +127,35 @@ class PublicInvitationController extends Controller
         $brideInstagram = $bride?->instagram ? ltrim(trim($bride->instagram), '@') : '';
         $bridePhoto = $bride?->photo_url ?: ($activeStyle['bride_photo'] ?? null);
 
+        $bridePhotos = $invitation->media
+            ->filter(fn ($m) => ($m->media_type ?? '') === 'bride' || ($m->media_type ?? '') === 'bride_photo')
+            ->map(fn ($m) => $m->url ?? $m->file_url)
+            ->filter()
+            ->values()
+            ->toArray();
+        if (empty($bridePhotos) && $bridePhoto) {
+            $bridePhotos = [$bridePhoto];
+        }
+
         $events = $invitation->events;
         $akad = $events->firstWhere('title', 'Akad Nikah') ?? $events->first();
         $resepsi = $events->firstWhere('title', 'Resepsi Pernikahan') ?? $events->skip(1)->first();
+
+        // Helper to format event time nicely without duplicate timezones
+        $formatEventTime = function (?InvitationEvent $event, string $default): string {
+            if (! $event || ! $event->start_time) {
+                return $default;
+            }
+            $str = $event->start_time;
+            if ($event->end_time && ! str_contains($str, $event->end_time)) {
+                $str .= ' - '.$event->end_time;
+            }
+            if ($event->timezone && ! str_contains($str, $event->timezone)) {
+                $str .= ' '.$event->timezone;
+            }
+
+            return $str;
+        };
 
         // Format tanggal acara dan komponen kalender
         $akadDate = $akad?->date ?? $invitation->event_date;
@@ -109,7 +164,7 @@ class PublicInvitationController extends Controller
         $akadDayNum = $akadDate ? $akadDate->format('d') : '28';
         $akadMonth = $akadDate ? $akadDate->translatedFormat('F') : 'Desember';
         $akadYear = $akadDate ? $akadDate->format('Y') : '2026';
-        $akadTimeFormatted = $akad?->start_time ? ($akad->start_time.($akad->end_time ? ' - '.$akad->end_time : '').($akad->timezone ? ' '.$akad->timezone : '')) : '08:00 WIB';
+        $akadTimeFormatted = $formatEventTime($akad, '08:00 WIB');
         $akadMapsLink = $akad?->maps_url ?: ($akad?->google_maps_url ?: ($akad?->address || $akad?->venue_name ? 'https://maps.google.com/?q='.urlencode(trim(($akad->venue_name ?? '').' '.($akad->address ?? ''))) : 'https://maps.google.com'));
 
         $resepsiDate = $resepsi?->date ?? $akadDate;
@@ -118,7 +173,7 @@ class PublicInvitationController extends Controller
         $resepsiDayNum = $resepsiDate ? $resepsiDate->format('d') : '28';
         $resepsiMonth = $resepsiDate ? $resepsiDate->translatedFormat('F') : 'Desember';
         $resepsiYear = $resepsiDate ? $resepsiDate->format('Y') : '2026';
-        $resepsiTimeFormatted = $resepsi?->start_time ? ($resepsi->start_time.($resepsi->end_time ? ' - '.$resepsi->end_time : '').($resepsi->timezone ? ' '.$resepsi->timezone : '')) : '09:00 - 13:00 WIB';
+        $resepsiTimeFormatted = $formatEventTime($resepsi, '09:00 - 13:00 WIB');
         $resepsiMapsLink = $resepsi?->maps_url ?: ($resepsi?->google_maps_url ?: ($resepsi?->address || $resepsi?->venue_name ? 'https://maps.google.com/?q='.urlencode(trim(($resepsi->venue_name ?? '').' '.($resepsi->address ?? ''))) : 'https://maps.google.com'));
 
         // Monogram / Inisial pengantin
@@ -198,9 +253,15 @@ class PublicInvitationController extends Controller
             $giftAddress = $invitation->setting->metadata['gift_address'];
         }
 
+        $coverImages = $invitation->media->where('media_type', 'cover')->pluck('url')->filter()->values()->toArray();
+        if (empty($coverImages) && ! empty($invitation->cover_image)) {
+            $coverImages = [$invitation->cover_image];
+        }
+
         $data = [
             'title' => $invitation->title,
             'cover_image' => $invitation->cover_image ?: ($activeStyle['cover_bg'] ?? null),
+            'cover_images' => ! empty($coverImages) ? $coverImages : [($activeStyle['cover_bg'] ?? null)],
             'background_music' => $invitation->background_music ?: ($activeStyle['audio_url'] ?? '/audio/wedding-song.mp3'),
             'quote_text' => $invitation->quote_text ?: '',
             'quote_source' => $invitation->quote_source ?: '',
@@ -222,6 +283,7 @@ class PublicInvitationController extends Controller
                 'child_order' => $groomChildOrder,
                 'instagram' => $groomInstagram,
                 'photo' => $groomPhoto,
+                'photos' => $groomPhotos,
             ],
             'bride' => [
                 'name' => $brideName,
@@ -231,6 +293,7 @@ class PublicInvitationController extends Controller
                 'child_order' => $brideChildOrder,
                 'instagram' => $brideInstagram,
                 'photo' => $bridePhoto,
+                'photos' => $bridePhotos,
             ],
 
             'events' => [
@@ -283,7 +346,7 @@ class PublicInvitationController extends Controller
         return [
             'invitation' => $invitation,
             'data' => $data,
-            'defaultViewName' => $invitation->theme?->view_path ?: 'demo.classic',
+            'defaultViewName' => $invitation->theme?->view_path ?: 'demo.standart-04',
             'themeSlug' => $themeSlug,
         ];
     }

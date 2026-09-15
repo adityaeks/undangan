@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'KlikMomen') }} - Studio Undangan Digital Minimalis & Elegan</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-klikmomen.png') }}">
+
     <!-- Meta SEO -->
     <meta name="description" content="Platform penyedia website undangan digital pernikahan, khitanan, dan acara spesial dengan desain minimalis, stylist, RSVP real-time, amplop digital tanpa potongan, dan musik romantis.">
     <meta name="keywords" content="undangan digital, wedding invitation, undangan online, website pernikahan, undangan pernikahan aesthetic, rsvp online, amplop digital">
@@ -1442,9 +1445,7 @@
                 <!-- BRAND BIO -->
                 <div class="space-y-4 md:col-span-1">
                     <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-full bg-charcoal-950 text-brand-300 flex items-center justify-center font-serif font-bold border border-brand-400/40">
-                            K
-                        </div>
+                        <img src="{{ asset('images/logo-klikmomen.png') }}" alt="KlikMomen Logo" class="w-8 h-8 object-contain">
                         <span class="font-serif text-xl font-bold text-white">KlikMomen.</span>
                     </div>
                     <p class="text-xs text-sand-400 leading-relaxed">

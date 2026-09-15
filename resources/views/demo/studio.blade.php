@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Demo Studio &amp; Kustomisasi Undangan — KlikMomen</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-klikmomen.png') }}">
+
     <!-- Meta SEO -->
     <meta name="description" content="Coba dan kustomisasi langsung tema undangan digital pernikahan impian Anda. Pilih template, masukkan nama mempelai, dan lihat preview instan di layar.">
     <meta name="keywords" content="demo undangan digital, template pernikahan, live preview undangan, kustomisasi undangan online, klikmomen">
@@ -102,9 +105,7 @@
         <div class="flex items-center gap-4">
             <!-- BRAND LOGO -->
             <a href="{{ url('/') }}" class="flex items-center gap-2 group">
-                <div class="w-8 h-8 rounded-lg bg-charcoal-950 flex items-center justify-center text-brand-300 font-serif font-bold text-base shadow-sm group-hover:bg-brand-600 transition">
-                    K
-                </div>
+                <img src="{{ asset('images/logo-klikmomen.png') }}" alt="KlikMomen Logo" class="w-8 h-8 object-contain group-hover:scale-105 transition">
                 <div class="flex flex-col">
                     <span class="font-serif text-lg font-bold tracking-tight text-charcoal-950 flex items-center">
                         KlikMomen<span class="text-brand-500">.</span>

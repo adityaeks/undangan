@@ -11,160 +11,25 @@ use Illuminate\Database\Seeder;
 class ThemeSeeder extends Seeder
 {
     /**
-     * Run the database seeds for exactly the 5 canonical themes.
+     * Run the database seeds for all 16 themes.
      */
     public function run(): void
     {
         $canonicalThemes = [
+            // 1. STANDART 01 (Rose Romance)
             [
-                'name' => 'The Vogue Editorial Issue',
-                'slug' => 'editorial',
-                'category' => 'modern',
-                'thumbnail' => 'https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=800&auto=format&fit=crop&q=80',
-                'view_path' => 'demo.editorial',
+                'name' => 'Standart 01',
+                'slug' => 'standart-01',
+                'category' => 'Standart',
+                'thumbnail' => 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80',
+                'view_path' => 'demo.standart-01',
                 'price' => 49000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 01',
-                    'category_label' => 'Modern Dark Studio',
-                    'tag' => 'Editorial',
-                    'tag_badge_class' => 'bg-amber-500 text-charcoal-950 font-extrabold',
-                    'secondary_image' => 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
-                    'description' => 'Desain bergaya majalah fashion internasional dengan Bento Grid arsitektural, timeline horizontal estetik, dan pemutar musik Dynamic Island.',
-                    'typography' => 'Cinzel + Cormorant Garamond',
-                    'colors' => [
-                        ['hex' => '#0A0C13', 'name' => 'Obsidian Deep'],
-                        ['hex' => '#121624', 'name' => 'Midnight Slate'],
-                        ['hex' => '#38BDF8', 'name' => 'Cosmic Cyan'],
-                        ['hex' => '#F8FAFC', 'name' => 'Pure Starlight'],
-                    ],
-                    'features' => [
-                        'Bento Grid Event Schedule',
-                        'Dynamic Island Floating Audio Player',
-                        'Interactive Love Story Horizontal Carousel',
-                        'Modern Dark Mode Luxury Finish',
-                    ],
-                    'best_for' => 'Pasangan modern, resepsi malam ballroom, pesta elegan minimalis',
-                    'rating' => '4.98',
-                    'reviews_count' => '1.240',
-                ],
-            ],
-            [
-                'name' => 'The Ethereal Botanical Glass',
-                'slug' => 'botanical',
-                'category' => 'botanical',
-                'thumbnail' => 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80',
-                'view_path' => 'demo.botanical',
-                'price' => 49000,
-                'is_active' => true,
-                'is_premium' => true,
-                'metadata' => [
-                    'number' => 'Tema Desain 02',
-                    'category_label' => 'Sage Botanical & Rustic',
-                    'tag' => 'Botanical Glass',
-                    'tag_badge_class' => 'bg-emerald-600 text-white font-bold',
-                    'secondary_image' => 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&auto=format&fit=crop&q=80',
-                    'description' => 'Bingkai lengkung arsitektural (arch geometry) dengan layer kaca buram (frosted glass) lembut, floral watermark, dan pemutar piringan hitam vintage.',
-                    'typography' => 'Italiana + Cormorant Garamond',
-                    'colors' => [
-                        ['hex' => '#F4F7F4', 'name' => 'Sage Mist'],
-                        ['hex' => '#1D3328', 'name' => 'Forest Pine'],
-                        ['hex' => '#3E6F56', 'name' => 'Olive Leaf'],
-                        ['hex' => '#DCE5DE', 'name' => 'Frosted Frost'],
-                    ],
-                    'features' => [
-                        'Arch Window Architectural Frames',
-                        'Vinyl Record Player Animated Spinner',
-                        'Frosted Glass Translucent Cards',
-                        'Gentle Organic Floral Accents',
-                    ],
-                    'best_for' => 'Garden party, resepsi outdoor, rustic chic, pernikahan alam terbuka',
-                    'rating' => '4.95',
-                    'reviews_count' => '890',
-                ],
-            ],
-            [
-                'name' => 'The Timeless Classic Card',
-                'slug' => 'classic',
-                'category' => 'classic',
-                'thumbnail' => 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=800&auto=format&fit=crop&q=80',
-                'view_path' => 'demo.classic',
-                'price' => 49000,
-                'is_active' => true,
-                'is_premium' => true,
-                'metadata' => [
-                    'number' => 'Tema Desain 03',
-                    'category_label' => 'Nusantara Adat & Heritage',
-                    'tag' => 'Timeless Simplicity',
-                    'tag_badge_class' => 'bg-slate-800 text-amber-300 font-bold border border-amber-400/30',
-                    'secondary_image' => 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=80',
-                    'description' => 'Tata letak kartu vertikal bertingkat rapi dengan amplop pembuka bersimbol wax seal emas, countdown timer terpusat, dan motif songket batik warisan nusantara.',
-                    'typography' => 'Playfair Display + Plus Jakarta Sans',
-                    'colors' => [
-                        ['hex' => '#FDF8F2', 'name' => 'Warm Ivory'],
-                        ['hex' => '#2B0E11', 'name' => 'Royal Maroon'],
-                        ['hex' => '#B67E22', 'name' => 'Songket Gold'],
-                        ['hex' => '#ECDDCB', 'name' => 'Linen Silk'],
-                    ],
-                    'features' => [
-                        'Wax Seal Envelope Interactive Intro',
-                        'Songket & Batik Gold Borders',
-                        'Clean Stacked Information Hierarchy',
-                        'Direct Bank Transfer Badges',
-                    ],
-                    'best_for' => 'Akad nikah tradisional, adat Jawa/Sunda/Minang/Melayu, resepsi formal sakral',
-                    'rating' => '4.97',
-                    'reviews_count' => '960',
-                ],
-            ],
-            [
-                'name' => 'The Warm Minimalist',
-                'slug' => 'minimalist',
-                'category' => 'minimalist',
-                'thumbnail' => 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
-                'view_path' => 'demo.minimalist',
-                'price' => 49000,
-                'is_active' => true,
-                'is_premium' => true,
-                'metadata' => [
-                    'number' => 'Tema Desain 04',
-                    'category_label' => 'Warm Minimalist & Aesthetic',
-                    'tag' => 'Clean Art',
-                    'tag_badge_class' => 'bg-stone-800 text-stone-100 font-semibold',
-                    'secondary_image' => 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80',
-                    'description' => 'Estetika minimalis kontemporer bernuansa warm linen dan soft beige. Tipografi halus, tata letak tenang tanpa ornamen berlebih, dan pemutar musik lembut.',
-                    'typography' => 'Cormorant Garamond + Plus Jakarta Sans',
-                    'colors' => [
-                        ['hex' => '#FAF8F5', 'name' => 'Warm Linen'],
-                        ['hex' => '#EBE3D5', 'name' => 'Soft Cashmere'],
-                        ['hex' => '#A8967E', 'name' => 'Muted Earth'],
-                        ['hex' => '#211E1B', 'name' => 'Deep Espresso'],
-                    ],
-                    'features' => [
-                        'Clean Monoline Layout & Fine Serif',
-                        'Aesthetic Warm Linen & Paper Palette',
-                        'Quiet Luxury Intimate Wedding Flow',
-                        'Discreet Minimalist Audio Player',
-                    ],
-                    'best_for' => 'Intimate wedding, aesthetic modern, pasangan pecinta konsep minimalis yang hangat dan bersih',
-                    'rating' => '4.98',
-                    'reviews_count' => '810',
-                ],
-            ],
-            [
-                'name' => 'The Rose Romance Arch',
-                'slug' => 'rose-romance',
-                'category' => 'romantic',
-                'thumbnail' => 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80',
-                'view_path' => 'demo.rose-romance',
-                'price' => 49000,
-                'is_active' => true,
-                'is_premium' => true,
-                'metadata' => [
-                    'number' => 'Tema Desain 05',
                     'category_label' => 'Dusty Rose & Floral Arch',
-                    'tag' => 'Floral Arch',
+                    'tag' => 'Standart 01',
                     'tag_badge_class' => 'bg-rose-700 text-white font-bold',
                     'secondary_image' => 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80',
                     'description' => 'Nuansa romantis dusty rose dan floral watercolor dengan bingkai lengkung (arch frame), potret oval anggun, dan sampul foto transparan Ryan & Vanya.',
@@ -186,10 +51,156 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '1.450',
                 ],
             ],
+
+            // 2. STANDART 02 (Editorial)
             [
-                'name' => 'Tema 3D Motion 01 (Garden Pavilion)',
+                'name' => 'Standart 02',
+                'slug' => 'standart-02',
+                'category' => 'Standart',
+                'thumbnail' => 'https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=800&auto=format&fit=crop&q=80',
+                'view_path' => 'demo.standart-02',
+                'price' => 49000,
+                'is_active' => true,
+                'is_premium' => true,
+                'metadata' => [
+                    'number' => 'Tema Desain 02',
+                    'category_label' => 'Modern Dark Studio',
+                    'tag' => 'Standart 02',
+                    'tag_badge_class' => 'bg-amber-500 text-charcoal-950 font-extrabold',
+                    'secondary_image' => 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
+                    'description' => 'Desain bergaya majalah fashion internasional dengan Bento Grid arsitektural, timeline horizontal estetik, dan pemutar musik Dynamic Island.',
+                    'typography' => 'Cinzel + Cormorant Garamond',
+                    'colors' => [
+                        ['hex' => '#0A0C13', 'name' => 'Obsidian Deep'],
+                        ['hex' => '#121624', 'name' => 'Midnight Slate'],
+                        ['hex' => '#38BDF8', 'name' => 'Cosmic Cyan'],
+                        ['hex' => '#F8FAFC', 'name' => 'Pure Starlight'],
+                    ],
+                    'features' => [
+                        'Bento Grid Event Schedule',
+                        'Dynamic Island Floating Audio Player',
+                        'Interactive Love Story Horizontal Carousel',
+                        'Modern Dark Mode Luxury Finish',
+                    ],
+                    'best_for' => 'Pasangan modern, resepsi malam ballroom, pesta elegan minimalis',
+                    'rating' => '4.98',
+                    'reviews_count' => '1.240',
+                ],
+            ],
+
+            // 3. STANDART 03 (Botanical)
+            [
+                'name' => 'Standart 03',
+                'slug' => 'standart-03',
+                'category' => 'Standart',
+                'thumbnail' => 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=80',
+                'view_path' => 'demo.standart-03',
+                'price' => 49000,
+                'is_active' => true,
+                'is_premium' => true,
+                'metadata' => [
+                    'number' => 'Tema Desain 03',
+                    'category_label' => 'Sage Botanical & Rustic',
+                    'tag' => 'Standart 03',
+                    'tag_badge_class' => 'bg-emerald-600 text-white font-bold',
+                    'secondary_image' => 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&auto=format&fit=crop&q=80',
+                    'description' => 'Bingkai lengkung arsitektural (arch geometry) dengan layer kaca buram (frosted glass) lembut, floral watermark, dan pemutar piringan hitam vintage.',
+                    'typography' => 'Italiana + Cormorant Garamond',
+                    'colors' => [
+                        ['hex' => '#F4F7F4', 'name' => 'Sage Mist'],
+                        ['hex' => '#1D3328', 'name' => 'Forest Pine'],
+                        ['hex' => '#3E6F56', 'name' => 'Olive Leaf'],
+                        ['hex' => '#DCE5DE', 'name' => 'Frosted Frost'],
+                    ],
+                    'features' => [
+                        'Arch Window Architectural Frames',
+                        'Vinyl Record Player Animated Spinner',
+                        'Frosted Glass Translucent Cards',
+                        'Gentle Organic Floral Accents',
+                    ],
+                    'best_for' => 'Garden party, resepsi outdoor, rustic chic, pernikahan alam terbuka',
+                    'rating' => '4.95',
+                    'reviews_count' => '890',
+                ],
+            ],
+
+            // 4. STANDART 04 (Classic)
+            [
+                'name' => 'Standart 04',
+                'slug' => 'standart-04',
+                'category' => 'Standart',
+                'thumbnail' => 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=800&auto=format&fit=crop&q=80',
+                'view_path' => 'demo.standart-04',
+                'price' => 49000,
+                'is_active' => true,
+                'is_premium' => true,
+                'metadata' => [
+                    'number' => 'Tema Desain 04',
+                    'category_label' => 'Nusantara Adat & Heritage',
+                    'tag' => 'Standart 04',
+                    'tag_badge_class' => 'bg-slate-800 text-amber-300 font-bold border border-amber-400/30',
+                    'secondary_image' => 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=80',
+                    'description' => 'Tata letak kartu vertikal bertingkat rapi dengan amplop pembuka bersimbol wax seal emas, countdown timer terpusat, dan motif songket batik warisan nusantara.',
+                    'typography' => 'Playfair Display + Plus Jakarta Sans',
+                    'colors' => [
+                        ['hex' => '#FDF8F2', 'name' => 'Warm Ivory'],
+                        ['hex' => '#2B0E11', 'name' => 'Royal Maroon'],
+                        ['hex' => '#B67E22', 'name' => 'Songket Gold'],
+                        ['hex' => '#ECDDCB', 'name' => 'Linen Silk'],
+                    ],
+                    'features' => [
+                        'Wax Seal Envelope Interactive Intro',
+                        'Songket & Batik Gold Borders',
+                        'Clean Stacked Information Hierarchy',
+                        'Direct Bank Transfer Badges',
+                    ],
+                    'best_for' => 'Akad nikah tradisional, adat Jawa/Sunda/Minang/Melayu, resepsi formal sakral',
+                    'rating' => '4.97',
+                    'reviews_count' => '960',
+                ],
+            ],
+
+            // 5. STANDART 05 (Minimalist)
+            [
+                'name' => 'Standart 05',
+                'slug' => 'standart-05',
+                'category' => 'Standart',
+                'thumbnail' => 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80',
+                'view_path' => 'demo.standart-05',
+                'price' => 49000,
+                'is_active' => true,
+                'is_premium' => true,
+                'metadata' => [
+                    'number' => 'Tema Desain 05',
+                    'category_label' => 'Warm Minimalist & Aesthetic',
+                    'tag' => 'Standart 05',
+                    'tag_badge_class' => 'bg-stone-800 text-stone-100 font-semibold',
+                    'secondary_image' => 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=80',
+                    'description' => 'Estetika minimalis kontemporer bernuansa warm linen dan soft beige. Tipografi halus, tata letak tenang tanpa ornamen berlebih, dan pemutar musik lembut.',
+                    'typography' => 'Cormorant Garamond + Plus Jakarta Sans',
+                    'colors' => [
+                        ['hex' => '#FAF8F5', 'name' => 'Warm Linen'],
+                        ['hex' => '#EBE3D5', 'name' => 'Soft Cashmere'],
+                        ['hex' => '#A8967E', 'name' => 'Muted Earth'],
+                        ['hex' => '#211E1B', 'name' => 'Deep Espresso'],
+                    ],
+                    'features' => [
+                        'Clean Monoline Layout & Fine Serif',
+                        'Aesthetic Warm Linen & Paper Palette',
+                        'Quiet Luxury Intimate Wedding Flow',
+                        'Discreet Minimalist Audio Player',
+                    ],
+                    'best_for' => 'Intimate wedding, aesthetic modern, pasangan pecinta konsep minimalis yang hangat dan bersih',
+                    'rating' => '4.98',
+                    'reviews_count' => '810',
+                ],
+            ],
+
+            // 6. 3D MOTION 01 (Garden Pavilion)
+            [
+                'name' => '3D Motion 01',
                 'slug' => '3d-motion-01',
-                'category' => 'motion',
+                'category' => '3D Motion',
                 'thumbnail' => '/themes/3d-motion-01/uploads/2024/10/Garden-01-Overlay-1.jpg',
                 'view_path' => 'demo.3d-motion-01',
                 'price' => 59000,
@@ -198,7 +209,7 @@ class ThemeSeeder extends Seeder
                 'metadata' => [
                     'number' => 'Tema Desain 06',
                     'category_label' => '3D Motion & Garden Pavilion',
-                    'tag' => '3D Motion',
+                    'tag' => '3D Motion 01',
                     'tag_badge_class' => 'bg-emerald-700 text-emerald-50 font-bold shadow-sm',
                     'secondary_image' => '/themes/3d-motion-01/uploads/2024/10/Garden-01-Ayat-1.jpg',
                     'description' => 'Tema undangan video 3D Pavilion Garden yang imersif dengan transisi slide opening sinematik, efek floating couple, dan pemutar musik otomatis.',
@@ -220,19 +231,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '420',
                 ],
             ],
+
+            // 7. 3D MOTION 02 (Sage Arch)
             [
-                'name' => 'Tema 3D Motion 05 (Sage Arch)',
-                'slug' => '3d-motion-05',
-                'category' => 'motion',
+                'name' => '3D Motion 02',
+                'slug' => '3d-motion-02',
+                'category' => '3D Motion',
                 'thumbnail' => '/themes/3d-motion-05/uploads/2024/10/Garden-05-Overlay.jpg',
-                'view_path' => 'demo.3d-motion-05',
+                'view_path' => 'demo.3d-motion-02',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 07',
                     'category_label' => '3D Motion & Sage Arch',
-                    'tag' => '3D Motion',
+                    'tag' => '3D Motion 02',
                     'tag_badge_class' => 'bg-slate-700 text-slate-50 font-bold shadow-sm',
                     'secondary_image' => '/themes/3d-motion-05/uploads/2024/10/Garden-05-Ayat.jpg',
                     'description' => 'Estetika modern 3D motion bertema Sage Arch dengan aksen biru lembut, transisi video dinamis, dan tipografi Playball & Sora yang anggun.',
@@ -254,19 +267,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '380',
                 ],
             ],
+
+            // 8. SPECIAL 01 (Royal Gold)
             [
-                'name' => 'Tema Luxury 01 (Royal Gold)',
-                'slug' => 'luxury-01',
-                'category' => 'luxury',
+                'name' => 'Special 01',
+                'slug' => 'special-01',
+                'category' => 'Special',
                 'thumbnail' => '/themes/luxury-01/uploads/2025/02/thumbnail-luxury-01-1.jpg',
-                'view_path' => 'demo.luxury-01',
+                'view_path' => 'demo.special-01',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 08',
                     'category_label' => 'Luxury & Royal Gold',
-                    'tag' => 'Royal Gold',
+                    'tag' => 'Special 01',
                     'tag_badge_class' => 'bg-amber-600 text-amber-50 font-bold shadow-sm',
                     'secondary_image' => '/themes/luxury-01/uploads/2025/02/thumbnail-luxury-01-1.jpg',
                     'description' => 'Sentuhan kemewahan istana dengan palet royal gold, layout grid simetris elegan, audio player romantis, dan sistem RSVP amplop digital.',
@@ -288,19 +303,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '740',
                 ],
             ],
+
+            // 9. SPECIAL 02 (Minimal Luxe)
             [
-                'name' => 'Tema Luxury 02 (Minimal Luxe)',
-                'slug' => 'luxury-02',
-                'category' => 'luxury',
+                'name' => 'Special 02',
+                'slug' => 'special-02',
+                'category' => 'Special',
                 'thumbnail' => '/themes/luxury-02/uploads/2025/02/thumbnail-luxury-02-1.jpg',
-                'view_path' => 'demo.luxury-02',
+                'view_path' => 'demo.special-02',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 09',
                     'category_label' => 'Luxury Minimal Luxe',
-                    'tag' => 'Minimal Luxe',
+                    'tag' => 'Special 02',
                     'tag_badge_class' => 'bg-yellow-700 text-yellow-50 font-bold shadow-sm',
                     'secondary_image' => '/themes/luxury-02/uploads/2025/02/thumbnail-luxury-02-1.jpg',
                     'description' => 'Perpaduan quiet luxury dan modern clean lines bernuansa soft gold ivory, tata letak seimbang nan lapang, dan pengalaman scrolling halus.',
@@ -322,19 +339,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '680',
                 ],
             ],
+
+            // 10. SPECIAL 03 (Black & Gold Modern)
             [
-                'name' => 'Tema Luxury 07 (Black & Gold Modern)',
-                'slug' => 'luxury-07',
-                'category' => 'luxury',
+                'name' => 'Special 03',
+                'slug' => 'special-03',
+                'category' => 'Special',
                 'thumbnail' => '/themes/luxury-07/uploads/2026/06/thumbnail-luxury-07-rev.jpg',
-                'view_path' => 'demo.luxury-07',
+                'view_path' => 'demo.special-03',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 10',
                     'category_label' => 'Luxury Black & Gold',
-                    'tag' => 'Dark Luxury',
+                    'tag' => 'Special 03',
                     'tag_badge_class' => 'bg-stone-900 text-amber-400 font-bold border border-amber-500/40 shadow-sm',
                     'secondary_image' => '/themes/luxury-07/uploads/2026/06/thumbnail-luxury-07-rev.jpg',
                     'description' => 'Nuansa glamor dramatis dark mode dipadu kilau emas bercahaya, kontras visual premium tinggi, dan alur narasi cinta yang eksklusif.',
@@ -356,19 +375,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '890',
                 ],
             ],
+
+            // 11. 3D MOTION 03 (Modern Bloom)
             [
-                'name' => 'Tema 3D Motion 07 (Modern Bloom)',
-                'slug' => '3d-motion-07',
-                'category' => 'motion',
+                'name' => '3D Motion 03',
+                'slug' => '3d-motion-03',
+                'category' => '3D Motion',
                 'thumbnail' => '/themes/3d-motion-07/uploads/2026/01/preview-m07-reseller.jpg',
-                'view_path' => 'demo.3d-motion-07',
+                'view_path' => 'demo.3d-motion-03',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 11',
                     'category_label' => '3D Motion & Modern Bloom',
-                    'tag' => '3D Motion',
+                    'tag' => '3D Motion 03',
                     'tag_badge_class' => 'bg-emerald-800 text-emerald-100 font-bold shadow-sm',
                     'secondary_image' => '/themes/3d-motion-07/uploads/2024/10/background-cover-07-rev3-.jpg',
                     'description' => 'Undangan video animasi 3D interaktif berlatar floral bloom bermekaran, efek paralaks kedalaman kamera, dan alur romantis kontemporer.',
@@ -390,19 +411,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '610',
                 ],
             ],
+
+            // 12. 3D MOTION 04 (Javanese Classic)
             [
-                'name' => 'Tema 3D Motion 10 (Javanese Classic)',
-                'slug' => '3d-motion-10',
-                'category' => 'motion',
+                'name' => '3D Motion 04',
+                'slug' => '3d-motion-04',
+                'category' => '3D Motion',
                 'thumbnail' => '/themes/3d-motion-10/uploads/2026/01/preview-m10-reseller.jpg',
-                'view_path' => 'demo.3d-motion-10',
+                'view_path' => 'demo.3d-motion-04',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 12',
                     'category_label' => '3D Motion Adat Jawa',
-                    'tag' => '3D Adat Jawa',
+                    'tag' => '3D Motion 04',
                     'tag_badge_class' => 'bg-amber-900 text-amber-200 font-bold shadow-sm',
                     'secondary_image' => '/themes/3d-motion-10/uploads/2024/12/JAWA-BACKGROUND.jpg',
                     'description' => 'Sentuhan agung budaya Jawa klasik dalam format 3D motion modern, animasi gunungan wayang, motif batik klasik, dan iringan gending gamelan sakral.',
@@ -424,19 +447,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '940',
                 ],
             ],
+
+            // 13. 3D MOTION 05 (Royal Nusantara)
             [
-                'name' => 'Tema 3D Motion 27 (Royal Nusantara)',
-                'slug' => '3d-motion-27',
-                'category' => 'motion',
+                'name' => '3D Motion 05',
+                'slug' => '3d-motion-05',
+                'category' => '3D Motion',
                 'thumbnail' => '/themes/3d-motion-27/uploads/2026/01/preview-m27-reseller.jpg',
-                'view_path' => 'demo.3d-motion-27',
+                'view_path' => 'demo.3d-motion-05',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 13',
                     'category_label' => '3D Motion Royal Nusantara',
-                    'tag' => '3D Nusantara',
+                    'tag' => '3D Motion 05',
                     'tag_badge_class' => 'bg-yellow-900 text-yellow-200 font-bold shadow-sm',
                     'secondary_image' => '/themes/3d-motion-27/uploads/2025/05/motion-jawa-03-bg.jpg',
                     'description' => 'Megahnya pesona pusaka warisan nusantara dengan gerak sinematik 3D, ornamen ukiran istana, dan tata warna keemasan berwibawa.',
@@ -458,19 +483,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '530',
                 ],
             ],
+
+            // 14. 3D MOTION 06 (Golden Bloom)
             [
-                'name' => 'Tema 3D Motion 47 (Golden Bloom)',
-                'slug' => '3d-motion-47',
-                'category' => 'motion',
+                'name' => '3D Motion 06',
+                'slug' => '3d-motion-06',
+                'category' => '3D Motion',
                 'thumbnail' => '/themes/3d-motion-47/uploads/2026/03/preview-m47-reseller-new.jpg',
-                'view_path' => 'demo.3d-motion-47',
+                'view_path' => 'demo.3d-motion-06',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 14',
                     'category_label' => '3D Motion Golden Bloom',
-                    'tag' => 'Golden Bloom',
+                    'tag' => '3D Motion 06',
                     'tag_badge_class' => 'bg-amber-800 text-amber-100 font-bold shadow-sm',
                     'secondary_image' => '/themes/3d-motion-47/uploads/2026/03/BACKGROUND-ALL-PAGE-.jpg',
                     'description' => 'Animasi dedaunan emas dan floral mekar berselaras 3D lembut, transisi buka undangan menawan, dan kehangatan tata visual pesta.',
@@ -492,19 +519,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '470',
                 ],
             ],
+
+            // 15. 3D MOTION 07 (Javanese Terracotta)
             [
-                'name' => 'Tema 3D Motion 49 (Javanese Terracotta)',
-                'slug' => '3d-motion-49',
-                'category' => 'motion',
+                'name' => '3D Motion 07',
+                'slug' => '3d-motion-07',
+                'category' => '3D Motion',
                 'thumbnail' => '/themes/3d-motion-49/uploads/2026/03/preview-m49-reseller-new.jpg',
-                'view_path' => 'demo.3d-motion-49',
+                'view_path' => 'demo.3d-motion-07',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 15',
                     'category_label' => '3D Motion Terracotta Adat',
-                    'tag' => '3D Terracotta',
+                    'tag' => '3D Motion 07',
                     'tag_badge_class' => 'bg-orange-950 text-orange-200 font-bold shadow-sm',
                     'secondary_image' => '/themes/3d-motion-49/uploads/2026/03/ALL-BG-TEMA-5-.jpg',
                     'description' => 'Keunikan nuansa etnik terracotta berpadu corak batik kontemporer, efek 3D berkedalaman lembut, dan alur sakral yang hangat.',
@@ -526,19 +555,21 @@ class ThemeSeeder extends Seeder
                     'reviews_count' => '390',
                 ],
             ],
+
+            // 16. 3D MOTION 08 (Jawa Biru Asmaranala)
             [
-                'name' => 'Tema 3D Motion 55 (Jawa Biru Asmaranala)',
-                'slug' => '3d-motion-55',
-                'category' => 'motion',
+                'name' => '3D Motion 08',
+                'slug' => '3d-motion-08',
+                'category' => '3D Motion',
                 'thumbnail' => '/themes/3d-motion-55/uploads/2026/06/preview-m55-reseller.jpg',
-                'view_path' => 'demo.3d-motion-55',
+                'view_path' => 'demo.3d-motion-08',
                 'price' => 59000,
                 'is_active' => true,
                 'is_premium' => true,
                 'metadata' => [
                     'number' => 'Tema Desain 16',
                     'category_label' => '3D Motion Jawa Biru',
-                    'tag' => 'Jawa Biru',
+                    'tag' => '3D Motion 08',
                     'tag_badge_class' => 'bg-blue-900 text-blue-100 font-bold shadow-sm',
                     'secondary_image' => '/themes/3d-motion-55/uploads/2026/06/Design-Jawa-Biru-.jpg',
                     'description' => 'Pernikahan adat Jawa bernuansa Royal Blue sakral berhias gunungan emas, iringan narasi Jawa puitis Asmaranala, dan estetika video 3D berwibawa.',
@@ -562,7 +593,36 @@ class ThemeSeeder extends Seeder
             ],
         ];
 
-        // 1. Upsert canonical themes
+        // 1. Map legacy theme slugs to new canonical themes before upserting
+        $legacySlugMap = [
+            'rose-romance' => 'standart-01',
+            'editorial' => 'standart-02',
+            'botanical' => 'standart-03',
+            'classic' => 'standart-04',
+            'minimalist' => 'standart-05',
+            'vogue-editorial' => 'standart-02',
+            'midnight-starlight' => 'standart-02',
+            'ethereal-botanical' => 'standart-03',
+            'sage-botanical' => 'standart-03',
+            'timeless-classic' => 'standart-04',
+            'nusantara-heritage' => 'standart-04',
+            'monochrome-elegance' => 'standart-05',
+            'warm-minimalist' => 'standart-05',
+            'minimalist-linen' => 'standart-05',
+            'blush-silk' => 'standart-01',
+            'luxury-01' => 'special-01',
+            'luxury-02' => 'special-02',
+            'luxury-07' => 'special-03',
+        ];
+
+        foreach ($legacySlugMap as $oldSlug => $newSlug) {
+            $oldTheme = Theme::where('slug', $oldSlug)->first();
+            if ($oldTheme && ! Theme::where('slug', $newSlug)->exists()) {
+                $oldTheme->update(['slug' => $newSlug]);
+            }
+        }
+
+        // 2. Upsert canonical themes
         $persistedThemes = [];
         foreach ($canonicalThemes as $data) {
             $theme = Theme::updateOrCreate(
@@ -572,25 +632,12 @@ class ThemeSeeder extends Seeder
             $persistedThemes[$data['slug']] = $theme;
         }
 
-        // 2. Map legacy themes to canonical themes before deletion
-        $legacySlugMap = [
-            'vogue-editorial' => 'editorial',
-            'midnight-starlight' => 'editorial',
-            'ethereal-botanical' => 'botanical',
-            'sage-botanical' => 'botanical',
-            'timeless-classic' => 'classic',
-            'nusantara-heritage' => 'classic',
-            'monochrome-elegance' => 'minimalist',
-            'warm-minimalist' => 'minimalist',
-            'minimalist-linen' => 'minimalist',
-            'blush-silk' => 'rose-romance',
-        ];
-
+        // 3. Clean up any remaining legacy links
         foreach ($legacySlugMap as $oldSlug => $canonicalSlug) {
             $oldTheme = Theme::where('slug', $oldSlug)->first();
             $targetTheme = $persistedThemes[$canonicalSlug] ?? null;
 
-            if ($oldTheme && $targetTheme) {
+            if ($oldTheme && $targetTheme && $oldTheme->id !== $targetTheme->id) {
                 Invitation::where('theme_id', $oldTheme->id)->update(['theme_id' => $targetTheme->id]);
                 UserTheme::where('theme_id', $oldTheme->id)->update(['theme_id' => $targetTheme->id]);
                 OrderItem::where('item_id', $oldTheme->id)
@@ -602,9 +649,5 @@ class ThemeSeeder extends Seeder
                 $oldTheme->delete();
             }
         }
-
-        // 3. Delete any remaining themes outside the 5 canonical ones
-        $canonicalSlugs = array_column($canonicalThemes, 'slug');
-        Theme::whereNotIn('slug', $canonicalSlugs)->delete();
     }
 }

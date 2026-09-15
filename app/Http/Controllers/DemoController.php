@@ -14,24 +14,24 @@ class DemoController extends Controller
     public function index(Request $request): View
     {
         if ($request->boolean('standalone') || $request->boolean('raw')) {
-            $layout = $request->query('layout', 'classic');
+            $layout = $request->query('layout', 'standart-04');
             $defaultStyle = match ($layout) {
-                'editorial' => 'editorial',
-                'botanical' => 'botanical',
-                'minimalist' => 'minimalist',
-                'rose-romance' => 'rose-romance',
+                'standart-01', 'rose-romance', 'romantic' => 'rose-romance',
+                'standart-02', 'editorial' => 'editorial',
+                'standart-03', 'botanical' => 'botanical',
+                'standart-04', 'classic' => 'classic',
+                'standart-05', 'minimalist' => 'minimalist',
+                'special-01', 'luxury-01', 'l01' => 'luxury-01',
+                'special-02', 'luxury-02', 'l02' => 'luxury-02',
+                'special-03', 'luxury-07', 'l07' => 'luxury-07',
                 '3d-motion-01', 'motion-01', '3d-motion' => '3d-motion-01',
-                '3d-motion-05', 'motion-05', 'm05' => '3d-motion-05',
-                '3d-motion-07', 'motion-07', 'm07' => '3d-motion-07',
-                '3d-motion-10', 'motion-10', 'm10' => '3d-motion-10',
-                '3d-motion-27', 'motion-27', 'm27' => '3d-motion-27',
-                '3d-motion-47', 'motion-47', 'm47' => '3d-motion-47',
-                '3d-motion-49', 'motion-49', 'm49' => '3d-motion-49',
-                '3d-motion-55', 'motion-55', 'm55' => '3d-motion-55',
-                'luxury-01', 'l01' => 'luxury-01',
-                'luxury-02', 'l02' => 'luxury-02',
-                'luxury-07', 'l07' => 'luxury-07',
-                'classic' => 'classic',
+                '3d-motion-02', '3d-motion-05', 'motion-05', 'm05' => '3d-motion-05',
+                '3d-motion-03', '3d-motion-07', 'motion-07', 'm07' => '3d-motion-07',
+                '3d-motion-04', '3d-motion-10', 'motion-10', 'm10' => '3d-motion-10',
+                '3d-motion-05', '3d-motion-27', 'motion-27', 'm27' => '3d-motion-27',
+                '3d-motion-06', '3d-motion-47', 'motion-47', 'm47' => '3d-motion-47',
+                '3d-motion-07', '3d-motion-49', 'motion-49', 'm49' => '3d-motion-49',
+                '3d-motion-08', '3d-motion-55', 'motion-55', 'm55' => '3d-motion-55',
                 default => 'classic',
             };
             $style = $request->query('style', $defaultStyle);
@@ -40,7 +40,7 @@ class DemoController extends Controller
         }
 
         $themes = ThemeCatalogController::getMasterThemes();
-        $selectedThemeSlug = $request->query('theme', 'editorial');
+        $selectedThemeSlug = $request->query('theme', 'standart-02');
         $guestName = $request->query('to', 'Reyhan');
         $defaultData = config('themes.demo_data');
 
@@ -68,23 +68,7 @@ class DemoController extends Controller
     public function show(string $slug, Request $request): View
     {
         $canonicalSlug = config("themes.slug_to_preset.{$slug}", $slug);
-        $validLayouts = [
-            'editorial', 'botanical', 'classic', 'minimalist', 'rose-romance',
-            '3d-motion-01', 'motion-01', '3d-motion',
-            '3d-motion-05', 'motion-05', 'm05',
-            '3d-motion-07', 'motion-07', 'm07',
-            '3d-motion-10', 'motion-10', 'm10',
-            '3d-motion-27', 'motion-27', 'm27',
-            '3d-motion-47', 'motion-47', 'm47',
-            '3d-motion-49', 'motion-49', 'm49',
-            '3d-motion-55', 'motion-55', 'm55',
-            'luxury-01', 'l01',
-            'luxury-02', 'l02',
-            'luxury-07', 'l07',
-        ];
-        $layout = in_array($canonicalSlug, $validLayouts, true)
-            ? $canonicalSlug
-            : 'classic';
+        $layout = $slug;
 
         return $this->renderInvitation($canonicalSlug, $layout, $request);
     }
@@ -95,7 +79,7 @@ class DemoController extends Controller
     protected function renderInvitation(string $styleKey, string $layout, Request $request): View
     {
         $presets = config('themes.presets', []);
-        $activeStyle = $presets[$styleKey] ?? $presets['minimalist'];
+        $activeStyle = $presets[$styleKey] ?? ($presets['minimalist'] ?? []);
         $defaults = config('themes.demo_data');
 
         $groomNickname = $request->query('groom_nickname', 'Raka');
@@ -153,24 +137,30 @@ class DemoController extends Controller
             'sample_wishes' => $defaults['sample_wishes'],
         ];
 
-        $viewName = match ($layout) {
-            '3d-motion-01', 'motion-01', '3d-motion' => 'demo.3d-motion-01',
-            '3d-motion-05', 'motion-05', 'm05' => 'demo.3d-motion-05',
-            '3d-motion-07', 'motion-07', 'm07' => 'demo.3d-motion-07',
-            '3d-motion-10', 'motion-10', 'm10' => 'demo.3d-motion-10',
-            '3d-motion-27', 'motion-27', 'm27' => 'demo.3d-motion-27',
-            '3d-motion-47', 'motion-47', 'm47' => 'demo.3d-motion-47',
-            '3d-motion-49', 'motion-49', 'm49' => 'demo.3d-motion-49',
-            '3d-motion-55', 'motion-55', 'm55' => 'demo.3d-motion-55',
-            'luxury-01', 'l01' => 'demo.luxury-01',
-            'luxury-02', 'l02' => 'demo.luxury-02',
-            'luxury-07', 'l07' => 'demo.luxury-07',
-            'editorial' => 'demo.editorial',
-            'botanical' => 'demo.botanical',
-            'minimalist', 'warm-minimalist', 'royal-luxury' => 'demo.minimalist',
-            'rose-romance', 'romantic', 'rose-floral' => 'demo.rose-romance',
-            default => 'demo.classic',
-        };
+        // Resolusi view blade yang sesuai
+        if (view()->exists("demo.{$layout}")) {
+            $viewName = "demo.{$layout}";
+        } else {
+            $viewName = match ($layout) {
+                'standart-01', 'rose-romance', 'romantic', 'rose-floral' => 'demo.standart-01',
+                'standart-02', 'editorial' => 'demo.standart-02',
+                'standart-03', 'botanical' => 'demo.standart-03',
+                'standart-04', 'classic' => 'demo.standart-04',
+                'standart-05', 'minimalist', 'warm-minimalist', 'royal-luxury' => 'demo.standart-05',
+                'special-01', 'luxury-01', 'l01' => 'demo.special-01',
+                'special-02', 'luxury-02', 'l02' => 'demo.special-02',
+                'special-03', 'luxury-07', 'l07' => 'demo.special-03',
+                '3d-motion-01', 'motion-01', '3d-motion' => 'demo.3d-motion-01',
+                '3d-motion-02', '3d-motion-05', 'motion-05', 'm05' => 'demo.3d-motion-02',
+                '3d-motion-03', '3d-motion-07', 'motion-07', 'm07' => 'demo.3d-motion-03',
+                '3d-motion-04', '3d-motion-10', 'motion-10', 'm10' => 'demo.3d-motion-04',
+                '3d-motion-05', '3d-motion-27', 'motion-27', 'm27' => 'demo.3d-motion-05',
+                '3d-motion-06', '3d-motion-47', 'motion-47', 'm47' => 'demo.3d-motion-06',
+                '3d-motion-07', '3d-motion-49', 'motion-49', 'm49' => 'demo.3d-motion-07',
+                '3d-motion-08', '3d-motion-55', 'motion-55', 'm55' => 'demo.3d-motion-08',
+                default => 'demo.standart-04',
+            };
+        }
 
         return view($viewName, [
             'activeStyle' => $activeStyle,

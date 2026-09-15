@@ -12,9 +12,7 @@
         :class="sidebarCollapsed ? 'lg:px-3 lg:justify-center' : ''"
     >
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group overflow-hidden" :title="sidebarCollapsed ? 'KlikMomen - Admin Workspace' : ''">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-400 via-brand-500 to-brand-700 text-white flex items-center justify-center font-serif font-bold text-lg shadow-md group-hover:scale-105 transition-transform duration-200 shrink-0">
-                K
-            </div>
+            <img src="{{ asset('images/logo-klikmomen.png') }}" alt="KlikMomen Logo" class="w-10 h-10 object-contain group-hover:scale-105 transition-transform duration-200 shrink-0">
             <div class="sidebar-brand-text flex flex-col whitespace-nowrap" :class="sidebarCollapsed ? 'lg:hidden' : ''">
                 <span class="font-serif text-xl font-bold tracking-tight text-white">
                     KlikMomen<span class="text-brand-400">.</span>

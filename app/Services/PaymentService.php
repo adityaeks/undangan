@@ -173,7 +173,7 @@ class PaymentService
             }
 
             // Fulfill purchased items idempotently
-            foreach ($order->items as $item) {
+            foreach ($order->items()->get() as $item) {
                 if ($item->item_type === 'theme') {
                     $theme = Theme::find($item->item_id);
                     if ($theme && $order->user) {

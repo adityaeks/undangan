@@ -114,7 +114,8 @@ class InvitationController extends Controller
             'cover_image_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'cover_image_url' => 'nullable|url|max:500',
             'music_file' => 'nullable|mimes:mp3,wav,ogg,m4a|max:10240',
-            'music_preset' => 'nullable|string|max:255',
+            'music_preset' => 'nullable|string|max:500',
+            'music_url' => 'nullable|url|max:500',
 
             // Groom
             'groom_name' => 'required|string|max:255',
@@ -123,6 +124,10 @@ class InvitationController extends Controller
             'groom_father' => 'nullable|string|max:255',
             'groom_mother' => 'nullable|string|max:255',
             'groom_instagram' => 'nullable|string|max:100',
+            'groom_photo_files' => 'nullable|array|max:5',
+            'groom_photo_files.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
+            'existing_groom_photo_urls' => 'nullable|array',
+            'existing_groom_photo_urls.*' => 'nullable|string|max:500',
             'groom_photo_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'groom_photo_url' => 'nullable|url|max:500',
 
@@ -133,6 +138,10 @@ class InvitationController extends Controller
             'bride_father' => 'nullable|string|max:255',
             'bride_mother' => 'nullable|string|max:255',
             'bride_instagram' => 'nullable|string|max:100',
+            'bride_photo_files' => 'nullable|array|max:5',
+            'bride_photo_files.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
+            'existing_bride_photo_urls' => 'nullable|array',
+            'existing_bride_photo_urls.*' => 'nullable|string|max:500',
             'bride_photo_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'bride_photo_url' => 'nullable|url|max:500',
 
@@ -144,14 +153,20 @@ class InvitationController extends Controller
 
             // Events - Akad
             'akad_date' => 'required|date',
-            'akad_time' => 'required|string|max:100',
+            'akad_time' => 'nullable|string|max:100',
+            'akad_start_time' => 'nullable|string|max:50',
+            'akad_end_time' => 'nullable|string|max:50',
+            'akad_timezone' => 'nullable|string|max:10',
             'akad_venue' => 'required|string|max:255',
             'akad_address' => 'required|string',
             'akad_maps_link' => 'nullable|url|max:500',
 
             // Events - Resepsi
             'resepsi_date' => 'required|date',
-            'resepsi_time' => 'required|string|max:100',
+            'resepsi_time' => 'nullable|string|max:100',
+            'resepsi_start_time' => 'nullable|string|max:50',
+            'resepsi_end_time' => 'nullable|string|max:50',
+            'resepsi_timezone' => 'nullable|string|max:10',
             'resepsi_venue' => 'required|string|max:255',
             'resepsi_address' => 'required|string',
             'resepsi_maps_link' => 'nullable|url|max:500',
@@ -200,36 +215,87 @@ class InvitationController extends Controller
                 ->with('warning', 'Template ini berbayar. Silakan lakukan aktivasi template terlebih dahulu.');
         }
 
-        // Cover Image
-        if ($request->hasFile('cover_image_file')) {
-            $coverPath = upload_as_webp($request->file('cover_image_file'), 'invitations/covers');
-            $coverImage = Storage::url($coverPath);
-        } else {
-            $coverImage = $validated['cover_image_url'] ?? null;
+        // Cover Images (Multiple or Single)
+        $coverUrls = [];
+        if ($request->hasFile('cover_image_files')) {
+            foreach ($request->file('cover_image_files') as $cFile) {
+                $path = upload_as_webp($cFile, 'invitations/covers');
+                $coverUrls[] = Storage::url($path);
+            }
+        } elseif ($request->hasFile('cover_image_file')) {
+            $path = upload_as_webp($request->file('cover_image_file'), 'invitations/covers');
+            $coverUrls[] = Storage::url($path);
         }
+
+        if ($request->filled('existing_cover_urls') && is_array($request->existing_cover_urls)) {
+            foreach ($request->existing_cover_urls as $eUrl) {
+                if (! empty($eUrl)) {
+                    $coverUrls[] = $eUrl;
+                }
+            }
+        } elseif ($request->filled('cover_image_url')) {
+            $coverUrls[] = $request->cover_image_url;
+        }
+
+        $coverImage = $coverUrls[0] ?? null;
 
         // Background Music
         if ($request->hasFile('music_file')) {
             $musicPath = $request->file('music_file')->store('invitations/music', 'public');
             $backgroundMusic = Storage::url($musicPath);
+        } elseif ($request->filled('music_url')) {
+            $backgroundMusic = $validated['music_url'];
         } else {
             $backgroundMusic = $validated['music_preset'] ?? '/audio/wedding-song.mp3';
         }
 
-        // Groom & Bride Photos
-        if ($request->hasFile('groom_photo_file')) {
-            $groomPath = upload_as_webp($request->file('groom_photo_file'), 'invitations/couples');
-            $groomPhoto = Storage::url($groomPath);
-        } else {
-            $groomPhoto = $validated['groom_photo_url'] ?? null;
+        // Groom Photos (Multi-photo handling)
+        $groomPhotos = [];
+        if (! empty($validated['existing_groom_photo_urls'])) {
+            foreach ($validated['existing_groom_photo_urls'] as $url) {
+                if (! empty($url)) {
+                    $groomPhotos[] = $url;
+                }
+            }
         }
+        if ($request->hasFile('groom_photo_files')) {
+            foreach ($request->file('groom_photo_files') as $file) {
+                if ($file && $file->isValid()) {
+                    $path = upload_as_webp($file, 'invitations/couples');
+                    $groomPhotos[] = Storage::url($path);
+                }
+            }
+        } elseif ($request->hasFile('groom_photo_file')) {
+            $path = upload_as_webp($request->file('groom_photo_file'), 'invitations/couples');
+            $groomPhotos[] = Storage::url($path);
+        } elseif (! empty($validated['groom_photo_url'])) {
+            $groomPhotos[] = $validated['groom_photo_url'];
+        }
+        $groomPhoto = $groomPhotos[0] ?? null;
 
-        if ($request->hasFile('bride_photo_file')) {
-            $bridePath = upload_as_webp($request->file('bride_photo_file'), 'invitations/couples');
-            $bridePhoto = Storage::url($bridePath);
-        } else {
-            $bridePhoto = $validated['bride_photo_url'] ?? null;
+        // Bride Photos (Multi-photo handling)
+        $bridePhotos = [];
+        if (! empty($validated['existing_bride_photo_urls'])) {
+            foreach ($validated['existing_bride_photo_urls'] as $url) {
+                if (! empty($url)) {
+                    $bridePhotos[] = $url;
+                }
+            }
         }
+        if ($request->hasFile('bride_photo_files')) {
+            foreach ($request->file('bride_photo_files') as $file) {
+                if ($file && $file->isValid()) {
+                    $path = upload_as_webp($file, 'invitations/couples');
+                    $bridePhotos[] = Storage::url($path);
+                }
+            }
+        } elseif ($request->hasFile('bride_photo_file')) {
+            $path = upload_as_webp($request->file('bride_photo_file'), 'invitations/couples');
+            $bridePhotos[] = Storage::url($path);
+        } elseif (! empty($validated['bride_photo_url'])) {
+            $bridePhotos[] = $validated['bride_photo_url'];
+        }
+        $bridePhoto = $bridePhotos[0] ?? null;
 
         // Generate clean unique slug
         $baseSlug = $request->filled('slug')
@@ -306,27 +372,67 @@ class InvitationController extends Controller
         ]);
 
         // Events
+        $akadStartTime = $request->input('akad_start_time') ?: ($validated['akad_time'] ?? '08:00');
+        $akadEndTime = $request->boolean('akad_is_until_finish') ? 'Selesai' : ($request->input('akad_end_time') ?: null);
+        $akadTz = $request->input('akad_timezone') ?: 'WIB';
+
         $invitation->events()->create([
             'title' => 'Akad Nikah',
             'date' => $validated['akad_date'],
-            'start_time' => $validated['akad_time'],
-            'timezone' => 'WIB',
+            'start_time' => $akadStartTime,
+            'end_time' => $akadEndTime,
+            'timezone' => $akadTz,
             'venue_name' => $validated['akad_venue'],
             'address' => $validated['akad_address'],
             'maps_url' => $validated['akad_maps_link'] ?? 'https://maps.google.com/?q=Jakarta',
             'order' => 1,
         ]);
 
+        $resepsiStartTime = $request->input('resepsi_start_time') ?: ($validated['resepsi_time'] ?? '11:00');
+        $resepsiEndTime = $request->boolean('resepsi_is_until_finish') ? 'Selesai' : ($request->input('resepsi_end_time') ?: null);
+        $resepsiTz = $request->input('resepsi_timezone') ?: 'WIB';
+
         $invitation->events()->create([
             'title' => 'Resepsi Pernikahan',
             'date' => $validated['resepsi_date'],
-            'start_time' => $validated['resepsi_time'],
-            'timezone' => 'WIB',
+            'start_time' => $resepsiStartTime,
+            'end_time' => $resepsiEndTime,
+            'timezone' => $resepsiTz,
             'venue_name' => $validated['resepsi_venue'],
             'address' => $validated['resepsi_address'],
             'maps_url' => $validated['resepsi_maps_link'] ?? 'https://maps.google.com/?q=Jakarta',
             'order' => 2,
         ]);
+
+        // Cover Media Entries
+        $coverOrder = 1;
+        foreach ($coverUrls as $cUrl) {
+            $invitation->media()->create([
+                'media_type' => 'cover',
+                'url' => $cUrl,
+                'order' => $coverOrder++,
+            ]);
+        }
+
+        // Groom Media Entries
+        $groomOrder = 1;
+        foreach ($groomPhotos as $gPhoto) {
+            $invitation->media()->create([
+                'media_type' => 'groom',
+                'url' => $gPhoto,
+                'order' => $groomOrder++,
+            ]);
+        }
+
+        // Bride Media Entries
+        $brideOrder = 1;
+        foreach ($bridePhotos as $bPhoto) {
+            $invitation->media()->create([
+                'media_type' => 'bride',
+                'url' => $bPhoto,
+                'order' => $brideOrder++,
+            ]);
+        }
 
         // Galleries
         $orderPos = 1;
@@ -341,15 +447,17 @@ class InvitationController extends Controller
             }
         }
 
-        if ($request->filled('gallery_urls') && is_array($request->gallery_urls)) {
-            foreach ($request->gallery_urls as $gUrl) {
-                if (! empty($gUrl)) {
-                    $invitation->media()->create([
-                        'media_type' => 'photo',
-                        'url' => $gUrl,
-                        'order' => $orderPos++,
-                    ]);
-                }
+        $existingUrls = array_merge(
+            (array) $request->input('existing_gallery_urls', []),
+            (array) $request->input('gallery_urls', [])
+        );
+        foreach ($existingUrls as $gUrl) {
+            if (! empty($gUrl)) {
+                $invitation->media()->create([
+                    'media_type' => 'photo',
+                    'url' => $gUrl,
+                    'order' => $orderPos++,
+                ]);
             }
         }
 
