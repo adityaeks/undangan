@@ -236,7 +236,7 @@
                     <!-- PROGRES KELENGKAPAN UNDANGAN (COMPACT) -->
                     <div class="p-6 sm:p-7 rounded-3xl bg-white border border-sand-200 shadow-sm space-y-4">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-serif text-base font-bold text-charcoal-950">Kelengkapan Konten Undangan</h3>
+                            <h3 class="font-serif text-base font-bold text-charcoal-950">Progres Kelengkapan Undangan</h3>
                             <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/60">
                                 Data Aktif
                             </span>

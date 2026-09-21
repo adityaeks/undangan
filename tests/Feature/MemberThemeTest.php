@@ -763,3 +763,239 @@ test('used theme shows Sudah Digunakan badge and proper action buttons on member
         ->assertSee('Beli Lisensi Tambahan')
         ->assertSee(route('checkout.theme', ['theme' => $theme->id, 'additional' => 1]));
 });
+
+test('member can see edit button on their invitations index page', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Rose Gold Theme', 'slug' => 'rose-gold-'.uniqid()]);
+
+    $invitation = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'The Wedding of Romeo & Juliet',
+        'slug' => 'romeo-juliet-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    $response = $this->actingAs($member)->get(route('member.invitations.index'));
+
+    $response->assertOk()
+        ->assertSee('Edit Undangan')
+        ->assertSee(route('member.invitations.edit', $invitation));
+});
+
+test('member can view edit page of their invitation and both slug and theme are locked', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Royal Romance', 'slug' => 'royal-romance-'.uniqid()]);
+
+    $invitation = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'The Wedding of Romeo & Juliet',
+        'slug' => 'romeo-dan-juliet-locked',
+        'is_published' => true,
+    ]);
+
+    $response = $this->actingAs($member)->get(route('member.invitations.edit', $invitation));
+
+    $response->assertOk()
+        ->assertSee('Terkunci (Permanen)')
+        ->assertSee('Tema Aktif')
+        ->assertSee('Tema undangan sudah terikat dengan lisensi undangan ini dan tidak dapat diganti.')
+        ->assertSee('readonly', false)
+        ->assertSee('romeo-dan-juliet-locked');
+});
+
+test('member cannot edit other member invitation', function () {
+    $member1 = User::factory()->create(['role' => 'member']);
+    $member2 = User::factory()->create(['role' => 'member']);
+    $theme = createTestTheme(['name' => 'Minimalist Theme', 'slug' => 'minimalist-'.uniqid()]);
+
+    $invitation = Invitation::create([
+        'user_id' => $member1->id,
+        'owner_id' => $member1->id,
+        'theme_id' => $theme->id,
+        'title' => 'Private Wedding',
+        'slug' => 'private-wedding-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    $response = $this->actingAs($member2)->get(route('member.invitations.edit', $invitation));
+    $response->assertForbidden();
+
+    $responseUpdate = $this->actingAs($member2)->put(route('member.invitations.update', $invitation), [
+        'theme_id' => $theme->id,
+        'title' => 'Hacked Title',
+    ]);
+    $responseUpdate->assertForbidden();
+});
+
+test('updating an invitation updates fields but strictly preserves original slug and theme even if modified in payload', function () {
+    $member = User::factory()->create(['role' => 'member']);
+    $originalTheme = createTestTheme(['name' => 'Ethereal Garden', 'slug' => 'ethereal-garden-'.uniqid()]);
+    $attemptedNewTheme = createTestTheme(['name' => 'Another Different Theme', 'slug' => 'different-theme-'.uniqid()]);
+
+    $originalSlug = 'original-permanent-slug-'.uniqid();
+
+    $invitation = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $originalTheme->id,
+        'title' => 'Old Wedding Title',
+        'slug' => $originalSlug,
+        'is_published' => true,
+    ]);
+
+    $response = $this->actingAs($member)->put(route('member.invitations.update', $invitation), [
+        'theme_id' => $attemptedNewTheme->id, // Maliciously attempting to swap theme
+        'title' => 'New Updated Wedding Title',
+        'slug' => 'maliciously-attempted-new-slug',
+        'groom_name' => 'Groom Updated Name',
+        'groom_nickname' => 'GroomNick',
+        'bride_name' => 'Bride Updated Name',
+        'bride_nickname' => 'BrideNick',
+        'akad_date' => '2026-10-15',
+        'akad_venue' => 'Masjid Raya',
+        'akad_address' => 'Jl. Merdeka No. 10',
+        'resepsi_date' => '2026-10-15',
+        'resepsi_venue' => 'Ballroom Grand Hotel',
+        'resepsi_address' => 'Jl. Sudirman No. 20',
+    ]);
+
+    $response->assertRedirect(route('member.invitations.index'));
+
+    $invitation->refresh();
+    expect($invitation->title)->toBe('New Updated Wedding Title');
+    expect($invitation->slug)->toBe($originalSlug); // Must NOT change
+    expect($invitation->theme_id)->toBe($originalTheme->id); // Must NOT change
+});
+
+test('theme standart 01 supports story images and renders story image inputs in invitation form', function () {
+    $theme = Theme::firstOrCreate(
+        ['slug' => 'standart-01'],
+        [
+            'name' => 'Standart 01',
+            'category' => 'Standart',
+            'thumbnail' => 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800',
+            'view_path' => 'demo.standart-01',
+            'price' => 49000,
+            'is_active' => true,
+            'is_premium' => true,
+        ]
+    );
+
+    expect($theme->has_story_images)->toBeTrue();
+
+    $member = User::factory()->create(['role' => 'member']);
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    $invitation = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'Story Image Test Wedding',
+        'slug' => 'story-image-test-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    $response = $this->actingAs($member)->get(route('member.invitations.edit', $invitation));
+
+    $response->assertOk()
+        ->assertSee('Tema ini mendukung')
+        ->assertSee('Foto Kenangan')
+        ->assertSee('Fitur Foto Aktif');
+});
+
+test('member can update invitation amplop digital and it persists to database and displays on public invitation page', function () {
+    $theme = Theme::firstOrCreate(
+        ['slug' => 'standart-01'],
+        [
+            'name' => 'Standart 01 Floral',
+            'category' => 'standart',
+            'thumbnail' => 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800',
+            'view_path' => 'demo.standart-01',
+            'price' => 49000,
+            'is_active' => true,
+            'is_premium' => true,
+        ]
+    );
+
+    $member = User::factory()->create(['role' => 'member']);
+    UserTheme::create([
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'is_active' => true,
+        'unlocked_at' => now(),
+    ]);
+
+    $invitation = Invitation::create([
+        'user_id' => $member->id,
+        'owner_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'The Wedding of Romeo & Juliet',
+        'slug' => 'amplop-test-wedding-'.uniqid(),
+        'is_published' => true,
+    ]);
+
+    $updateData = [
+        'title' => 'The Wedding of Romeo & Juliet Updated',
+        'groom_name' => 'Romeo Montague',
+        'groom_nickname' => 'Romeo',
+        'bride_name' => 'Juliet Capulet',
+        'bride_nickname' => 'Juliet',
+        'akad_date' => '2026-10-10',
+        'akad_venue' => 'Masjid Raya',
+        'akad_address' => 'Jl. Kebangsaan No. 1',
+        'resepsi_date' => '2026-10-10',
+        'resepsi_venue' => 'Grand Ballroom',
+        'resepsi_address' => 'Jl. Pahlawan No. 2',
+        'bank_1_name' => 'Bank Central Asia (BCA)',
+        'bank_1_account' => '5432109876',
+        'bank_1_holder' => 'Romeo Montague',
+        'bank_2_name' => 'Bank Mandiri',
+        'bank_2_number' => '1234567890123',
+        'bank_2_holder' => 'Juliet Capulet',
+        'gift_address' => 'Jl. Mawar Indah No. 12, Jakarta Selatan',
+        'is_published' => '1',
+    ];
+
+    $response = $this->actingAs($member)->put(route('member.invitations.update', $invitation), $updateData);
+
+    $response->assertRedirect(route('member.invitations.index'));
+
+    $this->assertDatabaseHas('invitation_gifts', [
+        'invitation_id' => $invitation->id,
+        'gift_type' => 'bank_transfer',
+        'bank_name' => 'Bank Central Asia (BCA)',
+        'account_number' => '5432109876',
+        'account_name' => 'Romeo Montague',
+    ]);
+
+    $this->assertDatabaseHas('invitation_gifts', [
+        'invitation_id' => $invitation->id,
+        'gift_type' => 'bank_transfer',
+        'bank_name' => 'Bank Mandiri',
+        'account_number' => '1234567890123',
+        'account_name' => 'Juliet Capulet',
+    ]);
+
+    $this->assertDatabaseHas('invitation_gifts', [
+        'invitation_id' => $invitation->id,
+        'gift_type' => 'physical_gift',
+        'recipient_address' => 'Jl. Mawar Indah No. 12, Jakarta Selatan',
+    ]);
+
+    // Public invitation display check (must not throw incomplete class error and must show bank accounts)
+    $publicResponse = $this->get('/u/'.$invitation->slug);
+    $publicResponse->assertOk()
+        ->assertSee('Bank Central Asia (BCA)')
+        ->assertSee('5432109876')
+        ->assertSee('Bank Mandiri')
+        ->assertSee('1234567890123');
+});

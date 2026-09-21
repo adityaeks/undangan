@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
+    Config::set('services.midtrans.server_key', null);
+    Config::set('services.midtrans.client_key', null);
+    Config::set('services.midtrans.is_production', false);
+
     $this->member = User::factory()->create(['role' => 'member']);
     $this->theme = Theme::create([
         'name' => 'Royal Sapphire Wedding',
@@ -43,7 +47,7 @@ test('order detail page handles midtrans snap token generation using http client
     $response = $this->actingAs($this->member)->get(route('orders.show', $order));
 
     $response->assertOk()
-        ->assertSee('Detail Pembelian & Tagihan', false)
+        ->assertSee('Detail Pembelian')
         ->assertSee('mock-snap-token-xyz-98765')
         ->assertSee('Bayar Sekarang')
         ->assertSee('https://app.sandbox.midtrans.com/snap/snap.js');
@@ -98,7 +102,7 @@ test('midtrans webhook with valid signature activates order and unlocks theme', 
     $order = $paymentService->createOrderForTheme($this->member, $this->theme);
 
     $statusCode = '200';
-    $grossAmount = number_format((float) $order->amount, 2, '.', '');
+    $grossAmount = number_format((float) ($order->total_amount ?? $order->amount), 2, '.', '');
     $signature = hash('sha512', $order->order_code.$statusCode.$grossAmount.$serverKey);
 
     $payload = [

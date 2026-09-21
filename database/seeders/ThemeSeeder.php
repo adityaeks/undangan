@@ -46,6 +46,7 @@ class ThemeSeeder extends Seeder
                         'Perjalanan Cinta Timeline Cards',
                         'Floating Audio & Amplop Digital 1-Klik',
                     ],
+                    'has_story_images' => true,
                     'best_for' => 'Pernikahan romantis, intimate & ballroom wedding, pasangan pecinta estetika floral dusty rose',
                     'rating' => '4.99',
                     'reviews_count' => '1.450',

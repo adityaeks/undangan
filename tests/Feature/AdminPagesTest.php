@@ -18,6 +18,23 @@ test('authenticated user can view dashboard page with real metrics', function ()
 
 test('authenticated member can view dedicated member dashboard with member layout', function () {
     $member = User::factory()->create(['role' => 'user']);
+    $theme = Theme::first() ?? Theme::create([
+        'name' => 'The Warm Minimalist',
+        'slug' => 'minimalist',
+        'category' => 'minimalist',
+        'thumbnail' => 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc',
+        'view_path' => 'demo.minimalist',
+        'is_active' => true,
+    ]);
+
+    Invitation::create([
+        'owner_id' => $member->id,
+        'user_id' => $member->id,
+        'theme_id' => $theme->id,
+        'title' => 'The Wedding of Member',
+        'slug' => 'wedding-of-member-'.uniqid(),
+        'is_published' => true,
+    ]);
 
     $response = $this->actingAs($member)->get('/dashboard');
 
@@ -34,8 +51,8 @@ test('newly registered member starts with empty invitations and shows empty onbo
 
     $response->assertOk()
         ->assertSee('Portal Pengantin')
-        ->assertSee('Undangan Belum Dibuat')
-        ->assertSee('Mulai Buat Undangan Pertama Saya')
+        ->assertSee('Selamat Datang')
+        ->assertSee('Buat Undangan Sekarang')
         ->assertDontSee('The Wedding of Raka & Arinda');
 
     $invitationResponse = $this->actingAs($member)->get('/member/invitations');
@@ -68,7 +85,9 @@ test('member can view and manage their dedicated member pages with portal pengan
     $this->actingAs($member)->get('/member/invitations/create')
         ->assertOk()
         ->assertSee('Portal Pengantin')
-        ->assertSee('Form Pembuatan Undangan Baru');
+        ->assertSee('Form Pembuatan Undangan Baru')
+        ->assertSee('novalidate')
+        ->assertSee('data-step="1"', false);
 
     // Themes
     $this->actingAs($member)->get('/member/themes')
@@ -104,7 +123,9 @@ test('authenticated super admin can view admin invitations index and create page
 
     $createResponse = $this->actingAs($user)->get('/admin/invitations/create');
     $createResponse->assertOk()
-        ->assertSee('Form Pembuatan Undangan Baru');
+        ->assertSee('Form Pembuatan Undangan Baru')
+        ->assertSee('novalidate')
+        ->assertSee('data-step="1"', false);
 });
 
 test('authenticated member can store and save new invitation with couple events and wallets', function () {

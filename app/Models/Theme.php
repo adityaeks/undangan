@@ -55,7 +55,11 @@ class Theme extends Model
             return (bool) $preset['has_story_images'];
         }
 
-        return in_array($canonicalSlug, ['3d-motion-05', 'motion-05', 'm05'], true);
+        return in_array($this->slug, [
+            'standart-01', 'standart-02', 'standart-03', 'standart-04', 'standart-05',
+            'rose-romance', 'editorial', 'botanical', 'classic', 'minimalist',
+            '3d-motion-01', '3d-motion-02', '3d-motion-05', 'special-01', 'special-02', 'special-03',
+        ], true) || in_array($canonicalSlug, ['3d-motion-05', 'motion-05', 'm05', 'rose-romance'], true);
     }
 
     /**

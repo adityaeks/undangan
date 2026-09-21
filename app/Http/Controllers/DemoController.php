@@ -30,7 +30,7 @@ class DemoController extends Controller
                 '3d-motion-04', '3d-motion-10', 'motion-10', 'm10' => '3d-motion-10',
                 '3d-motion-05', '3d-motion-27', 'motion-27', 'm27' => '3d-motion-27',
                 '3d-motion-06', '3d-motion-47', 'motion-47', 'm47' => '3d-motion-47',
-                '3d-motion-07', '3d-motion-49', 'motion-49', 'm49' => '3d-motion-49',
+                '3d-motion-49', 'motion-49', 'm49' => '3d-motion-49',
                 '3d-motion-08', '3d-motion-55', 'motion-55', 'm55' => '3d-motion-55',
                 default => 'classic',
             };
@@ -101,6 +101,7 @@ class DemoController extends Controller
         $demoData = [
             'title' => 'The Wedding of '.$groomNickname.' & '.$brideNickname,
             'cover_image' => $activeStyle['cover_bg'] ?? null,
+            'cover_images' => array_values(array_filter([$activeStyle['cover_bg'] ?? null])),
             'background_music' => $activeStyle['audio_url'] ?? '/audio/wedding-song.mp3',
             'quote_text' => $defaults['quote_text'] ?? 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.',
             'quote_source' => $defaults['quote_source'] ?? 'QS. Ar-Rum: 21',
@@ -108,11 +109,13 @@ class DemoController extends Controller
                 'name' => $groomName,
                 'nickname' => $groomNickname,
                 'photo' => $activeStyle['groom_photo'] ?? ($defaults['groom']['photo'] ?? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80'),
+                'photos' => array_values(array_filter([$activeStyle['groom_photo'] ?? ($defaults['groom']['photo'] ?? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80')])),
             ]),
             'bride' => array_merge($defaults['bride'], [
                 'name' => $brideName,
                 'nickname' => $brideNickname,
                 'photo' => $activeStyle['bride_photo'] ?? ($defaults['bride']['photo'] ?? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'),
+                'photos' => array_values(array_filter([$activeStyle['bride_photo'] ?? ($defaults['bride']['photo'] ?? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80')])),
             ]),
             'events' => [
                 'akad' => array_merge($defaults['events']['akad'], [
@@ -138,29 +141,25 @@ class DemoController extends Controller
         ];
 
         // Resolusi view blade yang sesuai
-        if (view()->exists("demo.{$layout}")) {
-            $viewName = "demo.{$layout}";
-        } else {
-            $viewName = match ($layout) {
-                'standart-01', 'rose-romance', 'romantic', 'rose-floral' => 'demo.standart-01',
-                'standart-02', 'editorial' => 'demo.standart-02',
-                'standart-03', 'botanical' => 'demo.standart-03',
-                'standart-04', 'classic' => 'demo.standart-04',
-                'standart-05', 'minimalist', 'warm-minimalist', 'royal-luxury' => 'demo.standart-05',
-                'special-01', 'luxury-01', 'l01' => 'demo.special-01',
-                'special-02', 'luxury-02', 'l02' => 'demo.special-02',
-                'special-03', 'luxury-07', 'l07' => 'demo.special-03',
-                '3d-motion-01', 'motion-01', '3d-motion' => 'demo.3d-motion-01',
-                '3d-motion-02', '3d-motion-05', 'motion-05', 'm05' => 'demo.3d-motion-02',
-                '3d-motion-03', '3d-motion-07', 'motion-07', 'm07' => 'demo.3d-motion-03',
-                '3d-motion-04', '3d-motion-10', 'motion-10', 'm10' => 'demo.3d-motion-04',
-                '3d-motion-05', '3d-motion-27', 'motion-27', 'm27' => 'demo.3d-motion-05',
-                '3d-motion-06', '3d-motion-47', 'motion-47', 'm47' => 'demo.3d-motion-06',
-                '3d-motion-07', '3d-motion-49', 'motion-49', 'm49' => 'demo.3d-motion-07',
-                '3d-motion-08', '3d-motion-55', 'motion-55', 'm55' => 'demo.3d-motion-08',
-                default => 'demo.standart-04',
-            };
-        }
+        $viewName = match ($layout) {
+            'standart-01', 'rose-romance', 'romantic', 'rose-floral' => 'demo.standart-01',
+            'standart-02', 'editorial' => 'demo.standart-02',
+            'standart-03', 'botanical' => 'demo.standart-03',
+            'standart-04', 'classic' => 'demo.standart-04',
+            'standart-05', 'minimalist', 'warm-minimalist', 'royal-luxury' => 'demo.standart-05',
+            'special-01', 'luxury-01', 'l01' => 'demo.special-01',
+            'special-02', 'luxury-02', 'l02' => 'demo.special-02',
+            'special-03', 'luxury-07', 'l07' => 'demo.special-03',
+            '3d-motion-01', 'motion-01', '3d-motion' => 'demo.3d-motion-01',
+            '3d-motion-02', '3d-motion-05', 'motion-05', 'm05' => 'demo.3d-motion-02',
+            '3d-motion-03', '3d-motion-07', 'motion-07', 'm07' => 'demo.3d-motion-03',
+            '3d-motion-04', '3d-motion-10', 'motion-10', 'm10' => 'demo.3d-motion-04',
+            '3d-motion-05', '3d-motion-27', 'motion-27', 'm27' => 'demo.3d-motion-05',
+            '3d-motion-06', '3d-motion-47', 'motion-47', 'm47' => 'demo.3d-motion-06',
+            '3d-motion-49', 'motion-49', 'm49' => 'demo.3d-motion-07',
+            '3d-motion-08', '3d-motion-55', 'motion-55', 'm55' => 'demo.3d-motion-08',
+            default => view()->exists("demo.{$layout}") ? "demo.{$layout}" : 'demo.standart-04',
+        };
 
         return view($viewName, [
             'activeStyle' => $activeStyle,

@@ -123,11 +123,19 @@ class InvitationController extends Controller
             // Wallets
             'bank_1_name' => 'nullable|string|max:100',
             'bank_1_number' => 'nullable|string|max:100',
+            'bank_1_account' => 'nullable|string|max:100',
             'bank_1_holder' => 'nullable|string|max:255',
+            'bank_1_qris_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'bank_1_existing_qris' => 'nullable|string|max:500',
 
             'bank_2_name' => 'nullable|string|max:100',
             'bank_2_number' => 'nullable|string|max:100',
+            'bank_2_account' => 'nullable|string|max:100',
             'bank_2_holder' => 'nullable|string|max:255',
+            'bank_2_qris_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'bank_2_existing_qris' => 'nullable|string|max:500',
+
+            'gift_address' => 'nullable|string|max:1000',
         ]);
 
         // 1. Process Uploads
@@ -306,35 +314,51 @@ class InvitationController extends Controller
         }
 
         // 7. Create Gifts / Bank Accounts
-        if (! empty($validated['bank_1_name']) && ! empty($validated['bank_1_number'])) {
+        $bank1Number = $validated['bank_1_number'] ?? $validated['bank_1_account'] ?? $request->input('bank_1_number') ?? $request->input('bank_1_account');
+        if (! empty($validated['bank_1_name']) && ! empty($bank1Number)) {
+            $qris1 = $request->input('bank_1_existing_qris');
+            if ($request->hasFile('bank_1_qris_file')) {
+                $path1 = upload_as_webp($request->file('bank_1_qris_file'), 'invitations/qris');
+                $qris1 = Storage::url($path1);
+            }
+
             $invitation->gifts()->create([
                 'gift_type' => 'bank_transfer',
                 'bank_name' => $validated['bank_1_name'],
-                'account_number' => $validated['bank_1_number'],
-                'account_name' => $validated['bank_1_holder'] ?? $validated['groom_name'],
+                'account_number' => $bank1Number,
+                'account_name' => $validated['bank_1_holder'] ?? $validated['groom_name'] ?? 'Pengantin Pria',
+                'qr_code_url' => $qris1,
+                'qris_image' => $qris1,
                 'order' => 1,
             ]);
         }
 
-        if (! empty($validated['bank_2_name']) && ! empty($validated['bank_2_number'])) {
+        $bank2Number = $validated['bank_2_number'] ?? $validated['bank_2_account'] ?? $request->input('bank_2_number') ?? $request->input('bank_2_account');
+        if (! empty($validated['bank_2_name']) && ! empty($bank2Number)) {
+            $qris2 = $request->input('bank_2_existing_qris');
+            if ($request->hasFile('bank_2_qris_file')) {
+                $path2 = upload_as_webp($request->file('bank_2_qris_file'), 'invitations/qris');
+                $qris2 = Storage::url($path2);
+            }
+
             $invitation->gifts()->create([
                 'gift_type' => 'bank_transfer',
                 'bank_name' => $validated['bank_2_name'],
-                'account_number' => $validated['bank_2_number'],
-                'account_name' => $validated['bank_2_holder'] ?? $validated['bride_name'],
+                'account_number' => $bank2Number,
+                'account_name' => $validated['bank_2_holder'] ?? $validated['bride_name'] ?? 'Pengantin Wanita',
+                'qr_code_url' => $qris2,
+                'qris_image' => $qris2,
                 'order' => 2,
             ]);
         }
 
-        // 8. Create Default Sample Guest
-        $invitation->guests()->create([
-            'name' => 'Reyhan',
-            'slug' => 'budi-santoso',
-            'phone' => '081234567890',
-            'category' => 'VIP',
-            'attendance_status' => 'pending',
-            'pax' => 2,
-        ]);
+        if (! empty($validated['gift_address'])) {
+            $invitation->gifts()->create([
+                'gift_type' => 'physical_gift',
+                'recipient_address' => $validated['gift_address'],
+                'order' => 3,
+            ]);
+        }
 
         return redirect()->route('invitations.index')
             ->with('success', 'Selamat! Undangan pernikahan "'.$invitation->title.'" berhasil disimpan dan diterbitkan.');

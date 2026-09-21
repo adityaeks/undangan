@@ -1,6 +1,20 @@
 <!-- STEP 2: MEMPELAI -->
 <div x-show="currentStep === 2" x-transition data-step="2" class="space-y-6">
 
+    <!-- DYNAMIC THEME PHOTO GUIDANCE -->
+    <!-- <template x-if="activeTheme && activeTheme.photo_tip">
+        <div class="p-3.5 rounded-2xl bg-brand-50/70 border border-brand-200/80 text-xs text-brand-900 flex items-center justify-between gap-3 shadow-2xs">
+            <div class="flex items-center gap-2.5">
+                <i data-lucide="sparkles" class="w-4 h-4 text-brand-600 shrink-0"></i>
+                <div>
+                    <span class="font-bold text-charcoal-900" x-text="'Rekomendasi Foto untuk Tema ' + activeTheme.name + ':'"></span>
+                    <span class="text-sand-600 ml-1" x-text="activeTheme.photo_tip"></span>
+                </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-md bg-white border border-brand-200 text-brand-700 text-[10px] font-bold uppercase tracking-wider shrink-0" x-text="activeTheme.category"></span>
+        </div>
+    </template> -->
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         <!-- MEMPELAI PRIA (GROOM) -->
@@ -10,8 +24,8 @@
                 <h4 class="font-serif text-sm font-bold text-charcoal-950">Mempelai Pria (Groom)</h4>
             </div>
 
-            <!-- FOTO MEMPELAI PRIA (MULTI-PHOTO GRID) -->
-            <div class="space-y-2">
+            <!-- FOTO MEMPELAI PRIA (MULTI-PHOTO GRID - HIDDEN IF NO PHOTO THEME) -->
+            <div x-show="!isNoPhotoTheme" class="space-y-2">
                 <div class="flex items-center justify-between">
                     <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-900">
                         Foto Mempelai Pria
@@ -108,6 +122,12 @@
                 <p class="text-[10px] text-sand-400">💡 Bisa unggah hingga 5 foto (1 per 1 atau sekaligus). Foto pertama otomatis jadi foto profil utama.</p>
             </div>
 
+            <!-- NO PHOTO THEME NOTICE FOR GROOM -->
+            <div x-show="isNoPhotoTheme" class="p-3.5 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-900 flex items-center gap-2.5 shadow-2xs">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Visual mempelai pria diisi oleh <strong>Animasi 3D Bawaan</strong> tema (tanpa foto).</span>
+            </div>
+
             <!-- DETAIL PRIA -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="space-y-1">
@@ -139,17 +159,47 @@
                 </div>
             </div>
 
+            @php
+                $groomChildOrders = [
+                    'Putra Pertama dari',
+                    'Putra Kedua dari',
+                    'Putra Ketiga dari',
+                    'Putra Keempat dari',
+                    'Putra Kelima dari',
+                    'Putra Keenam dari',
+                    'Putra Ketujuh dari',
+                    'Putra Kedelapan dari',
+                    'Putra Kesembilan dari',
+                    'Putra Kesepuluh dari',
+                    'Putra Sulung dari',
+                    'Putra Bungsu dari',
+                    'Putra Tunggal dari',
+                    'Putra dari',
+                ];
+                $currentGroomChildOrder = old('groom_child_order', $groom?->child_number ?? 'Putra Pertama dari');
+                if ($currentGroomChildOrder && !in_array($currentGroomChildOrder, $groomChildOrders)) {
+                    array_unshift($groomChildOrders, $currentGroomChildOrder);
+                }
+            @endphp
             <div class="space-y-1">
                 <label class="block text-xs font-bold text-charcoal-900">
                     Urutan Anak
                 </label>
-                <input 
-                    type="text" 
-                    name="groom_child_order" 
-                    value="{{ old('groom_child_order', $groom?->child_number ?? 'Putra Pertama dari') }}" 
-                    placeholder="Putra Pertama dari / Putra ke-2 dari" 
-                    class="w-full px-3 py-2 rounded-xl border border-sand-300 text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
-                >
+                <div class="relative">
+                    <select 
+                        name="groom_child_order" 
+                        class="w-full px-3 py-2 rounded-xl border border-sand-300 text-xs font-medium text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20 bg-sand-50/50 appearance-none cursor-pointer"
+                    >
+                        @foreach($groomChildOrders as $order)
+                            <option value="{{ $order }}" @selected($currentGroomChildOrder === $order)>
+                                {{ $order }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-sand-400">
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -197,8 +247,8 @@
                 <h4 class="font-serif text-sm font-bold text-charcoal-950">Mempelai Wanita (Bride)</h4>
             </div>
 
-            <!-- FOTO MEMPELAI WANITA (MULTI-PHOTO GRID) -->
-            <div class="space-y-2">
+            <!-- FOTO MEMPELAI WANITA (MULTI-PHOTO GRID - HIDDEN IF NO PHOTO THEME) -->
+            <div x-show="!isNoPhotoTheme" class="space-y-2">
                 <div class="flex items-center justify-between">
                     <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-900">
                         Foto Mempelai Wanita
@@ -295,6 +345,12 @@
                 <p class="text-[10px] text-sand-400">💡 Bisa unggah hingga 5 foto (1 per 1 atau sekaligus). Foto pertama otomatis jadi foto profil utama.</p>
             </div>
 
+            <!-- NO PHOTO THEME NOTICE FOR BRIDE -->
+            <div x-show="isNoPhotoTheme" class="p-3.5 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-900 flex items-center gap-2.5 shadow-2xs">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Visual mempelai wanita diisi oleh <strong>Animasi 3D Bawaan</strong> tema (tanpa foto).</span>
+            </div>
+
             <!-- DETAIL WANITA -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="space-y-1">
@@ -326,17 +382,47 @@
                 </div>
             </div>
 
+            @php
+                $brideChildOrders = [
+                    'Putri Pertama dari',
+                    'Putri Kedua dari',
+                    'Putri Ketiga dari',
+                    'Putri Keempat dari',
+                    'Putri Kelima dari',
+                    'Putri Keenam dari',
+                    'Putri Ketujuh dari',
+                    'Putri Kedelapan dari',
+                    'Putri Kesembilan dari',
+                    'Putri Kesepuluh dari',
+                    'Putri Sulung dari',
+                    'Putri Bungsu dari',
+                    'Putri Tunggal dari',
+                    'Putri dari',
+                ];
+                $currentBrideChildOrder = old('bride_child_order', $bride?->child_number ?? 'Putri Kedua dari');
+                if ($currentBrideChildOrder && !in_array($currentBrideChildOrder, $brideChildOrders)) {
+                    array_unshift($brideChildOrders, $currentBrideChildOrder);
+                }
+            @endphp
             <div class="space-y-1">
                 <label class="block text-xs font-bold text-charcoal-900">
                     Urutan Anak
                 </label>
-                <input 
-                    type="text" 
-                    name="bride_child_order" 
-                    value="{{ old('bride_child_order', $bride?->child_number ?? 'Putri Kedua dari') }}" 
-                    placeholder="Putri Kedua dari / Putri Bungsu dari" 
-                    class="w-full px-3 py-2 rounded-xl border border-sand-300 text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
-                >
+                <div class="relative">
+                    <select 
+                        name="bride_child_order" 
+                        class="w-full px-3 py-2 rounded-xl border border-sand-300 text-xs font-medium text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20 bg-sand-50/50 appearance-none cursor-pointer"
+                    >
+                        @foreach($brideChildOrders as $order)
+                            <option value="{{ $order }}" @selected($currentBrideChildOrder === $order)>
+                                {{ $order }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-sand-400">
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -370,7 +456,7 @@
                         type="text" 
                         name="bride_instagram" 
                         value="{{ old('bride_instagram', $bride?->instagram) }}" 
-                        placeholder="username_tanpa_at" 
+                        placeholder="username" 
                         class="w-full px-3 py-2 rounded-r-xl border border-sand-300 text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
                     >
                 </div>

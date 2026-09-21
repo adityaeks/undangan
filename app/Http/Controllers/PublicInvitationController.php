@@ -26,7 +26,11 @@ class PublicInvitationController extends Controller
             abort(404);
         }
 
-        $invitation = $payload['invitation'];
+        $invitation = (object) [
+            'id' => $payload['invitation_id'] ?? ($payload['invitation']->id ?? null),
+            'slug' => $payload['invitation_slug'] ?? ($payload['invitation']->slug ?? $slug),
+            'title' => $payload['invitation_title'] ?? ($payload['data']['title'] ?? ''),
+        ];
         $data = $payload['data'];
         $themeSlug = $payload['themeSlug'];
 
@@ -199,6 +203,7 @@ class PublicInvitationController extends Controller
                     'account_number' => $wallet->account_number,
                     'account_name' => $wallet->account_name ?: $groomNickname,
                     'color' => $bankColors[$idx % count($bankColors)],
+                    'qris_image' => $wallet->qr_code_url ?: $wallet->qris_image,
                 ];
             }
         }
@@ -344,7 +349,9 @@ class PublicInvitationController extends Controller
         ];
 
         return [
-            'invitation' => $invitation,
+            'invitation_id' => $invitation->id,
+            'invitation_slug' => $invitation->slug,
+            'invitation_title' => $invitation->title,
             'data' => $data,
             'defaultViewName' => $invitation->theme?->view_path ?: 'demo.standart-04',
             'themeSlug' => $themeSlug,

@@ -1398,6 +1398,7 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 		</div>
 					</div>
 		</section>
+				@if (!empty($data['stories']) && count($data['stories']) > 0)
 				<section data-dce-background-color="#744C2F" class="elementor-section elementor-inner-section elementor-element elementor-element-83dc9fe elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="83dc9fe" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-no">
@@ -1411,36 +1412,38 @@ Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah 
 				<div class="elementor-widget-container">
 					<div class="elementor-jet-timeline jet-elements"><div class="jet-timeline jet-timeline--align-left jet-timeline--align-top">
 	<div class="jet-timeline__line"><div class="jet-timeline__line-progress"></div></div>
-	<div class="jet-timeline-list"><div class="jet-timeline-item jet-timeline-item--animated elementor-repeater-item-0363b0b-0 jet-timeline-item--image-inside">
+	<div class="jet-timeline-list">
+@foreach ($data['stories'] as $index => $story)
+	<div class="jet-timeline-item jet-timeline-item--animated elementor-repeater-item-0363b0b-{{ $index }} jet-timeline-item--image-inside">
 	<div class="timeline-item__card">
 		<div class="timeline-item__card-inner">
-				<div class="timeline-item__card-img"><img loading="lazy" width="1000" height="667" src="/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-12.jpeg" class="attachment-full size-full wp-image-7687" alt="" decoding="async" /></div>				<div class="timeline-item__card-content">
-					<div class="timeline-item__meta"></div><h5 class="timeline-item__card-title">25 AGUSTUS 2023</h5><div class="timeline-item__card-desc">Berawal dari tempat pekerjaan Cianjur-2023, kami mengenal satu sama lain dan belum ada benih cinta kala itu, hanya sebatas teman kerja.</div>				</div>
-						</div>
+				@php
+					$storyImg = $story['image_url'] ?? $story['image'] ?? null;
+				@endphp
+				@if (!empty($storyImg))
+				<div class="timeline-item__card-img"><img loading="lazy" width="1000" height="667" src="{{ $storyImg }}" class="attachment-full size-full" alt="{{ $story['title'] ?? 'Love Story' }}" decoding="async" /></div>
+				@endif
+				<div class="timeline-item__card-content">
+					<div class="timeline-item__meta"></div>
+					<h5 class="timeline-item__card-title">{{ strtoupper($story['date'] ?? $story['year'] ?? ($story['title'] ?? '')) }}</h5>
+					@if (!empty($story['title']) && !empty($story['date'] ?? $story['year']))
+					<div style="font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #ffffff;">{{ $story['title'] }}</div>
+					@endif
+					<div class="timeline-item__card-desc">{{ $story['story'] ?? $story['desc'] ?? '' }}</div>
+				</div>
+		</div>
 		<div class="timeline-item__card-arrow"></div>
 	</div>
-	<div class="timeline-item__point"><div class="timeline-item__point-content timeline-item__point-content--icon"><span class="jet-elements-icon"><i aria-hidden="true" class="fas fa-heart"></i></span></div></div><div class="timeline-item__meta"></div></div><div class="jet-timeline-item jet-timeline-item--animated elementor-repeater-item-0363b0b-1 jet-timeline-item--image-inside">
-	<div class="timeline-item__card">
-		<div class="timeline-item__card-inner">
-				<div class="timeline-item__card-img"><img loading="lazy" width="1000" height="667" src="/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-10.jpeg" class="attachment-full size-full wp-image-7688" alt="" decoding="async" /></div>				<div class="timeline-item__card-content">
-					<div class="timeline-item__meta"></div><h5 class="timeline-item__card-title">03 JUNI 2024</h5><div class="timeline-item__card-desc">Setelah cukup mengenal satu sama lain, satu tahun kurang lebih nya kami menjalin hubungan. 03 Juni 2024 Akhirnya kita memutuskan untuk melanjutkan ke Hubungan yang lebih serius mempertemukan kedua keluarga.</div>				</div>
-						</div>
-		<div class="timeline-item__card-arrow"></div>
+	<div class="timeline-item__point"><div class="timeline-item__point-content timeline-item__point-content--icon"><span class="jet-elements-icon"><i aria-hidden="true" class="fas fa-heart"></i></span></div></div><div class="timeline-item__meta"></div>
 	</div>
-	<div class="timeline-item__point"><div class="timeline-item__point-content timeline-item__point-content--icon"><span class="jet-elements-icon"><i aria-hidden="true" class="fas fa-heart"></i></span></div></div><div class="timeline-item__meta"></div></div><div class="jet-timeline-item jet-timeline-item--animated elementor-repeater-item-0363b0b-2 jet-timeline-item--image-inside">
-	<div class="timeline-item__card">
-		<div class="timeline-item__card-inner">
-				<div class="timeline-item__card-img"><img loading="lazy" width="1000" height="667" src="/themes/3d-motion-27/uploads/jet-form-builder/85dc7996f092d5ad5a652fac6079bd57/2024/10/img-sample-01-11.jpeg" class="attachment-full size-full wp-image-7689" alt="" decoding="async" /></div>				<div class="timeline-item__card-content">
-					<div class="timeline-item__meta"></div><h5 class="timeline-item__card-title">29 DESEMBER 2025</h5><div class="timeline-item__card-desc">Sampai tanggal ini kami melaksanakan akad terlebih dahulu dan akhirnya kami mengubah status hingga menjadi pasangan suami istri. Semoga allah swt. Memberikan keberkahan pernikahan ini. "AMIN</div>				</div>
-						</div>
-		<div class="timeline-item__card-arrow"></div>
-	</div>
-	<div class="timeline-item__point"><div class="timeline-item__point-content timeline-item__point-content--icon"><span class="jet-elements-icon"><i aria-hidden="true" class="fas fa-heart"></i></span></div></div><div class="timeline-item__meta"></div></div></div></div></div>				</div>
+@endforeach
+	</div></div></div>				</div>
 				</div>
 					</div>
 		</div>
 					</div>
 		</section>
+				@endif
 				<section data-dce-background-overlay-color="#744C2F" class="elementor-section elementor-inner-section elementor-element elementor-element-1f09732 elementor-section-full_width elementor-section-content-middle wdsdv-enabled--yes jedv-enabled--yes elementor-section-height-default elementor-section-height-default" data-id="1f09732" data-element_type="section" data-e-type="section" data-settings="{&quot;jet_parallax_layout_list&quot;:[],&quot;background_background&quot;:&quot;slideshow&quot;,&quot;background_slideshow_gallery&quot;:[],&quot;background_slideshow_loop&quot;:&quot;yes&quot;,&quot;background_slideshow_slide_duration&quot;:5000,&quot;background_slideshow_slide_transition&quot;:&quot;fade&quot;,&quot;background_slideshow_transition_duration&quot;:500}">
 							<div class="elementor-background-overlay"></div>
 							<div class="elementor-container elementor-column-gap-no">

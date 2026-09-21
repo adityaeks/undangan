@@ -47,22 +47,16 @@ test('invitation generateUniqueSlug resolves slug collisions cleanly', function 
     expect($newSlug)->toBe('raka-arinda-1');
 });
 
-test('theme seeder seeds exactly the 5 canonical themes and prunes the rest', function () {
+test('theme seeder seeds all 16 canonical themes and prunes the rest', function () {
     $this->seed(ThemeSeeder::class);
 
     $themes = Theme::all();
-    expect($themes->count())->toBe(5)
-        ->and($themes->pluck('slug')->sort()->values()->toArray())->toBe([
-            'botanical',
-            'classic',
-            'editorial',
-            'minimalist',
-            'rose-romance',
-        ]);
+    expect($themes->count())->toBe(16)
+        ->and($themes->pluck('slug')->toArray())->toContain('standart-01', 'standart-02', 'special-01', '3d-motion-01');
 
-    $editorial = Theme::where('slug', 'editorial')->first();
-    expect($editorial->metadata)->toBeArray()
-        ->and($editorial->metadata['typography'])->toBe('Cinzel + Cormorant Garamond')
-        ->and($editorial->metadata['colors'])->toBeArray()
-        ->and($editorial->metadata['colors'][0]['hex'])->toBe('#0A0C13');
+    $standart01 = Theme::where('slug', 'standart-01')->first();
+    expect($standart01->metadata)->toBeArray()
+        ->and($standart01->metadata['typography'])->toBe('Alex Brush + Cormorant + Plus Jakarta')
+        ->and($standart01->metadata['colors'])->toBeArray()
+        ->and($standart01->metadata['colors'][0]['hex'])->toBe('#FBF6F7');
 });

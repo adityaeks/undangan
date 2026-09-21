@@ -108,16 +108,57 @@
         <!-- ========================================== -->
         <!-- 1. FULLSCREEN COVER / ENVELOPE OPENER -->
         <!-- ========================================== -->
+        @php
+            $coverPhotos = !empty($data['cover_images']) ? $data['cover_images'] : array_values(array_filter([$data['cover_image'] ?? null, $activeStyle['cover_bg'] ?? null]));
+            if (empty($coverPhotos)) {
+                $coverPhotos = ['https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=1200&auto=format&fit=crop&q=85'];
+            }
+        @endphp
+
         <div 
             x-show="!isOpened"
             x-transition:leave="transition ease-in-out duration-700 transform"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 -translate-y-full scale-95 pointer-events-none"
-            class="fixed inset-0 max-w-md mx-auto z-50 flex flex-col justify-between p-8 text-center text-white bg-cover bg-center overflow-hidden"
-            style="background-image: url('{{ !empty($data['cover_image']) ? $data['cover_image'] : ($activeStyle['cover_bg'] ?? 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=1200&auto=format&fit=crop&q=85') }}');"
+            class="fixed inset-0 max-w-md mx-auto z-50 flex flex-col justify-between p-8 text-center text-white overflow-hidden bg-black"
         >
-            <!-- DARK GRADIENT OVERLAY -->
-            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black/90 z-0"></div>
+            <!-- Background Cover Crossfade -->
+            <div 
+                class="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+                x-data="{
+                    activeCoverIdx: 0,
+                    outgoingCoverIdx: null,
+                    totalCovers: {{ count($coverPhotos) }},
+                    nextCover() {
+                        if (this.totalCovers <= 1) return;
+                        this.outgoingCoverIdx = this.activeCoverIdx;
+                        this.activeCoverIdx = (this.activeCoverIdx + 1) % this.totalCovers;
+                        setTimeout(() => {
+                            this.outgoingCoverIdx = null;
+                        }, 2100);
+                    },
+                    init() {
+                        if (this.totalCovers > 1) {
+                            setInterval(() => this.nextCover(), 5000);
+                        }
+                    }
+                }"
+            >
+                @foreach($coverPhotos as $cIdx => $cUrl)
+                    <div 
+                        class="absolute inset-0 bg-cover bg-center bg-no-repeat will-change-[opacity,transform] transition-all duration-[2000ms] ease-in-out {{ $cIdx === 0 ? 'opacity-100 scale-105 z-10' : 'opacity-0 scale-110 z-0' }}"
+                        :class="{
+                            'opacity-100 scale-105 z-20': activeCoverIdx === {{ $cIdx }},
+                            'opacity-100 scale-105 z-10': outgoingCoverIdx === {{ $cIdx }},
+                            'opacity-0 scale-110 z-0 pointer-events-none': activeCoverIdx !== {{ $cIdx }} && outgoingCoverIdx !== {{ $cIdx }}
+                        }"
+                        style="background-image: url('{{ $cUrl }}');"
+                    ></div>
+                @endforeach
+
+                <!-- DARK GRADIENT OVERLAY -->
+                <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black/90 z-[25] pointer-events-none"></div>
+            </div>
 
             <!-- TOP HEADER BADGE -->
             <div class="relative z-10 pt-8 space-y-2">
@@ -249,6 +290,18 @@
             @endif
 
             <!-- SECTION: KEDUA MEMPELAI (BRIDE & GROOM) -->
+            @php
+                $groomPhotos = !empty($data['groom']['photos']) ? $data['groom']['photos'] : array_values(array_filter([$data['groom']['photo'] ?? null]));
+                if (empty($groomPhotos)) {
+                    $groomPhotos = ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80'];
+                }
+
+                $bridePhotos = !empty($data['bride']['photos']) ? $data['bride']['photos'] : array_values(array_filter([$data['bride']['photo'] ?? null]));
+                if (empty($bridePhotos)) {
+                    $bridePhotos = ['https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'];
+                }
+            @endphp
+
             <section id="sec-mempelai" class="px-6 space-y-8">
                 <div class="text-center space-y-1">
                     <span 
@@ -272,8 +325,40 @@
                     :class="currentStyle.card_radius"
                     class="p-6 border shadow-md text-center space-y-4 max-w-sm mx-auto transition-all duration-300"
                 >
-                    <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-amber-400/30 shadow-inner">
-                        <img src="{{ $data['groom']['photo'] }}" alt="{{ $data['groom']['name'] }}" class="w-full h-full object-cover">
+                    <div 
+                        class="relative w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-amber-400/30 shadow-inner bg-stone-900"
+                        x-data="{
+                            activeIdx: 0,
+                            outgoingIdx: null,
+                            total: {{ count($groomPhotos) }},
+                            next() {
+                                if (this.total <= 1) return;
+                                this.outgoingIdx = this.activeIdx;
+                                this.activeIdx = (this.activeIdx + 1) % this.total;
+                                setTimeout(() => {
+                                    this.outgoingIdx = null;
+                                }, 1900);
+                            },
+                            init() {
+                                if (this.total > 1) {
+                                    setInterval(() => this.next(), 4800);
+                                }
+                            }
+                        }"
+                    >
+                        @foreach($groomPhotos as $index => $photoUrl)
+                            <img 
+                                src="{{ $photoUrl }}" 
+                                alt="{{ $data['groom']['name'] }}" 
+                                class="absolute inset-0 w-full h-full object-cover will-change-[opacity,transform] transition-all duration-[1800ms] ease-in-out {{ $index === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0' }}"
+                                :class="{
+                                    'opacity-100 scale-100 z-20': activeIdx === {{ $index }},
+                                    'opacity-100 scale-100 z-10': outgoingIdx === {{ $index }},
+                                    'opacity-0 scale-105 z-0 pointer-events-none': activeIdx !== {{ $index }} && outgoingIdx !== {{ $index }}
+                                }"
+                                loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                            >
+                        @endforeach
                     </div>
                     <div class="space-y-1">
                         <h4 
@@ -322,8 +407,43 @@
                     :class="currentStyle.card_radius"
                     class="p-6 border shadow-md text-center space-y-4 max-w-sm mx-auto transition-all duration-300"
                 >
-                    <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-amber-400/30 shadow-inner">
-                        <img src="{{ $data['bride']['photo'] }}" alt="{{ $data['bride']['name'] }}" class="w-full h-full object-cover">
+                    <div 
+                        class="relative w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-amber-400/30 shadow-inner bg-stone-900"
+                        x-data="{
+                            activeIdx: 0,
+                            outgoingIdx: null,
+                            total: {{ count($bridePhotos) }},
+                            next() {
+                                if (this.total <= 1) return;
+                                this.outgoingIdx = this.activeIdx;
+                                this.activeIdx = (this.activeIdx + 1) % this.total;
+                                setTimeout(() => {
+                                    this.outgoingIdx = null;
+                                }, 1900);
+                            },
+                            init() {
+                                if (this.total > 1) {
+                                    setTimeout(() => {
+                                        this.next();
+                                        setInterval(() => this.next(), 4800);
+                                    }, 2400);
+                                }
+                            }
+                        }"
+                    >
+                        @foreach($bridePhotos as $index => $photoUrl)
+                            <img 
+                                src="{{ $photoUrl }}" 
+                                alt="{{ $data['bride']['name'] }}" 
+                                class="absolute inset-0 w-full h-full object-cover will-change-[opacity,transform] transition-all duration-[1800ms] ease-in-out {{ $index === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0' }}"
+                                :class="{
+                                    'opacity-100 scale-100 z-20': activeIdx === {{ $index }},
+                                    'opacity-100 scale-100 z-10': outgoingIdx === {{ $index }},
+                                    'opacity-0 scale-105 z-0 pointer-events-none': activeIdx !== {{ $index }} && outgoingIdx !== {{ $index }}
+                                }"
+                                loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                            >
+                        @endforeach
                     </div>
                     <div class="space-y-1">
                         <h4 

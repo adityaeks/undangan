@@ -148,10 +148,18 @@ class InvitationController extends Controller
             // Wallets & Gifts
             'bank_1_name' => 'nullable|string|max:100',
             'bank_1_number' => 'nullable|string|max:100',
+            'bank_1_account' => 'nullable|string|max:100',
             'bank_1_holder' => 'nullable|string|max:255',
+            'bank_1_qris_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'bank_1_existing_qris' => 'nullable|string|max:500',
+
             'bank_2_name' => 'nullable|string|max:100',
             'bank_2_number' => 'nullable|string|max:100',
+            'bank_2_account' => 'nullable|string|max:100',
             'bank_2_holder' => 'nullable|string|max:255',
+            'bank_2_qris_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'bank_2_existing_qris' => 'nullable|string|max:500',
+
             'gift_address' => 'nullable|string|max:1000',
 
             // Stories
@@ -420,22 +428,40 @@ class InvitationController extends Controller
             }
 
             // Wallets & Gifts
-            if (! empty($validated['bank_1_name']) && ! empty($validated['bank_1_number'])) {
+            $bank1Number = $validated['bank_1_number'] ?? $validated['bank_1_account'] ?? $request->input('bank_1_number') ?? $request->input('bank_1_account');
+            if (! empty($validated['bank_1_name']) && ! empty($bank1Number)) {
+                $qris1 = $request->input('bank_1_existing_qris');
+                if ($request->hasFile('bank_1_qris_file')) {
+                    $path1 = upload_as_webp($request->file('bank_1_qris_file'), 'invitations/qris');
+                    $qris1 = Storage::url($path1);
+                }
+
                 $invitation->gifts()->create([
                     'gift_type' => 'bank_transfer',
                     'bank_name' => $validated['bank_1_name'],
-                    'account_number' => $validated['bank_1_number'],
-                    'account_name' => $validated['bank_1_holder'] ?? $validated['groom_name'],
+                    'account_number' => $bank1Number,
+                    'account_name' => $validated['bank_1_holder'] ?? $validated['groom_name'] ?? 'Pengantin Pria',
+                    'qr_code_url' => $qris1,
+                    'qris_image' => $qris1,
                     'order' => 1,
                 ]);
             }
 
-            if (! empty($validated['bank_2_name']) && ! empty($validated['bank_2_number'])) {
+            $bank2Number = $validated['bank_2_number'] ?? $validated['bank_2_account'] ?? $request->input('bank_2_number') ?? $request->input('bank_2_account');
+            if (! empty($validated['bank_2_name']) && ! empty($bank2Number)) {
+                $qris2 = $request->input('bank_2_existing_qris');
+                if ($request->hasFile('bank_2_qris_file')) {
+                    $path2 = upload_as_webp($request->file('bank_2_qris_file'), 'invitations/qris');
+                    $qris2 = Storage::url($path2);
+                }
+
                 $invitation->gifts()->create([
                     'gift_type' => 'bank_transfer',
                     'bank_name' => $validated['bank_2_name'],
-                    'account_number' => $validated['bank_2_number'],
-                    'account_name' => $validated['bank_2_holder'] ?? $validated['bride_name'],
+                    'account_number' => $bank2Number,
+                    'account_name' => $validated['bank_2_holder'] ?? $validated['bride_name'] ?? 'Pengantin Wanita',
+                    'qr_code_url' => $qris2,
+                    'qris_image' => $qris2,
                     'order' => 2,
                 ]);
             }
@@ -528,7 +554,7 @@ class InvitationController extends Controller
 
         $validated = $request->validate([
             'client_id' => 'nullable|exists:partner_clients,id',
-            'theme_id' => 'required|exists:themes,id',
+            'theme_id' => 'nullable|exists:themes,id',
             'title' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255',
             'is_published' => 'nullable|in:0,1',
@@ -596,10 +622,18 @@ class InvitationController extends Controller
             // Wallets & Gifts
             'bank_1_name' => 'nullable|string|max:100',
             'bank_1_number' => 'nullable|string|max:100',
+            'bank_1_account' => 'nullable|string|max:100',
             'bank_1_holder' => 'nullable|string|max:255',
+            'bank_1_qris_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'bank_1_existing_qris' => 'nullable|string|max:500',
+
             'bank_2_name' => 'nullable|string|max:100',
             'bank_2_number' => 'nullable|string|max:100',
+            'bank_2_account' => 'nullable|string|max:100',
             'bank_2_holder' => 'nullable|string|max:255',
+            'bank_2_qris_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'bank_2_existing_qris' => 'nullable|string|max:500',
+
             'gift_address' => 'nullable|string|max:1000',
 
             // Stories
@@ -614,12 +648,10 @@ class InvitationController extends Controller
             'whatsapp_template' => 'nullable|string|max:2000',
         ]);
 
-        $theme = Theme::findOrFail($validated['theme_id']);
-        if ($theme->id !== $invitation->theme_id && ! $this->themeOwnershipService->canUseTheme($user, $theme)) {
-            return back()->with('error', 'Template tema ini belum diaktifkan oleh Super Admin untuk Partner.');
-        }
+        // Tema TIDAK BOLEH BERUBAH (tetap memakai tema lama)
+        $theme = $invitation->theme ?? Theme::findOrFail($invitation->theme_id);
 
-        DB::transaction(function () use ($invitation, $theme, $validated, $request) {
+        DB::transaction(function () use ($invitation, $validated, $request) {
             // Cover Image
             $coverImage = $invitation->cover_image;
             if ($request->hasFile('cover_image_file')) {
@@ -725,11 +757,8 @@ class InvitationController extends Controller
                 }
             }
 
-            // Slug
+            // Slug TIDAK BOLEH BERUBAH (tetap memakai slug lama)
             $slug = $invitation->slug;
-            if ($request->filled('slug') && $request->slug !== $invitation->slug) {
-                $slug = Invitation::generateUniqueSlug($request->slug, $invitation->id);
-            }
 
             $eventDate = $validated['event_date'] ?? $validated['akad_date'] ?? $validated['resepsi_date'] ?? $invitation->event_date;
             $isPublished = $request->has('is_published') ? ((int) $request->is_published === 1) : $invitation->is_published;
@@ -737,7 +766,7 @@ class InvitationController extends Controller
             // Update Invitation
             $invitation->update([
                 'client_id' => $validated['client_id'] ?? null,
-                'theme_id' => $theme->id,
+                'theme_id' => $invitation->theme_id,
                 'title' => $validated['title'],
                 'slug' => $slug,
                 'event_date' => $eventDate,
@@ -875,22 +904,41 @@ class InvitationController extends Controller
 
             // Wallets & Gifts
             $invitation->gifts()->delete();
-            if (! empty($validated['bank_1_name']) && ! empty($validated['bank_1_number'])) {
+
+            $bank1Number = $validated['bank_1_number'] ?? $validated['bank_1_account'] ?? $request->input('bank_1_number') ?? $request->input('bank_1_account');
+            if (! empty($validated['bank_1_name']) && ! empty($bank1Number)) {
+                $qris1 = $request->input('bank_1_existing_qris');
+                if ($request->hasFile('bank_1_qris_file')) {
+                    $path1 = upload_as_webp($request->file('bank_1_qris_file'), 'invitations/qris');
+                    $qris1 = Storage::url($path1);
+                }
+
                 $invitation->gifts()->create([
                     'gift_type' => 'bank_transfer',
                     'bank_name' => $validated['bank_1_name'],
-                    'account_number' => $validated['bank_1_number'],
-                    'account_name' => $validated['bank_1_holder'] ?? $validated['groom_name'],
+                    'account_number' => $bank1Number,
+                    'account_name' => $validated['bank_1_holder'] ?? $validated['groom_name'] ?? 'Pengantin Pria',
+                    'qr_code_url' => $qris1,
+                    'qris_image' => $qris1,
                     'order' => 1,
                 ]);
             }
 
-            if (! empty($validated['bank_2_name']) && ! empty($validated['bank_2_number'])) {
+            $bank2Number = $validated['bank_2_number'] ?? $validated['bank_2_account'] ?? $request->input('bank_2_number') ?? $request->input('bank_2_account');
+            if (! empty($validated['bank_2_name']) && ! empty($bank2Number)) {
+                $qris2 = $request->input('bank_2_existing_qris');
+                if ($request->hasFile('bank_2_qris_file')) {
+                    $path2 = upload_as_webp($request->file('bank_2_qris_file'), 'invitations/qris');
+                    $qris2 = Storage::url($path2);
+                }
+
                 $invitation->gifts()->create([
                     'gift_type' => 'bank_transfer',
                     'bank_name' => $validated['bank_2_name'],
-                    'account_number' => $validated['bank_2_number'],
-                    'account_name' => $validated['bank_2_holder'] ?? $validated['bride_name'],
+                    'account_number' => $bank2Number,
+                    'account_name' => $validated['bank_2_holder'] ?? $validated['bride_name'] ?? 'Pengantin Wanita',
+                    'qr_code_url' => $qris2,
+                    'qris_image' => $qris2,
                     'order' => 2,
                 ]);
             }

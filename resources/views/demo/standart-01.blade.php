@@ -165,6 +165,13 @@
     <!-- ========================================================================= -->
     <!-- 1. COVER ENTRANCE OVERLAY (Persis seperti Gambar 1 yang diunggah) -->
     <!-- ========================================================================= -->
+    @php
+        $coverPhotos = !empty($data['cover_images']) ? $data['cover_images'] : array_values(array_filter([$data['cover_image'] ?? null, $activeStyle['cover_bg'] ?? null]));
+        if (empty($coverPhotos)) {
+            $coverPhotos = ['https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&auto=format&fit=crop&q=85'];
+        }
+    @endphp
+
     <div 
         x-show="!isOpen" 
         x-transition:leave="transition ease-in-out duration-700"
@@ -172,17 +179,46 @@
         x-transition:leave-end="opacity-0 scale-95 pointer-events-none"
         class="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-rosewood-950"
     >
-        <!-- Background Foto Pasangan di Pintu Kaca Putih Konservatori -->
+        <!-- Background Foto Pasangan (Smooth Two-Layer Cross-Dissolve) -->
         <div 
-            class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105"
-            style="background-image: url('{{ !empty($data['cover_image']) ? $data['cover_image'] : ($activeStyle['cover_bg'] ?? 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&auto=format&fit=crop&q=85') }}');"
+            class="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+            x-data="{
+                activeCoverIdx: 0,
+                outgoingCoverIdx: null,
+                totalCovers: {{ count($coverPhotos) }},
+                nextCover() {
+                    if (this.totalCovers <= 1) return;
+                    this.outgoingCoverIdx = this.activeCoverIdx;
+                    this.activeCoverIdx = (this.activeCoverIdx + 1) % this.totalCovers;
+                    setTimeout(() => {
+                        this.outgoingCoverIdx = null;
+                    }, 2100);
+                },
+                init() {
+                    if (this.totalCovers > 1) {
+                        setInterval(() => this.nextCover(), 5000);
+                    }
+                }
+            }"
         >
+            @foreach($coverPhotos as $cIdx => $cUrl)
+                <div 
+                    class="absolute inset-0 bg-cover bg-center bg-no-repeat will-change-[opacity,transform] transition-all duration-[2000ms] ease-in-out {{ $cIdx === 0 ? 'opacity-100 scale-105 z-10' : 'opacity-0 scale-110 z-0' }}"
+                    :class="{
+                        'opacity-100 scale-105 z-20': activeCoverIdx === {{ $cIdx }},
+                        'opacity-100 scale-105 z-10': outgoingCoverIdx === {{ $cIdx }},
+                        'opacity-0 scale-110 z-0 pointer-events-none': activeCoverIdx !== {{ $cIdx }} && outgoingCoverIdx !== {{ $cIdx }}
+                    }"
+                    style="background-image: url('{{ $cUrl }}');"
+                ></div>
+            @endforeach
+
             <!-- Gradient Scrim / Dark Tint agar teks dan lingkaran pop jelas -->
-            <div class="absolute inset-0 bg-gradient-to-b from-rosewood-950/40 via-rosewood-950/50 to-rosewood-950/80"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-rosewood-950/40 via-rosewood-950/50 to-rosewood-950/80 z-[25] pointer-events-none"></div>
         </div>
 
         <!-- Konten Lingkaran Tipis Tengah (Identik dengan Screenshot User) -->
-        <div class="relative z-10 w-full max-w-sm mx-auto px-4 flex flex-col items-center justify-center text-center">
+        <div class="relative z-30 w-full max-w-sm mx-auto px-4 flex flex-col items-center justify-center text-center">
             
             <!-- White Thin Circular Ring Frame -->
             <div class="w-[320px] h-[320px] sm:w-[350px] sm:h-[350px] rounded-full border border-white/60 flex flex-col items-center justify-center p-6 text-center text-white backdrop-blur-[2px] shadow-2xl relative">
@@ -367,6 +403,18 @@
             <!-- ============================================================= -->
             <section class="py-16 px-6 text-center space-y-12 bg-white">
                 
+                @php
+                    $groomPhotos = !empty($data['groom']['photos']) ? $data['groom']['photos'] : array_values(array_filter([$data['groom']['photo'] ?? null]));
+                    if (empty($groomPhotos)) {
+                        $groomPhotos = ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80'];
+                    }
+
+                    $bridePhotos = !empty($data['bride']['photos']) ? $data['bride']['photos'] : array_values(array_filter([$data['bride']['photo'] ?? null]));
+                    if (empty($bridePhotos)) {
+                        $bridePhotos = ['https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'];
+                    }
+                @endphp
+
                 <div class="space-y-2">
                     <span class="text-[10px] uppercase tracking-[0.3em] text-rosewood-500 font-bold block">
                         Pasangan Mempelai
@@ -394,12 +442,42 @@
                         </div>
 
                         <!-- Oval Frame -->
-                        <div class="w-44 h-56 rounded-full overflow-hidden border-4 border-[#F7EDF0] shadow-xl p-1 bg-white">
-                            <img 
-                                src="{{ $data['groom']['photo'] }}" 
-                                alt="{{ $data['groom']['name'] }}" 
-                                class="w-full h-full object-cover rounded-full"
-                            >
+                        <div 
+                            class="w-44 h-56 rounded-full overflow-hidden border-4 border-[#F7EDF0] shadow-xl p-1 bg-white relative"
+                            x-data="{
+                                activeIdx: 0,
+                                outgoingIdx: null,
+                                total: {{ count($groomPhotos) }},
+                                next() {
+                                    if (this.total <= 1) return;
+                                    this.outgoingIdx = this.activeIdx;
+                                    this.activeIdx = (this.activeIdx + 1) % this.total;
+                                    setTimeout(() => {
+                                        this.outgoingIdx = null;
+                                    }, 1900);
+                                },
+                                init() {
+                                    if (this.total > 1) {
+                                        setInterval(() => this.next(), 4800);
+                                    }
+                                }
+                            }"
+                        >
+                            <div class="relative w-full h-full rounded-full overflow-hidden bg-rosewood-100">
+                                @foreach($groomPhotos as $index => $photoUrl)
+                                    <img 
+                                        src="{{ $photoUrl }}" 
+                                        alt="{{ $data['groom']['name'] ?? 'Mempelai Pria' }}" 
+                                        class="absolute inset-0 w-full h-full object-cover rounded-full will-change-[opacity,transform] transition-all duration-[1800ms] ease-in-out {{ $index === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0' }}"
+                                        :class="{
+                                            'opacity-100 scale-100 z-20': activeIdx === {{ $index }},
+                                            'opacity-100 scale-100 z-10': outgoingIdx === {{ $index }},
+                                            'opacity-0 scale-105 z-0 pointer-events-none': activeIdx !== {{ $index }} && outgoingIdx !== {{ $index }}
+                                        }"
+                                        loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                                    >
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -456,12 +534,45 @@
                         </div>
 
                         <!-- Oval Frame -->
-                        <div class="w-44 h-56 rounded-full overflow-hidden border-4 border-[#F7EDF0] shadow-xl p-1 bg-white">
-                            <img 
-                                src="{{ $data['bride']['photo'] }}" 
-                                alt="{{ $data['bride']['name'] }}" 
-                                class="w-full h-full object-cover rounded-full"
-                            >
+                        <div 
+                            class="w-44 h-56 rounded-full overflow-hidden border-4 border-[#F7EDF0] shadow-xl p-1 bg-white relative"
+                            x-data="{
+                                activeIdx: 0,
+                                outgoingIdx: null,
+                                total: {{ count($bridePhotos) }},
+                                next() {
+                                    if (this.total <= 1) return;
+                                    this.outgoingIdx = this.activeIdx;
+                                    this.activeIdx = (this.activeIdx + 1) % this.total;
+                                    setTimeout(() => {
+                                        this.outgoingIdx = null;
+                                    }, 1900);
+                                },
+                                init() {
+                                    if (this.total > 1) {
+                                        setTimeout(() => {
+                                            this.next();
+                                            setInterval(() => this.next(), 4800);
+                                        }, 2400);
+                                    }
+                                }
+                            }"
+                        >
+                            <div class="relative w-full h-full rounded-full overflow-hidden bg-rosewood-100">
+                                @foreach($bridePhotos as $index => $photoUrl)
+                                    <img 
+                                        src="{{ $photoUrl }}" 
+                                        alt="{{ $data['bride']['name'] ?? 'Mempelai Wanita' }}" 
+                                        class="absolute inset-0 w-full h-full object-cover rounded-full will-change-[opacity,transform] transition-all duration-[1800ms] ease-in-out {{ $index === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0' }}"
+                                        :class="{
+                                            'opacity-100 scale-100 z-20': activeIdx === {{ $index }},
+                                            'opacity-100 scale-100 z-10': outgoingIdx === {{ $index }},
+                                            'opacity-0 scale-105 z-0 pointer-events-none': activeIdx !== {{ $index }} && outgoingIdx !== {{ $index }}
+                                        }"
+                                        loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                                    >
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 

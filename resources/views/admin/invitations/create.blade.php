@@ -1,8 +1,32 @@
 <x-app-layout>
+    @php
+        $initialStep = 1;
+        if ($errors->any()) {
+            if ($errors->hasAny(['theme_id', 'title', 'slug'])) {
+                $initialStep = 1;
+            } elseif ($errors->hasAny(['groom_name', 'groom_nickname', 'groom_father', 'groom_mother', 'groom_instagram', 'bride_name', 'bride_nickname', 'bride_father', 'bride_mother', 'bride_instagram', 'groom_photo', 'bride_photo'])) {
+                $initialStep = 2;
+            } elseif ($errors->hasAny(['akad_date', 'akad_start_time', 'akad_venue', 'akad_address', 'resepsi_date', 'resepsi_start_time', 'resepsi_venue', 'resepsi_address'])) {
+                $initialStep = 3;
+            } elseif ($errors->hasAny(['cover_image', 'gallery_photos', 'background_music', 'music_preset'])) {
+                $initialStep = 4;
+            } elseif ($errors->hasAny(['bank_name', 'account_number', 'account_name', 'is_published'])) {
+                $initialStep = 5;
+            }
+        }
+    @endphp
     <div 
         class="space-y-8 max-w-5xl mx-auto" 
         x-data="{ 
-            currentStep: 1, 
+            currentStep: {{ $initialStep }}, 
+            errorMessage: '',
+            stepNames: {
+                1: 'Langkah 1: Tema & Judul',
+                2: 'Langkah 2: Data Mempelai',
+                3: 'Langkah 3: Rangkaian Acara',
+                4: 'Langkah 4: Galeri & Musik',
+                5: 'Langkah 5: Amplop & Rilis'
+            },
             selectedTheme: '{{ old('theme_id', $themes->first()->id ?? 1) }}',
             selectedMusic: '{{ old('music_preset', '/audio/wedding-song.mp3') }}',
             isPlayingAudio: false,
@@ -137,6 +161,134 @@
                 } catch (e) {
                     console.error('DataTransfer sync error:', e);
                 }
+            },
+
+            getFieldLabel(field) {
+                if (field.getAttribute('data-label')) return field.getAttribute('data-label');
+                if (field.getAttribute('aria-label')) return field.getAttribute('aria-label');
+                if (field.id) {
+                    const idLabel = this.$el.querySelector(`label[for='${field.id}']`);
+                    if (idLabel && idLabel.innerText.trim()) {
+                        return idLabel.innerText.replace('*', '').trim();
+                    }
+                }
+                let parent = field.parentElement;
+                for (let i = 0; i < 4 && parent; i++) {
+                    const label = parent.querySelector('label');
+                    if (label && label.innerText.trim()) {
+                        return label.innerText.replace('*', '').trim();
+                    }
+                    parent = parent.parentElement;
+                }
+                return field.placeholder || field.name || 'Kolom isian';
+            },
+
+            showNotification(msg, step = null) {
+                this.errorMessage = msg;
+                if (typeof window.showToast === 'function') {
+                    window.showToast(msg, 'warning');
+                } else if (window.Toast && typeof window.Toast.fire === 'function') {
+                    window.Toast.fire({
+                        icon: 'warning',
+                        title: msg
+                    });
+                } else if (typeof window.showWarning === 'function') {
+                    window.showWarning(msg, 'Perhatian');
+                }
+            },
+
+            validateStep(step, notify = true) {
+                const form = this.$el.querySelector('form');
+                if (!form) return true;
+
+                if (step === 1 && !this.selectedTheme) {
+                    this.currentStep = 1;
+                    const msg = 'Silakan pilih tema desain terlebih dahulu pada Langkah 1: Tema & Judul.';
+                    if (notify) this.showNotification(msg, 1);
+                    return false;
+                }
+
+                const stepContainer = form.querySelector(`[data-step='${step}']`);
+                if (!stepContainer) return true;
+
+                const allStepFields = stepContainer.querySelectorAll('input, select, textarea');
+                allStepFields.forEach(f => f.classList.remove('border-rose-500', 'ring-2', 'ring-rose-400', 'bg-rose-50/30'));
+
+                const fields = stepContainer.querySelectorAll('input[required], select[required], textarea[required]');
+                for (const field of fields) {
+                    if (field.type === 'hidden') continue;
+
+                    const isInvalid = !field.checkValidity() || !field.value || !field.value.trim();
+                    if (isInvalid) {
+                        const label = this.getFieldLabel(field);
+                        const stepName = this.stepNames[step] || ('Langkah ' + step);
+                        const msg = `Mohon lengkapi kolom wajib '${label}' pada ${stepName}.`;
+
+                        this.currentStep = step;
+
+                        field.classList.add('border-rose-500', 'ring-2', 'ring-rose-400', 'bg-rose-50/30');
+
+                        const clearHighlight = () => {
+                            field.classList.remove('border-rose-500', 'ring-2', 'ring-rose-400', 'bg-rose-50/30');
+                            if (this.errorMessage === msg) {
+                                this.errorMessage = '';
+                            }
+                            field.removeEventListener('input', clearHighlight);
+                            field.removeEventListener('change', clearHighlight);
+                        };
+                        field.addEventListener('input', clearHighlight);
+                        field.addEventListener('change', clearHighlight);
+
+                        if (notify) {
+                            this.showNotification(msg, step);
+                        }
+
+                        setTimeout(() => {
+                            try {
+                                field.focus({ preventScroll: true });
+                                field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            } catch (e) {}
+                        }, 120);
+
+                        return false;
+                    }
+                }
+
+                return true;
+            },
+
+            goToStep(targetStep) {
+                this.errorMessage = '';
+                if (targetStep > this.currentStep) {
+                    for (let s = 1; s < targetStep; s++) {
+                        if (!this.validateStep(s, true)) {
+                            return false;
+                        }
+                    }
+                }
+                this.currentStep = targetStep;
+                window.scrollTo({ top: 120, behavior: 'smooth' });
+                return true;
+            },
+
+            submitForm(e) {
+                this.errorMessage = '';
+                for (let s = 1; s <= 5; s++) {
+                    if (!this.validateStep(s, true)) {
+                        if (e) e.preventDefault();
+                        return false;
+                    }
+                }
+                return true;
+            },
+
+            handleEnterKey(e) {
+                if (e.target && e.target.tagName !== 'TEXTAREA') {
+                    if (this.currentStep < 5) {
+                        e.preventDefault();
+                        this.goToStep(this.currentStep + 1);
+                    }
+                }
             }
         }"
     >
@@ -180,7 +332,7 @@
         <div class="p-3.5 rounded-3xl glass-panel border border-sand-200 grid grid-cols-5 gap-2 text-center text-xs font-bold">
             <button 
                 type="button" 
-                @click="currentStep = 1"
+                @click="goToStep(1)"
                 :class="currentStep === 1 ? 'bg-charcoal-950 text-white shadow-md' : 'text-sand-600 hover:bg-sand-200'"
                 class="py-3 px-2 rounded-2xl transition flex items-center justify-center gap-2"
             >
@@ -190,7 +342,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 2"
+                @click="goToStep(2)"
                 :class="currentStep === 2 ? 'bg-charcoal-950 text-white shadow-md' : 'text-sand-600 hover:bg-sand-200'"
                 class="py-3 px-2 rounded-2xl transition flex items-center justify-center gap-2"
             >
@@ -200,7 +352,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 3"
+                @click="goToStep(3)"
                 :class="currentStep === 3 ? 'bg-charcoal-950 text-white shadow-md' : 'text-sand-600 hover:bg-sand-200'"
                 class="py-3 px-2 rounded-2xl transition flex items-center justify-center gap-2"
             >
@@ -210,7 +362,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 4"
+                @click="goToStep(4)"
                 :class="currentStep === 4 ? 'bg-charcoal-950 text-white shadow-md' : 'text-sand-600 hover:bg-sand-200'"
                 class="py-3 px-2 rounded-2xl transition flex items-center justify-center gap-2"
             >
@@ -220,7 +372,7 @@
 
             <button 
                 type="button" 
-                @click="currentStep = 5"
+                @click="goToStep(5)"
                 :class="currentStep === 5 ? 'bg-charcoal-950 text-white shadow-md' : 'text-sand-600 hover:bg-sand-200'"
                 class="py-3 px-2 rounded-2xl transition flex items-center justify-center gap-2"
             >
@@ -229,8 +381,19 @@
             </button>
         </div>
 
+        <!-- CLIENT-SIDE ERROR ALERT -->
+        <div 
+            x-show="errorMessage" 
+            x-transition 
+            class="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs flex items-center gap-2.5 shadow-sm"
+            style="display: none;"
+        >
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 shrink-0"></i>
+            <span x-text="errorMessage" class="font-semibold"></span>
+        </div>
+
         <!-- FORM WRAPPER WITH MULTIPART SUPPORT -->
-        <form method="POST" action="{{ route('invitations.store') }}" enctype="multipart/form-data" class="space-y-8">
+        <form method="POST" action="{{ route('invitations.store') }}" enctype="multipart/form-data" novalidate @submit="submitForm($event)" @keydown.enter="handleEnterKey($event)" class="space-y-8">
             @csrf
 
             <!-- HIDDEN INPUT FOR THEME ID -->
@@ -242,7 +405,7 @@
                 <!-- ========================================== -->
                 <!-- STEP 1: PILIH TEMA DESAIN -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 1" class="space-y-6">
+                <div x-show="currentStep === 1" data-step="1" class="space-y-6">
                     <div class="space-y-1">
                         <h3 class="font-serif text-xl font-bold text-charcoal-950">Langkah 1: Pilih Tema Desain &amp; Judul Undangan</h3>
                         <p class="text-xs text-sand-600">Pilih salah satu template visual yang sesuai dengan konsep pernikahan Anda.</p>
@@ -305,7 +468,7 @@
                     </div>
 
                     <div class="flex justify-end pt-4">
-                        <button type="button" @click="currentStep = 2" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-2">
+                        <button type="button" @click="goToStep(2)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-2">
                             <span>Lanjut ke Data Mempelai</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
@@ -315,7 +478,7 @@
                 <!-- ========================================== -->
                 <!-- STEP 2: DATA MEMPELAI -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 2" class="space-y-6" style="display: none;">
+                <div x-show="currentStep === 2" data-step="2" class="space-y-6" style="display: none;">
                     <div class="space-y-1">
                         <h3 class="font-serif text-xl font-bold text-charcoal-950">Langkah 2: Informasi &amp; Foto Kedua Mempelai</h3>
                         <p class="text-xs text-sand-600">Lengkapi data pribadi serta unggah foto profil mempelai pria dan wanita.</p>
@@ -464,10 +627,10 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-4 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 1" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs">
+                        <button type="button" @click="goToStep(1)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs">
                             Kembali
                         </button>
-                        <button type="button" @click="currentStep = 3" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-2">
+                        <button type="button" @click="goToStep(3)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-2">
                             <span>Lanjut ke Jadwal Acara</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
@@ -475,9 +638,9 @@
                 </div>
 
                 <!-- ========================================== -->
-                <!-- STEP 3: JADWAL & LOKASI ACARA -->
+                <!-- STEP 3: RANGKAIAN ACARA -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 3" class="space-y-6" style="display: none;">
+                <div x-show="currentStep === 3" data-step="3" class="space-y-6" style="display: none;">
                     <div class="space-y-1">
                         <h3 class="font-serif text-xl font-bold text-charcoal-950">Langkah 3: Rangkaian Jadwal Acara</h3>
                         <p class="text-xs text-sand-600">Atur tanggal, waktu, dan lokasi prosesi pernikahan.</p>
@@ -634,10 +797,10 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-4 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 2" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs">
+                        <button type="button" @click="goToStep(2)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs">
                             Kembali
                         </button>
-                        <button type="button" @click="currentStep = 4" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-2">
+                        <button type="button" @click="goToStep(4)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-2">
                             <span>Lanjut ke Galeri &amp; Musik</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
@@ -645,9 +808,9 @@
                 </div>
 
                 <!-- ========================================== -->
-                <!-- STEP 4: GALERI FOTO & MUSIK (NEW SECTION!) -->
+                <!-- STEP 4: GALERI FOTO & MUSIK -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 4" class="space-y-6" style="display: none;">
+                <div x-show="currentStep === 4" data-step="4" class="space-y-6" style="display: none;">
                     <div class="space-y-1">
                         <h3 class="font-serif text-xl font-bold text-charcoal-950">Langkah 4: Galeri Foto Prewedding &amp; Musik Latar</h3>
                         <p class="text-xs text-sand-600">Unggah foto cover utama, album galeri prewedding, dan tentukan lagu pengiring undangan.</p>
@@ -841,8 +1004,12 @@
                                 @change="changeMusicPreset($event.target.value)"
                                 class="w-full px-3.5 py-2.5 rounded-xl border border-sand-200 bg-white font-medium focus:ring-2 focus:ring-brand-500"
                             >
-                                @foreach ($musicPresets as $music)
-                                    <option value="{{ $music['file'] }}">{{ $music['title'] }}</option>
+                                @foreach ($musicPresets as $key => $music)
+                                    @php
+                                        $fileUrl = is_array($music) ? ($music['file'] ?? '') : $music;
+                                        $displayTitle = is_array($music) ? ($music['title'] ?? $key) : (is_string($key) ? $key : $music);
+                                    @endphp
+                                    <option value="{{ $fileUrl }}">{{ $displayTitle }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -861,10 +1028,10 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-4 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 3" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs">
+                        <button type="button" @click="goToStep(3)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs">
                             Kembali
                         </button>
-                        <button type="button" @click="currentStep = 5" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-2">
+                        <button type="button" @click="goToStep(5)" class="px-6 py-3 rounded-2xl bg-charcoal-950 text-white font-bold text-xs hover:bg-brand-600 transition flex items-center gap-2">
                             <span>Lanjut ke Amplop &amp; Rilis</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
@@ -872,9 +1039,9 @@
                 </div>
 
                 <!-- ========================================== -->
-                <!-- STEP 5: AMPLOP & PUBLISH -->
+                <!-- STEP 5: PENGATURAN KADO & RILIS -->
                 <!-- ========================================== -->
-                <div x-show="currentStep === 5" class="space-y-6" style="display: none;">
+                <div x-show="currentStep === 5" data-step="5" class="space-y-6" style="display: none;">
                     <div class="space-y-1">
                         <h3 class="font-serif text-xl font-bold text-charcoal-950">Langkah 5: Rekening Amplop &amp; Rilis</h3>
                         <p class="text-xs text-sand-600">Nomor rekening transfer untuk kado pernikahan digital para tamu.</p>
@@ -928,11 +1095,12 @@
                     </div>
 
                     <div class="flex items-center justify-between pt-4 border-t border-sand-200">
-                        <button type="button" @click="currentStep = 4" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs">
+                        <button type="button" @click="goToStep(4)" class="px-5 py-2.5 rounded-2xl bg-sand-200 text-charcoal-900 font-bold text-xs">
                             Kembali
                         </button>
                         <button 
                             type="submit" 
+                            @click="submitForm($event)"
                             class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white font-bold text-xs shadow-lg hover:shadow-brand-500/30 hover:scale-105 transition flex items-center gap-2 cursor-pointer"
                         >
                             <i data-lucide="check" class="w-4 h-4"></i>

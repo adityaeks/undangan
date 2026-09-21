@@ -1,13 +1,66 @@
 <!-- STEP 4: KISAH PERJALANAN (LOVE STORY) -->
 <div x-show="currentStep === 4" x-transition data-step="4" class="space-y-6">
 
-    <!-- NOTICE FOR THEMES WITHOUT STORY IMAGES -->
-    <template x-if="!themeSupportsStoryImages()">
-        <div class="p-3.5 rounded-2xl bg-sand-100 border border-sand-200 text-xs text-sand-600 flex items-center gap-2.5">
-            <i data-lucide="info" class="w-4 h-4 text-brand-600 shrink-0"></i>
-            <span>Tema yang Anda pilih menyajikan kisah cinta dalam format teks narasi elegan tanpa kartu foto.</span>
+    <!-- DYNAMIC THEME STORY BANNER -->
+    <!-- <template x-if="themeSupportsStoryImages()">
+        <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-xs text-emerald-900 flex items-center justify-between gap-3 shadow-2xs">
+            <div class="flex items-center gap-2.5">
+                <i data-lucide="image" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <div>
+                    <span class="font-bold text-emerald-950" x-text="activeTheme?.name + ':'"></span>
+                    <span>Tema ini mendukung <strong>Foto Kenangan</strong> pada setiap kartu babak kisah cinta Anda.</span>
+                </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-md bg-white border border-emerald-300 text-emerald-700 text-[10px] font-bold uppercase tracking-wider shrink-0">Fitur Foto Aktif</span>
         </div>
     </template>
+
+    <template x-if="!themeSupportsStoryImages()">
+        <div class="p-3.5 rounded-2xl bg-sand-100/90 border border-sand-200 text-xs text-sand-700 flex items-center justify-between gap-3 shadow-2xs">
+            <div class="flex items-center gap-2.5">
+                <i data-lucide="book-open" class="w-4 h-4 text-brand-600 shrink-0"></i>
+                <div>
+                    <span class="font-bold text-charcoal-900" x-text="activeTheme?.name + ':'"></span>
+                    <span>Kisah cinta disajikan dalam format timeline narasi teks yang elegan & rapi.</span>
+                </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-md bg-white border border-sand-200 text-sand-600 text-[10px] font-bold uppercase tracking-wider shrink-0">Format Narasi</span>
+        </div>
+    </template> -->
+
+    <!-- QUICK STORY PRESET BUTTONS -->
+    <div class="flex items-center justify-between gap-2 flex-wrap pt-1">
+        <span class="text-[11px] font-bold text-sand-600 uppercase tracking-wider">Isi Cepat Template Kisah:</span>
+        <div class="flex items-center gap-1.5 flex-wrap">
+            <button 
+                type="button" 
+                @click="
+                    stories = [
+                        { title: 'Pertemuan Pertama', date: 'Tahun 2021', story: 'Pertama kali kami dipertemukan dalam sebuah acara bersama, obrolan hangat membuka kisah indah kami.', existing_image: null, imagePreview: null },
+                        { title: 'Menjalin Kasih', date: 'Tahun 2023', story: 'Setelah saling memahami dan bertumbuh bersama, kami memutuskan untuk mengikat komitmen kasih.', existing_image: null, imagePreview: null },
+                        { title: 'Hari Lamaran', date: 'Desember 2025', story: 'Di hadapan keluarga besar tercinta, kami mengikat janji suci untuk melangkah ke jenjang pernikahan.', existing_image: null, imagePreview: null },
+                    ];
+                "
+                class="px-2.5 py-1 rounded-lg bg-sand-100 hover:bg-sand-200 text-charcoal-800 text-[11px] font-semibold border border-sand-200 transition cursor-pointer"
+            >
+                ✨ Kisah Romantis
+            </button>
+
+            <button 
+                type="button" 
+                @click="
+                    stories = [
+                        { title: 'Pitepangan (Awal Jumpa)', date: 'Wulan Sura 2021', story: 'Pinanggih wonten ing satunggaling papan, miwiti pitepangan kanthi manah ingkang tulus.', existing_image: null, imagePreview: null },
+                        { title: 'Lamaran & Pasang Tarub', date: 'Desember 2025', story: 'Kanthi donga pangestu saking tiyang sepuh kekalih, kaleksanan adicara lamaran resmi.', existing_image: null, imagePreview: null },
+                        { title: 'Dhaup Suci (Pernikahan)', date: 'Oktober 2026', story: 'Kanthi ridhonipun Gusti Kang Maha Agung, sumadya hanetepi darmaning agesang ing salebeting bebrajan.', existing_image: null, imagePreview: null },
+                    ];
+                "
+                class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 text-[11px] font-semibold border border-amber-200 transition cursor-pointer"
+            >
+                🏛️ Kisah Adat Jawa
+            </button>
+        </div>
+    </div>
 
     <div class="space-y-4">
         <template x-for="(story, index) in stories" :key="index">
@@ -67,10 +120,10 @@
                 <!-- STORY PHOTO UPLOAD (IF THEME SUPPORTS) -->
                 <div x-show="themeSupportsStoryImages()" class="pt-2 border-t border-sand-200/60 flex items-center gap-3">
                     <div class="w-12 h-12 rounded-xl bg-sand-200 border border-sand-300 overflow-hidden shrink-0 flex items-center justify-center">
-                        <template x-if="story.imagePreview">
-                            <img :src="story.imagePreview" class="w-full h-full object-cover">
+                        <template x-if="story.imagePreview || story.existing_image">
+                            <img :src="story.imagePreview || story.existing_image" class="w-full h-full object-cover">
                         </template>
-                        <template x-if="!story.imagePreview">
+                        <template x-if="!story.imagePreview && !story.existing_image">
                             <i data-lucide="image" class="w-5 h-5 text-sand-400"></i>
                         </template>
                     </div>

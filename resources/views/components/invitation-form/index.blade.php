@@ -24,9 +24,11 @@
     $bride = $invitation?->couples?->firstWhere('role', 'bride');
     $akad = $invitation?->events?->firstWhere('title', 'Akad Nikah') ?? $invitation?->events?->first();
     $resepsi = $invitation?->events?->firstWhere('title', 'Resepsi Pernikahan') ?? $invitation?->events?->skip(1)?->first();
-    $bank1 = $invitation?->gifts?->where('gift_type', 'bank_transfer')?->first();
-    $bank2 = $invitation?->gifts?->where('gift_type', 'bank_transfer')?->skip(1)?->first();
-    $giftAddress = $invitation?->gifts?->where('gift_type', 'physical_gift')?->first()?->recipient_address;
+    $bankGifts = $invitation?->gifts?->filter(fn($g) => !empty($g->bank_name) || !empty($g->account_number) || $g->gift_type === 'bank_transfer')->values();
+    $bank1 = $bankGifts?->first();
+    $bank2 = $bankGifts?->skip(1)?->first();
+    $giftAddress = $invitation?->gifts?->firstWhere('gift_type', 'physical_gift')?->recipient_address
+        ?? $invitation?->gifts?->first(fn($g) => !empty($g->recipient_address))?->recipient_address;
 
     // Default music preset URL
     $defaultMusic = '';
@@ -46,9 +48,10 @@
             'date' => $s->date,
             'story' => $s->story,
             'existing_image' => $s->image_url,
+            'imagePreview' => $s->image_url,
         ])->toArray() 
         : [
-            ['title' => '', 'date' => '', 'story' => '', 'existing_image' => null],
+            ['title' => '', 'date' => '', 'story' => '', 'existing_image' => null, 'imagePreview' => null],
         ]);
 
     $existingGalleries = $invitation 
@@ -66,17 +69,130 @@
     $existingBridePhotos = $invitation
         ? ($invitation->media->whereIn('media_type', ['bride', 'bride_photo'])->pluck('url')->filter()->values()->toArray() ?: ($bride?->photo_url ? [$bride->photo_url] : []))
         : [];
+
+    $canonicalPresets = config('themes.presets', []);
+    $slugToPreset = config('themes.slug_to_preset', []);
+
+    // Build comprehensive theme characteristics dictionary
+    $themeCharacteristics = $themes->mapWithKeys(function ($theme) use ($canonicalPresets, $slugToPreset) {
+        $meta = $theme->metadata ?? [];
+        $presetKey = $slugToPreset[$theme->slug] ?? $theme->slug;
+        $preset = $canonicalPresets[$presetKey] ?? [];
+
+        // Recommended audio
+        $recAudio = [
+            'file' => $preset['audio_url'] ?? '/audio/wedding-song.mp3',
+            'title' => $preset['audio_title'] ?? 'Lagu Romantis Default',
+        ];
+
+        // Specific tailored tips & presets by category / slug
+        $slug = $theme->slug;
+        $category = $theme->category;
+        $isNoPhoto = ($slug === '3d-motion-01');
+        
+        $photoTip = match(true) {
+            $isNoPhoto => 'Tema 3D Motion 01 adalah Tema Tanpa Foto. Menggunakan video animasi 3D Pavilion Garden & ilustrasi karakter bawaan, Anda tidak perlu mengunggah foto mempelai.',
+            str_contains($slug, '3d-motion') => 'Tema 3D Motion menyajikan animasi gerak sinematik. Disarankan foto mempelai beresolusi tajam dengan objek utama yang jelas.',
+            str_contains($slug, 'standart-02') || str_contains($slug, 'special-03') => 'Tema Dark Mode Luxury. Disarankan foto berpencahayaan hangat atau studio dengan kontras tajam.',
+            str_contains($slug, 'standart-03') => 'Tema Botanical & Rustic. Sangat serasi dengan foto bernuansa alam, dedaunan, atau garden party.',
+            str_contains($slug, 'standart-04') || in_array($slug, ['3d-motion-04', '3d-motion-05', '3d-motion-07', '3d-motion-08']) => 'Tema Adat & Budaya Nusantara. Sangat memukau dengan foto mengenakan busana adat tradisional.',
+            default => 'Disarankan foto berorientasi portrait (rasio 3:4 atau 9:16) untuk tampilan maksimal di ponsel.'
+        };
+
+        $waTemplate = match(true) {
+            str_contains($slug, 'standart-04') || in_array($slug, ['3d-motion-04', '3d-motion-05', '3d-motion-07', '3d-motion-08']) => "Assalamu’alaikum Warahmatullahi Wabarakatuh / Salam Santun\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada prosesi pernikahan kami:\n\n*{judul}*\n\nInformasi lengkap dan tautan undangan:\n{link}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga apabila Bapak/Ibu/Saudara/i berkenan hadir.\n\nMaturnuwun / Terima kasih.",
+            str_contains($slug, 'standart-05') || str_contains($slug, 'special-02') => "Dear Bapak/Ibu/Saudara/i *{nama}*,\n\nDengan penuh rasa syukur, kami mengundang Anda untuk merayakan momen bahagia pernikahan kami:\n\n*{judul}*\n\nDetail acara dan konfirmasi kehadiran:\n{link}\n\nKehadiran dan doa restu Anda akan melengkapi hari istimewa kami.\n\nWarm regards,\nPengantin",
+            default => "Kepada Yth. *{nama}*\n\nTanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami:\n\n*{judul}*\n\nInformasi lengkap dan konfirmasi kehadiran:\n{link}\n\nMerupakan suatu kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.\n\nTerima kasih."
+        };
+
+        return [(string) $theme->id => [
+            'id' => (string) $theme->id,
+            'slug' => $theme->slug,
+            'name' => $theme->name,
+            'category' => $category,
+            'category_label' => $meta['category_label'] ?? $category,
+            'tag' => $meta['tag'] ?? $theme->name,
+            'tag_badge_class' => $meta['tag_badge_class'] ?? 'bg-brand-600 text-white font-bold',
+            'description' => $meta['description'] ?? '',
+            'typography' => $meta['typography'] ?? 'Plus Jakarta Sans + Serif',
+            'colors' => $meta['colors'] ?? [
+                ['hex' => '#F4F7F4', 'name' => 'Main'],
+                ['hex' => '#85A57A', 'name' => 'Accent'],
+                ['hex' => '#333333', 'name' => 'Dark'],
+            ],
+            'features' => $meta['features'] ?? ['Desain Responsif', 'Amplop Digital', 'RSVP Real-Time'],
+            'has_story_images' => (bool) $theme->has_story_images,
+            'is_no_photo' => $isNoPhoto,
+            'recommended_music' => $recAudio,
+            'photo_tip' => $photoTip,
+            'whatsapp_preset' => $waTemplate,
+        ]];
+    });
+
+    $initialStep = 1;
+    if ($errors->any()) {
+        if ($errors->hasAny(['theme_id', 'title', 'slug', 'quote_text', 'quote_source'])) {
+            $initialStep = 1;
+        } elseif ($errors->hasAny(['groom_name', 'groom_nickname', 'groom_gender', 'groom_father', 'groom_mother', 'groom_instagram', 'bride_name', 'bride_nickname', 'bride_gender', 'bride_father', 'bride_mother', 'bride_instagram', 'groom_photo', 'bride_photo', 'groom_photos', 'bride_photos'])) {
+            $initialStep = 2;
+        } elseif ($errors->hasAny(['akad_date', 'akad_start_time', 'akad_end_time', 'akad_venue_name', 'akad_address', 'akad_maps_url', 'resepsi_date', 'resepsi_start_time', 'resepsi_end_time', 'resepsi_venue_name', 'resepsi_address', 'resepsi_maps_url'])) {
+            $initialStep = 3;
+        } elseif ($errors->hasAny(['stories', 'stories.*'])) {
+            $initialStep = 4;
+        } elseif ($errors->hasAny(['cover_image', 'cover_images', 'gallery_photos', 'video_url', 'background_music', 'music_preset'])) {
+            $initialStep = 5;
+        } elseif ($errors->hasAny(['bank_name', 'account_number', 'account_name', 'gift_address', 'is_published'])) {
+            $initialStep = 6;
+        }
+    }
 @endphp
 
 <div 
     class="space-y-4 max-w-5xl mx-auto" 
     x-data="{ 
-        currentStep: 1, 
+        currentStep: {{ $initialStep }}, 
         errorMessage: '',
+        stepNames: {
+            1: 'Langkah 1: Tema & Judul Undangan',
+            2: 'Langkah 2: Data Mempelai',
+            3: 'Langkah 3: Rangkaian Acara',
+            4: 'Langkah 4: Kisah Perjalanan',
+            5: 'Langkah 5: Galeri & Musik',
+            6: 'Langkah 6: Amplop & Rilis'
+        },
         selectedTheme: '{{ old('theme_id', $invitation?->theme_id ?? ($themes->first()?->id ?? '')) }}',
+        themeSearch: '',
+        themesList: @js($themes->map(fn($t) => [
+            'id' => (string) $t->id,
+            'name' => $t->name,
+            'category' => $t->category,
+            'slug' => $t->slug,
+            'description' => $t->metadata['description'] ?? '',
+        ])->values()),
+        isThemeVisible(id) {
+            if (!this.themeSearch || !this.themeSearch.trim()) return true;
+            const q = this.themeSearch.toLowerCase().trim();
+            const t = this.themesList.find(item => item.id === String(id));
+            if (!t) return true;
+            return (t.name + ' ' + t.category + ' ' + t.slug + ' ' + (t.description || '')).toLowerCase().includes(q);
+        },
+        get filteredThemeCount() {
+            if (!this.themeSearch || !this.themeSearch.trim()) return this.themesList.length;
+            const q = this.themeSearch.toLowerCase().trim();
+            return this.themesList.filter(t => 
+                (t.name + ' ' + t.category + ' ' + t.slug + ' ' + (t.description || '')).toLowerCase().includes(q)
+            ).length;
+        },
+        themeCharacteristics: @js($themeCharacteristics),
+        get activeTheme() {
+            return this.themeCharacteristics[String(this.selectedTheme)] || Object.values(this.themeCharacteristics)[0] || null;
+        },
+        get isNoPhotoTheme() {
+            return !!(this.activeTheme?.is_no_photo);
+        },
         themeStoryImageMap: @js($themes->mapWithKeys(fn($t) => [(string)$t->id => (bool)$t->has_story_images])),
         themeSupportsStoryImages() {
-            return !!this.themeStoryImageMap[String(this.selectedTheme)];
+            return !!(this.activeTheme?.has_story_images ?? this.themeStoryImageMap[String(this.selectedTheme)]);
         },
         selectedMusic: '{{ old('music_preset', $invitation?->background_music ?? $defaultMusic) }}',
         isPlayingAudio: false,
@@ -114,6 +230,21 @@
             existing_image: s.existing_image || null,
             imagePreview: s.existing_image || null
         })),
+
+        applyThemeDefaultMusic() {
+            if (this.activeTheme && this.activeTheme.recommended_music && this.activeTheme.recommended_music.file) {
+                this.changeMusicPreset(this.activeTheme.recommended_music.file);
+            }
+        },
+
+        applyThemeWhatsappTemplate() {
+            if (this.activeTheme && this.activeTheme.whatsapp_preset) {
+                const textarea = document.querySelector('textarea[name=whatsapp_template]');
+                if (textarea) {
+                    textarea.value = this.activeTheme.whatsapp_preset;
+                }
+            }
+        },
         
         async addCoverFiles(files) {
             if (!files || files.length === 0) return;
@@ -295,47 +426,105 @@
             }
         },
         
-        validateStep(step) {
-            this.errorMessage = '';
+        getFieldLabel(field) {
+            if (field.getAttribute('data-label')) return field.getAttribute('data-label');
+            if (field.getAttribute('aria-label')) return field.getAttribute('aria-label');
+            if (field.id) {
+                const idLabel = this.$el.querySelector(`label[for='${field.id}']`);
+                if (idLabel && idLabel.innerText.trim()) {
+                    return idLabel.innerText.replace('*', '').trim();
+                }
+            }
+            let parent = field.parentElement;
+            for (let i = 0; i < 4 && parent; i++) {
+                const label = parent.querySelector('label');
+                if (label && label.innerText.trim()) {
+                    return label.innerText.replace('*', '').trim();
+                }
+                parent = parent.parentElement;
+            }
+            return field.placeholder || field.name || 'Kolom isian';
+        },
+
+        showNotification(msg, step = null) {
+            this.errorMessage = msg;
+            if (typeof window.showToast === 'function') {
+                window.showToast(msg, 'warning');
+            } else if (window.Toast && typeof window.Toast.fire === 'function') {
+                window.Toast.fire({
+                    icon: 'warning',
+                    title: msg
+                });
+            } else if (typeof window.showWarning === 'function') {
+                window.showWarning(msg, 'Perhatian');
+            }
+        },
+
+        validateStep(step, notify = true) {
             const form = this.$el.querySelector('form');
             if (!form) return true;
 
             if (step === 1 && !this.selectedTheme) {
-                this.errorMessage = 'Silakan pilih tema desain terlebih dahulu.';
+                this.currentStep = 1;
+                const msg = 'Silakan pilih salah satu tema desain terlebih dahulu pada Langkah 1: Tema.';
+                if (notify) this.showNotification(msg, 1);
                 return false;
             }
 
             const stepContainer = form.querySelector(`[data-step='${step}']`);
             if (!stepContainer) return true;
 
+            const allStepFields = stepContainer.querySelectorAll('input, select, textarea');
+            allStepFields.forEach(f => f.classList.remove('border-rose-500', 'ring-2', 'ring-rose-400', 'bg-rose-50/30'));
+
             const fields = stepContainer.querySelectorAll('input[required], select[required], textarea[required]');
             for (const field of fields) {
-                if (!field.checkValidity()) {
-                    field.classList.add('border-rose-500', 'ring-2', 'ring-rose-200');
+                if (field.type === 'hidden') continue;
+
+                const isInvalid = !field.checkValidity() || !field.value || !field.value.trim();
+                if (isInvalid) {
+                    const label = this.getFieldLabel(field);
+                    const stepName = this.stepNames[step] || ('Langkah ' + step);
+                    const msg = `Mohon lengkapi kolom wajib '${label}' pada ${stepName}.`;
+
                     this.currentStep = step;
-                    this.$nextTick(() => {
-                        field.focus();
-                        if (field.reportValidity) {
-                            field.reportValidity();
+
+                    field.classList.add('border-rose-500', 'ring-2', 'ring-rose-400', 'bg-rose-50/30');
+
+                    const clearHighlight = () => {
+                        field.classList.remove('border-rose-500', 'ring-2', 'ring-rose-400', 'bg-rose-50/30');
+                        if (this.errorMessage === msg) {
+                            this.errorMessage = '';
                         }
-                    });
-                    const labelEl = field.closest('div')?.querySelector('label');
-                    const label = labelEl ? labelEl.innerText.replace('*', '').trim() : (field.placeholder || field.name);
-                    this.errorMessage = `Mohon lengkapi kolom wajib: '${label}'.`;
+                        field.removeEventListener('input', clearHighlight);
+                        field.removeEventListener('change', clearHighlight);
+                    };
+                    field.addEventListener('input', clearHighlight);
+                    field.addEventListener('change', clearHighlight);
+
+                    if (notify) {
+                        this.showNotification(msg, step);
+                    }
+
+                    setTimeout(() => {
+                        try {
+                            field.focus({ preventScroll: true });
+                            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } catch (e) {}
+                    }, 120);
+
                     return false;
-                } else {
-                    field.classList.remove('border-rose-500', 'ring-2', 'ring-rose-200');
                 }
             }
 
             return true;
         },
+
         goToStep(targetStep) {
             this.errorMessage = '';
             if (targetStep > this.currentStep) {
-                for (let s = this.currentStep; s < targetStep; s++) {
-                    if (!this.validateStep(s)) {
-                        this.currentStep = s;
+                for (let s = 1; s < targetStep; s++) {
+                    if (!this.validateStep(s, true)) {
                         return false;
                     }
                 }
@@ -344,12 +533,23 @@
             window.scrollTo({ top: 120, behavior: 'smooth' });
             return true;
         },
+
         submitForm(e) {
+            this.errorMessage = '';
             for (let s = 1; s <= 6; s++) {
-                if (!this.validateStep(s)) {
-                    e.preventDefault();
-                    this.currentStep = s;
+                if (!this.validateStep(s, true)) {
+                    if (e) e.preventDefault();
                     return false;
+                }
+            }
+            return true;
+        },
+
+        handleEnterKey(e) {
+            if (e.target && e.target.tagName !== 'TEXTAREA') {
+                if (this.currentStep < 6) {
+                    e.preventDefault();
+                    this.goToStep(this.currentStep + 1);
                 }
             }
         },
@@ -505,7 +705,9 @@
         action="{{ $action }}" 
         method="POST" 
         enctype="multipart/form-data" 
+        novalidate
         @submit="submitForm($event)"
+        @keydown.enter="handleEnterKey($event)"
         class="glass-panel rounded-3xl border border-sand-200/80 shadow-sm overflow-hidden"
     >
         @csrf
@@ -543,8 +745,8 @@
                 </div>
                 <!-- STEP 6 HEADER -->
                 <div x-show="currentStep === 6" style="display: none;">
-                    <h3 class="font-serif text-base sm:text-lg font-bold text-charcoal-950">Langkah 6: Amplop Digital & Status Publikasi</h3>
-                    <p class="text-[11px] text-sand-500">Atur rekening tanda kasih untuk tamu jarak jauh serta status rilis undangan.</p>
+                    <h3 class="font-serif text-base sm:text-lg font-bold text-charcoal-950">Langkah 6: Amplop Digital & Hadiah</h3>
+                    <p class="text-[11px] text-sand-500">Atur rekening tanda kasih untuk tamu jarak jauh dan alamat kirim kado fisik.</p>
                 </div>
             </div>
 
@@ -588,7 +790,7 @@
                         3 => ['title' => 'Acara', 'short' => 'Acara'],
                         4 => ['title' => 'Kisah Perjalanan', 'short' => 'Kisah'],
                         5 => ['title' => 'Galeri & Musik', 'short' => 'Galeri'],
-                        6 => ['title' => 'Amplop & Rilis', 'short' => 'Amplop'],
+                        6 => ['title' => 'Amplop Digital', 'short' => 'Amplop'],
                     ];
                 @endphp
 
@@ -701,7 +903,8 @@
                     <button 
                         type="submit" 
                         x-show="currentStep === 6"
-                        class="px-7 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-lg shadow-brand-500/20 hover:scale-105 transition flex items-center gap-2"
+                        @click="submitForm($event)"
+                        class="px-7 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs font-bold shadow-lg shadow-brand-500/20 hover:scale-105 transition flex items-center gap-2 cursor-pointer"
                     >
                         <i data-lucide="check-circle" class="w-4 h-4"></i>
                         <span>{{ $isEdit ? 'Simpan Perubahan Undangan' : 'Terbitkan Undangan Sekarang' }}</span>

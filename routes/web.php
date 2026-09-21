@@ -110,6 +110,8 @@ Route::middleware(['auth', 'verified', 'role:member,user'])->prefix('member')->n
     Route::get('/invitations', [MemberInvitationController::class, 'index'])->name('invitations.index');
     Route::get('/invitations/create', [MemberInvitationController::class, 'create'])->name('invitations.create');
     Route::post('/invitations', [MemberInvitationController::class, 'store'])->name('invitations.store');
+    Route::get('/invitations/{invitation}/edit', [MemberInvitationController::class, 'edit'])->name('invitations.edit');
+    Route::put('/invitations/{invitation}', [MemberInvitationController::class, 'update'])->name('invitations.update');
     Route::delete('/invitations/{invitation}', [MemberInvitationController::class, 'destroy'])->name('invitations.destroy');
 
     // Member Themes

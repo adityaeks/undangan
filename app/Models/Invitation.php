@@ -245,7 +245,7 @@ class Invitation extends Model
 
     public function galleries(): HasMany
     {
-        return $this->hasMany(InvitationMedia::class)->orderBy('order');
+        return $this->hasMany(InvitationMedia::class)->whereIn('media_type', ['photo', 'gallery'])->orderBy('order');
     }
 
     /**

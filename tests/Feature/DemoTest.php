@@ -32,8 +32,8 @@ test('renders interactive demo studio with template list and customizer form', f
     $response->assertOk()
         ->assertSee('Kustomisasi Undangan')
         ->assertSee('Demo Studio Interaktif')
-        ->assertSee('The Vogue Editorial Issue')
-        ->assertSee('The Rose Romance Arch');
+        ->assertSee('Standart 02')
+        ->assertSee('Standart 01');
 });
 
 test('allows custom query parameters in demo studio', function () {

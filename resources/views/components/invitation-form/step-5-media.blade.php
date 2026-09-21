@@ -16,103 +16,124 @@
                             <p class="text-[10px] text-sand-500">Foto pembuka (bisa 1 atau banyak foto untuk slider)</p>
                         </div>
                     </div>
-                    <span class="px-2.5 py-0.5 rounded-full bg-sand-100 text-charcoal-800 text-[11px] font-bold border border-sand-200" x-text="coverItems.length + '/5 Foto'"></span>
+                    <template x-if="!isNoPhotoTheme">
+                        <span class="px-2.5 py-0.5 rounded-full bg-sand-100 text-charcoal-800 text-[11px] font-bold border border-sand-200" x-text="coverItems.length + '/5 Foto'"></span>
+                    </template>
+                    <template x-if="isNoPhotoTheme">
+                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-bold border border-emerald-200 flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-3 h-3 text-emerald-600"></i> Video 3D
+                        </span>
+                    </template>
                 </div>
 
-                <!-- HIDDEN FILE INPUT FOR FORM SUBMISSION -->
-                <input 
-                    type="file" 
-                    name="cover_image_files[]" 
-                    multiple 
-                    accept="image/*" 
-                    x-ref="coverFilesInput" 
-                    class="hidden"
-                >
+                <!-- NO PHOTO THEME NOTICE FOR COVER -->
+                <div x-show="isNoPhotoTheme" class="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 space-y-2 shadow-2xs">
+                    <div class="flex items-center gap-2 font-bold text-emerald-900">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                        <span>Sampul Animasi 3D Bawaan Aktif</span>
+                    </div>
+                    <p class="text-emerald-800 leading-relaxed text-[11px]">
+                        Tema <strong>3D Motion 01 (Garden Pavilion)</strong> menggunakan video animasi 3D Pavilion Garden resolusi tinggi sebagai sampul pembuka secara otomatis. Anda tidak perlu mengunggah foto sampul.
+                    </p>
+                </div>
 
-                <!-- HIDDEN INPUTS FOR EXISTING COVERS -->
-                <template x-for="item in coverItems" :key="item.id">
-                    <template x-if="item.is_existing">
-                        <input type="hidden" name="existing_cover_urls[]" :value="item.url">
-                    </template>
-                </template>
-
-                <!-- COVER PHOTO DISPLAY (UNIFIED 9:16 PORTRAIT GRID - SIDE BY SIDE) -->
-                <div>
-                    <!-- HIDDEN FILE INPUT FOR CHOOSING COVER IMAGES -->
+                <!-- COVER PHOTO UPLOAD CONTAINER (HIDDEN IF NO PHOTO THEME) -->
+                <div x-show="!isNoPhotoTheme" class="space-y-3">
+                    <!-- HIDDEN FILE INPUT FOR FORM SUBMISSION -->
                     <input 
                         type="file" 
+                        name="cover_image_files[]" 
                         multiple 
                         accept="image/*" 
-                        x-ref="coverAddInput" 
-                        class="hidden" 
-                        @change="addCoverFiles($event.target.files); $event.target.value = '';"
+                        x-ref="coverFilesInput" 
+                        class="hidden"
                     >
 
-                    <!-- UNIFIED 9:16 COVERS GRID -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
-                        
-                        <!-- PRIMARY COVER (SAMPUL 1 / UTAMA) -->
-                        <template x-if="coverItems.length > 0">
-                            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-sand-100 border-2 border-brand-300 shadow-sm group">
-                                <img :src="coverItems[0].url" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                
-                                <div class="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold flex items-center gap-1">
-                                    <i data-lucide="sparkles" class="w-3 h-3 text-amber-300"></i>
-                                    <span>Utama</span>
-                                </div>
+                    <!-- HIDDEN INPUTS FOR EXISTING COVERS -->
+                    <template x-for="item in coverItems" :key="item.id">
+                        <template x-if="item.is_existing">
+                            <input type="hidden" name="existing_cover_urls[]" :value="item.url">
+                        </template>
+                    </template>
 
-                                <button 
-                                    type="button" 
-                                    @click="removeCoverItem(0)"
-                                    title="Hapus foto sampul ini"
-                                    class="absolute top-2 right-2 w-7 h-7 rounded-lg bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center shadow-md opacity-90 group-hover:opacity-100 transition cursor-pointer"
+                    <!-- COVER PHOTO DISPLAY (UNIFIED 9:16 PORTRAIT GRID - SIDE BY SIDE) -->
+                    <div>
+                        <!-- HIDDEN FILE INPUT FOR CHOOSING COVER IMAGES -->
+                        <input 
+                            type="file" 
+                            multiple 
+                            accept="image/*" 
+                            x-ref="coverAddInput" 
+                            class="hidden" 
+                            @change="addCoverFiles($event.target.files); $event.target.value = '';"
+                        >
+
+                        <!-- UNIFIED 9:16 COVERS GRID -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+                            
+                            <!-- PRIMARY COVER (SAMPUL 1 / UTAMA) -->
+                            <template x-if="coverItems.length > 0">
+                                <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-sand-100 border-2 border-brand-300 shadow-sm group">
+                                    <img :src="coverItems[0].url" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                    
+                                    <div class="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold flex items-center gap-1">
+                                        <i data-lucide="sparkles" class="w-3 h-3 text-amber-300"></i>
+                                        <span>Utama</span>
+                                    </div>
+
+                                    <button 
+                                        type="button" 
+                                        @click="removeCoverItem(0)"
+                                        title="Hapus foto sampul ini"
+                                        class="absolute top-2 right-2 w-7 h-7 rounded-lg bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center shadow-md opacity-90 group-hover:opacity-100 transition cursor-pointer"
+                                    >
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </div>
+                            </template>
+
+                            <!-- ADDITIONAL COVERS (SAMPUL 2, 3, ...) -->
+                            <template x-for="(item, index) in coverItems.slice(1)" :key="item.id">
+                                <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-sand-100 border border-sand-200 shadow-2xs group">
+                                    <img :src="item.url" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                    
+                                    <div class="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold">
+                                        <span x-text="'Foto ' + (index + 2)"></span>
+                                    </div>
+
+                                    <button 
+                                        type="button" 
+                                        @click="removeCoverItem(index + 1)"
+                                        title="Hapus foto ini"
+                                        class="absolute top-2 right-2 w-7 h-7 rounded-lg bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center shadow-xs opacity-90 group-hover:opacity-100 transition cursor-pointer"
+                                    >
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </div>
+                            </template>
+
+                            <!-- EMPTY DASHED CARD FOR NEXT COVER (9:16) - PLACED SIDE BY SIDE NEXT TO PHOTOS -->
+                            <template x-if="coverItems.length < 5">
+                                <div 
+                                    @click="$refs.coverAddInput.click()"
+                                    class="aspect-[9/16] rounded-2xl border-2 border-dashed border-sand-300 hover:border-brand-500 hover:bg-brand-50/20 bg-sand-50/30 transition-all flex flex-col items-center justify-center p-3 text-center cursor-pointer group shadow-2xs"
                                 >
-                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                </button>
-                            </div>
-                        </template>
-
-                        <!-- ADDITIONAL COVERS (SAMPUL 2, 3, ...) -->
-                        <template x-for="(item, index) in coverItems.slice(1)" :key="item.id">
-                            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-sand-100 border border-sand-200 shadow-2xs group">
-                                <img :src="item.url" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                
-                                <div class="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold">
-                                    <span x-text="'Foto ' + (index + 2)"></span>
+                                    <div class="w-10 h-10 rounded-full bg-white group-hover:bg-brand-500 text-sand-700 group-hover:text-white flex items-center justify-center shadow-xs border border-sand-200 group-hover:border-brand-500 transition mb-2">
+                                        <i data-lucide="plus" class="w-5 h-5"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-charcoal-900 group-hover:text-brand-700">Tambah Sampul</span>
+                                    <span class="text-[10px] text-sand-500 mt-0.5">Rasio 9:16</span>
+                                    <span class="text-[9px] text-sand-400" x-text="coverItems.length > 0 ? '(Sampul ' + (coverItems.length + 1) + ')' : '(Layar HP)'"></span>
                                 </div>
+                            </template>
 
-                                <button 
-                                    type="button" 
-                                    @click="removeCoverItem(index + 1)"
-                                    title="Hapus foto ini"
-                                    class="absolute top-2 right-2 w-7 h-7 rounded-lg bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center shadow-xs opacity-90 group-hover:opacity-100 transition cursor-pointer"
-                                >
-                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                </button>
-                            </div>
-                        </template>
-
-                        <!-- EMPTY DASHED CARD FOR NEXT COVER (9:16) - PLACED SIDE BY SIDE NEXT TO PHOTOS -->
-                        <template x-if="coverItems.length < 5">
-                            <div 
-                                @click="$refs.coverAddInput.click()"
-                                class="aspect-[9/16] rounded-2xl border-2 border-dashed border-sand-300 hover:border-brand-500 hover:bg-brand-50/20 bg-sand-50/30 transition-all flex flex-col items-center justify-center p-3 text-center cursor-pointer group shadow-2xs"
-                            >
-                                <div class="w-10 h-10 rounded-full bg-white group-hover:bg-brand-500 text-sand-700 group-hover:text-white flex items-center justify-center shadow-xs border border-sand-200 group-hover:border-brand-500 transition mb-2">
-                                    <i data-lucide="plus" class="w-5 h-5"></i>
-                                </div>
-                                <span class="text-xs font-bold text-charcoal-900 group-hover:text-brand-700">Tambah Sampul</span>
-                                <span class="text-[10px] text-sand-500 mt-0.5">Rasio 9:16</span>
-                                <span class="text-[9px] text-sand-400" x-text="coverItems.length > 0 ? '(Sampul ' + (coverItems.length + 1) + ')' : '(Layar HP)'"></span>
-                            </div>
-                        </template>
-
+                        </div>
                     </div>
-                </div>
 
-                <p class="text-[10px] text-sand-400 pt-1">
-                    💡 Disarankan rasio portrait 9:16 (Layar HP / Story). Jika mengunggah lebih dari 1 foto, sampul pembuka dapat berputar bergantian.
-                </p>
+                    <p class="text-[10px] text-sand-400 pt-1">
+                        💡 Disarankan rasio portrait 9:16 (Layar HP / Story). Jika mengunggah lebih dari 1 foto, sampul pembuka dapat berputar bergantian.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -167,10 +188,42 @@
 
                 <!-- PRESET MUSIC SELECTOR -->
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-charcoal-900">Pilih Musik Romantis Favorit</label>
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs font-bold text-charcoal-900">Pilih Musik Romantis Favorit</label>
+                        <template x-if="activeTheme && activeTheme.recommended_music">
+                            <span class="text-[10px] text-brand-700 font-bold bg-brand-50 px-2 py-0.5 rounded-full border border-brand-200">
+                                Rekomendasi Tema
+                            </span>
+                        </template>
+                    </div>
+
+                    <!-- DYNAMIC RECOMMENDED MUSIC QUICK-APPLY BUTTON -->
+                    <template x-if="activeTheme && activeTheme.recommended_music">
+                        <div class="p-2.5 rounded-xl bg-sand-50 border border-sand-200 flex items-center justify-between gap-2 shadow-2xs">
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="w-6 h-6 rounded-lg bg-brand-600 text-white flex items-center justify-center text-xs shrink-0">
+                                    🎵
+                                </span>
+                                <div class="min-w-0">
+                                    <span class="text-[10px] text-sand-500 block uppercase font-bold tracking-wider">Musik Default Tema</span>
+                                    <span class="text-xs font-bold text-charcoal-900 truncate block" x-text="activeTheme.recommended_music.title"></span>
+                                </div>
+                            </div>
+                            <button 
+                                type="button" 
+                                @click="applyThemeDefaultMusic()"
+                                class="px-2.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-[11px] font-bold transition flex items-center gap-1 shrink-0 cursor-pointer shadow-2xs"
+                            >
+                                <i data-lucide="check" class="w-3 h-3"></i>
+                                <span>Gunakan Lagu Ini</span>
+                            </button>
+                        </div>
+                    </template>
+
                     <div class="relative">
                         <select 
                             name="music_preset" 
+                            x-model="selectedMusic"
                             @change="changeMusicPreset($event.target.value)"
                             class="w-full px-3.5 py-2.5 rounded-xl border border-sand-300 text-xs font-medium text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20 bg-sand-50/50 appearance-none"
                         >
@@ -231,80 +284,100 @@
                     <p class="text-[10px] text-sand-500">Unggah foto satu per satu atau sekaligus (Otomatis WebP hemat kuota)</p>
                 </div>
             </div>
-            <span class="px-2.5 py-0.5 rounded-full bg-sand-100 text-charcoal-800 text-[11px] font-bold border border-sand-200" x-text="galleryItems.length + '/10 Foto'"></span>
+            <template x-if="!isNoPhotoTheme">
+                <span class="px-2.5 py-0.5 rounded-full bg-sand-100 text-charcoal-800 text-[11px] font-bold border border-sand-200" x-text="galleryItems.length + '/10 Foto'"></span>
+            </template>
+            <template x-if="isNoPhotoTheme">
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-bold border border-emerald-200 flex items-center gap-1">
+                    <i data-lucide="sparkles" class="w-3 h-3 text-emerald-600"></i> Edisi Tanpa Foto
+                </span>
+            </template>
         </div>
 
-        <!-- HIDDEN FILE INPUT FOR ACTUAL FORM SUBMISSION -->
-        <input 
-            type="file" 
-            name="gallery_files[]" 
-            multiple 
-            accept="image/*" 
-            x-ref="galleryFilesInput" 
-            class="hidden"
-        >
-
-        <!-- HIDDEN INPUTS FOR EXISTING PHOTOS -->
-        <template x-for="item in galleryItems" :key="item.id">
-            <template x-if="item.is_existing">
-                <input type="hidden" name="existing_gallery_urls[]" :value="item.url">
-            </template>
-        </template>
-
-        <!-- INTERACTIVE GALLERY GRID (1-by-1 or batch) -->
-        <div class="space-y-3">
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
-                
-                <!-- UPLOADED / EXISTING PHOTO ITEMS -->
-                <template x-for="(item, index) in galleryItems" :key="item.id">
-                    <div class="relative aspect-square rounded-2xl overflow-hidden bg-sand-100 border border-sand-200 shadow-2xs group">
-                        <img :src="item.url" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                        
-                        <!-- TOP ORDER BADGE -->
-                        <div class="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold">
-                            <span x-text="'Foto ' + (index + 1)"></span>
-                        </div>
-
-                        <!-- DELETE BUTTON OVERLAY -->
-                        <button 
-                            type="button" 
-                            @click="removeGalleryItem(index)"
-                            title="Hapus foto ini"
-                            class="absolute top-2 right-2 w-7 h-7 rounded-xl bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center shadow-sm opacity-90 group-hover:opacity-100 transition cursor-pointer"
-                        >
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </template>
-
-                <!-- EMPTY DASHED CARD TO ADD PHOTO (1-by-1 or batch) -->
-                <template x-if="galleryItems.length < 10">
-                    <div 
-                        @click="$refs.galleryAddInput.click()"
-                        class="aspect-square rounded-2xl border-2 border-dashed border-sand-300 hover:border-brand-500 hover:bg-brand-50/20 bg-sand-50/30 transition-all flex flex-col items-center justify-center p-3 text-center cursor-pointer group shadow-2xs"
-                    >
-                        <input 
-                            type="file" 
-                            multiple 
-                            accept="image/*" 
-                            x-ref="galleryAddInput" 
-                            class="hidden" 
-                            @change="addGalleryFiles($event.target.files); $event.target.value = '';"
-                        >
-                        <div class="w-10 h-10 rounded-2xl bg-white group-hover:bg-brand-500 text-brand-600 group-hover:text-white flex items-center justify-center shadow-xs border border-sand-200 group-hover:border-brand-500 transition mb-2">
-                            <i data-lucide="plus" class="w-5 h-5"></i>
-                        </div>
-                        <span class="text-xs font-bold text-charcoal-900 group-hover:text-brand-700">Tambah Foto</span>
-                        <span class="text-[10px] text-sand-400">1 per 1 atau banyak</span>
-                    </div>
-                </template>
-
+        <!-- NO PHOTO THEME NOTICE FOR GALLERY -->
+        <div x-show="isNoPhotoTheme" class="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 flex items-start gap-3 shadow-2xs">
+            <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
             </div>
+            <div class="space-y-1">
+                <p class="font-bold">Tema ini adalah Edisi Khusus Tanpa Foto Prewedding</p>
+                <p class="text-emerald-800 leading-relaxed text-[11px]">Tema <strong>3D Motion 01 (Garden Pavilion)</strong> berfokus pada keanggunan animasi 3D, tipografi, dan kemudahan akses informasi acara tanpa galeri foto prewedding. Tautan Siaran Langsung (Live Streaming YouTube) tetap dapat diatur pada kolom di bawah ini.</p>
+            </div>
+        </div>
 
-            <p class="text-[11px] text-sand-500 flex items-center gap-1.5 pt-1">
-                <i data-lucide="info" class="w-3.5 h-3.5 text-sand-400 shrink-0"></i>
-                <span>Klik tombol <strong>+ Tambah Foto</strong> untuk menambah foto galeri (Maksimal 10 foto, otomatis dikonversi ke WebP).</span>
-            </p>
+        <!-- HIDDEN FILE INPUT FOR ACTUAL FORM SUBMISSION & GALLERY GRID (HIDDEN IF NO PHOTO THEME) -->
+        <div x-show="!isNoPhotoTheme" class="space-y-3">
+            <input 
+                type="file" 
+                name="gallery_files[]" 
+                multiple 
+                accept="image/*" 
+                x-ref="galleryFilesInput" 
+                class="hidden"
+            >
+
+            <!-- HIDDEN INPUTS FOR EXISTING PHOTOS -->
+            <template x-for="item in galleryItems" :key="item.id">
+                <template x-if="item.is_existing">
+                    <input type="hidden" name="existing_gallery_urls[]" :value="item.url">
+                </template>
+            </template>
+
+            <!-- INTERACTIVE GALLERY GRID (1-by-1 or batch) -->
+            <div class="space-y-3">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
+                    
+                    <!-- UPLOADED / EXISTING PHOTO ITEMS -->
+                    <template x-for="(item, index) in galleryItems" :key="item.id">
+                        <div class="relative aspect-square rounded-2xl overflow-hidden bg-sand-100 border border-sand-200 shadow-2xs group">
+                            <img :src="item.url" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            
+                            <!-- TOP ORDER BADGE -->
+                            <div class="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold">
+                                <span x-text="'Foto ' + (index + 1)"></span>
+                            </div>
+
+                            <!-- DELETE BUTTON OVERLAY -->
+                            <button 
+                                type="button" 
+                                @click="removeGalleryItem(index)"
+                                title="Hapus foto ini"
+                                class="absolute top-2 right-2 w-7 h-7 rounded-xl bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center shadow-sm opacity-90 group-hover:opacity-100 transition cursor-pointer"
+                            >
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </template>
+
+                    <!-- EMPTY DASHED CARD TO ADD PHOTO (1-by-1 or batch) -->
+                    <template x-if="galleryItems.length < 10">
+                        <div 
+                            @click="$refs.galleryAddInput.click()"
+                            class="aspect-square rounded-2xl border-2 border-dashed border-sand-300 hover:border-brand-500 hover:bg-brand-50/20 bg-sand-50/30 transition-all flex flex-col items-center justify-center p-3 text-center cursor-pointer group shadow-2xs"
+                        >
+                            <input 
+                                type="file" 
+                                multiple 
+                                accept="image/*" 
+                                x-ref="galleryAddInput" 
+                                class="hidden" 
+                                @change="addGalleryFiles($event.target.files); $event.target.value = '';"
+                            >
+                            <div class="w-10 h-10 rounded-2xl bg-white group-hover:bg-brand-500 text-brand-600 group-hover:text-white flex items-center justify-center shadow-xs border border-sand-200 group-hover:border-brand-500 transition mb-2">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </div>
+                            <span class="text-xs font-bold text-charcoal-900 group-hover:text-brand-700">Tambah Foto</span>
+                            <span class="text-[10px] text-sand-400">1 per 1 atau banyak</span>
+                        </div>
+                    </template>
+
+                </div>
+
+                <p class="text-[11px] text-sand-500 flex items-center gap-1.5 pt-1">
+                    <i data-lucide="info" class="w-3.5 h-3.5 text-sand-400 shrink-0"></i>
+                    <span>Klik tombol <strong>+ Tambah Foto</strong> untuk menambah foto galeri (Maksimal 10 foto, otomatis dikonversi ke WebP).</span>
+                </p>
+            </div>
         </div>
 
         <!-- VIDEO STREAMING LINK -->

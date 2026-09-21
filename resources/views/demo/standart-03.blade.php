@@ -127,6 +127,13 @@
         <!-- ============================================================== -->
         <!-- 1. BOTANICAL ARCHED COVER SCREEN WITH WATERCOLOR OVERLAY -->
         <!-- ============================================================== -->
+        @php
+            $coverPhotos = !empty($data['cover_images']) ? $data['cover_images'] : array_values(array_filter([$data['cover_image'] ?? null, $activeStyle['cover_bg'] ?? null]));
+            if (empty($coverPhotos)) {
+                $coverPhotos = ['https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=85'];
+            }
+        @endphp
+
         <div 
             x-show="!isOpened"
             x-transition:leave="transition ease-in-out duration-800 transform"
@@ -146,11 +153,43 @@
 
             <!-- CENTER ARCHED PHOTO WITH FLOATING NAMES -->
             <div class="relative z-10 my-auto py-2">
-                <div class="relative w-60 h-80 mx-auto arch-frame overflow-hidden shadow-2xl border-4 border-white">
-                    <img src="{{ !empty($data['cover_image']) ? $data['cover_image'] : ($activeStyle['cover_bg'] ?? 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&auto=format&fit=crop&q=85') }}" alt="Cover" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#152B20]/80 via-transparent to-transparent"></div>
+                <div 
+                    class="relative w-60 h-80 mx-auto arch-frame overflow-hidden shadow-2xl border-4 border-white bg-[#152B20]"
+                    x-data="{
+                        activeCoverIdx: 0,
+                        outgoingCoverIdx: null,
+                        totalCovers: {{ count($coverPhotos) }},
+                        nextCover() {
+                            if (this.totalCovers <= 1) return;
+                            this.outgoingCoverIdx = this.activeCoverIdx;
+                            this.activeCoverIdx = (this.activeCoverIdx + 1) % this.totalCovers;
+                            setTimeout(() => {
+                                this.outgoingCoverIdx = null;
+                            }, 1900);
+                        },
+                        init() {
+                            if (this.totalCovers > 1) {
+                                setInterval(() => this.nextCover(), 5000);
+                            }
+                        }
+                    }"
+                >
+                    @foreach($coverPhotos as $cIdx => $cUrl)
+                        <img 
+                            src="{{ $cUrl }}" 
+                            alt="Cover" 
+                            class="absolute inset-0 w-full h-full object-cover will-change-[opacity,transform] transition-all duration-[1800ms] ease-in-out {{ $cIdx === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0' }}"
+                            :class="{
+                                'opacity-100 scale-100 z-20': activeCoverIdx === {{ $cIdx }},
+                                'opacity-100 scale-100 z-10': outgoingCoverIdx === {{ $cIdx }},
+                                'opacity-0 scale-105 z-0 pointer-events-none': activeCoverIdx !== {{ $cIdx }} && outgoingCoverIdx !== {{ $cIdx }}
+                            }"
+                            loading="{{ $cIdx === 0 ? 'eager' : 'lazy' }}"
+                        >
+                    @endforeach
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#152B20]/80 via-transparent to-transparent z-[25] pointer-events-none"></div>
                     
-                    <div class="absolute bottom-4 inset-x-0 text-white text-center space-y-0.5">
+                    <div class="absolute bottom-4 inset-x-0 text-white text-center space-y-0.5 z-30">
                         <span class="text-[9px] uppercase tracking-widest text-emerald-200 font-bold">Save The Date</span>
                         <p class="font-serif text-sm font-semibold tracking-wider">{{ $data['events']['akad']['date'] ?? '24 • 10 • 2026' }}</p>
                     </div>
@@ -246,6 +285,18 @@
             </section>
 
             <!-- SECTION: MEMPELAI (THE COUPLE) -->
+            @php
+                $groomPhotos = !empty($data['groom']['photos']) ? $data['groom']['photos'] : array_values(array_filter([$data['groom']['photo'] ?? null]));
+                if (empty($groomPhotos)) {
+                    $groomPhotos = ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80'];
+                }
+
+                $bridePhotos = !empty($data['bride']['photos']) ? $data['bride']['photos'] : array_values(array_filter([$data['bride']['photo'] ?? null]));
+                if (empty($bridePhotos)) {
+                    $bridePhotos = ['https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'];
+                }
+            @endphp
+
             <section id="sec-mempelai" class="space-y-8">
                 <div class="text-center space-y-1">
                     <span class="font-italiana text-xs uppercase tracking-[0.25em] text-[#3D6350] font-bold">The Bride &amp; Groom</span>
@@ -255,8 +306,40 @@
 
                 <!-- GROOM ARCH CARD -->
                 <div class="p-6 rounded-3xl glass-botanical text-center space-y-4">
-                    <div class="w-32 h-40 mx-auto arch-frame overflow-hidden shadow-md border-2 border-white">
-                        <img src="{{ $data['groom']['photo'] }}" alt="{{ $data['groom']['name'] }}" class="w-full h-full object-cover">
+                    <div 
+                        class="w-32 h-40 mx-auto arch-frame overflow-hidden shadow-md border-2 border-white relative bg-[#204030]"
+                        x-data="{
+                            activeIdx: 0,
+                            outgoingIdx: null,
+                            total: {{ count($groomPhotos) }},
+                            next() {
+                                if (this.total <= 1) return;
+                                this.outgoingIdx = this.activeIdx;
+                                this.activeIdx = (this.activeIdx + 1) % this.total;
+                                setTimeout(() => {
+                                    this.outgoingIdx = null;
+                                }, 1900);
+                            },
+                            init() {
+                                if (this.total > 1) {
+                                    setInterval(() => this.next(), 4800);
+                                }
+                            }
+                        }"
+                    >
+                        @foreach($groomPhotos as $index => $photoUrl)
+                            <img 
+                                src="{{ $photoUrl }}" 
+                                alt="{{ $data['groom']['name'] }}" 
+                                class="absolute inset-0 w-full h-full object-cover will-change-[opacity,transform] transition-all duration-[1800ms] ease-in-out {{ $index === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0' }}"
+                                :class="{
+                                    'opacity-100 scale-100 z-20': activeIdx === {{ $index }},
+                                    'opacity-100 scale-100 z-10': outgoingIdx === {{ $index }},
+                                    'opacity-0 scale-105 z-0 pointer-events-none': activeIdx !== {{ $index }} && outgoingIdx !== {{ $index }}
+                                }"
+                                loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                            >
+                        @endforeach
                     </div>
                     <div class="space-y-1">
                         <h4 class="font-italiana text-2xl font-bold text-[#183024]" data-preview="groom-name">{{ $data['groom']['name'] }}</h4>
@@ -290,8 +373,43 @@
 
                 <!-- BRIDE ARCH CARD -->
                 <div class="p-6 rounded-3xl glass-botanical text-center space-y-4">
-                    <div class="w-32 h-40 mx-auto arch-frame overflow-hidden shadow-md border-2 border-white">
-                        <img src="{{ $data['bride']['photo'] }}" alt="{{ $data['bride']['name'] }}" class="w-full h-full object-cover">
+                    <div 
+                        class="w-32 h-40 mx-auto arch-frame overflow-hidden shadow-md border-2 border-white relative bg-[#204030]"
+                        x-data="{
+                            activeIdx: 0,
+                            outgoingIdx: null,
+                            total: {{ count($bridePhotos) }},
+                            next() {
+                                if (this.total <= 1) return;
+                                this.outgoingIdx = this.activeIdx;
+                                this.activeIdx = (this.activeIdx + 1) % this.total;
+                                setTimeout(() => {
+                                    this.outgoingIdx = null;
+                                }, 1900);
+                            },
+                            init() {
+                                if (this.total > 1) {
+                                    setTimeout(() => {
+                                        this.next();
+                                        setInterval(() => this.next(), 4800);
+                                    }, 2400);
+                                }
+                            }
+                        }"
+                    >
+                        @foreach($bridePhotos as $index => $photoUrl)
+                            <img 
+                                src="{{ $photoUrl }}" 
+                                alt="{{ $data['bride']['name'] }}" 
+                                class="absolute inset-0 w-full h-full object-cover will-change-[opacity,transform] transition-all duration-[1800ms] ease-in-out {{ $index === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0' }}"
+                                :class="{
+                                    'opacity-100 scale-100 z-20': activeIdx === {{ $index }},
+                                    'opacity-100 scale-100 z-10': outgoingIdx === {{ $index }},
+                                    'opacity-0 scale-105 z-0 pointer-events-none': activeIdx !== {{ $index }} && outgoingIdx !== {{ $index }}
+                                }"
+                                loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                            >
+                        @endforeach
                     </div>
                     <div class="space-y-1">
                         <h4 class="font-italiana text-2xl font-bold text-[#183024]" data-preview="bride-name">{{ $data['bride']['name'] }}</h4>
