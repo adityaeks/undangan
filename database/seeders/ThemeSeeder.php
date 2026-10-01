@@ -21,7 +21,7 @@ class ThemeSeeder extends Seeder
                 'name' => 'Standart 01',
                 'slug' => 'standart-01',
                 'category' => 'Standart',
-                'thumbnail' => 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop&q=80',
+                'thumbnail' => '/frame/Frame-standart-01.png',
                 'view_path' => 'demo.standart-01',
                 'price' => 49000,
                 'is_active' => true,

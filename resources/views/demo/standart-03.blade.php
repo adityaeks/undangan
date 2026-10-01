@@ -148,7 +148,7 @@
             <!-- HEADER TEXT -->
             <div class="relative z-10 pt-4 space-y-1">
                 <span class="font-italiana text-xs uppercase tracking-[0.35em] text-[#3D6350] block font-bold">The Wedding Celebration</span>
-                <p class="text-[10px] tracking-[0.2em] uppercase text-stone-500 font-medium">Under The Grace of Nature</p>
+                <!-- <p class="text-[10px] tracking-[0.2em] uppercase text-stone-500 font-medium">Under The Grace of Nature</p> -->
             </div>
 
             <!-- CENTER ARCHED PHOTO WITH FLOATING NAMES -->
@@ -189,10 +189,10 @@
                     @endforeach
                     <div class="absolute inset-0 bg-gradient-to-t from-[#152B20]/80 via-transparent to-transparent z-[25] pointer-events-none"></div>
                     
-                    <div class="absolute bottom-4 inset-x-0 text-white text-center space-y-0.5 z-30">
+                    <!-- <div class="absolute bottom-4 inset-x-0 text-white text-center space-y-0.5 z-30">
                         <span class="text-[9px] uppercase tracking-widest text-emerald-200 font-bold">Save The Date</span>
                         <p class="font-serif text-sm font-semibold tracking-wider">{{ $data['events']['akad']['date'] ?? '24 • 10 • 2026' }}</p>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- OVERLAPPING CALLIGRAPHIC NAMES -->
@@ -703,7 +703,7 @@
                     {{ $data['groom']['nickname'] }} &amp; {{ $data['bride']['nickname'] }}
                 </div>
                 <div class="pt-4 text-[10px] opacity-60">
-                    Platform Undangan Digital oleh <a href="{{ route('home') }}" class="underline font-bold">KlikMomen.id</a> • Botanical Series
+                    Platform Undangan Digital oleh <a href="{{ route('home') }}" class="underline font-bold">KlikMomen.id</a>
                 </div>
             </footer>
 
